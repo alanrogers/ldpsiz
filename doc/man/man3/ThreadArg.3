@@ -1,0 +1,90 @@
+.TH "ThreadArg" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ThreadArg \- 
+.PP
+Data required by a single thread\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "unsigned \fBthisThread\fP"
+.br
+.RI "\fIindex of thread \fP"
+.ti -1c
+.RI "int \fBnbins\fP"
+.br
+.RI "\fInumber of tabulation bins \fP"
+.ti -1c
+.RI "int \fBploidy\fP"
+.br
+.RI "\fI1=haploid; 2=diploid \fP"
+.ti -1c
+.RI "int \fBoverflow\fP"
+.br
+.RI "\fI0=no overflow \fP"
+.ti -1c
+.RI "unsigned \fBnGtype\fP"
+.br
+.RI "\fInumber of genotypes in data \fP"
+.ti -1c
+.RI "long \fBsampling_interval\fP"
+.br
+.RI "\fIFor production, set sampling_interval=1\&. \fP"
+.ti -1c
+.RI "double \fBwindow_cm\fP"
+.br
+.RI "\fIMaximum distance in centimorgans between pairs of SNPs used in LD calculations\&. \fP"
+.ti -1c
+.RI "const char * \fBifname\fP"
+.br
+.RI "\fIinput file name \fP"
+.ti -1c
+.RI "\fBThreadBounds\fP * \fBtb\fP"
+.br
+.RI "\fIIn a multithreaded environment, each thread operates only on a portion of the chromosome\&. \fP"
+.ti -1c
+.RI "\fBTabulation\fP * \fBtab\fP"
+.br
+.RI "\fIHolds tabulated values of numerator and denominator of sigdsq and also of rsq\&. \fP"
+.ti -1c
+.RI "\fBBoot\fP * \fBboot\fP"
+.br
+.RI "\fIData used in bootstrap\&. \fP"
+.ti -1c
+.RI "\fBFileIndex\fP * \fBfndx\fP"
+.br
+.RI "\fIAn index into the input file, which allows the current thread to find the SNPs it needs to analyze\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Data required by a single thread\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBBoot\fP* ThreadArg::boot"
+
+.PP
+Data used in bootstrap\&. Not locally owned\&. 
+.PP
+Referenced by threadfun()\&.
+.SS "long ThreadArg::sampling_interval"
+
+.PP
+For production, set sampling_interval=1\&. For debugging, set to (say) 5 to process only every 5th \fBSNP\fP\&. This makes execution faster\&. 
+.PP
+Referenced by ThreadArg_print(), and threadfun()\&.
+.SS "\fBThreadBounds\fP* ThreadArg::tb"
+
+.PP
+In a multithreaded environment, each thread operates only on a portion of the chromosome\&. The Threadbounds object, tb, specifies the SNPs to be considered by the current thread\&. 
+.PP
+Referenced by ThreadArg_print(), and threadfun()\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

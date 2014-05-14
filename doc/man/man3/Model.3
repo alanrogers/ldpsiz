@@ -1,0 +1,56 @@
+.TH "Model" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Model \- 
+.PP
+An object of type \fBModel\fP is shared among threads and among tasks\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <model\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "char \fBlbl\fP [MODEL_LBL_SIZE]"
+.br
+.ti -1c
+.RI "int \fBtwoNsmp\fP"
+.br
+.ti -1c
+.RI "double(* \fBld\fP )(\fBODE\fP *ode, double c, double u, \fBPopHist\fP *ph, int twoNsmp)"
+.br
+.ti -1c
+.RI "double(* \fBldEq\fP )(double c, double u, \fBPopHist\fP *ph, unsigned whichEpoch, int twoNsmp, void *data)"
+.br
+.ti -1c
+.RI "double(* \fBexactLD\fP )(double c, double u, \fBPopHist\fP *ph, int twoNsmp, void *state)"
+.br
+.ti -1c
+.RI "size_t(* \fBstateDim\fP )(void)"
+.br
+.ti -1c
+.RI "const char *(* \fBstateLbl\fP )(unsigned i)"
+.br
+.ti -1c
+.RI "double(* \fBstateVal\fP )(void *vdata, unsigned i)"
+.br
+.ti -1c
+.RI "void *(* \fBnewState\fP )(void)"
+.br
+.ti -1c
+.RI "void(* \fBfreeState\fP )(void *vdata)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+An object of type \fBModel\fP is shared among threads and among tasks\&. 
+
+It therefore cannot have any per-thread or per-task data\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

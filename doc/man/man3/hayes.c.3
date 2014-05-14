@@ -1,0 +1,93 @@
+.TH "hayes.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+hayes.c \- 
+.PP
+Code for Sved's (1971) formula, as used by Hayes et al\&. 2003\&. Genome Research 13:635-643\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+\fC#include 'hayes\&.h'\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'model\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "static double \fBsvedRsq\fP (double c, double twoN, int twoNsmp)"
+.br
+.RI "\fISved's (1971; also 2009, p 184) formula for E[r^2], modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624)\&. \fP"
+.ti -1c
+.RI "double \fBHayes_rsq_dummy\fP (double *y, int twoNsmp)"
+.br
+.ti -1c
+.RI "int \fBHayes_rsqEq_dummy\fP (double *x, double twoN, double c, double u)"
+.br
+.ti -1c
+.RI "\fBModel\fP * \fBModel_allocHayes\fP (int twoNsmp)"
+.br
+.ti -1c
+.RI "double \fBHayes_rsqNoODE\fP (double c, double u, \fBPopHist\fP *ph, int twoNsmp, void *notused)"
+.br
+.ti -1c
+.RI "double \fBHayes_rsq\fP (\fBODE\fP *notused, double c, double u, \fBPopHist\fP *ph, int twoNsmp)"
+.br
+.ti -1c
+.RI "double \fBHayes_rsqEq\fP (double c, double u, \fBPopHist\fP *ph, unsigned whichEpoch, int twoNsmp, void *notused)"
+.br
+.ti -1c
+.RI "size_t \fBHayes_stateDim\fP (void)"
+.br
+.ti -1c
+.RI "const char * \fBHayes_stateLbl\fP (unsigned notused)"
+.br
+.ti -1c
+.RI "void * \fBHayesData_new\fP (void)"
+.br
+.ti -1c
+.RI "double \fBHayesData_stateVal\fP (void *notused, unsigned i)"
+.br
+.ti -1c
+.RI "void \fBHayesData_free\fP (void *notused)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Code for Sved's (1971) formula, as used by Hayes et al\&. 2003\&. Genome Research 13:635-643\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "static double svedRsq (doublec, doubletwoN, inttwoNsmp)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Sved's (1971; also 2009, p 184) formula for E[r^2], modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624)\&. Hudson uses 'n' throughout his paper without clearly defining it\&. On p 631, he says that 'with probability 1/n the same gamete
+will be drawn from the sample twice' (in random sampling with replacement)\&. Thus, Hudson's 'n' is the number of gametes in the sample, which equals twoNsmp in the notation below\&.
+.PP
+The HAYES_MUTATION_ADJUSTMENT is based on Tenesa et al (2007, Genome Research, 17(4):520-526)\&. On p 521, these authors say:
+.PP
+For autosomal loci, Hill (1975, Theor\&. Pop\&. Biol\&. 8(2):117-126) showed that, in the presence of mutation, $E(r^2) = (10+)/(22 + 13 + ^2)$, with $ = 4N_e c$\&. Since $(22 + 13 + ^2)$ factors into $(11+)(2+)$, a further approximation is $E(r^2) = 1/(2 + ) = 1/(2 + 4N_e c)$\&.
+.PP
+Hill's formula (on his p 124), however, is for sigma_d^2 rather than E[r^2], so this adjustment is relevant only to the extent that sigma_d^2 approximates the expectation of r^2\&. Tenesa's approximation also takes 10 as approximately equal to 11--a fairly crude standard of approximation\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

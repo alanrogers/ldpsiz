@@ -1,0 +1,292 @@
+\hypertarget{assign_8c}{\subsection{assign.\-c File Reference}
+\label{assign_8c}\index{assign.\-c@{assign.\-c}}
+}
+
+
+Functions for objects of class \hyperlink{struct_assignment}{Assignment}, which handles assignment statements in input files. These functions do not parse the input files---that job is handled elsewhere, because syntax differs in different files.  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$assert.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}assign.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tokenizer.\-h\char`\"{}}\\*
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_assignment}{Assignment}
+\begin{DoxyCompactList}\small\item\em A linked list, each item representing the name and value of a variable whose value is assigned in an initialization file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_assignment}{Assignment} $\ast$ \hyperlink{assign_8c_a166adfe0311bc2721c473d5a8306a7b5}{Assignment\-\_\-new} (\hyperlink{struct_assignment}{Assignment} $\ast$head, const char $\ast$key, const char $\ast$value)
+\begin{DoxyCompactList}\small\item\em Insert new assignment. \end{DoxyCompactList}\item 
+void \hyperlink{assign_8c_af8ff77140ab1232249c7eb8c88a8e120}{Assignment\-\_\-free} (\hyperlink{struct_assignment}{Assignment} $\ast$head)
+\begin{DoxyCompactList}\small\item\em Free list of \hyperlink{struct_assignment}{Assignment} objects. \end{DoxyCompactList}\item 
+\hypertarget{assign_8c_ae14280769d9f21abd4bde8eb41ae9ebc}{const char $\ast$ \hyperlink{assign_8c_ae14280769d9f21abd4bde8eb41ae9ebc}{Assignment\-\_\-value} (const \hyperlink{struct_assignment}{Assignment} $\ast$head, const char $\ast$key)}\label{assign_8c_ae14280769d9f21abd4bde8eb41ae9ebc}
+
+\begin{DoxyCompactList}\small\item\em Return value corresponding with given key, or N\-U\-L\-L if no such key is found. \end{DoxyCompactList}\item 
+\hypertarget{assign_8c_ace61958d66571fc179c78d79284ede98}{void {\bfseries Assignment\-\_\-print} (const \hyperlink{struct_assignment}{Assignment} $\ast$head, F\-I\-L\-E $\ast$fp)}\label{assign_8c_ace61958d66571fc179c78d79284ede98}
+
+\item 
+int \hyperlink{assign_8c_a6a92b1f85ce1a9117e7626c22a44f9cb}{Assignment\-\_\-set\-Dbl} (const \hyperlink{struct_assignment}{Assignment} $\ast$a, const char $\ast$key, double $\ast$ptr, int mandatory)
+\begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
+int \hyperlink{assign_8c_aaeee1e463f7cc3074d8e80623b4dac8b}{Assignment\-\_\-set\-Long} (const \hyperlink{struct_assignment}{Assignment} $\ast$a, const char $\ast$key, long $\ast$ptr, int mandatory)
+\begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
+int \hyperlink{assign_8c_a9bc332a3896cef221d8d3dcbdf929874}{Assignment\-\_\-set\-Int} (const \hyperlink{struct_assignment}{Assignment} $\ast$a, const char $\ast$key, int $\ast$ptr, int mandatory)
+\begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
+unsigned \hyperlink{assign_8c_af2fa9926a0049b7a276029aa7520ed26}{Assignment\-\_\-set\-Unsigned\-Int} (const \hyperlink{struct_assignment}{Assignment} $\ast$a, const char $\ast$key, unsigned $\ast$ptr, int mandatory)
+\begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
+int \hyperlink{assign_8c_a7fd68a3763f98e4e47c69dae1b4310b4}{Assignment\-\_\-set\-String} (const \hyperlink{struct_assignment}{Assignment} $\ast$a, const char $\ast$key, char $\ast$ptr, int size, int mandatory)
+\begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
+\hyperlink{struct_assignment}{Assignment} $\ast$ \hyperlink{assign_8c_a7bcf674e8d2fa6b2697b4aee30ff73e4}{Assignment\-\_\-read\-Obsld} (F\-I\-L\-E $\ast$ifp)
+\begin{DoxyCompactList}\small\item\em Read assignment statements in file produced by obsld. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Functions for objects of class \hyperlink{struct_assignment}{Assignment}, which handles assignment statements in input files. These functions do not parse the input files---that job is handled elsewhere, because syntax differs in different files. \begin{DoxyAuthor}{Author}
+Alan R. Rogers 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}
+
+
+\subsubsection{Function Documentation}
+\hypertarget{assign_8c_af8ff77140ab1232249c7eb8c88a8e120}{\index{assign.\-c@{assign.\-c}!Assignment\-\_\-free@{Assignment\-\_\-free}}
+\index{Assignment\-\_\-free@{Assignment\-\_\-free}!assign.c@{assign.\-c}}
+\paragraph[{Assignment\-\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}void Assignment\-\_\-free (
+\begin{DoxyParamCaption}
+\item[{{\bf Assignment} $\ast$}]{head}
+\end{DoxyParamCaption}
+)}}\label{assign_8c_af8ff77140ab1232249c7eb8c88a8e120}
+
+
+Free list of \hyperlink{struct_assignment}{Assignment} objects. 
+
+
+
+References Assignment\-\_\-free(), Assignment\-::key, Assignment\-::next, and Assignment\-::value.
+
+
+
+Referenced by Assignment\-\_\-free(), File\-Index\-\_\-read\-File(), and Ini\-\_\-free().
+
+\hypertarget{assign_8c_a166adfe0311bc2721c473d5a8306a7b5}{\index{assign.\-c@{assign.\-c}!Assignment\-\_\-new@{Assignment\-\_\-new}}
+\index{Assignment\-\_\-new@{Assignment\-\_\-new}!assign.c@{assign.\-c}}
+\paragraph[{Assignment\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Assignment}$\ast$ Assignment\-\_\-new (
+\begin{DoxyParamCaption}
+\item[{{\bf Assignment} $\ast$}]{head, }
+\item[{const char $\ast$}]{key, }
+\item[{const char $\ast$}]{value}
+\end{DoxyParamCaption}
+)}}\label{assign_8c_a166adfe0311bc2721c473d5a8306a7b5}
+
+
+Insert new assignment. 
+
+
+
+References Assignment\-\_\-new(), Assignment\-::key, Assignment\-::next, and Assignment\-::value.
+
+
+
+Referenced by Assignment\-\_\-new(), Assignment\-\_\-read\-Obsld(), Gtp\-\_\-read\-Hdr(), and Ini\-\_\-new().
+
+\hypertarget{assign_8c_a7bcf674e8d2fa6b2697b4aee30ff73e4}{\index{assign.\-c@{assign.\-c}!Assignment\-\_\-read\-Obsld@{Assignment\-\_\-read\-Obsld}}
+\index{Assignment\-\_\-read\-Obsld@{Assignment\-\_\-read\-Obsld}!assign.c@{assign.\-c}}
+\paragraph[{Assignment\-\_\-read\-Obsld}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Assignment}$\ast$ Assignment\-\_\-read\-Obsld (
+\begin{DoxyParamCaption}
+\item[{F\-I\-L\-E $\ast$}]{ifp}
+\end{DoxyParamCaption}
+)}}\label{assign_8c_a7bcf674e8d2fa6b2697b4aee30ff73e4}
+
+
+Read assignment statements in file produced by obsld. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em ifp} & Pointer to input file.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to an \hyperlink{struct_assignment}{Assignment} object, which contains all the assignments found. 
+\end{DoxyReturn}
+
+
+References Assignment\-\_\-new().
+
+\hypertarget{assign_8c_a6a92b1f85ce1a9117e7626c22a44f9cb}{\index{assign.\-c@{assign.\-c}!Assignment\-\_\-set\-Dbl@{Assignment\-\_\-set\-Dbl}}
+\index{Assignment\-\_\-set\-Dbl@{Assignment\-\_\-set\-Dbl}!assign.c@{assign.\-c}}
+\paragraph[{Assignment\-\_\-set\-Dbl}]{\setlength{\rightskip}{0pt plus 5cm}int Assignment\-\_\-set\-Dbl (
+\begin{DoxyParamCaption}
+\item[{const {\bf Assignment} $\ast$}]{a, }
+\item[{const char $\ast$}]{key, }
+\item[{double $\ast$}]{ptr, }
+\item[{int}]{mandatory}
+\end{DoxyParamCaption}
+)}}\label{assign_8c_a6a92b1f85ce1a9117e7626c22a44f9cb}
+
+
+Initialize $\ast$ptr do value corresponding to given key. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & A structure containing the assigned values.\\
+\hline
+\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts if \char`\"{}key\char`\"{} is not found.\\
+\hline
+\mbox{\tt out}  & {\em ptr} & Points to a double variable, which will be initialized. If variable \char`\"{}key\char`\"{} has been assigned, then its value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if variable was initialized, 0 otherwise. 
+\end{DoxyReturn}
+
+
+References Assignment\-\_\-value(), and Assignment\-::value.
+
+
+
+Referenced by Ini\-\_\-set\-Dbl().
+
+\hypertarget{assign_8c_a9bc332a3896cef221d8d3dcbdf929874}{\index{assign.\-c@{assign.\-c}!Assignment\-\_\-set\-Int@{Assignment\-\_\-set\-Int}}
+\index{Assignment\-\_\-set\-Int@{Assignment\-\_\-set\-Int}!assign.c@{assign.\-c}}
+\paragraph[{Assignment\-\_\-set\-Int}]{\setlength{\rightskip}{0pt plus 5cm}int Assignment\-\_\-set\-Int (
+\begin{DoxyParamCaption}
+\item[{const {\bf Assignment} $\ast$}]{a, }
+\item[{const char $\ast$}]{key, }
+\item[{int $\ast$}]{ptr, }
+\item[{int}]{mandatory}
+\end{DoxyParamCaption}
+)}}\label{assign_8c_a9bc332a3896cef221d8d3dcbdf929874}
+
+
+Initialize $\ast$ptr do value corresponding to given key. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & A structure containing the assigned values.\\
+\hline
+\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts if \char`\"{}key\char`\"{} is not found.\\
+\hline
+\mbox{\tt out}  & {\em ptr} & Points to a variable of type \char`\"{}int\char`\"{}, which will be initialized. If variable \char`\"{}key\char`\"{} has been assigned, then its value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if variable was initialized, 0 otherwise. 
+\end{DoxyReturn}
+
+
+References Assignment\-\_\-value(), and Assignment\-::value.
+
+
+
+Referenced by File\-Index\-\_\-read\-File(), and Ini\-\_\-set\-Int().
+
+\hypertarget{assign_8c_aaeee1e463f7cc3074d8e80623b4dac8b}{\index{assign.\-c@{assign.\-c}!Assignment\-\_\-set\-Long@{Assignment\-\_\-set\-Long}}
+\index{Assignment\-\_\-set\-Long@{Assignment\-\_\-set\-Long}!assign.c@{assign.\-c}}
+\paragraph[{Assignment\-\_\-set\-Long}]{\setlength{\rightskip}{0pt plus 5cm}int Assignment\-\_\-set\-Long (
+\begin{DoxyParamCaption}
+\item[{const {\bf Assignment} $\ast$}]{a, }
+\item[{const char $\ast$}]{key, }
+\item[{long $\ast$}]{ptr, }
+\item[{int}]{mandatory}
+\end{DoxyParamCaption}
+)}}\label{assign_8c_aaeee1e463f7cc3074d8e80623b4dac8b}
+
+
+Initialize $\ast$ptr do value corresponding to given key. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & A structure containing the assigned values.\\
+\hline
+\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts if \char`\"{}key\char`\"{} is not found.\\
+\hline
+\mbox{\tt out}  & {\em ptr} & Points to a variable of type \char`\"{}long int\char`\"{}, which will be initialized. If variable \char`\"{}key\char`\"{} has been assigned, then its value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if variable was initialized, 0 otherwise. 
+\end{DoxyReturn}
+
+
+References Assignment\-\_\-value(), and Assignment\-::value.
+
+
+
+Referenced by Ini\-\_\-set\-Long().
+
+\hypertarget{assign_8c_a7fd68a3763f98e4e47c69dae1b4310b4}{\index{assign.\-c@{assign.\-c}!Assignment\-\_\-set\-String@{Assignment\-\_\-set\-String}}
+\index{Assignment\-\_\-set\-String@{Assignment\-\_\-set\-String}!assign.c@{assign.\-c}}
+\paragraph[{Assignment\-\_\-set\-String}]{\setlength{\rightskip}{0pt plus 5cm}int Assignment\-\_\-set\-String (
+\begin{DoxyParamCaption}
+\item[{const {\bf Assignment} $\ast$}]{a, }
+\item[{const char $\ast$}]{key, }
+\item[{char $\ast$}]{ptr, }
+\item[{int}]{size, }
+\item[{int}]{mandatory}
+\end{DoxyParamCaption}
+)}}\label{assign_8c_a7fd68a3763f98e4e47c69dae1b4310b4}
+
+
+Initialize $\ast$ptr do value corresponding to given key. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & A structure containing the assigned values.\\
+\hline
+\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts if \char`\"{}key\char`\"{} is not found.\\
+\hline
+\mbox{\tt out}  & {\em ptr} & Points to a character array containing \char`\"{}size\char`\"{} bytes. If the variable \char`\"{}key\char`\"{} has been assigned, its value will be copied into \char`\"{}ptr\char`\"{}. Otherwise, $\ast$ptr is unaltered.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if variable was initialized, 0 otherwise. 
+\end{DoxyReturn}
+
+
+References Assignment\-\_\-value(), and Assignment\-::value.
+
+
+
+Referenced by Ini\-\_\-set\-String().
+
+\hypertarget{assign_8c_af2fa9926a0049b7a276029aa7520ed26}{\index{assign.\-c@{assign.\-c}!Assignment\-\_\-set\-Unsigned\-Int@{Assignment\-\_\-set\-Unsigned\-Int}}
+\index{Assignment\-\_\-set\-Unsigned\-Int@{Assignment\-\_\-set\-Unsigned\-Int}!assign.c@{assign.\-c}}
+\paragraph[{Assignment\-\_\-set\-Unsigned\-Int}]{\setlength{\rightskip}{0pt plus 5cm}unsigned Assignment\-\_\-set\-Unsigned\-Int (
+\begin{DoxyParamCaption}
+\item[{const {\bf Assignment} $\ast$}]{a, }
+\item[{const char $\ast$}]{key, }
+\item[{unsigned $\ast$}]{ptr, }
+\item[{int}]{mandatory}
+\end{DoxyParamCaption}
+)}}\label{assign_8c_af2fa9926a0049b7a276029aa7520ed26}
+
+
+Initialize $\ast$ptr do value corresponding to given key. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & A structure containing the assigned values.\\
+\hline
+\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts if \char`\"{}key\char`\"{} is not found.\\
+\hline
+\mbox{\tt out}  & {\em ptr} & Points to a variable of type \char`\"{}unsigned int\char`\"{}, which will be initialized. If variable \char`\"{}key\char`\"{} has been assigned, then its value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if variable was initialized, 0 otherwise. 
+\end{DoxyReturn}
+
+
+References Assignment\-\_\-value(), and Assignment\-::value.
+
+
+
+Referenced by Ini\-\_\-set\-Unsigned\-Int().
+

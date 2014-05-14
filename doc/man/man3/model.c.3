@@ -1,0 +1,271 @@
+.TH "model.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+model.c \- 
+.PP
+Functions for objects of type \fBModel\fP, a generic class whose details are implemented elsewhere\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <gsl/gsl_odeiv2\&.h>\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'tokenizer\&.h'\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+\fC#include 'hill\&.h'\fP
+.br
+\fC#include 'strobeck\&.h'\fP
+.br
+\fC#include 'hayes\&.h'\fP
+.br
+\fC#include 'model\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBODE\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBModel\fP * \fBModel_dup\fP (const \fBModel\fP *model)"
+.br
+.ti -1c
+.RI "\fBODE\fP * \fBODE_new\fP (const \fBModel\fP *model, double abstol, double reltol)"
+.br
+.ti -1c
+.RI "void \fBODE_free\fP (\fBODE\fP *ode)"
+.br
+.ti -1c
+.RI "void * \fBODE_state\fP (\fBODE\fP *ode)"
+.br
+.ti -1c
+.RI "double \fBODE_stateVal\fP (const \fBODE\fP *ode, unsigned i)"
+.br
+.ti -1c
+.RI "size_t \fBODE_stateDim\fP (const \fBODE\fP *ode)"
+.br
+.ti -1c
+.RI "\fBModel\fP * \fBODE_model\fP (\fBODE\fP *ode)"
+.br
+.ti -1c
+.RI "struct \fBdydt_params\fP * \fBODE_dydtPar\fP (\fBODE\fP *ode)"
+.br
+.ti -1c
+.RI "double \fBODE_ld\fP (\fBODE\fP *ode, double c, double u, \fBPopHist\fP *ph)"
+.br
+.ti -1c
+.RI "\fBModel\fP * \fBModel_alloc\fP (const char *method, int twoNsmp)"
+.br
+.RI "\fIAllocate a new \fBModel\fP of type specified by the character string 'method'\&. \fP"
+.ti -1c
+.RI "void \fBModel_free\fP (\fBModel\fP *m)"
+.br
+.RI "\fIFree an object of type \fBModel\fP\&. \fP"
+.ti -1c
+.RI "void * \fBModel_newState\fP (const \fBModel\fP *m)"
+.br
+.ti -1c
+.RI "void \fBModel_freeState\fP (\fBModel\fP *m, void *state)"
+.br
+.ti -1c
+.RI "double \fBModel_exactLD\fP (const \fBModel\fP *model, \fBODE\fP *ode, double c, double u, \fBPopHist\fP *ph)"
+.br
+.ti -1c
+.RI "void \fBODE_printState\fP (const \fBODE\fP *ode, FILE *fp)"
+.br
+.RI "\fIPrint state vector to file fp\&. \fP"
+.ti -1c
+.RI "int \fBODE_evolve\fP (\fBODE\fP *ode, double *y, unsigned ydim, double c, double u, \fBPopHist\fP *ph, int dydt(double t_notused, const double y1[], double f[], void *params), int verbose)"
+.br
+.RI "\fIEvolve through all Epochs of population history, beginning with initial state given in y\&. \fP"
+.ti -1c
+.RI "void \fBODE_ldVec\fP (\fBODE\fP *ode, double *ld, int nbins, const double *c, double u, \fBPopHist\fP *ph)"
+.br
+.RI "\fIOn entry, c is a list of recombination rates, ph the population history, and odeStepSize is the initial step size\&. \fP"
+.ti -1c
+.RI "double \fBODE_ldEq\fP (\fBODE\fP *ode, double c, double u, \fBPopHist\fP *ph, unsigned whichEpoch)"
+.br
+.ti -1c
+.RI "void \fBODE_ldVecEq\fP (\fBODE\fP *ode, double *eq, int nbins, const double *c, double u, \fBPopHist\fP *ph, int whichEpoch)"
+.br
+.RI "\fIThis function returns 1 vector: eq[i] is sigma_d^2 for a population at equilibrium with parameters as given in the specified \fBPopHist\fP Epoch, and recombination rate as specified by c[i]\&. \fP"
+.ti -1c
+.RI "\fBModelList\fP * \fBModelList_alloc\fP (const char *s0, int twoNsmp)"
+.br
+.RI "\fIAllocate a new \fBModelList\fP\&. \fP"
+.ti -1c
+.RI "unsigned \fBModelList_addModel\fP (\fBModelList\fP *ml, const char *modelName, int twoNsmp)"
+.br
+.RI "\fIAdd a method to an \fBModelList\fP\&. \fP"
+.ti -1c
+.RI "void \fBModelList_free\fP (\fBModelList\fP *el)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "pthread_mutex_t \fBstderr_mutex\fP = PTHREAD_MUTEX_INITIALIZER"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for objects of type \fBModel\fP, a generic class whose details are implemented elsewhere\&. 
+
+The \fBModel\fP class generalizes the task of calculating the expected value of an LD statistic from parameter values involving recombination rate, c, mutation rate, u, and the history of population size\&.
+.PP
+Several of the models involve a vector of state variables, which is iterated forward from generation to generation\&. This file implements a function, odeEvolve, which approximates such systems as ODEs\&.
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBModel\fP* Model_alloc (const char *method, inttwoNsmp)"
+
+.PP
+Allocate a new \fBModel\fP of type specified by the character string 'method'\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImethod\fP character string representing a method to be used in predicting LD from population history\&. Legal values: 'hill', 'strobeck', and 'hayes'\&.
+.br
+\fItwoNsamp\fP haploid sample size, which is used to incorporate sampling bias into predicted values\&. To turn this feature off, use the value 0\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+a pointer to a newly-allocated \fBModel\fP, if successful; or NULL, on failure\&. 
+.RE
+.PP
+
+.PP
+References strlowercase()\&.
+.PP
+Referenced by ModelList_addModel()\&.
+.SS "unsigned ModelList_addModel (\fBModelList\fP *ml, const char *modelName, inttwoNsmp)"
+
+.PP
+Add a method to an \fBModelList\fP\&. Return 1 on success, 0 on failure\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIel\fP The \fBModelList\fP\&. 
+.br
+\fImethod\fP A character string such as 'hill', or 'strobeck'\&. 
+.br
+\fItwoNsmp\fP The number of individuals sampled\&. 
+.RE
+.PP
+
+.PP
+References Model_alloc()\&.
+.PP
+Referenced by ModelList_alloc()\&.
+.SS "\fBModelList\fP* ModelList_alloc (const char *s0, inttwoNsmp)"
+
+.PP
+Allocate a new \fBModelList\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIs0\fP A comma-separated list of \fBModel\fP types, such as 'Hill,Strobeck'\&. 
+.RE
+.PP
+
+.PP
+References ModelList_addModel()\&.
+.SS "int ODE_evolve (\fBODE\fP *ode, double *y, unsignedydim, doublec, doubleu, \fBPopHist\fP *ph, int dydtdouble t_notused, const double y1[], double f[],void *params, intverbose)"
+
+.PP
+Evolve through all Epochs of population history, beginning with initial state given in y\&. Calculation uses \fBODE\fP approximation\&. The initial value of y should be set before calling ODE_evolve\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fImodel\fP An object of type \fBModel\fP, which specifies the method to be used in evolving across a population history\&. The function makes use of model->ydim, model->y, and model->dydt\&. On return, model->y contains the state variable the results from this process\&. 
+.br
+\fIy\fP Vector of state variables\&. 
+.br
+\fIodeStepSize\fP Controls the size of step taken by the minimizer\&. 
+.br
+\fIph\fP Describes the population's history\&. If ph contains just one Epoch, y gets its equilibrium value\&. 
+.br
+\fIverbose\fP Verbosity\&. 
+.br
+\fIc\fP Recombination rate; overrides values in ph\&. 
+.br
+\fIu\fP Mutation rate\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Returns 0 on success, 1 if function didn't run because dydt was not provided\&. 
+.RE
+.PP
+
+.PP
+References PopHist_duration(), PopHist_nepoch(), and PopHist_twoN()\&.
+.PP
+Referenced by Hill_sigdsq(), and Strobeck_sigdsq()\&.
+.SS "void ODE_ldVec (\fBODE\fP *ode, double *ld, intnbins, const double *c, doubleu, \fBPopHist\fP *ph)"
+
+.PP
+On entry, c is a list of recombination rates, ph the population history, and odeStepSize is the initial step size\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImodel\fP An object of type \fBModel\fP, which specifies the method to be used in evolving across a population history\&. On return, model->y is changed\&. 
+.br
+\fIc,u\fP Rates of recombination and mutation\&. 
+.br
+\fInbins\fP Size of arrayys sigdsq and c\&. 
+.br
+\fIph\fP Population history\&. 
+.br
+\fIodeStepSize\fP Controls the step size of the \fBODE\fP algorithm\&. 
+.br
+\fIld[i]\fP is a vector of 'nbins' doubles\&. On return, the i'th entry will contain the value of sigma_d^2 implied by recombination rate c[i], and by the population history in argument 'ph'\&. 
+.RE
+.PP
+
+.PP
+Referenced by costFun(), and lnObjFun()\&.
+.SS "void ODE_ldVecEq (\fBODE\fP *ode, double *eq, intnbins, const double *c, doubleu, \fBPopHist\fP *ph, intwhichEpoch)"
+
+.PP
+This function returns 1 vector: eq[i] is sigma_d^2 for a population at equilibrium with parameters as given in the specified \fBPopHist\fP Epoch, and recombination rate as specified by c[i]\&. On entry, c is a list of recombination rates and ep the population history Epoch\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fImodel\fP An object of type \fBModel\fP, which specifies the method to be used in calculating expected LD\&. 
+.RE
+.PP
+
+.SS "void ODE_printState (const \fBODE\fP *ode, FILE *fp)"
+
+.PP
+Print state vector to file fp\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

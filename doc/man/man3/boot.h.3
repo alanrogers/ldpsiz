@@ -1,0 +1,172 @@
+.TH "boot.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+boot.h \- 
+.PP
+Header for \fBboot\&.c\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <gsl/gsl_rng\&.h>\fP
+.br
+\fC#include 'typedefs\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBconfidenceBounds\fP (double *lowBnd, double *highBnd, double confidence, double *v, long len)"
+.br
+.RI "\fICalculate confidence bounds from a vector of values representing samples drawn from the sampling distribution of some estimator\&. \fP"
+.ti -1c
+.RI "double \fBinterpolate\fP (double p, double *v, long len)"
+.br
+.RI "\fIInterpolate in order to approximate the value v[p*(len-1)]\&. \fP"
+.ti -1c
+.RI "\fBBoot\fP * \fBBoot_new\fP (long nSNPs, long nReps, long blockLength, double windowcm, int nBins, gsl_rng *rng)"
+.br
+.RI "\fIConstructor for class \fBBoot\fP\&. \fP"
+.ti -1c
+.RI "void \fBBoot_addLD\fP (\fBBoot\fP *boot, double Dsq, double pqpq, double sep_cm, const \fBSNP\fP *snp1, const \fBSNP\fP *snp2)"
+.br
+.ti -1c
+.RI "void \fBBoot_free\fP (\fBBoot\fP *boot)"
+.br
+.ti -1c
+.RI "int \fBBoot_equals\fP (const \fBBoot\fP *x, const \fBBoot\fP *y)"
+.br
+.ti -1c
+.RI "\fBBoot\fP * \fBBoot_dup\fP (const \fBBoot\fP *old)"
+.br
+.ti -1c
+.RI "long \fBBoot_nReps\fP (const \fBBoot\fP *boot)"
+.br
+.ti -1c
+.RI "int \fBBoot_nBins\fP (const \fBBoot\fP *boot)"
+.br
+.ti -1c
+.RI "long \fBBoot_nBlocks\fP (const \fBBoot\fP *boot)"
+.br
+.RI "\fIReturn number of blocks\&. \fP"
+.ti -1c
+.RI "long \fBBoot_nSNPs\fP (const \fBBoot\fP *boot)"
+.br
+.RI "\fIReturn number of SNPs\&. \fP"
+.ti -1c
+.RI "void \fBBoot_plus_equals\fP (\fBBoot\fP *x, const \fBBoot\fP *y)"
+.br
+.ti -1c
+.RI "void \fBBoot_dump\fP (const \fBBoot\fP *boot, FILE *ofp)"
+.br
+.ti -1c
+.RI "\fBBoot\fP * \fBBoot_restore\fP (FILE *ifp)"
+.br
+.ti -1c
+.RI "long \fBBoot_multiplicity\fP (const \fBBoot\fP *boot, long ndx, long rep)"
+.br
+.ti -1c
+.RI "void \fBBoot_get_rep\fP (\fBBoot\fP *boot, double *sigdsq, double *rsq, double *cm, long unsigned *nobs, int rep)"
+.br
+.RI "\fIFill arrays sigdsq, cm, and nobs with values for bootstrap repetition 'rep'\&. \fP"
+.ti -1c
+.RI "long unsigned \fBBoot_rawCounts\fP (const \fBBoot\fP *boot, int rep, int bin, double *numerator, double *denominator, double *sumRsq, double *sep_cm)"
+.br
+.ti -1c
+.RI "long \fBBoot_purge\fP (\fBBoot\fP *boot)"
+.br
+.RI "\fIRemove replicates in which some bins have zero observations\&. \fP"
+.ti -1c
+.RI "void \fBBoot_print\fP (const \fBBoot\fP *boot, FILE *ofp)"
+.br
+.RI "\fIPrint a \fBBoot\fP object\&. \fP"
+.ti -1c
+.RI "long \fBBoot_multiplicity_slow\fP (\fBBoot\fP *boot, long snp, long rep)"
+.br
+.ti -1c
+.RI "\fBBootConf\fP * \fBBootConf_new\fP (\fBBoot\fP *boot, double confidence)"
+.br
+.ti -1c
+.RI "void \fBBootConf_printHdr\fP (const \fBBootConf\fP *bc, FILE *ofp)"
+.br
+.ti -1c
+.RI "double \fBBootConf_lowBound\fP (const \fBBootConf\fP *bc, long bin)"
+.br
+.ti -1c
+.RI "double \fBBootConf_highBound\fP (const \fBBootConf\fP *bc, long bin)"
+.br
+.ti -1c
+.RI "void \fBBootConf_print\fP (const \fBBootConf\fP *bc, FILE *ofp)"
+.br
+.ti -1c
+.RI "void \fBBootConf_free\fP (\fBBootConf\fP *bc)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for \fBboot\&.c\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void Boot_get_rep (\fBBoot\fP *boot, double *sigdsq, double *rsq, double *cm, long unsigned *nobs, intrep)"
+
+.PP
+Fill arrays sigdsq, cm, and nobs with values for bootstrap repetition 'rep'\&. If nobs==NULL, nothing is stored there\&. 
+.PP
+References Boot::tab\&.
+.SS "long Boot_purge (\fBBoot\fP *boot)"
+
+.PP
+Remove replicates in which some bins have zero observations\&. These would generate NaN values in the calculation of sigdsq, which are not handled by the minimizer\&. Return revised number of bootstrap replicates\&. 
+.PP
+References Boot::nBins, Boot::nReps, Boot::start, and Boot::tab\&.
+.SS "void confidenceBounds (double *lowBnd, double *highBnd, doubleconfidence, double *v, longlen)"
+
+.PP
+Calculate confidence bounds from a vector of values representing samples drawn from the sampling distribution of some estimator\&. To calculate the lower bound (*lowBnd), the function calculates the total probability mass in the tails (1 - confidence) and divides this into two equal parts to find p, the probability mass in each tail\&. It then estimates a value L such that a fraction p of the data values are less than or equal to L\&. To find this value, the function uses linear interpolation between the sorted list of data values\&.
+.PP
+The upper bound (*highBnd) is calculated in an analogous fashion\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlowBnd,highBnd\fP Calculated results will be written into these memory locations\&. 
+.br
+\fIconfidence\fP Fraction of sampling distribution that lies inside the confidence bounds\&. 
+.br
+\fIv\fP The vector of values\&. 
+.br
+\fIlen\fP The number of values inf v\&. 
+.RE
+.PP
+\fBSide Effects:\fP
+.RS 4
+The function sorts the vector v\&. 
+.RE
+.PP
+
+.PP
+References compareDoubles(), and interpolate()\&.
+.SS "double interpolate (doublep, double *v, longlen)"
+
+.PP
+Interpolate in order to approximate the value v[p*(len-1)]\&. Return NaN if len==0\&. 
+.PP
+Referenced by confidenceBounds()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

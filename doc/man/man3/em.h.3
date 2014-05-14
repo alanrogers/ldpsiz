@@ -1,0 +1,160 @@
+.TH "em.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+em.h \- 
+.PP
+Header for \fBem\&.c\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include 'typedefs\&.h'\fP
+.br
+\fC#include 'window\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBDsqData\fP"
+.br
+.RI "\fIData used by EM algorithm in estimating Dsq from partially phased diploid data\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBHOMOZYGOTE\fP(A)   ((A)==0 || (A)==3)"
+.br
+.RI "\fIIs A a homozygote? \fP"
+.ti -1c
+.RI "#define \fBUNPHASED_PAIR\fP(A, B)"
+.br
+.RI "\fITrue if A and B are both heterozygotes and at least one is unphased\&. \fP"
+.ti -1c
+.RI "#define \fBMAKE_PHASED\fP(A)   ((A)==UNPHASED_HETEROZYGOTE ? 1 : (A))"
+.br
+.RI "\fIIf A is an unphased heterozygote, then convert it to a phased one (genotype 1)\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBDsqData_print\fP (\fBDsqData\fP *dd, const char *file, int line, FILE *fp)"
+.br
+.RI "\fIPrint an object of type \fBDsqData\fP\&. \fP"
+.ti -1c
+.RI "void \fBDsqData_reset\fP (\fBDsqData\fP *dd)"
+.br
+.RI "\fIMake \fBDsqData\fP object consistent with its current allele freqs\&. \fP"
+.ti -1c
+.RI "double \fBloD\fP (double pA, double pB, unsigned *nGam)"
+.br
+.RI "\fILowest feasible value of D, given allele frequencies\&. \fP"
+.ti -1c
+.RI "double \fBhiD\fP (double pA, double pB, unsigned *nGam)"
+.br
+.RI "\fIHighest feasible value of D, given allele frequencies\&. \fP"
+.ti -1c
+.RI "int \fBminimize1D\fP (double *D, \fBDsqData\fP *dd)"
+.br
+.RI "\fIThis algorithm finds the minimum of function negLnL within the range [a,b], where a = dd->loD, and b=dd->hiD\&. \fP"
+.ti -1c
+.RI "static void \fBtrBits\fP (unsigned char *x, unsigned char *y)"
+.br
+.RI "\fIThink of x and y as the two rows of a matrix, with the columns of the matrix equal to the bits of x and y\&. \fP"
+.ti -1c
+.RI "static unsigned char \fBgamete\fP (unsigned char x, unsigned char y)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for \fBem\&.c\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MAKE_PHASED(A)   ((A)==UNPHASED_HETEROZYGOTE ? 1 : (A))"
+
+.PP
+If A is an unphased heterozygote, then convert it to a phased one (genotype 1)\&. Otherwise leave it alone\&. 
+.PP
+Referenced by SNP_getDsq()\&.
+.SS "#define UNPHASED_PAIR(A, B)"
+\fBValue:\fP
+.PP
+.nf
+(((A)==UNPHASED_HETEROZYGOTE && !HOMOZYGOTE(B)) \
+                            || ((B)==UNPHASED_HETEROZYGOTE && !HOMOZYGOTE(A)))
+.fi
+.PP
+True if A and B are both heterozygotes and at least one is unphased\&. 
+.PP
+Referenced by SNP_getDsq()\&.
+.SH "Function Documentation"
+.PP 
+.SS "void DsqData_reset (\fBDsqData\fP *dd)"
+
+.PP
+Make \fBDsqData\fP object consistent with its current allele freqs\&. 
+.PP
+References DsqData::alpha, DsqData::beta, DsqData::hiD, hiD(), DsqData::loD, loD(), DsqData::nGam, DsqData::px, and DsqData::py\&.
+.SS "int minimize1D (double *D, \fBDsqData\fP *dd)"
+
+.PP
+This algorithm finds the minimum of function negLnL within the range [a,b], where a = dd->loD, and b=dd->hiD\&. The algorithm uses Newton steps when these go downhill, and otherwise bisects in the downhill direction\&.
+.PP
+When Newton fails, the next step is in the downhill direction, as indicated by the derivative\&. If the derivative at the boundary has the same sign as that at the current point, the algorithm bets that the function is monotonic and takes a big step\&. Otherwise, there must be an intermediate minimum, so the algorithm bisects\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fID\fP Lewontin's original measure of linkage disequilibrium,
+.br
+\fIdd\fP pointer to object of type \fBDsqData\fP
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the integer 0 
+.RE
+.PP
+
+.PP
+References DsqData::hiD, initialD(), DsqData::loD, negLnL_df(), negLnL_df12(), and DsqData::tol\&.
+.PP
+Referenced by SNP_getDsq()\&.
+.SS "static void trBits (unsigned char *x, unsigned char *y)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Think of x and y as the two rows of a matrix, with the columns of the matrix equal to the bits of x and y\&. We are only interested in the low-order (rightmost) pair of bits\&. Transpose that 2X2 matrix, so that x and y are set equal to the bits that had previously been in the columns\&.
+.PP
+In other words, if [i,j] are the right-most two bits of x, and [k,l] are the right-most two bits of y, then the function does the following transformation:
+.PP
+x: i j x: i k ----> y: k l y: j l
+.PP
+Suppose, for example, that x=2, or in binary, x=0b10\&. Furthermore, suppose that y=3=0b11\&. Then after a call to trBits, we'll have x=3=0b11 and y=1=0b01\&.
+.PP
+Any higher-order bits are ignored\&. For example, the preceding example still generates x=3 and y=1, even if on input y=7=0b111\&. 
+.PP
+Referenced by SNP_getDsq()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

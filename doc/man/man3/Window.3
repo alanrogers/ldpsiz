@@ -1,0 +1,58 @@
+.TH "Window" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Window \- 
+.PP
+\fBWindow\fP represents a window that slides across the chromosome\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "FILE * \fBifp\fP"
+.br
+.RI "\fIinput file pointer \fP"
+.ti -1c
+.RI "double \fBwidth_cm\fP"
+.br
+.RI "\fIthe width of the window in cM \fP"
+.ti -1c
+.RI "\fBSNP\fP * \fBcurr\fP"
+.br
+.RI "\fIpoints to current focal \fBSNP\fP \fP"
+.ti -1c
+.RI "long \fBnSNPs\fP"
+.br
+.RI "\fInumber of SNPs that have been read \fP"
+.ti -1c
+.RI "unsigned \fBploidy\fP"
+.br
+.RI "\fI1 for haploid, 2 for diploid \fP"
+.ti -1c
+.RI "unsigned char \fBgtype\fP [500]"
+.br
+.RI "\fIbinary-encoded genotypes in sample \fP"
+.ti -1c
+.RI "unsigned \fBnGtype\fP"
+.br
+.RI "\fInumber of genotypes in data \fP"
+.ti -1c
+.RI "\fBSNPstore\fP * \fBstore\fP"
+.br
+.RI "\fIholds SNPs when not in use \fP"
+.ti -1c
+.RI "long int \fBsampling_interval\fP"
+.br
+.RI "\fIfor debugging \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBWindow\fP represents a window that slides across the chromosome\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

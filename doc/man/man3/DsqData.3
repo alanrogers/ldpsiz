@@ -1,0 +1,64 @@
+.TH "DsqData" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+DsqData \- 
+.PP
+Data used by EM algorithm in estimating Dsq from partially phased diploid data\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <em\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "double \fBtol\fP"
+.br
+.RI "\fIcontrols convergence \fP"
+.ti -1c
+.RI "double \fBalpha\fP"
+.br
+.RI "\fIa*(1-a)*b*(1-b) \fP"
+.ti -1c
+.RI "double \fBbeta\fP"
+.br
+.RI "\fIa + b - 2*a*b \fP"
+.ti -1c
+.RI "double \fBloD\fP"
+.br
+.RI "\fIleast feasible D \fP"
+.ti -1c
+.RI "double \fBhiD\fP"
+.br
+.RI "\fIgreatest feasible D \fP"
+.ti -1c
+.RI "double \fBpx\fP"
+.br
+.RI "\fIfrequency of allele '1' in sample from A \fP"
+.ti -1c
+.RI "double \fBpy\fP"
+.br
+.RI "\fIfrequency of allele '1' in sample from B \fP"
+.ti -1c
+.RI "unsigned \fBnGtype\fP"
+.br
+.RI "\fInumber of genotypes in (diploid) sample \fP"
+.ti -1c
+.RI "unsigned \fBnUnphased\fP"
+.br
+.RI "\fInumber of unphased genotype pairs \fP"
+.ti -1c
+.RI "unsigned \fBnGam\fP [4]"
+.br
+.RI "\fInumber of phased gametes of types 0-3 \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Data used by EM algorithm in estimating Dsq from partially phased diploid data\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

@@ -1,0 +1,242 @@
+.TH "assign.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+assign.h \- 
+.PP
+Header for functions defined in \fBassign\&.c\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'typedefs\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMANDATORY\fP   1"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBAssignment\fP * \fBAssignment_new\fP (\fBAssignment\fP *a, const char *key, const char *value)"
+.br
+.RI "\fIInsert new assignment\&. \fP"
+.ti -1c
+.RI "void \fBAssignment_free\fP (\fBAssignment\fP *a)"
+.br
+.RI "\fIFree list of \fBAssignment\fP objects\&. \fP"
+.ti -1c
+.RI "const char * \fBAssignment_value\fP (const \fBAssignment\fP *a, const char *key)"
+.br
+.RI "\fIReturn value corresponding with given key, or NULL if no such key is found\&. \fP"
+.ti -1c
+.RI "void \fBAssignment_print\fP (const \fBAssignment\fP *a, FILE *fp)"
+.br
+.ti -1c
+.RI "int \fBAssignment_setDbl\fP (const \fBAssignment\fP *a, const char *key, double *ptr, int mandatory)"
+.br
+.RI "\fIInitialize *ptr do value corresponding to given key\&. \fP"
+.ti -1c
+.RI "int \fBAssignment_setLong\fP (const \fBAssignment\fP *a, const char *key, long *ptr, int mandatory)"
+.br
+.RI "\fIInitialize *ptr do value corresponding to given key\&. \fP"
+.ti -1c
+.RI "int \fBAssignment_setInt\fP (const \fBAssignment\fP *a, const char *key, int *ptr, int mandatory)"
+.br
+.RI "\fIInitialize *ptr do value corresponding to given key\&. \fP"
+.ti -1c
+.RI "unsigned \fBAssignment_setUnsignedInt\fP (const \fBAssignment\fP *a, const char *key, unsigned *ptr, int mandatory)"
+.br
+.RI "\fIInitialize *ptr do value corresponding to given key\&. \fP"
+.ti -1c
+.RI "int \fBAssignment_setString\fP (const \fBAssignment\fP *a, const char *key, char *ptr, int size, int mandatory)"
+.br
+.RI "\fIInitialize *ptr do value corresponding to given key\&. \fP"
+.ti -1c
+.RI "\fBAssignment\fP * \fBAssignment_readObsld\fP (FILE *ifp)"
+.br
+.RI "\fIRead assignment statements in file produced by obsld\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for functions defined in \fBassign\&.c\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void Assignment_free (\fBAssignment\fP *head)"
+
+.PP
+Free list of \fBAssignment\fP objects\&. 
+.PP
+References Assignment_free(), Assignment::key, Assignment::next, and Assignment::value\&.
+.PP
+Referenced by Assignment_free(), FileIndex_readFile(), and Ini_free()\&.
+.SS "\fBAssignment\fP* Assignment_new (\fBAssignment\fP *head, const char *key, const char *value)"
+
+.PP
+Insert new assignment\&. 
+.PP
+References Assignment_new(), Assignment::key, Assignment::next, and Assignment::value\&.
+.PP
+Referenced by Assignment_new(), Assignment_readObsld(), Gtp_readHdr(), and Ini_new()\&.
+.SS "\fBAssignment\fP* Assignment_readObsld (FILE *ifp)"
+
+.PP
+Read assignment statements in file produced by obsld\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIifp\fP Pointer to input file\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Pointer to an \fBAssignment\fP object, which contains all the assignments found\&. 
+.RE
+.PP
+
+.PP
+References Assignment_new()\&.
+.SS "int Assignment_setDbl (const \fBAssignment\fP *a, const char *key, double *ptr, intmandatory)"
+
+.PP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP A structure containing the assigned values\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts if 'key' is not found\&.
+.br
+\fIptr\fP Points to a double variable, which will be initialized\&. If variable 'key' has been assigned, then its value will be written into *ptr\&. Otherwise, *ptr is unaltered\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References Assignment_value(), and Assignment::value\&.
+.PP
+Referenced by Ini_setDbl()\&.
+.SS "int Assignment_setInt (const \fBAssignment\fP *a, const char *key, int *ptr, intmandatory)"
+
+.PP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP A structure containing the assigned values\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts if 'key' is not found\&.
+.br
+\fIptr\fP Points to a variable of type 'int', which will be initialized\&. If variable 'key' has been assigned, then its value will be written into *ptr\&. Otherwise, *ptr is unaltered\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References Assignment_value(), and Assignment::value\&.
+.PP
+Referenced by FileIndex_readFile(), and Ini_setInt()\&.
+.SS "int Assignment_setLong (const \fBAssignment\fP *a, const char *key, long *ptr, intmandatory)"
+
+.PP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP A structure containing the assigned values\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts if 'key' is not found\&.
+.br
+\fIptr\fP Points to a variable of type 'long int', which will be initialized\&. If variable 'key' has been assigned, then its value will be written into *ptr\&. Otherwise, *ptr is unaltered\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References Assignment_value(), and Assignment::value\&.
+.PP
+Referenced by Ini_setLong()\&.
+.SS "int Assignment_setString (const \fBAssignment\fP *a, const char *key, char *ptr, intsize, intmandatory)"
+
+.PP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP A structure containing the assigned values\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts if 'key' is not found\&.
+.br
+\fIptr\fP Points to a character array containing 'size' bytes\&. If the variable 'key' has been assigned, its value will be copied into 'ptr'\&. Otherwise, *ptr is unaltered\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References Assignment_value(), and Assignment::value\&.
+.PP
+Referenced by Ini_setString()\&.
+.SS "unsigned Assignment_setUnsignedInt (const \fBAssignment\fP *a, const char *key, unsigned *ptr, intmandatory)"
+
+.PP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP A structure containing the assigned values\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts if 'key' is not found\&.
+.br
+\fIptr\fP Points to a variable of type 'unsigned int', which will be initialized\&. If variable 'key' has been assigned, then its value will be written into *ptr\&. Otherwise, *ptr is unaltered\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References Assignment_value(), and Assignment::value\&.
+.PP
+Referenced by Ini_setUnsignedInt()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

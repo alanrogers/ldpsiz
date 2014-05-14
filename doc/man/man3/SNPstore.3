@@ -1,0 +1,36 @@
+.TH "SNPstore" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SNPstore \- 
+.PP
+\fBSNPstore\fP is a place to store objects of type \fBSNP\fP when they are not in use\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "unsigned \fBnGtype\fP"
+.br
+.RI "\fInumber of genotypes at each \fBSNP\fP \fP"
+.ti -1c
+.RI "int \fBbootreps\fP"
+.br
+.RI "\fInumber of bootstrap replicates \fP"
+.ti -1c
+.RI "\fBSNP\fP * \fBhead\fP"
+.br
+.RI "\fIpointer to first \fBSNP\fP \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBSNPstore\fP is a place to store objects of type \fBSNP\fP when they are not in use\&. 
+
+This allows them to be reused without repeated calls to malloc\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

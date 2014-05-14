@@ -1,0 +1,153 @@
+.TH "strobeck.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+strobeck.h \- 
+.PP
+Header for \fBstrobeck\&.c\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'typedefs\&.h'\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void * \fBStrobeckData_new\fP (void)"
+.br
+.ti -1c
+.RI "void \fBStrobeckData_free\fP (void *p)"
+.br
+.ti -1c
+.RI "double \fBStrobeckData_stateVal\fP (void *vdata, unsigned i)"
+.br
+.RI "\fIi'th state value \fP"
+.ti -1c
+.RI "int \fBStrobeck_geteq\fP (double x[], double twoN, double c, double u)"
+.br
+.RI "\fIFill x vector with equilibrium values given on pp 833-834 of Strobeck and Morgan\&. \fP"
+.ti -1c
+.RI "int \fBStrobeck_dydt\fP (double t, const double y[], double f[], void *params)"
+.br
+.RI "\fIThis function calculates the difference, from one generation to the next, for each of the 5 identity coefficients\&. \fP"
+.ti -1c
+.RI "double \fBStrobeck_get_sigdsq\fP (double y[], int n)"
+.br
+.RI "\fICalculate sigma_d^2 from state vector\&. \fP"
+.ti -1c
+.RI "int \fBStrobeck_evolveDiscrete\fP (double y[], \fBPopHist\fP *ph, double c, double u)"
+.br
+.RI "\fIEvolve through all epochs of population history, using step size h and beginning with initial equilibrium\&. \fP"
+.ti -1c
+.RI "double \fBStrobeck_sigdsq\fP (\fBODE\fP *ode, double c, double u, \fBPopHist\fP *ph, int twoNsmp)"
+.br
+.RI "\fISet state vector to initial equilibrium, then evolve it through the population history, and then use this state vector to calculate sigmdsq\&. \fP"
+.ti -1c
+.RI "double \fBStrobeck_sigdsqEq\fP (double c, double u, \fBPopHist\fP *ph, unsigned whichEpoch, int twoNsmp, void *data)"
+.br
+.RI "\fISet state vector to equilibrium for epoch 'whichEpoch' and then use it to calculate sigmdsq\&. \fP"
+.ti -1c
+.RI "size_t \fBStrobeck_stateDim\fP (void)"
+.br
+.ti -1c
+.RI "const char * \fBStrobeck_stateLbl\fP (unsigned i)"
+.br
+.ti -1c
+.RI "\fBModel\fP * \fBModel_allocStrobeck\fP (int twoNsmp)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for \fBstrobeck\&.c\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "int Strobeck_dydt (doublet_notused, const doubleyy1[], doublef[], void *params)"
+
+.PP
+This function calculates the difference, from one generation to the next, for each of the 5 identity coefficients\&. It is based on equation 3 of Strobeck and Morgan\&.
+.PP
+y[0] = phiA y[1] = phiB y[2] = phiAB y[3] = gammaAB y[4] = deltaAB
+.PP
+\fBParameters:\fP
+.RS 4
+\fIy1\fP is the current vector of identity coefficients\&. 
+.br
+\fIf\fP will contain the derivatives of y[], as approximated by the difference equations of Strobeck and Morgan\&. 
+.br
+\fIparams\fP points to a structure of type \fBparam_struct\fP\&. 
+.RE
+.PP
+
+.PP
+References onestep()\&.
+.PP
+Referenced by Strobeck_sigdsq()\&.
+.SS "int Strobeck_evolveDiscrete (doubley[], \fBPopHist\fP *ph, doublec, doubleu)"
+
+.PP
+Evolve through all epochs of population history, using step size h and beginning with initial equilibrium\&. Calculation iterates difference equation\&. The initial value of y is set to equilibrium equation for equilibrium\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIy\fP On return, y contains Hill's vector of moments\&. 
+.br
+\fIph\fP Describes the population's history\&. If ph contains just one epoch, y gets its equilibrium value\&. 
+.br
+\fIc\fP Recombination rate; overrides values in ph\&. 
+.br
+\fIu\fP Mutation rate\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Always returns 0\&. 
+.RE
+.PP
+
+.PP
+References iterate(), PopHist_duration(), PopHist_nepoch(), PopHist_twoN(), and Strobeck_geteq()\&.
+.SS "double Strobeck_get_sigdsq (doubley[], inttwoNsmp)"
+
+.PP
+Calculate sigma_d^2 from state vector\&. The formulas involved are in the comment at the top of this file\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIy\fP State vector, whose entries represent PhiA, PhiB, PhiAB, GammaAB, and DeltaAB\&. 
+.br
+\fIn\fP Number of gene copies in sample\&. If n==0, then no bias correction is done\&. 
+.RE
+.PP
+
+.PP
+References onestep()\&.
+.PP
+Referenced by Strobeck_sigdsq(), and Strobeck_sigdsqEq()\&.
+.SS "int Strobeck_geteq (doublex[], doubletwoN, doublec, doubleu)"
+
+.PP
+Fill x vector with equilibrium values given on pp 833-834 of Strobeck and Morgan\&. Strobeck and Morgan separate 3 cases, for c << u, c >> u, and c ~= u\&. I did some experiments to figure out how to bound these ranges, and decided never to use the formula for large c\&. 
+.PP
+Referenced by Strobeck_evolveDiscrete(), Strobeck_sigdsq(), and Strobeck_sigdsqEq()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

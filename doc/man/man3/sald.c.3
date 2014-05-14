@@ -1,0 +1,241 @@
+.TH "sald.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+sald.c \- 
+.PP
+use simplex-simulated annealing to estimate population history  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <gsl/gsl_rng\&.h>\fP
+.br
+\fC#include <gsl/gsl_randist\&.h>\fP
+.br
+\fC#include <float\&.h>\fP
+.br
+\fC#include <getopt\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'boot\&.h'\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+\fC#include 'sasimplex\&.h'\fP
+.br
+\fC#include 'tokenizer\&.h'\fP
+.br
+\fC#include 'jobqueue\&.h'\fP
+.br
+\fC#include 'hill\&.h'\fP
+.br
+\fC#include 'ini\&.h'\fP
+.br
+\fC#include 'model\&.h'\fP
+.br
+\fC#include 'assign\&.h'\fP
+.br
+\fC#include 'annealsched\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBTaskArg\fP"
+.br
+.RI "\fIThe total job is divided into tasks, which are placed on a queue\&. \fP"
+.ti -1c
+.RI "struct \fBCostPar\fP"
+.br
+.RI "\fIParameters of cost function--that which is minimized\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDPRINTF\fP(arg)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBusage\fP (void)"
+.br
+.ti -1c
+.RI "int \fBread_data\fP (FILE *ifp, int nbins, double *cm, double *sigdsq)"
+.br
+.RI "\fIRead the data file produced by obsld\&. \fP"
+.ti -1c
+.RI "\fBTaskArg\fP * \fBTaskArg_new\fP (unsigned task, unsigned seed, int nbins, double u, double ftol, double xtol, double *stepsize, \fBAnnealSched\fP *sched, double *loBnd, double *hiBnd, double *hiInit, double odeAbsTol, double odeRelTol, int nPerTmptr, int verbose, double *sigdsq_obs, double *c, \fBModel\fP *model, \fBPopHist\fP *ph_init, int randomStart)"
+.br
+.RI "\fIConstruct a new \fBTaskArg\fP\&. \fP"
+.ti -1c
+.RI "void \fBTaskArg_free\fP (\fBTaskArg\fP *targ)"
+.br
+.ti -1c
+.RI "int \fBtaskfun\fP (void *varg)"
+.br
+.ti -1c
+.RI "static double \fBcostFun\fP (const gsl_vector *x, void *varg)"
+.br
+.RI "\fISum of differences between observed and expected sigma_d^2 vectors\&. \fP"
+.ti -1c
+.RI "void \fBCostPar_print\fP (\fBCostPar\fP *cp)"
+.br
+.ti -1c
+.RI "\fBTaskArg\fP * \fBTaskArg_best\fP (\fBTaskArg\fP **tpvec, int n)"
+.br
+.RI "\fIGiven a vector of \fBTaskArg\fP pointers, return a pointer to the one with lowest cost among those that have converged\&. \fP"
+.ti -1c
+.RI "void \fBprHeader\fP (\fBPopHist\fP *ph)"
+.br
+.RI "\fIPrint header\&. \fP"
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const int \fBsetSimplexVersion\fP"
+.br
+.ti -1c
+.RI "pthread_mutex_t \fBstdoutLock\fP = PTHREAD_MUTEX_INITIALIZER"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+use simplex-simulated annealing to estimate population history 
+
+
+.SH "\fCsald\fP: use simplex-simulated annealing to estimate population history "
+.PP
+.PP
+To estimate the parameters describing population history, we need to find values that provide the best fit to LD data\&. This involves maximization on a complex surface with lots of local peaks\&. (To verify this for yourself, see \fBmcmcld\fP\&.) To avoid getting stuck on local peaks, \fCsald\fP uses the simplex version of simulated annealing\&.
+.PP
+.SS "Usage "
+.PP
+The input data file should be as produced by \fBobsld\fP\&.
+.PP
+Although simulated annealing works pretty well, I often find that different runs end up on different peaks\&. Therefore, \fCsald\fP is able to launch multiple simulated annealing jobs, each from a random starting point\&. These can run in parallel, on separate threads\&. The number of parallel optimizers is set using the \fC--nOpt\fP argument described below\&.
+.PP
+The program also deals with bootstrap data, as provided by \fBobsld\fP\&. The various boostrap data sets also run in parallel if your machine has multiple cores\&. By default \fCsald\fP does not process bootstrap replicates: use \fC--bootfile\fP if you want it to\&.
+.PP
+By default \fCsald\fP uses as many threads as your machine has cores\&. This is not a good idea if you are sharing a machine with other users\&. Set the number of threads to some smaller number using \fC--threads\fP\&. On linux or osx, you can use \fCtop\fP to figure out how many threads are actually running\&. If you launch 20 threads but only 10 run at any given time, your job will run slower\&. Stop it and launch again with \fC--threads 10\fP\&.
+.PP
+Simulated annealing works by beginning with a flattened version of your objective function\&. In this flattened version, all the peaks are smaller, so it is easy for the simplex to move from peak to peak\&. The extent of flattening is controlled by a parameter called 'temperature'\&. High temperature corresponds to lots of flattening\&. The annealing algorithm runs for awhile at a high temperature, then lowers the temperature and runs awhile more\&. The succession of temperatures and the number of iterations at each temperature is called the 'annealing schedule'\&. You can change the performance of the algorithm by adjusting this schedule\&. See the \fC--initTmptr\fP, \fC--nPerTmptr\fP and \fC--tmptrDecay\fP arguments\&. 
+.PP
+.nf
+usage: sald [options] input_file_name
+   where options may include:
+   -m <method> or --methods <method>
+      specify method "Hill", or "Strobeck", or "Hill,Strobeck"
+   -n <x> or --twoNsmp <x>
+      haploid sample size
+   -t <x> or --threads <x>
+      number of threads (default is auto)
+   -u <x> or --mutation <x>
+      mutation rate/generation
+   -v <x> or --verbose
+      more output
+   -f <x> or --bootfile <x>
+      read bootstrap file x
+   -c <x> or --confidence <x>
+      specify confidence level for CIs of parameters
+   --twoN <x>
+      haploid pop size to x in current epoch
+   -T <x> or --time <x>
+      length of current epoch (generations)
+   -E or --nextepoch
+      move to next earlier epoch
+   --noRandomStart
+      Don't initialize PopHist at random
+   --nOpt <x>
+      optimizers per data set
+   --initTmptr <x>
+      initial temperature
+   --nTmptrs <x>
+      number of temperatures
+   --tmptrDecay <x>
+      ratio of successive temperatures
+   -i <x> or --nItr <x>
+      total number of iterations
+   -h or --help
+      print this message
+
+.fi
+.PP
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "static double costFun (const gsl_vector *x, void *varg)\fC [static]\fP"
+
+.PP
+Sum of differences between observed and expected sigma_d^2 vectors\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIph\fP Current population history 
+.br
+\fIu\fP mutation rate per site per generation 
+.br
+\fInbins\fP Number of values in vectors obs and c 
+.br
+\fIsigdsq\fP Vector of nbins values, the observed values of sigdsq\&. 
+.br
+\fIc\fP Vector of nbins values, the recombination rates associated with the values in sigdsq\&. 
+.RE
+.PP
+
+.PP
+References ODE_ldVec(), PopHist_nParams(), PopHist_paramName(), PopHist_paramValue(), PopHist_print(), and vector_to_PopHist()\&.
+.SS "int read_data (FILE *ifp, intnbins, double *cm, double *sigdsq)"
+
+.PP
+Read the data file produced by obsld\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIifp\fP Points to file produced by obsld\&. 
+.br
+\fInbins\fP The length of all arrays\&. 
+.br
+\fIcm\fP An array giving the average separation (in centimorgans) between pairs of SNPs within the various bins\&. 
+.br
+\fIsigdsq\fP An array of estimates of sigma_d^2\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of lines read 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

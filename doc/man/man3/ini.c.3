@@ -1,0 +1,262 @@
+.TH "ini.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ini.c \- 
+.PP
+Functions for objects of class \fBIni\fP, which reads parameters from an initialization file\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+\fC#include 'tokenizer\&.h'\fP
+.br
+\fC#include 'assign\&.h'\fP
+.br
+\fC#include 'ini\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBIni\fP"
+.br
+.RI "\fIThe information read from an initialization file\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBIni\fP * \fBIni_new\fP (const char *ifname)"
+.br
+.RI "\fIOpen and read an initialization file, putting the information therein into a newly-allocated object of type \fBIni\fP\&. \fP"
+.ti -1c
+.RI "void \fBIni_free\fP (\fBIni\fP *ini)"
+.br
+.RI "\fIFree object of type \fBIni\fP\&. \fP"
+.ti -1c
+.RI "void \fBIni_print\fP (\fBIni\fP *ini, FILE *ofp)"
+.br
+.RI "\fIPrint object of type \fBIni\fP to file ofp\&. \fP"
+.ti -1c
+.RI "double \fBIni_twoN0\fP (const \fBIni\fP *ini)"
+.br
+.RI "\fIReturn the value of twoN in the 0th epoch\&. \fP"
+.ti -1c
+.RI "int \fBIni_setDbl\fP (const \fBIni\fP *ini, const char *key, double *ptr, int mandatory)"
+.br
+.RI "\fIInitialize *ptr to value corresponding to given key\&. \fP"
+.ti -1c
+.RI "int \fBIni_setLong\fP (const \fBIni\fP *ini, const char *key, long *ptr, int mandatory)"
+.br
+.RI "\fIInitialize *ptr do value corresponding to given key\&. \fP"
+.ti -1c
+.RI "int \fBIni_setInt\fP (const \fBIni\fP *ini, const char *key, int *ptr, int mandatory)"
+.br
+.RI "\fIInitialize *ptr do value corresponding to given key\&. \fP"
+.ti -1c
+.RI "unsigned \fBIni_setUnsignedInt\fP (const \fBIni\fP *ini, const char *key, unsigned *ptr, int mandatory)"
+.br
+.RI "\fIInitialize *ptr do value corresponding to given key\&. \fP"
+.ti -1c
+.RI "int \fBIni_setString\fP (const \fBIni\fP *ini, const char *key, char *ptr, int size, int mandatory)"
+.br
+.RI "\fIInitialize *ptr do value corresponding to given key\&. \fP"
+.ti -1c
+.RI "int \fBIni_setEpochLink\fP (const \fBIni\fP *ini, \fBEpochLink\fP **ptr, int mandatory)"
+.br
+.RI "\fIInitialize linked list of Epochs from value (if any) specified in initialization file\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for objects of class \fBIni\fP, which reads parameters from an initialization file\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBIni\fP* Ini_new (const char *ifname)"
+
+.PP
+Open and read an initialization file, putting the information therein into a newly-allocated object of type \fBIni\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIifname\fP Name of input file
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Newly-allocate \fBIni\fP object containing info from input file\&. 
+.RE
+.PP
+
+.PP
+References Ini::a, Assignment_new(), EpochLink_new(), Ini::epochList, strempty(), and stripComment()\&.
+.SS "void Ini_print (\fBIni\fP *ini, FILE *ofp)"
+
+.PP
+Print object of type \fBIni\fP to file ofp\&. 
+.PP
+References Ini::a, EpochLink_print(), and Ini::epochList\&.
+.SS "int Ini_setDbl (const \fBIni\fP *ini, const char *key, double *ptr, intmandatory)"
+
+.PP
+Initialize *ptr to value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIini\fP A structure containing the assigned values\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts execution if 'key' is missing from \fBIni\fP structure\&.
+.br
+\fIptr\fP Points to a double variable, which will be initialized\&. If variable was set in initialization file, then this value will be written into *ptr\&. Otherwise, *ptr is unaltered\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References Ini::a, and Assignment_setDbl()\&.
+.SS "int Ini_setEpochLink (const \fBIni\fP *ini, \fBEpochLink\fP **ptr, intmandatory)"
+
+.PP
+Initialize linked list of Epochs from value (if any) specified in initialization file\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIini\fP A structure containing the values specified in the initialization file\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts execution if 'key' is missing from \fBIni\fP structure\&.
+.br
+\fIptr\fP Points to variable to be initialized\&. If variable was set in initialization file, then this value will be written into *ptr\&. Otherwise, *ptr is unaltered\&. If ptr is initialized, it will point to a newly-allocated linked list of \fBEpochLink\fP structures, which must be freed by the calling routine\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References EpochLink_dup(), and Ini::epochList\&.
+.SS "int Ini_setInt (const \fBIni\fP *ini, const char *key, int *ptr, intmandatory)"
+
+.PP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIini\fP A structure containing the assigned values\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts execution if 'key' is missing from \fBIni\fP structure\&.
+.br
+\fIptr\fP Points to a variable of type 'int', which will be initialized\&. If variable was set in initialization file, then this value will be written into *ptr\&. Otherwise, *ptr is unaltered\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References Ini::a, and Assignment_setInt()\&.
+.SS "int Ini_setLong (const \fBIni\fP *ini, const char *key, long *ptr, intmandatory)"
+
+.PP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIini\fP A structure containing the assigned values\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts execution if 'key' is missing from \fBIni\fP structure\&.
+.br
+\fIptr\fP Points to a variable of type 'long int', which will be initialized\&. If variable was set in initialization file, then this value will be written into *ptr\&. Otherwise, *ptr is unaltered\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References Ini::a, and Assignment_setLong()\&.
+.SS "int Ini_setString (const \fBIni\fP *ini, const char *key, char *ptr, intsize, intmandatory)"
+
+.PP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIini\fP A structure containing the assigned values\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts execution if 'key' is missing from \fBIni\fP structure\&.
+.br
+\fIptr\fP Points to a character array containing 'size' bytes\&. If the variable 'key' is assigned within 'ini', its value will be copied into 'ptr'\&. Otherwise, *ptr is unaltered\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References Ini::a, and Assignment_setString()\&.
+.SS "unsigned Ini_setUnsignedInt (const \fBIni\fP *ini, const char *key, unsigned *ptr, intmandatory)"
+
+.PP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIini\fP A structure containing the assigned values\&.
+.br
+\fImandatory\fP If mandatory!=0, the function aborts execution if 'key' is missing from \fBIni\fP structure\&.
+.br
+\fIptr\fP Points to a variable of type 'unsigned int', which will be initialized\&. If variable was set in initialization file, then this value will be written into *ptr\&. Otherwise, *ptr is unaltered\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if variable was initialized, 0 otherwise\&. 
+.RE
+.PP
+
+.PP
+References Ini::a, and Assignment_setUnsignedInt()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

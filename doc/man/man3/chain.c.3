@@ -1,0 +1,252 @@
+.TH "chain.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+chain.c \- 
+.PP
+A linked list of Markov chains, used in Markov-coupled Markov chain Monte Carlo (MCMCMC)\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <math\&.h>\fP
+.br
+\fC#include <float\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <gsl/gsl_rng\&.h>\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+\fC#include 'model\&.h'\fP
+.br
+\fC#include 'chain\&.h'\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBChainState\fP"
+.br
+.RI "\fIThe state of a single Markov chain\&. \fP"
+.ti -1c
+.RI "struct \fBChain\fP"
+.br
+.RI "\fIA linked list of Markov chains, which differ in the extent to which the objective function has been artificially flattened\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBChainState\fP * \fBChainState_new\fP (\fBPopHist\fP *ph)"
+.br
+.RI "\fIAllocate and initialize a new \fBChainState\fP structure\&. \fP"
+.ti -1c
+.RI "void \fBChainState_free\fP (\fBChainState\fP *cs)"
+.br
+.RI "\fIDe-allocate a \fBChainState\fP object\&. \fP"
+.ti -1c
+.RI "void \fBChain_publish\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIMake data available to other threads\&. \fP"
+.ti -1c
+.RI "\fBChain\fP * \fBChain_next\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIReturn pointer to next \fBChain\fP in linked list\&. \fP"
+.ti -1c
+.RI "unsigned \fBChain_naccepted\fP (\fBChain\fP *chain)"
+.br
+.RI "\fINumber of proposals accepted so far by this chain\&. \fP"
+.ti -1c
+.RI "unsigned \fBChain_nswapped\fP (\fBChain\fP *chain)"
+.br
+.RI "\fINumber of times this chain has swapped states with the next\&. \fP"
+.ti -1c
+.RI "unsigned \fBChain_which\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIReturn the index of this chain\&. \fP"
+.ti -1c
+.RI "\fBChain\fP * \fBChain_new\fP (unsigned which, unsigned nChains, unsigned nreps, double u, double dt, double dNinv, double temp, unsigned nbins, double *sigdsq, double *c, \fBPopHist\fP *ph, \fBModel\fP *model, double odeAbsTol, double odeRelTol, unsigned swapInterval)"
+.br
+.RI "\fIAllocate memory for a \fBChain\fP\&. \fP"
+.ti -1c
+.RI "void \fBChain_sanityCheck\fP (\fBChain\fP *chain, const char *file, int line)"
+.br
+.ti -1c
+.RI "void \fBChain_free\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIFree memory allocated by linked list of chains\&. \fP"
+.ti -1c
+.RI "void \fBChain_prStateAddr\fP (const \fBChain\fP *chain, int ndx, const char *file, int line)"
+.br
+.RI "\fIPrint machine address of state of each chain in linked list\&. \fP"
+.ti -1c
+.RI "int \fBChain_accepted\fP (const \fBChain\fP *c)"
+.br
+.RI "\fIReturn 1 if chain's state changed; 0 otherwise\&. \fP"
+.ti -1c
+.RI "void \fBChain_swapState\fP (\fBChain\fP *c)"
+.br
+.RI "\fISwap states of chains c and c->next\&. \fP"
+.ti -1c
+.RI "void \fBChain_waitForData\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIWait until thread has completed another iteration and made the resulting data available\&. \fP"
+.ti -1c
+.RI "void \fBChain_waitUntilDataNeeded\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIWait until main thread has finished with data from last iteration\&. \fP"
+.ti -1c
+.RI "void \fBChain_setDataAvailable\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIIndicate that data are available\&. \fP"
+.ti -1c
+.RI "void \fBChain_setDataNeeded\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIIndicate that data are needed\&. \fP"
+.ti -1c
+.RI "void \fBChain_signal\fP (\fBChain\fP *chain)"
+.br
+.RI "\fISend signal via condition variable\&. \fP"
+.ti -1c
+.RI "void \fBChain_lock\fP (\fBChain\fP *chain)"
+.br
+.RI "\fILock chain\&. \fP"
+.ti -1c
+.RI "void \fBChain_unlock\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIUnlock chain\&. \fP"
+.ti -1c
+.RI "void \fBChain_lockStdout\fP (void)"
+.br
+.RI "\fILock stdout\&. \fP"
+.ti -1c
+.RI "void \fBChain_unlockStdout\fP (void)"
+.br
+.RI "\fIUnock stdout\&. \fP"
+.ti -1c
+.RI "double \fBChain_lnObj\fP (\fBChain\fP *chain)"
+.br
+.RI "\fILog of objective function\&. \fP"
+.ti -1c
+.RI "double \fBChain_flatness\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIReturn flatness parameter of chain\&. \fP"
+.ti -1c
+.RI "void \fBChain_printFull\fP (\fBChain\fP *chain, FILE *fp)"
+.br
+.RI "\fIPrint entire chain\&. \fP"
+.ti -1c
+.RI "void \fBChain_bestFit\fP (\fBChain\fP *chain, double *bestLnObj, \fBPopHist\fP *bestPh)"
+.br
+.RI "\fIReturn values corresponding to the best fit\&. \fP"
+.ti -1c
+.RI "void * \fBrunChain\fP (void *arg)"
+.br
+.ti -1c
+.RI "void \fBChain_printHdr\fP (\fBChain\fP *chain, FILE *fp)"
+.br
+.RI "\fIPrinter header for markov chain output lines\&. \fP"
+.ti -1c
+.RI "void \fBChain_printState\fP (\fBChain\fP *chain, FILE *fp)"
+.br
+.RI "\fIPrinter state of markov chain\&. \fP"
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "pthread_mutex_t \fBstdout_mutex\fP = PTHREAD_MUTEX_INITIALIZER"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A linked list of Markov chains, used in Markov-coupled Markov chain Monte Carlo (MCMCMC)\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void Chain_bestFit (\fBChain\fP *chain, double *bestLnObj, \fBPopHist\fP *bestPh)"
+
+.PP
+Return values corresponding to the best fit\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbestLnObj\fP Pointer to double, into which the function will write the value of the log objective function\&.
+.br
+\fIph\fP Pointer to a \fBPopHist\fP, into which the optimal population history will be written\&. 
+.RE
+.PP
+
+.PP
+References PopHist_copy()\&.
+.SS "double Chain_flatness (\fBChain\fP *chain)"
+
+.PP
+Return flatness parameter of chain\&. 
+.PP
+References Chain::flatness\&.
+.SS "double Chain_lnObj (\fBChain\fP *chain)"
+
+.PP
+Log of objective function\&. Does not calculate function\&. Just returns current stored value\&. 
+.PP
+Referenced by Chain_printState()\&.
+.SS "void Chain_setDataAvailable (\fBChain\fP *chain)"
+
+.PP
+Indicate that data are available\&. \fBChain\fP should be locked before calling this function\&. 
+.PP
+Referenced by Chain_publish()\&.
+.SS "void Chain_setDataNeeded (\fBChain\fP *chain)"
+
+.PP
+Indicate that data are needed\&. \fBChain\fP should be locked before calling this function\&. 
+.SS "void Chain_swapState (\fBChain\fP *c)"
+
+.PP
+Swap states of chains c and c->next\&. Lock both chains before calling this function\&. 
+.PP
+References Chain::next\&.
+.SS "void Chain_waitForData (\fBChain\fP *chain)"
+
+.PP
+Wait until thread has completed another iteration and made the resulting data available\&. On return, chain will be locked\&. 
+.SS "void Chain_waitUntilDataNeeded (\fBChain\fP *chain)"
+
+.PP
+Wait until main thread has finished with data from last iteration\&. On return, the chain will be locked\&. 
+.SS "\fBChainState\fP * ChainState_new (\fBPopHist\fP *ph)"
+
+.PP
+Allocate and initialize a new \fBChainState\fP structure\&. Occupies a single block of memory, using the 'struct hack' of C programming\&. 
+.PP
+References ChainState::ph, PopHist_calcSize(), PopHist_copy(), PopHist_init(), and PopHist_nepoch()\&.
+.PP
+Referenced by Chain_new()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

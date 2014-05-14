@@ -1,0 +1,69 @@
+.TH "boot2tbl.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+boot2tbl.c \- 
+.PP
+Read a block bootstrap file, as produced by obsld, and print it in tabular form\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <getopt\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'boot\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBusage\fP (void)"
+.br
+.RI "\fIParse output of MS, produce gtp format, the input for obsld\&. \fP"
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Read a block bootstrap file, as produced by obsld, and print it in tabular form\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void usage (void)"
+
+.PP
+Parse output of MS, produce gtp format, the input for obsld\&. Print usage message and abort\&. 
+.PP
+Referenced by check_tn()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

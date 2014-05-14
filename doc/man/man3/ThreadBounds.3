@@ -1,0 +1,35 @@
+.TH "ThreadBounds" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ThreadBounds \- 
+.PP
+Each \fBThreadBounds\fP object contains the information needed by an individual thread to figure out where in the input file to begin reading SNPs and which \fBSNP\fP is its first focal \fBSNP\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <fileindex\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "long \fBndx\fP [3]"
+.br
+.ti -1c
+.RI "long \fBseekpos\fP [3]"
+.br
+.ti -1c
+.RI "double \fBmappos\fP [3]"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Each \fBThreadBounds\fP object contains the information needed by an individual thread to figure out where in the input file to begin reading SNPs and which \fBSNP\fP is its first focal \fBSNP\fP\&. 
+
+The definition is exposed here so that it will be possible to do array indexing on an array of objects of type \fBThreadBounds\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

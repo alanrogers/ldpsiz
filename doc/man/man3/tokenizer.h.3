@@ -1,0 +1,74 @@
+.TH "tokenizer.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tokenizer.h \- 
+.PP
+Header for \fBtokenizer\&.c\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'typedefs\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBTokenizer\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTokenizer\fP * \fBTokenizer_new\fP (int maxtok)"
+.br
+.ti -1c
+.RI "void \fBTokenizer_free\fP (\fBTokenizer\fP *t)"
+.br
+.ti -1c
+.RI "int \fBTokenizer_split\fP (\fBTokenizer\fP *t, char *buff, const char *sep)"
+.br
+.ti -1c
+.RI "char * \fBTokenizer_token\fP (\fBTokenizer\fP *t, int index)"
+.br
+.ti -1c
+.RI "int \fBTokenizer_ntokens\fP (\fBTokenizer\fP *t)"
+.br
+.ti -1c
+.RI "int \fBTokenizer_strip\fP (\fBTokenizer\fP *t, const char *extraneous)"
+.br
+.ti -1c
+.RI "int \fBTokenizer_find\fP (\fBTokenizer\fP *t, const char *s)"
+.br
+.ti -1c
+.RI "void \fBTokenizer_print\fP (const \fBTokenizer\fP *tkz, FILE *ofp)"
+.br
+.ti -1c
+.RI "void \fBTokenizer_printSummary\fP (const \fBTokenizer\fP *tkz, FILE *ofp)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for \fBtokenizer\&.c\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

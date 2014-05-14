@@ -1,0 +1,117 @@
+\hypertarget{readgtp_8h}{\subsection{readgtp.\-h File Reference}
+\label{readgtp_8h}\index{readgtp.\-h@{readgtp.\-h}}
+}
+
+
+Header for \hyperlink{readgtp_8c}{readgtp.\-c}.  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\\*
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_assignment}{Assignment} $\ast$ \hyperlink{readgtp_8h_af381f767322c8addbf5366317792126e}{Gtp\-\_\-read\-Hdr} (F\-I\-L\-E $\ast$ifp)
+\begin{DoxyCompactList}\small\item\em Read header of file ifp in order to parse assignment statements. \end{DoxyCompactList}\item 
+int \hyperlink{readgtp_8h_a5000436dd66fa65fa9b7ebe9f3fe77c1}{Gtp\-\_\-read\-S\-N\-P} (F\-I\-L\-E $\ast$ifp, char $\ast$snp\-Id, size\-\_\-t snp\-Id\-Size, double $\ast$mappos, char $\ast$alleles, size\-\_\-t alleles\-Size, unsigned char $\ast$sitedat, size\-\_\-t sitedat\-Size, int is\-Diploid)
+\begin{DoxyCompactList}\small\item\em Read a \hyperlink{struct_s_n_p}{S\-N\-P} from the G\-T\-P output file. \end{DoxyCompactList}\item 
+\hypertarget{readgtp_8h_abd4af2dac287dca2db65353ba5da61e3}{static int {\bfseries recode\-\_\-0\-\_\-1} (int c)}\label{readgtp_8h_abd4af2dac287dca2db65353ba5da61e3}
+
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Header for \hyperlink{readgtp_8c}{readgtp.\-c}. \begin{DoxyAuthor}{Author}
+Alan R. Rogers 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}
+
+
+\subsubsection{Function Documentation}
+\hypertarget{readgtp_8h_af381f767322c8addbf5366317792126e}{\index{readgtp.\-h@{readgtp.\-h}!Gtp\-\_\-read\-Hdr@{Gtp\-\_\-read\-Hdr}}
+\index{Gtp\-\_\-read\-Hdr@{Gtp\-\_\-read\-Hdr}!readgtp.h@{readgtp.\-h}}
+\paragraph[{Gtp\-\_\-read\-Hdr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Assignment}$\ast$ Gtp\-\_\-read\-Hdr (
+\begin{DoxyParamCaption}
+\item[{F\-I\-L\-E $\ast$}]{ifp}
+\end{DoxyParamCaption}
+)}}\label{readgtp_8h_af381f767322c8addbf5366317792126e}
+
+
+Read header of file ifp in order to parse assignment statements. 
+
+These assignments are stored an a structure of class \hyperlink{struct_assignment}{Assignment}, which is returned to the calling function.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em ifp} & Points to input file stream. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to \hyperlink{struct_assignment}{Assignment} structure. 
+\end{DoxyReturn}
+\begin{DoxyParagraph}{Side Effects\-:}
+The file pointer ifp is positioned so that the next line read will be the first \hyperlink{struct_s_n_p}{S\-N\-P}. 
+\end{DoxyParagraph}
+
+
+References Assignment\-\_\-new().
+
+
+
+Referenced by File\-Index\-\_\-read\-File().
+
+\hypertarget{readgtp_8h_a5000436dd66fa65fa9b7ebe9f3fe77c1}{\index{readgtp.\-h@{readgtp.\-h}!Gtp\-\_\-read\-S\-N\-P@{Gtp\-\_\-read\-S\-N\-P}}
+\index{Gtp\-\_\-read\-S\-N\-P@{Gtp\-\_\-read\-S\-N\-P}!readgtp.h@{readgtp.\-h}}
+\paragraph[{Gtp\-\_\-read\-S\-N\-P}]{\setlength{\rightskip}{0pt plus 5cm}int Gtp\-\_\-read\-S\-N\-P (
+\begin{DoxyParamCaption}
+\item[{F\-I\-L\-E $\ast$}]{ifp, }
+\item[{char $\ast$}]{snp\-Id, }
+\item[{size\-\_\-t}]{snp\-Id\-Size, }
+\item[{double $\ast$}]{mappos, }
+\item[{char $\ast$}]{alleles, }
+\item[{size\-\_\-t}]{alleles\-Size, }
+\item[{unsigned char $\ast$}]{sitedat, }
+\item[{size\-\_\-t}]{sitedat\-Size, }
+\item[{int}]{is\-Diploid}
+\end{DoxyParamCaption}
+)}}\label{readgtp_8h_a5000436dd66fa65fa9b7ebe9f3fe77c1}
+
+
+Read a \hyperlink{struct_s_n_p}{S\-N\-P} from the G\-T\-P output file. 
+
+Return 0 on success, 1 on failure.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em ifp} & Points to input file stream. \\
+\hline
+\mbox{\tt out}  & {\em snp\-Id} & Character buffer to hold the string that identifies current \hyperlink{struct_s_n_p}{S\-N\-P}. \\
+\hline
+\mbox{\tt in}  & {\em snp\-Id\-Size} & Size of snp\-Id. If snp\-Id\-Size==0, nothing will be written into snp\-Id. In this case, it is O\-K to pass N\-U\-L\-L for the value of snp\-Id. \\
+\hline
+\mbox{\tt out}  & {\em mappos} & Map position of current \hyperlink{struct_s_n_p}{S\-N\-P} in centimorgans. \\
+\hline
+\mbox{\tt out}  & {\em alleles} & This string will contain a list of the alleles present at current \hyperlink{struct_s_n_p}{S\-N\-P}. \\
+\hline
+\mbox{\tt in}  & {\em alleles\-Size} & Size of \char`\"{}alleles\char`\"{}. If alleles\-Size==0, nothing will be written into alleles. In this case, it is O\-K to pass N\-U\-L\-L for the value of alleles. \\
+\hline
+\mbox{\tt out}  & {\em sitedat} & Unsigned character buffer whose i'th entry will hold the genotype data for the i'th individual. This value is an integer that encodes genotypic values as described in the documentation of function encode\-Gtype, defined in file \hyperlink{misc_8h}{misc.\-h}. \\
+\hline
+\mbox{\tt in}  & {\em sitedat\-Size} & Size of the sitedat array. \\
+\hline
+\mbox{\tt in}  & {\em is\-Diploid} & The data are assumed to be diploid if is\-Diploid is nonzero. Otherwise, haploidy is assumed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A positive number (the number of genotypes) on success, but a negative number (E\-O\-F) on end of file. 
+\end{DoxyReturn}
+
+
+References encode\-Diploid(), and encode\-Haploid().
+
+
+
+Referenced by File\-Index\-\_\-read\-File(), and Window\-\_\-next\-S\-N\-P().
+

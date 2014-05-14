@@ -1,0 +1,106 @@
+.TH "jobqueue.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+jobqueue.c \- 
+.PP
+Multithreaded job queue\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'jobqueue\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBJob\fP"
+.br
+.RI "\fIA single job in the queue\&. \fP"
+.ti -1c
+.RI "struct \fBJobQueue\fP"
+.br
+.RI "\fIAll data used by job queue\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDPRINTF\fP(arg)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void * \fBthreadfun\fP (void *vjq)"
+.br
+.RI "\fIWaits until there is a job in the queue, pops it off and executes it, then waits for another\&. \fP"
+.ti -1c
+.RI "void \fBJob_free\fP (\fBJob\fP *job)"
+.br
+.ti -1c
+.RI "\fBJobQueue\fP * \fBJobQueue_new\fP (int nthreads)"
+.br
+.ti -1c
+.RI "void \fBJobQueue_addJob\fP (\fBJobQueue\fP *jq, int(*jobfun)(void *), void *param)"
+.br
+.ti -1c
+.RI "void \fBJobQueue_waitOnJobs\fP (\fBJobQueue\fP *jq)"
+.br
+.RI "\fIWait until jobs are completed\&. \fP"
+.ti -1c
+.RI "void \fBJobQueue_free\fP (\fBJobQueue\fP *jq)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Multithreaded job queue\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers This file implements a multithreaded job queue\&. Jobs are pushed onto a queue by the main program\&. Each thread (or worker) removes a job from the queue, executes it, and then goes back for another\&. When all jobs are finished, control returns to the main function\&.
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void * threadfun (void *varg)"
+
+.PP
+Waits until there is a job in the queue, pops it off and executes it, then waits for another\&. \fCobsld\fP runs a copy of this function within each thread\&.
+.PP
+Runs until jobs are completed and main thread sets acceptingJobs=0\&.
+.PP
+The function opens the input file, which gives the thread its own input buffer so that it can move around in the file without locking it\&. Then it examines pairs of SNPs within a window that slides across the SNPs it is responsible for, placing the results into an object of type \fBTabulation\fP\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvarg\fP A void pointer to an object of type \fBThreadArg\fP\&. 
+.RE
+.PP
+
+.PP
+References JobQueue::acceptingJobs, Job::jobfun, JobQueue::lock, Job::next, JobQueue::nthreads, Job::param, JobQueue::threadsStopped, JobQueue::todo, JobQueue::wakeMain, and JobQueue::wakeWorker\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

@@ -1,0 +1,89 @@
+.TH "vcf2gtp.Map" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vcf2gtp.Map \- 
+.PP
+Represents the genetic map\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP"
+.br
+.ti -1c
+.RI "def \fBclose\fP"
+.br
+.ti -1c
+.RI "def \fBnext\fP"
+.br
+.ti -1c
+.RI "def \fBgetMapPos\fP"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBeof\fP"
+.br
+.ti -1c
+.RI "\fBcPerBasePair\fP"
+.br
+.ti -1c
+.RI "\fBextrapolate\fP"
+.br
+.ti -1c
+.RI "\fBmfile\fP"
+.br
+.ti -1c
+.RI "\fBnucposB\fP"
+.br
+.ti -1c
+.RI "\fBmapposB\fP"
+.br
+.ti -1c
+.RI "\fBcMperMbB\fP"
+.br
+.ti -1c
+.RI "\fBcMperMbA\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Represents the genetic map\&. 
+
+\fBMap\fP data can be provided either via a fixed recombination rate per Mb, or via a character, string representing a file name, which should be should be in the format provided by the 1000 Genomes Project\&. A \fBMap\fP is created like this:
+.PP
+mf = Map(cPerBasePair, mapFileName)
+.PP
+Exactly one of these arguments must equal None\&. If mapFileName!=None, the class maintains an eof variable (either True or False) and the following data about two adjacent map positions: nucpos (nucleotide position, an integer representing the position of the \fBSNP\fP on the chromosome in base-pairs), mappos (genetic map position in cM, a float), and cPerBasePair (local recombination rate per base pair)\&.
+.PP
+If cPerBasePair!=None, the the class retains only the value of the argument and an eof variable, which is always equal to True\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "def vcf2gtp\&.Map\&.next (self)"
+
+.PP
+.nf
+Move MapFile forward to next mapped SNP. If there is no more
+data, self.eof is set to True, and nothing else changes. Otherwise,
+self.eof is set to False, the values of nucposA, mapposA, and cMperMbA
+are set to the old values of nucposB, mapposB, and cMperMbB,
+and the latter three values are set from the next line of the file.
+
+.fi
+.PP
+ 
+.PP
+References vcf2gtp\&.Map\&.cMperMbA, vcf2gtp\&.Map\&.cMperMbB, vcf2gtp\&.Map\&.cPerBasePair, vcf2gtp\&.Map\&.eof, vcf2gtp\&.Map\&.extrapolate, vcf2gtp\&.Map\&.mapposB, Assignment\&.next, Job\&.next, Chain\&.next, EpochLink\&.next, vcf2gtp\&.Map\&.next(), and vcf2gtp\&.Map\&.nucposB\&.
+.PP
+Referenced by vcf2gtp\&.Map\&.next()\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

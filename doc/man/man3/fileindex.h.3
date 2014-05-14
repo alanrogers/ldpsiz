@@ -1,0 +1,295 @@
+.TH "fileindex.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+fileindex.h \- 
+.PP
+Header for \fBfileindex\&.c\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'typedefs\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBThreadBounds\fP"
+.br
+.RI "\fIEach \fBThreadBounds\fP object contains the information needed by an individual thread to figure out where in the input file to begin reading SNPs and which \fBSNP\fP is its first focal \fBSNP\fP\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBFileIndex\fP * \fBFileIndex_new\fP (void)"
+.br
+.RI "\fIConstruct an empty \fBFileIndex\fP\&. \fP"
+.ti -1c
+.RI "void \fBFileIndex_free\fP (\fBFileIndex\fP *fndx)"
+.br
+.RI "\fIFree a \fBFileIndex\fP object\&. \fP"
+.ti -1c
+.RI "long \fBFileIndex_push\fP (\fBFileIndex\fP *fndx, long seekpos, double mappos)"
+.br
+.RI "\fIRecord location data for a \fBSNP\fP in the \fBFileIndex\fP\&. \fP"
+.ti -1c
+.RI "\fBSNPLoc\fP * \fBFileIndex_atNdx\fP (\fBFileIndex\fP *fndx, long ndx)"
+.br
+.RI "\fIReturn the \fBSNPLoc\fP object for \fBSNP\fP with given index\&. \fP"
+.ti -1c
+.RI "long \fBFileIndex_atMapPos\fP (\fBFileIndex\fP *fndx, double mappos)"
+.br
+.RI "\fIReturn index of smallest element in sorted array that is >= mappos\&. \fP"
+.ti -1c
+.RI "long \fBFileIndex_nSNPs\fP (\fBFileIndex\fP *fndx)"
+.br
+.RI "\fIReturn the number of SNPs\&. \fP"
+.ti -1c
+.RI "void \fBFileIndex_printSummary\fP (\fBFileIndex\fP *fndx, FILE *ofp)"
+.br
+.ti -1c
+.RI "void \fBFileIndex_printChunks\fP (\fBFileIndex\fP *fndx, FILE *ofp)"
+.br
+.ti -1c
+.RI "void \fBFileIndex_print\fP (\fBFileIndex\fP *fndx, FILE *ofp)"
+.br
+.ti -1c
+.RI "\fBFileIndex\fP * \fBFileIndex_readFile\fP (FILE *ifp)"
+.br
+.RI "\fIRead through a file, storing the location of each \fBSNP\fP in a structure of type \fBFileIndex\fP, which is then returned\&. \fP"
+.ti -1c
+.RI "void \fBFileIndex_realloc\fP (\fBFileIndex\fP *fndx, long ptrsNeeded)"
+.br
+.RI "\fIReallocate the list of pointers so that the number of them is at least as large as ptrsNeeded\&. \fP"
+.ti -1c
+.RI "double \fBFileIndex_getMapPos\fP (\fBFileIndex\fP *fndx, long ndx)"
+.br
+.RI "\fIReturn the map position (in cM) of \fBSNP\fP with given index\&. \fP"
+.ti -1c
+.RI "long \fBFileIndex_getSeekPos\fP (\fBFileIndex\fP *fndx, long ndx)"
+.br
+.RI "\fIReturn the seek position of \fBSNP\fP with given index\&. \fP"
+.ti -1c
+.RI "void \fBFileIndex_sanityCheck\fP (\fBFileIndex\fP *fi, const char *file, int lineno)"
+.br
+.ti -1c
+.RI "unsigned \fBFileIndex_nPtrs\fP (void)"
+.br
+.ti -1c
+.RI "unsigned \fBFileIndex_chunkSize\fP (void)"
+.br
+.ti -1c
+.RI "long \fBFileIndex_nPtrsAllocated\fP (const \fBFileIndex\fP *fndx)"
+.br
+.ti -1c
+.RI "long \fBSNPLoc_seekpos\fP (const \fBSNPLoc\fP *sl)"
+.br
+.ti -1c
+.RI "double \fBSNPLoc_mappos\fP (const \fBSNPLoc\fP *sl)"
+.br
+.ti -1c
+.RI "\fBThreadBounds\fP * \fBThreadBounds_new\fP (int nthreads, double windowcm, \fBFileIndex\fP *fndx)"
+.br
+.RI "\fIDivide the genome into contiguous chunks of roughly equal size, so that each chunk can be processed by a separate thread\&. \fP"
+.ti -1c
+.RI "void \fBThreadBounds_free\fP (\fBThreadBounds\fP *tb)"
+.br
+.ti -1c
+.RI "void \fBThreadBounds_print\fP (const \fBThreadBounds\fP *tb, int nthreads, FILE *ofp)"
+.br
+.ti -1c
+.RI "void \fBThreadBounds_sanityCheck\fP (const \fBThreadBounds\fP *tb, const char *file, int lineno)"
+.br
+.ti -1c
+.RI "void \fBThreadBounds_arraySanityCheck\fP (const \fBThreadBounds\fP *tb, int nthreads, const char *file, int lineno)"
+.br
+.ti -1c
+.RI "long \fBThreadBounds_ndx_initial\fP (const \fBThreadBounds\fP *tb)"
+.br
+.RI "\fIReturn the index of the starting \fBSNP\fP\&. \fP"
+.ti -1c
+.RI "long \fBThreadBounds_ndx_1stFocal\fP (const \fBThreadBounds\fP *tb)"
+.br
+.RI "\fIReturn the index of the 1st focal \fBSNP\fP\&. \fP"
+.ti -1c
+.RI "long \fBThreadBounds_ndx_lastFocal\fP (const \fBThreadBounds\fP *tb)"
+.br
+.RI "\fIReturn the index of the last focal \fBSNP\fP\&. \fP"
+.ti -1c
+.RI "long \fBThreadBounds_seekpos_initial\fP (const \fBThreadBounds\fP *tb)"
+.br
+.RI "\fIReturn the seek position of the starting \fBSNP\fP\&. \fP"
+.ti -1c
+.RI "long \fBThreadBounds_seekpos_1stFocal\fP (const \fBThreadBounds\fP *tb)"
+.br
+.RI "\fIReturn the seek position of the 1st focal \fBSNP\fP\&. \fP"
+.ti -1c
+.RI "long \fBThreadBounds_seekpos_lastFocal\fP (const \fBThreadBounds\fP *tb)"
+.br
+.RI "\fIReturn the seek position of the last focal \fBSNP\fP\&. \fP"
+.ti -1c
+.RI "double \fBThreadBounds_mappos_initial\fP (const \fBThreadBounds\fP *tb)"
+.br
+.RI "\fIReturn the map position of the starting \fBSNP\fP\&. \fP"
+.ti -1c
+.RI "double \fBThreadBounds_mappos_1stFocal\fP (const \fBThreadBounds\fP *tb)"
+.br
+.RI "\fIReturn the map position of the 1st focal \fBSNP\fP\&. \fP"
+.ti -1c
+.RI "double \fBThreadBounds_mappos_lastFocal\fP (const \fBThreadBounds\fP *tb)"
+.br
+.RI "\fIReturn the map position of the last focal \fBSNP\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for \fBfileindex\&.c\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBSNPLoc\fP* FileIndex_atNdx (\fBFileIndex\fP *fndx, longndx)"
+
+.PP
+Return the \fBSNPLoc\fP object for \fBSNP\fP with given index\&. 
+.PP
+Referenced by FileIndex_atMapPos(), FileIndex_getMapPos(), and FileIndex_getSeekPos()\&.
+.SS "double FileIndex_getMapPos (\fBFileIndex\fP *fndx, longndx)"
+
+.PP
+Return the map position (in cM) of \fBSNP\fP with given index\&. 
+.PP
+References FileIndex_atNdx()\&.
+.PP
+Referenced by ThreadBounds_new()\&.
+.SS "long FileIndex_getSeekPos (\fBFileIndex\fP *fndx, longndx)"
+
+.PP
+Return the seek position of \fBSNP\fP with given index\&. 
+.PP
+References FileIndex_atNdx()\&.
+.PP
+Referenced by ThreadBounds_new()\&.
+.SS "long FileIndex_nSNPs (\fBFileIndex\fP *fndx)"
+
+.PP
+Return the number of SNPs\&. 
+.PP
+Referenced by FileIndex_atMapPos(), and ThreadBounds_new()\&.
+.SS "long FileIndex_push (\fBFileIndex\fP *fndx, longseekpos, doublemappos)"
+
+.PP
+Record location data for a \fBSNP\fP in the \fBFileIndex\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfndx\fP points to \fBFileIndex\fP\&. 
+.br
+\fIseekpos\fP seek position of new entry 
+.br
+\fImappos\fP map position (in cM) of new entry 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+index of newly recorded \fBSNP\fP\&. 
+.RE
+.PP
+
+.PP
+References FileIndex_realloc()\&.
+.PP
+Referenced by FileIndex_readFile()\&.
+.SS "\fBFileIndex\fP* FileIndex_readFile (FILE *ifp)"
+
+.PP
+Read through a file, storing the location of each \fBSNP\fP in a structure of type \fBFileIndex\fP, which is then returned\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIifp\fP Pointer to input stream\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+NULL if FILE pointer is NULL\&. If no sites are found, it returns an empty \fBFileIndex\fP\&. Otherwise, function returns a pointer to an object of type \fBFileIndex\fP\&. 
+.RE
+.PP
+
+.PP
+References Assignment_free(), Assignment_setInt(), Dbl_near(), FileIndex_new(), FileIndex_push(), Gtp_readHdr(), and Gtp_readSNP()\&.
+.SS "void FileIndex_realloc (\fBFileIndex\fP *fndx, longptrsNeeded)"
+
+.PP
+Reallocate the list of pointers so that the number of them is at least as large as ptrsNeeded\&. All newly-allocated pointers are set equal to NULL\&. 
+.PP
+Referenced by FileIndex_push()\&.
+.SS "double ThreadBounds_mappos_1stFocal (const \fBThreadBounds\fP *tb)"
+
+.PP
+Return the map position of the 1st focal \fBSNP\fP\&. 
+.SS "double ThreadBounds_mappos_initial (const \fBThreadBounds\fP *tb)"
+
+.PP
+Return the map position of the starting \fBSNP\fP\&. 
+.SS "double ThreadBounds_mappos_lastFocal (const \fBThreadBounds\fP *tb)"
+
+.PP
+Return the map position of the last focal \fBSNP\fP\&. 
+.SS "long ThreadBounds_ndx_1stFocal (const \fBThreadBounds\fP *tb)"
+
+.PP
+Return the index of the 1st focal \fBSNP\fP\&. 
+.PP
+Referenced by threadfun()\&.
+.SS "long ThreadBounds_ndx_initial (const \fBThreadBounds\fP *tb)"
+
+.PP
+Return the index of the starting \fBSNP\fP\&. 
+.PP
+Referenced by threadfun()\&.
+.SS "long ThreadBounds_ndx_lastFocal (const \fBThreadBounds\fP *tb)"
+
+.PP
+Return the index of the last focal \fBSNP\fP\&. 
+.PP
+Referenced by threadfun()\&.
+.SS "\fBThreadBounds\fP* ThreadBounds_new (intnthreads, doublewindowcm, \fBFileIndex\fP *fndx)"
+
+.PP
+Divide the genome into contiguous chunks of roughly equal size, so that each chunk can be processed by a separate thread\&. On input, nthreads gives the number of threads, windowsize (the number of SNPs in the sliding window), and ifp points to the input file stream\&. The function returns a pointer to a newly-allocated array of type \fBThreadBounds\fP, which has an entry for each thread, each of which is an object of type \fBThreadBounds\fP\&. The i'th entry defines the starting position for thread i\&. 
+.PP
+References FileIndex_atMapPos(), FileIndex_getMapPos(), FileIndex_getSeekPos(), and FileIndex_nSNPs()\&.
+.SS "long ThreadBounds_seekpos_1stFocal (const \fBThreadBounds\fP *tb)"
+
+.PP
+Return the seek position of the 1st focal \fBSNP\fP\&. 
+.SS "long ThreadBounds_seekpos_initial (const \fBThreadBounds\fP *tb)"
+
+.PP
+Return the seek position of the starting \fBSNP\fP\&. 
+.PP
+Referenced by threadfun()\&.
+.SS "long ThreadBounds_seekpos_lastFocal (const \fBThreadBounds\fP *tb)"
+
+.PP
+Return the seek position of the last focal \fBSNP\fP\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

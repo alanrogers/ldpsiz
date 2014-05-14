@@ -1,0 +1,50 @@
+.TH "Boot" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Boot \- 
+.PP
+Contains the all data involved in a moving blocks bootstrap\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "long \fBnSNPs\fP"
+.br
+.RI "\fInumber of polymorphic sites in data \fP"
+.ti -1c
+.RI "long \fBnReps\fP"
+.br
+.RI "\fInumber of bootstrap replicates \fP"
+.ti -1c
+.RI "long \fBblockLength\fP"
+.br
+.RI "\fInumber of SNPs per block \fP"
+.ti -1c
+.RI "long \fBnBlocks\fP"
+.br
+.RI "\fInumber of blocks in each replicate \fP"
+.ti -1c
+.RI "int \fBnBins\fP"
+.br
+.RI "\fItabulate recombination rates into this number of bins \fP"
+.ti -1c
+.RI "long ** \fBstart\fP"
+.br
+.RI "\fIstart[i][j] = start of j'th block in i'th rep \fP"
+.ti -1c
+.RI "\fBTabulation\fP ** \fBtab\fP"
+.br
+.RI "\fItab[i] points to tabulation for i'th replicate \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Contains the all data involved in a moving blocks bootstrap\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

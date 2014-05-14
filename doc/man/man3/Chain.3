@@ -1,0 +1,61 @@
+.TH "Chain" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Chain \- 
+.PP
+A linked list of Markov chains, which differ in the extent to which the objective function has been artificially flattened\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "struct \fBChain\fP * \fBnext\fP"
+.br
+.RI "\fIpoints to next \fBChain\fP in linked list \fP"
+.ti -1c
+.RI "unsigned \fBwhich\fP"
+.br
+.RI "\fIindex of chain in linked list \fP"
+.ti -1c
+.RI "double \fBflatness\fP"
+.br
+.RI "\fIhow much this chain is flattened \fP"
+.ti -1c
+.RI "double \fBu\fP"
+.br
+.RI "\fImutation rate \fP"
+.ti -1c
+.RI "double \fBdt\fP"
+.br
+.RI "\fIsize of perturbations in epoch lengths \fP"
+.ti -1c
+.RI "double \fBdNinv\fP"
+.br
+.RI "\fIsize of perturbations in 1/2N \fP"
+.ti -1c
+.RI "\fBODE\fP * \fBode\fP"
+.br
+.ti -1c
+.RI "unsigned \fBnreps\fP"
+.br
+.RI "\fInumber of iterations of chain \fP"
+.ti -1c
+.RI "unsigned \fBswapInterval\fP"
+.br
+.RI "\fIhow often to try swapping \fP"
+.ti -1c
+.RI "unsigned \fBnbins\fP"
+.br
+.RI "\fIdimension of arrays \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A linked list of Markov chains, which differ in the extent to which the objective function has been artificially flattened\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

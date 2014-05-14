@@ -1,0 +1,229 @@
+.TH "chain.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+chain.h \- 
+.PP
+Header for \fBchain\&.c\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'typedefs\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBPRSTAT\fP(MSG)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBChain\fP * \fBChain_new\fP (unsigned which, unsigned nChains, unsigned nreps, double u, double dt, double dN, double temp, unsigned nbins, double *sigdsq, double *c, \fBPopHist\fP *ph, \fBModel\fP *model, double odeAbsTol, double odeRelTol, unsigned swapInterval)"
+.br
+.RI "\fIAllocate memory for a \fBChain\fP\&. \fP"
+.ti -1c
+.RI "void \fBChain_free\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIFree memory allocated by linked list of chains\&. \fP"
+.ti -1c
+.RI "void * \fBrunChain\fP (void *arg)"
+.br
+.ti -1c
+.RI "void \fBChain_waitForData\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIWait until thread has completed another iteration and made the resulting data available\&. \fP"
+.ti -1c
+.RI "void \fBChain_waitUntilDataNeeded\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIWait until main thread has finished with data from last iteration\&. \fP"
+.ti -1c
+.RI "void \fBChain_setDataAvailable\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIIndicate that data are available\&. \fP"
+.ti -1c
+.RI "void \fBChain_setDataNeeded\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIIndicate that data are needed\&. \fP"
+.ti -1c
+.RI "void \fBChain_lock\fP (\fBChain\fP *chain)"
+.br
+.RI "\fILock chain\&. \fP"
+.ti -1c
+.RI "void \fBChain_unlock\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIUnlock chain\&. \fP"
+.ti -1c
+.RI "void \fBChain_lockStdout\fP (void)"
+.br
+.RI "\fILock stdout\&. \fP"
+.ti -1c
+.RI "void \fBChain_unlockStdout\fP (void)"
+.br
+.RI "\fIUnock stdout\&. \fP"
+.ti -1c
+.RI "void \fBChain_signal\fP (\fBChain\fP *chain)"
+.br
+.RI "\fISend signal via condition variable\&. \fP"
+.ti -1c
+.RI "double \fBChain_flatness\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIReturn flatness parameter of chain\&. \fP"
+.ti -1c
+.RI "double \fBChain_lnObj\fP (\fBChain\fP *chain)"
+.br
+.RI "\fILog of objective function\&. \fP"
+.ti -1c
+.RI "void \fBChain_printFull\fP (\fBChain\fP *chain, FILE *fp)"
+.br
+.RI "\fIPrint entire chain\&. \fP"
+.ti -1c
+.RI "void \fBChain_printHdr\fP (\fBChain\fP *chain, FILE *fp)"
+.br
+.RI "\fIPrinter header for markov chain output lines\&. \fP"
+.ti -1c
+.RI "void \fBChain_printState\fP (\fBChain\fP *chain, FILE *fp)"
+.br
+.RI "\fIPrinter state of markov chain\&. \fP"
+.ti -1c
+.RI "int \fBChain_accepted\fP (const \fBChain\fP *c)"
+.br
+.RI "\fIReturn 1 if chain's state changed; 0 otherwise\&. \fP"
+.ti -1c
+.RI "void \fBChain_swapState\fP (\fBChain\fP *c)"
+.br
+.RI "\fISwap states of chains c and c->next\&. \fP"
+.ti -1c
+.RI "\fBChain\fP * \fBChain_next\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIReturn pointer to next \fBChain\fP in linked list\&. \fP"
+.ti -1c
+.RI "unsigned \fBChain_nswapped\fP (\fBChain\fP *chain)"
+.br
+.RI "\fINumber of times this chain has swapped states with the next\&. \fP"
+.ti -1c
+.RI "unsigned \fBChain_naccepted\fP (\fBChain\fP *chain)"
+.br
+.RI "\fINumber of proposals accepted so far by this chain\&. \fP"
+.ti -1c
+.RI "unsigned \fBChain_which\fP (\fBChain\fP *chain)"
+.br
+.RI "\fIReturn the index of this chain\&. \fP"
+.ti -1c
+.RI "void \fBChain_bestFit\fP (\fBChain\fP *chain, double *bestLnObj, \fBPopHist\fP *bestPh)"
+.br
+.RI "\fIReturn values corresponding to the best fit\&. \fP"
+.ti -1c
+.RI "void \fBChain_sanityCheck\fP (\fBChain\fP *chain, const char *file, int line)"
+.br
+.ti -1c
+.RI "void \fBChain_prStateAddr\fP (const \fBChain\fP *chain, int ndx, const char *file, int line)"
+.br
+.RI "\fIPrint machine address of state of each chain in linked list\&. \fP"
+.ti -1c
+.RI "double \fBlnObjFun\fP (\fBPopHist\fP *ph, double u, \fBODE\fP *ode, int nbins, double *sigdsq, double *c)"
+.br
+.RI "\fILog of objective function: negative of sum of squared differences between observed and expected sigma_d^2 vectors\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for \fBchain\&.c\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void Chain_bestFit (\fBChain\fP *chain, double *bestLnObj, \fBPopHist\fP *bestPh)"
+
+.PP
+Return values corresponding to the best fit\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbestLnObj\fP Pointer to double, into which the function will write the value of the log objective function\&.
+.br
+\fIph\fP Pointer to a \fBPopHist\fP, into which the optimal population history will be written\&. 
+.RE
+.PP
+
+.PP
+References PopHist_copy()\&.
+.SS "double Chain_flatness (\fBChain\fP *chain)"
+
+.PP
+Return flatness parameter of chain\&. 
+.PP
+References Chain::flatness\&.
+.SS "double Chain_lnObj (\fBChain\fP *chain)"
+
+.PP
+Log of objective function\&. Does not calculate function\&. Just returns current stored value\&. 
+.PP
+Referenced by Chain_printState()\&.
+.SS "void Chain_setDataAvailable (\fBChain\fP *chain)"
+
+.PP
+Indicate that data are available\&. \fBChain\fP should be locked before calling this function\&. 
+.PP
+Referenced by Chain_publish()\&.
+.SS "void Chain_setDataNeeded (\fBChain\fP *chain)"
+
+.PP
+Indicate that data are needed\&. \fBChain\fP should be locked before calling this function\&. 
+.SS "void Chain_swapState (\fBChain\fP *c)"
+
+.PP
+Swap states of chains c and c->next\&. Lock both chains before calling this function\&. 
+.PP
+References Chain::next\&.
+.SS "void Chain_waitForData (\fBChain\fP *chain)"
+
+.PP
+Wait until thread has completed another iteration and made the resulting data available\&. On return, chain will be locked\&. 
+.SS "void Chain_waitUntilDataNeeded (\fBChain\fP *chain)"
+
+.PP
+Wait until main thread has finished with data from last iteration\&. On return, the chain will be locked\&. 
+.SS "double lnObjFun (\fBPopHist\fP *ph, doubleu, \fBODE\fP *ode, intnbins, double *sigdsq, double *c)"
+
+.PP
+Log of objective function: negative of sum of squared differences between observed and expected sigma_d^2 vectors\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIph\fP Current population history 
+.br
+\fIu\fP mutation rate per site per generation 
+.br
+\fInbins\fP Number of values in vectors obs and c 
+.br
+\fIsigdsq\fP Vector of nbins values, the observed values of sigdsq\&. 
+.br
+\fIc\fP Vector of nbins values, the recombination rates associated with the values in sigdsq\&. 
+.RE
+.PP
+
+.PP
+References ODE_ldVec()\&.
+.PP
+Referenced by Chain_new()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

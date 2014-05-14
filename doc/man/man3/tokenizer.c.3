@@ -1,0 +1,89 @@
+.TH "tokenizer.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tokenizer.c \- 
+.PP
+Tokenize a character string\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'tokenizer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTokenizer\fP * \fBTokenizer_new\fP (int maxTokens)"
+.br
+.ti -1c
+.RI "void \fBTokenizer_free\fP (\fBTokenizer\fP *t)"
+.br
+.ti -1c
+.RI "int \fBTokenizer_split\fP (\fBTokenizer\fP *t, char *buff, const char *sep)"
+.br
+.ti -1c
+.RI "char * \fBTokenizer_token\fP (\fBTokenizer\fP *t, int ndx)"
+.br
+.ti -1c
+.RI "int \fBTokenizer_strip\fP (\fBTokenizer\fP *t, const char *extraneous)"
+.br
+.ti -1c
+.RI "int \fBTokenizer_ntokens\fP (\fBTokenizer\fP *t)"
+.br
+.ti -1c
+.RI "int \fBTokenizer_find\fP (\fBTokenizer\fP *t, const char *s)"
+.br
+.ti -1c
+.RI "void \fBTokenizer_printSummary\fP (const \fBTokenizer\fP *tkz, FILE *ofp)"
+.br
+.ti -1c
+.RI "void \fBTokenizer_print\fP (const \fBTokenizer\fP *tkz, FILE *ofp)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Tokenize a character string\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers This file implements a class that tokenizes a string\&. Usage is like this:
+.RE
+.PP
+int ntokens; char buff[100]; \fBTokenizer\fP *tkz = Tokenizer_new(maxTokens);
+.PP
+strcpy(buff, 'my: input   ; ; string'); ntokens = Tokenizer_split(tkz, buff, ':;');
+.PP
+The 3rd argument to Tokenizer_split defines the characters that separate tokens\&. Then you can access individual tokens like this:
+.PP
+char *token;
+.PP
+token = Tokenizer_token(tkz, 3);
+.PP
+The tokens themselves still reside in buff, so this array must not change until the next call to Tokenizer_split\&.
+.PP
+The memory allocated by Tokenizer_new is freed by Tokenizer_free\&.
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

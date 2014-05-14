@@ -1,0 +1,56 @@
+.TH "ini.Epoch" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ini.Epoch \- 
+.PP
+Represents an epoch of population history, within which the population's characteristics do not change\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP"
+.br
+.ti -1c
+.RI "def \fB__str__\fP"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBt\fP"
+.br
+.RI "\fIlength of epoch in generations \fP"
+.ti -1c
+.RI "\fBtwoN\fP"
+.br
+.RI "\fIhaploid population size during epoch \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Represents an epoch of population history, within which the population's characteristics do not change\&. 
+
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "def ini\&.Epoch\&.__init__ (self, line)"
+
+.PP
+.nf
+Input should be a list with two entries, each of which is a string.
+The first of these it interpreted as the length, t,
+of the Epoch in generations. The second is the number, twoN,
+of gene copies within the population during that Epoch.
+
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

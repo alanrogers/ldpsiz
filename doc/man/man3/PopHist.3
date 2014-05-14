@@ -1,0 +1,36 @@
+.TH "PopHist" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+PopHist \- 
+.PP
+\fBPopHist\fP represents the history of a single population\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "unsigned \fBnepoch\fP"
+.br
+.RI "\fInumber of epochs \fP"
+.ti -1c
+.RI "size_t \fBsize\fP"
+.br
+.RI "\fIsize of memory block allocated \fP"
+.ti -1c
+.RI "double \fBp\fP [\fBPAR_PER_EPOCH\fP]"
+.br
+.RI "\fIarray of parameter values \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBPopHist\fP represents the history of a single population\&. 
+
+It is a structure allocated on a single block of memory, using the 'struct hack' of C programming\&. This makes it possible to avoid pointers within \fBPopHist\fP, so that these objects can be copied using memcpy\&. (Otherwise, you end up with pointers in one object pointing to memory in another\&.) 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

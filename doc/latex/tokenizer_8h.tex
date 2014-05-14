@@ -1,0 +1,54 @@
+\hypertarget{tokenizer_8h}{\subsection{tokenizer.\-h File Reference}
+\label{tokenizer_8h}\index{tokenizer.\-h@{tokenizer.\-h}}
+}
+
+
+Header for \hyperlink{tokenizer_8c}{tokenizer.\-c}.  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\\*
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_tokenizer}{Tokenizer}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{tokenizer_8h_a63f96f4a40e9daaff2dd983fa2dc3b85}{\hyperlink{struct_tokenizer}{Tokenizer} $\ast$ {\bfseries Tokenizer\-\_\-new} (int maxtok)}\label{tokenizer_8h_a63f96f4a40e9daaff2dd983fa2dc3b85}
+
+\item 
+\hypertarget{tokenizer_8h_adb9007f2fd938123bafee4ae8f30549d}{void {\bfseries Tokenizer\-\_\-free} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t)}\label{tokenizer_8h_adb9007f2fd938123bafee4ae8f30549d}
+
+\item 
+\hypertarget{tokenizer_8h_aeedc80b92256e157dfcb0fe6a401e1a7}{int {\bfseries Tokenizer\-\_\-split} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t, char $\ast$buff, const char $\ast$sep)}\label{tokenizer_8h_aeedc80b92256e157dfcb0fe6a401e1a7}
+
+\item 
+\hypertarget{tokenizer_8h_a8547201a2d34e0c8dfc75bebf1c63899}{char $\ast$ {\bfseries Tokenizer\-\_\-token} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t, int index)}\label{tokenizer_8h_a8547201a2d34e0c8dfc75bebf1c63899}
+
+\item 
+\hypertarget{tokenizer_8h_a49055f5a86c2b0f1a4d83b36519500e5}{int {\bfseries Tokenizer\-\_\-ntokens} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t)}\label{tokenizer_8h_a49055f5a86c2b0f1a4d83b36519500e5}
+
+\item 
+\hypertarget{tokenizer_8h_ad89701d3d4406a68fb5f57e4520a789b}{int {\bfseries Tokenizer\-\_\-strip} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t, const char $\ast$extraneous)}\label{tokenizer_8h_ad89701d3d4406a68fb5f57e4520a789b}
+
+\item 
+\hypertarget{tokenizer_8h_a92038008ca79a13362dd34b49bbe0863}{int {\bfseries Tokenizer\-\_\-find} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t, const char $\ast$s)}\label{tokenizer_8h_a92038008ca79a13362dd34b49bbe0863}
+
+\item 
+\hypertarget{tokenizer_8h_a6f863b84319366c51ad658c7e4aeb8f1}{void {\bfseries Tokenizer\-\_\-print} (const \hyperlink{struct_tokenizer}{Tokenizer} $\ast$tkz, F\-I\-L\-E $\ast$ofp)}\label{tokenizer_8h_a6f863b84319366c51ad658c7e4aeb8f1}
+
+\item 
+\hypertarget{tokenizer_8h_a1155068bc8802af29bf9b779c0eac607}{void {\bfseries Tokenizer\-\_\-print\-Summary} (const \hyperlink{struct_tokenizer}{Tokenizer} $\ast$tkz, F\-I\-L\-E $\ast$ofp)}\label{tokenizer_8h_a1155068bc8802af29bf9b779c0eac607}
+
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Header for \hyperlink{tokenizer_8c}{tokenizer.\-c}. \begin{DoxyAuthor}{Author}
+Alan R. Rogers 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}

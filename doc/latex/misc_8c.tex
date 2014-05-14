@@ -1,0 +1,248 @@
+\hypertarget{misc_8c}{\subsection{misc.\-c File Reference}
+\label{misc_8c}\index{misc.\-c@{misc.\-c}}
+}
+
+
+Miscellaneous functions.  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$stdarg.\-h$>$}\\*
+{\ttfamily \#include $<$errno.\-h$>$}\\*
+{\ttfamily \#include $<$ctype.\-h$>$}\\*
+{\ttfamily \#include $<$assert.\-h$>$}\\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-matrix.\-h$>$}\\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-blas.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
+{\ttfamily \#include $<$execinfo.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{misc_8c_ada4341ae9d29ebc267bbd67116ecbe88}{\#define {\bfseries C\-A\-L\-L\-S\-T\-A\-C\-K\-\_\-\-S\-I\-Z\-E}~128}\label{misc_8c_ada4341ae9d29ebc267bbd67116ecbe88}
+
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{misc_8c_ace5f1dedd7c98a3533870d4140beb7f5}{isopt} (const char $\ast$short\-Opt, const char $\ast$long\-Opt, const char $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Return 1 if string arg matches either short\-Opt or long\-Opt. \end{DoxyCompactList}\item 
+\hypertarget{misc_8c_a788d76afc44809742da493061818ab64}{void {\bfseries tellopt} (const char $\ast$opt, const char $\ast$description)}\label{misc_8c_a788d76afc44809742da493061818ab64}
+
+\item 
+\hypertarget{misc_8c_a92ebec183869f6f334f2df76f3a2c279}{char $\ast$ \hyperlink{misc_8c_a92ebec183869f6f334f2df76f3a2c279}{strlowercase} (char $\ast$s)}\label{misc_8c_a92ebec183869f6f334f2df76f3a2c279}
+
+\begin{DoxyCompactList}\small\item\em Convert N\-U\-L\-L-\/terminated string to lower case. \end{DoxyCompactList}\item 
+\hypertarget{misc_8c_a4743e5591ae6709d53cde2e0af1b3541}{void {\bfseries checkmem} (void $\ast$obj, const char $\ast$file, int line)}\label{misc_8c_a4743e5591ae6709d53cde2e0af1b3541}
+
+\item 
+\hypertarget{misc_8c_a9dca80cefd27dd70b0e3780ef03f079d}{void {\bfseries assert\-Finite\-Array} (const double $\ast$x, size\-\_\-t dim, const char $\ast$file, int line)}\label{misc_8c_a9dca80cefd27dd70b0e3780ef03f079d}
+
+\item 
+\hypertarget{misc_8c_a72f67f178645830a56e358b39c7077ad}{void {\bfseries printsqrmat} (const char $\ast$msg, unsigned dim, double m\mbox{[}$\,$\mbox{]}\mbox{[}dim\mbox{]})}\label{misc_8c_a72f67f178645830a56e358b39c7077ad}
+
+\item 
+\hypertarget{misc_8c_a97c1c4aabca7717aab6db1a3fd062af0}{void {\bfseries printgslmat} (const char $\ast$msg, size\-\_\-t dim, gsl\-\_\-matrix $\ast$m)}\label{misc_8c_a97c1c4aabca7717aab6db1a3fd062af0}
+
+\item 
+\hypertarget{misc_8c_a2aa26b314648add42d56d0a8a24b5ab2}{int {\bfseries mat\-Is\-Finite} (unsigned dim, double m\mbox{[}$\,$\mbox{]}\mbox{[}dim\mbox{]})}\label{misc_8c_a2aa26b314648add42d56d0a8a24b5ab2}
+
+\item 
+\hypertarget{misc_8c_ab37ecd989a8498be631c12b0ea6b7b7f}{double {\bfseries getreldiff} (int dim, double x\mbox{[}$\,$\mbox{]}, double y\mbox{[}$\,$\mbox{]}, int verbose)}\label{misc_8c_ab37ecd989a8498be631c12b0ea6b7b7f}
+
+\item 
+char $\ast$ \hyperlink{misc_8c_af021c9932cc3a80ca9a94f812f2ec6ef}{strcenter} (const char $\ast$text, unsigned width, char $\ast$buff, unsigned buffsize)
+\begin{DoxyCompactList}\small\item\em Center string \char`\"{}text\char`\"{} in a field of width \char`\"{}width\char`\"{}. \end{DoxyCompactList}\item 
+\hypertarget{misc_8c_a5a3f5acac3215b5caf3ea59f061b927c}{int {\bfseries get\-Num\-Cores} (void)}\label{misc_8c_a5a3f5acac3215b5caf3ea59f061b927c}
+
+\item 
+\hypertarget{misc_8c_a6425787232b86c7902d3053901dfc9e8}{long {\bfseries long\-\_\-first\-\_\-geq} (long val, long $\ast$v, long len)}\label{misc_8c_a6425787232b86c7902d3053901dfc9e8}
+
+\item 
+\hypertarget{misc_8c_a56fc0975f9e72470c5b74035cdd4641c}{long {\bfseries long\-\_\-last\-\_\-leq} (long val, long $\ast$v, long len)}\label{misc_8c_a56fc0975f9e72470c5b74035cdd4641c}
+
+\item 
+\hypertarget{misc_8c_a53497e3fbee44d6910c63b0f87d7aaf4}{void {\bfseries die} (const char $\ast$msg, const char $\ast$file, int line)}\label{misc_8c_a53497e3fbee44d6910c63b0f87d7aaf4}
+
+\item 
+\hypertarget{misc_8c_a1f2415ec1f22a3a73f7702c0143d9402}{void {\bfseries eprintf} (const char $\ast$fmt,...)}\label{misc_8c_a1f2415ec1f22a3a73f7702c0143d9402}
+
+\item 
+\hypertarget{misc_8c_a0289f2f0a4cc23bb8741b455e40e9920}{void $\ast$ {\bfseries memdup} (const void $\ast$p, size\-\_\-t n)}\label{misc_8c_a0289f2f0a4cc23bb8741b455e40e9920}
+
+\item 
+\hypertarget{misc_8c_a401facf5813566d0d8c80c577ec2bf45}{int {\bfseries str\-Count\-Set\-Chunks} (const char $\ast$str, const char $\ast$sep)}\label{misc_8c_a401facf5813566d0d8c80c577ec2bf45}
+
+\item 
+int \hyperlink{misc_8c_ae2126d8e519787ffbf8c0f25c2465b06}{strcomment} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return 1 if the first non-\/white char in string s is '\#'; 0 otherwise. \end{DoxyCompactList}\item 
+\hypertarget{misc_8c_a767e10819535bd9e55a0fefeb23cdcfb}{char $\ast$ \hyperlink{misc_8c_a767e10819535bd9e55a0fefeb23cdcfb}{strip\-Comment} (char $\ast$s)}\label{misc_8c_a767e10819535bd9e55a0fefeb23cdcfb}
+
+\begin{DoxyCompactList}\small\item\em strip comment ('\#' to eol) from a string \end{DoxyCompactList}\item 
+int \hyperlink{misc_8c_a484547412aecf30e54ee2d7c73a369d2}{strempty} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Return 1 if string contains only whitespace; 0 otherwise. \end{DoxyCompactList}\item 
+int \hyperlink{misc_8c_a0f2a3ff110e895611c8df6dd52b37994}{dbl\-Equals} (double x, double y)
+\begin{DoxyCompactList}\small\item\em Test equality of x and y. \end{DoxyCompactList}\item 
+\hypertarget{misc_8c_a5e668cae5eacedc044e64b582f71341f}{void {\bfseries dostacktrace} (const char $\ast$file, int line, F\-I\-L\-E $\ast$ofp)}\label{misc_8c_a5e668cae5eacedc044e64b582f71341f}
+
+\item 
+\hypertarget{misc_8c_a2dfe91aee70b669f89ecec619eef1aa8}{double \hyperlink{misc_8c_a2dfe91aee70b669f89ecec619eef1aa8}{reflect} (double x, double lo, double hi)}\label{misc_8c_a2dfe91aee70b669f89ecec619eef1aa8}
+
+\begin{DoxyCompactList}\small\item\em Fold x back and forth across the boundaries \char`\"{}lo\char`\"{} and \char`\"{}hi\char`\"{} to obtain a value y such that lo $<$= y $<$= hi. \end{DoxyCompactList}\item 
+void \hyperlink{misc_8c_a60b1926dd7404871bbd4bd1f8f349a12}{replace\-Suffix} (char $\ast$str, size\-\_\-t str\-\_\-size, const char $\ast$suffix, size\-\_\-t suffix\-\_\-len)
+\begin{DoxyCompactList}\small\item\em Replace suffix (part after last period) of string \char`\"{}str\char`\"{} with new suffix. \end{DoxyCompactList}\item 
+\hypertarget{misc_8c_a9f3d011e394b1f2aaa7d62f2700b082c}{void {\bfseries unit\-Tst\-Result} (const char $\ast$facility, const char $\ast$result)}\label{misc_8c_a9f3d011e394b1f2aaa7d62f2700b082c}
+
+\item 
+int \hyperlink{misc_8c_aa90ca3a7aa29b1b6f75f586b17f16f0e}{compare\-Longs} (const void $\ast$void\-\_\-x, const void $\ast$void\-\_\-y)
+\begin{DoxyCompactList}\small\item\em Compare two long ints. \end{DoxyCompactList}\item 
+int \hyperlink{misc_8c_a762ddf5508ef0417ffdb2ec0c10481f1}{compare\-Doubles} (const void $\ast$void\-\_\-x, const void $\ast$void\-\_\-y)
+\begin{DoxyCompactList}\small\item\em Compare two doubles. \end{DoxyCompactList}\item 
+\hypertarget{misc_8c_a96c65c90fb602b05b182f3ab278f3e7b}{int {\bfseries pr\-\_\-gsl\-\_\-vector} (F\-I\-L\-E $\ast$fp, const char $\ast$fmt, const gsl\-\_\-vector $\ast$v)}\label{misc_8c_a96c65c90fb602b05b182f3ab278f3e7b}
+
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Miscellaneous functions. \begin{DoxyAuthor}{Author}
+Alan R. Rogers 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}
+
+
+\subsubsection{Function Documentation}
+\hypertarget{misc_8c_a762ddf5508ef0417ffdb2ec0c10481f1}{\index{misc.\-c@{misc.\-c}!compare\-Doubles@{compare\-Doubles}}
+\index{compare\-Doubles@{compare\-Doubles}!misc.c@{misc.\-c}}
+\paragraph[{compare\-Doubles}]{\setlength{\rightskip}{0pt plus 5cm}int compare\-Doubles (
+\begin{DoxyParamCaption}
+\item[{const void $\ast$}]{void\-\_\-x, }
+\item[{const void $\ast$}]{void\-\_\-y}
+\end{DoxyParamCaption}
+)}}\label{misc_8c_a762ddf5508ef0417ffdb2ec0c10481f1}
+
+
+Compare two doubles. 
+
+Function interprets its arguments as pointers to doubles.
+
+
+\begin{DoxyParams}{Parameters}
+{\em void\-\_\-x,void\-\_\-y} & Pointers to the two doubles, cast as pointers to voids. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/1, 0, or 1 depending on whether the first arg is $<$, ==, or $>$ the second. 
+\end{DoxyReturn}
+
+
+Referenced by confidence\-Bounds().
+
+\hypertarget{misc_8c_aa90ca3a7aa29b1b6f75f586b17f16f0e}{\index{misc.\-c@{misc.\-c}!compare\-Longs@{compare\-Longs}}
+\index{compare\-Longs@{compare\-Longs}!misc.c@{misc.\-c}}
+\paragraph[{compare\-Longs}]{\setlength{\rightskip}{0pt plus 5cm}int compare\-Longs (
+\begin{DoxyParamCaption}
+\item[{const void $\ast$}]{void\-\_\-x, }
+\item[{const void $\ast$}]{void\-\_\-y}
+\end{DoxyParamCaption}
+)}}\label{misc_8c_aa90ca3a7aa29b1b6f75f586b17f16f0e}
+
+
+Compare two long ints. 
+
+Function interprets its arguments as pointers to long ints.
+
+
+\begin{DoxyParams}{Parameters}
+{\em void\-\_\-x,void\-\_\-y} & Pointers to the two integers, cast as pointers to voids. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/1, 0, or 1 depending on whether the first arg is $<$, ==, or $>$ the second. 
+\end{DoxyReturn}
+
+
+Referenced by Boot\-\_\-new().
+
+\hypertarget{misc_8c_a0f2a3ff110e895611c8df6dd52b37994}{\index{misc.\-c@{misc.\-c}!dbl\-Equals@{dbl\-Equals}}
+\index{dbl\-Equals@{dbl\-Equals}!misc.c@{misc.\-c}}
+\paragraph[{dbl\-Equals}]{\setlength{\rightskip}{0pt plus 5cm}int dbl\-Equals (
+\begin{DoxyParamCaption}
+\item[{double}]{x, }
+\item[{double}]{y}
+\end{DoxyParamCaption}
+)}}\label{misc_8c_a0f2a3ff110e895611c8df6dd52b37994}
+
+
+Test equality of x and y. 
+
+In this test Na\-N == Na\-N, Inf == Inf, and -\/\-Inf == -\/\-Inf. \hypertarget{misc_8c_ace5f1dedd7c98a3533870d4140beb7f5}{\index{misc.\-c@{misc.\-c}!isopt@{isopt}}
+\index{isopt@{isopt}!misc.c@{misc.\-c}}
+\paragraph[{isopt}]{\setlength{\rightskip}{0pt plus 5cm}int isopt (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{short\-Opt, }
+\item[{const char $\ast$}]{long\-Opt, }
+\item[{const char $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}}\label{misc_8c_ace5f1dedd7c98a3533870d4140beb7f5}
+
+
+Return 1 if string arg matches either short\-Opt or long\-Opt. 
+
+Short\-Opt and long\-Opt are ignored if their values are N\-U\-L\-L. If arg doesn't match either short\-Opt or long\-Opt, then return 0. \hypertarget{misc_8c_a60b1926dd7404871bbd4bd1f8f349a12}{\index{misc.\-c@{misc.\-c}!replace\-Suffix@{replace\-Suffix}}
+\index{replace\-Suffix@{replace\-Suffix}!misc.c@{misc.\-c}}
+\paragraph[{replace\-Suffix}]{\setlength{\rightskip}{0pt plus 5cm}void replace\-Suffix (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str, }
+\item[{size\-\_\-t}]{str\-\_\-size, }
+\item[{const char $\ast$}]{suffix, }
+\item[{size\-\_\-t}]{suffix\-\_\-len}
+\end{DoxyParamCaption}
+)}}\label{misc_8c_a60b1926dd7404871bbd4bd1f8f349a12}
+
+
+Replace suffix (part after last period) of string \char`\"{}str\char`\"{} with new suffix. 
+
+If original string has no suffix, then append one to string. Abort if string isn't long enough. \hypertarget{misc_8c_af021c9932cc3a80ca9a94f812f2ec6ef}{\index{misc.\-c@{misc.\-c}!strcenter@{strcenter}}
+\index{strcenter@{strcenter}!misc.c@{misc.\-c}}
+\paragraph[{strcenter}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ strcenter (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{text, }
+\item[{unsigned}]{width, }
+\item[{char $\ast$}]{buff, }
+\item[{unsigned}]{buffsize}
+\end{DoxyParamCaption}
+)}}\label{misc_8c_af021c9932cc3a80ca9a94f812f2ec6ef}
+
+
+Center string \char`\"{}text\char`\"{} in a field of width \char`\"{}width\char`\"{}. 
+
+The centered string is written into the character string \char`\"{}buff\char`\"{}, whose size is \char`\"{}buffsize\char`\"{}. \hypertarget{misc_8c_ae2126d8e519787ffbf8c0f25c2465b06}{\index{misc.\-c@{misc.\-c}!strcomment@{strcomment}}
+\index{strcomment@{strcomment}!misc.c@{misc.\-c}}
+\paragraph[{strcomment}]{\setlength{\rightskip}{0pt plus 5cm}int strcomment (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}}\label{misc_8c_ae2126d8e519787ffbf8c0f25c2465b06}
+
+
+Return 1 if the first non-\/white char in string s is '\#'; 0 otherwise. 
+
+\hypertarget{misc_8c_a484547412aecf30e54ee2d7c73a369d2}{\index{misc.\-c@{misc.\-c}!strempty@{strempty}}
+\index{strempty@{strempty}!misc.c@{misc.\-c}}
+\paragraph[{strempty}]{\setlength{\rightskip}{0pt plus 5cm}int strempty (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}}\label{misc_8c_a484547412aecf30e54ee2d7c73a369d2}
+
+
+Return 1 if string contains only whitespace; 0 otherwise. 
+
+
+
+Referenced by Ini\-\_\-new().
+

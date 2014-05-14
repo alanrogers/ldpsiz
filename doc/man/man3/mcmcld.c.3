@@ -1,0 +1,136 @@
+.TH "mcmcld.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mcmcld.c \- 
+.PP
+\fCmcmcld\fP uses Markov-Coupled Markov-Chain Monte Carlo (MCMCMC) to estimate population history from data on $\sigma_d^2$\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <float\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'boot\&.h'\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+\fC#include 'tokenizer\&.h'\fP
+.br
+\fC#include 'ini\&.h'\fP
+.br
+\fC#include 'model\&.h'\fP
+.br
+\fC#include 'assign\&.h'\fP
+.br
+\fC#include 'chain\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBusage\fP (void)"
+.br
+.ti -1c
+.RI "int \fBread_data\fP (FILE *ifp, int nbins, int twoNsmp, double *cm, double *sigdsq)"
+.br
+.RI "\fIRead the data file produced by obsld\&. \fP"
+.ti -1c
+.RI "int \fBisopt\fP (const char *shortOpt, const char *longOpt, const char *arg)"
+.br
+.RI "\fIReturn 1 if string arg matches either shortOpt or longOpt\&. \fP"
+.ti -1c
+.RI "double \fBlnObjFun\fP (\fBPopHist\fP *ph, double u, \fBODE\fP *ode, int nbins, double *sigdsq, double *c)"
+.br
+.RI "\fILog of objective function: negative of sum of squared differences between observed and expected sigma_d^2 vectors\&. \fP"
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fCmcmcld\fP uses Markov-Coupled Markov-Chain Monte Carlo (MCMCMC) to estimate population history from data on $\sigma_d^2$\&. 
+
+
+.SH "mcmcld, MCMCMC estimates of population history from $\sigma_d^2$ "
+.PP
+.PP
+This program needs work\&. Don't trust the current version\&.
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "int isopt (const char *shortOpt, const char *longOpt, const char *arg)"
+
+.PP
+Return 1 if string arg matches either shortOpt or longOpt\&. ShortOpt and longOpt are ignored if their values are NULL\&. If arg doesn't match either shortOpt or longOpt, then return 0\&. 
+.SS "double lnObjFun (\fBPopHist\fP *ph, doubleu, \fBODE\fP *ode, intnbins, double *sigdsq, double *c)"
+
+.PP
+Log of objective function: negative of sum of squared differences between observed and expected sigma_d^2 vectors\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIph\fP Current population history 
+.br
+\fIu\fP mutation rate per site per generation 
+.br
+\fInbins\fP Number of values in vectors obs and c 
+.br
+\fIsigdsq\fP Vector of nbins values, the observed values of sigdsq\&. 
+.br
+\fIc\fP Vector of nbins values, the recombination rates associated with the values in sigdsq\&. 
+.RE
+.PP
+
+.PP
+References ODE_ldVec()\&.
+.PP
+Referenced by Chain_new()\&.
+.SS "int read_data (FILE *ifp, intnbins, inttwoNsmp, double *cm, double *sigdsq)"
+
+.PP
+Read the data file produced by obsld\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIifp\fP Points to file produced by obsld\&. 
+.br
+\fInbins\fP The length of all arrays\&. 
+.br
+\fItwoNsmp\fP Number of gene copies sampled per locus\&. 
+.br
+\fIcm\fP An array giving the average separation (in centimorgans) between pairs of SNPs within the various bins\&. 
+.br
+\fIsigdsq\fP An array of estimates of sigma_d^2\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of lines read 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

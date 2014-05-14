@@ -1,0 +1,72 @@
+.TH "rusage.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+rusage.c \- 
+.PP
+Use getrusage to measure use of system resources\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include 'rusage\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBprint_rusage\fP (const char *lbl, struct rusage *ru)"
+.br
+.ti -1c
+.RI "void \fBprint_rusage_header\fP (void)"
+.br
+.ti -1c
+.RI "void \fBrusage_subtractFrom\fP (struct rusage *x, struct rusage *y)"
+.br
+.RI "\fISubtract each element of y from the corresponding element of x\&. \fP"
+.ti -1c
+.RI "void \fBrusage_addTo\fP (struct rusage *x, struct rusage *y)"
+.br
+.RI "\fIAdd each element of y from the corresponding element of x\&. \fP"
+.ti -1c
+.RI "void \fBtms_print_header\fP (void)"
+.br
+.ti -1c
+.RI "void \fBtms_print\fP (const char *lbl, struct tms *t)"
+.br
+.ti -1c
+.RI "void \fBtms_subtractFrom\fP (struct tms *x, struct tms *y)"
+.br
+.RI "\fISubtract each element of y from the corresponding element of x, provided that the result would be >= zero\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Use getrusage to measure use of system resources\&. 
+
+Header for \fBrusage\&.c\fP\&.
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void tms_subtractFrom (struct tms *x, struct tms *y)"
+
+.PP
+Subtract each element of y from the corresponding element of x, provided that the result would be >= zero\&. Otherwise, set the element to zero\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

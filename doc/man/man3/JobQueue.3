@@ -1,0 +1,54 @@
+.TH "JobQueue" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+JobQueue \- 
+.PP
+All data used by job queue\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBJob\fP * \fBtodo\fP"
+.br
+.RI "\fIlist of jobs \fP"
+.ti -1c
+.RI "int \fBacceptingJobs\fP"
+.br
+.RI "\fI0 means not accepting jobs \fP"
+.ti -1c
+.RI "int \fBthreadsStopped\fP"
+.br
+.RI "\fInumber of threads stopped \fP"
+.ti -1c
+.RI "int \fBnthreads\fP"
+.br
+.RI "\fInumber of threads \fP"
+.ti -1c
+.RI "pthread_t * \fBthread\fP"
+.br
+.RI "\fIarray of threads \fP"
+.ti -1c
+.RI "pthread_mutex_t \fBlock\fP"
+.br
+.RI "\fImutex for locking queue \fP"
+.ti -1c
+.RI "pthread_cond_t \fBwakeWorker\fP"
+.br
+.RI "\fIcondition variable for waking workers \fP"
+.ti -1c
+.RI "pthread_cond_t \fBwakeMain\fP"
+.br
+.RI "\fIcondition variable for waking main \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+All data used by job queue\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

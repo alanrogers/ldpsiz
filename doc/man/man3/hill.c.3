@@ -1,0 +1,241 @@
+.TH "hill.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+hill.c \- 
+.PP
+Method of Hill, William G\&. 1975\&. TPB 8:117-126\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <math\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <gsl/gsl_matrix\&.h>\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+\fC#include 'model\&.h'\fP
+.br
+\fC#include 'hill\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBHillData\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDIM\fP   4"
+.br
+.ti -1c
+.RI "#define \fBDPRINTF\fP(arg)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "static int \fBonestep\fP (const double x[], double y[], double twoN, double c, double u)"
+.br
+.RI "\fIMove the state vector forward one generation, using Hill's recurrence (Eqns 5 and 8)\&. \fP"
+.ti -1c
+.RI "static int \fBgetDRM\fP (double DRM[][DIM], double twoN, const double c, double u)"
+.br
+.ti -1c
+.RI "static int \fBgetDRM_slow\fP (double DRM[][DIM], double twoN, const double c, double u)"
+.br
+.ti -1c
+.RI "int \fBiterate\fP (double y[], int t, double twoN, double c, double u)"
+.br
+.RI "\fIIterate the difference equation across t generations\&. \fP"
+.ti -1c
+.RI "double \fBHill_exactLD\fP (double c, double u, \fBPopHist\fP *ph, int twoNsmp, void *data)"
+.br
+.ti -1c
+.RI "void * \fBHillData_new\fP (void)"
+.br
+.ti -1c
+.RI "double \fBHillData_stateVal\fP (void *vdata, unsigned i)"
+.br
+.RI "\fIi'th state value \fP"
+.ti -1c
+.RI "void \fBHillData_free\fP (void *vdata)"
+.br
+.RI "\fIfree state variables \fP"
+.ti -1c
+.RI "\fBModel\fP * \fBModel_allocHill\fP (int twoNsmp)"
+.br
+.ti -1c
+.RI "size_t \fBHill_stateDim\fP (void)"
+.br
+.ti -1c
+.RI "const char * \fBHill_stateLbl\fP (unsigned i)"
+.br
+.ti -1c
+.RI "int \fBHill_geteq\fP (double x[], double twoN, double c, double u)"
+.br
+.ti -1c
+.RI "void \fBHill_approxeq\fP (double x[], double twoN, double c, double u)"
+.br
+.ti -1c
+.RI "int \fBHill_dydt\fP (double t_notused, const double x[], double f[], void *params)"
+.br
+.RI "\fIparams points to a structure of type \fBdydt_params\fP\&. \fP"
+.ti -1c
+.RI "int \fBHill_test_getDRM\fP (double twoN, double c, double u)"
+.br
+.ti -1c
+.RI "int \fBHill_test_onestep\fP (double *x1, int dim, double twoN, double c, double u)"
+.br
+.ti -1c
+.RI "double \fBHill_sigdsqEq\fP (double c, double u, \fBPopHist\fP *ph, unsigned whichEpoch, int twoNsmp, void *vdata)"
+.br
+.RI "\fISet state vector to equilibrium for Epoch 'whichEpoch' and then use it to calculate sigmdsq\&. \fP"
+.ti -1c
+.RI "double \fBHill_sigdsq\fP (\fBODE\fP *ode, double c, double u, \fBPopHist\fP *ph, int twoNsmp)"
+.br
+.RI "\fISet state vector to initial equilibrium, then evolve it through the population history, and then use this state vector to calculate sigmdsq\&. \fP"
+.ti -1c
+.RI "double \fBHill_get_sigdsq\fP (double y[], int twoNsmp)"
+.br
+.RI "\fICalculate sigma_d^2 from state vector\&. \fP"
+.ti -1c
+.RI "int \fBHill_evolveDiscrete\fP (double y[], \fBPopHist\fP *ph, double c, double u)"
+.br
+.RI "\fIEvolve through all Epochs of population history, using step size h and beginning with initial equilibrium\&. \fP"
+.ti -1c
+.RI "int \fBonestep_slow\fP (const double x[], double y[], double twoN, double c, double u)"
+.br
+.RI "\fIThis version does not have unrolled loops\&. \fP"
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "static const char * \fBstateLbl\fP [DIM]"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Method of Hill, William G\&. 1975\&. TPB 8:117-126\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers The state variable is as defined on p 120 of Hill (1975)\&. Hill's x corresponds to entries 0, 1, and 2 of my vector below\&. Hill also needs the expected heterozygosity (see his eqn 7), so I have added that on as element 3 of the state vector\&.
+.RE
+.PP
+y[0] = E[H_A*H_B] y[1] = 4 E[sum_{ij} a_i b_j D_{ij}] y[2] = 2 E[sum_{ij} D_{ij}^2 y[3] = E[H_A] = E[H_B]
+.PP
+Here, a_i and b_j are the frequencies of the i'th allele at locus A and the j'th allele at locus B\&. D_{ij} is the coefficient of linkage disequilibrium between these alleles, H_A = 1 - sum a_i^2 is the heterozygosity at locus A and H_B is the corresponding value for locus B\&.
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "int Hill_dydt (doublet_notused, const doublex[], doublef[], void *params)"
+
+.PP
+params points to a structure of type \fBdydt_params\fP\&. On return, f[] contains the derivatives of y1[], as approximated by difference equations\&. 
+.PP
+References onestep()\&.
+.PP
+Referenced by Hill_sigdsq()\&.
+.SS "int Hill_evolveDiscrete (doubley[], \fBPopHist\fP *ph, doublec, doubleu)"
+
+.PP
+Evolve through all Epochs of population history, using step size h and beginning with initial equilibrium\&. Calculation iterates Hill's difference equation\&. The initial value of y is set using Hill's equation for equilibrium\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIy\fP On return, y contains Hill's vector of moments\&. 
+.br
+\fIph\fP Describes the population's history\&. If ph contains just one Epoch, y gets its equilibrium value\&. 
+.br
+\fIc\fP Recombination rate; overrides values in ph\&. 
+.br
+\fIu\fP Mutation rate\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Always returns 0\&. 
+.RE
+.PP
+
+.PP
+References iterate(), PopHist_duration(), PopHist_nepoch(), and PopHist_twoN()\&.
+.SS "double Hill_get_sigdsq (doubley[], inttwoNsmp)"
+
+.PP
+Calculate sigma_d^2 from state vector\&. On page 124, just after eqn 14, in Hill, William G\&. 1975\&. TPB 8:117-126\&. 
+.PP
+References onestep()\&.
+.PP
+Referenced by Hill_sigdsq(), and Hill_sigdsqEq()\&.
+.SS "static int iterate (doubley[], intt, doubletwoN, doublec, doubleu)"
+
+.PP
+Iterate the difference equation across t generations\&. 
+.PP
+References onestep()\&.
+.PP
+Referenced by Hill_evolveDiscrete()\&.
+.SS "static int onestep (const doublex[], doubley[], doubletwoN, doublec, doubleu)\fC [static]\fP"
+
+.PP
+Move the state vector forward one generation, using Hill's recurrence (Eqns 5 and 8)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIinput]\fP x is the initial state vector\&. 
+.br
+\fIoutput]\fP y is the new state vector\&. 
+.RE
+.PP
+
+.PP
+Referenced by Hill_dydt(), Hill_get_sigdsq(), and iterate()\&.
+.SS "int onestep_slow (const doublex[], doubley[], doubletwoN, doublec, doubleu)"
+
+.PP
+This version does not have unrolled loops\&. Move the state vector forward one generation, using Hill's recurrence (Eqns 5 and 8)\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIinput]\fP x is the initial state vector\&. 
+.br
+\fIoutput]\fP y is the new state vector\&. 
+.RE
+.PP
+
+.SH "Variable Documentation"
+.PP 
+.SS "const char* stateLbl[DIM]\fC [static]\fP"
+\fBInitial value:\fP
+.PP
+.nf
+= { "Ha*Hb",
+    "4S[abD]",
+    "2S[D^2]",
+    "H"
+}
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

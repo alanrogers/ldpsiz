@@ -1,0 +1,114 @@
+.TH "readgtp.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+readgtp.h \- 
+.PP
+Header for \fBreadgtp\&.c\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'typedefs\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBAssignment\fP * \fBGtp_readHdr\fP (FILE *ifp)"
+.br
+.RI "\fIRead header of file ifp in order to parse assignment statements\&. \fP"
+.ti -1c
+.RI "int \fBGtp_readSNP\fP (FILE *ifp, char *snpId, size_t snpIdSize, double *mappos, char *alleles, size_t allelesSize, unsigned char *sitedat, size_t sitedatSize, int isDiploid)"
+.br
+.RI "\fIRead a \fBSNP\fP from the GTP output file\&. \fP"
+.ti -1c
+.RI "static int \fBrecode_0_1\fP (int c)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for \fBreadgtp\&.c\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBAssignment\fP* Gtp_readHdr (FILE *ifp)"
+
+.PP
+Read header of file ifp in order to parse assignment statements\&. These assignments are stored an a structure of class \fBAssignment\fP, which is returned to the calling function\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIifp\fP Points to input file stream\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to \fBAssignment\fP structure\&. 
+.RE
+.PP
+\fBSide Effects:\fP
+.RS 4
+The file pointer ifp is positioned so that the next line read will be the first \fBSNP\fP\&. 
+.RE
+.PP
+
+.PP
+References Assignment_new()\&.
+.PP
+Referenced by FileIndex_readFile()\&.
+.SS "int Gtp_readSNP (FILE *ifp, char *snpId, size_tsnpIdSize, double *mappos, char *alleles, size_tallelesSize, unsigned char *sitedat, size_tsitedatSize, intisDiploid)"
+
+.PP
+Read a \fBSNP\fP from the GTP output file\&. Return 0 on success, 1 on failure\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIifp\fP Points to input file stream\&. 
+.br
+\fIsnpId\fP Character buffer to hold the string that identifies current \fBSNP\fP\&. 
+.br
+\fIsnpIdSize\fP Size of snpId\&. If snpIdSize==0, nothing will be written into snpId\&. In this case, it is OK to pass NULL for the value of snpId\&. 
+.br
+\fImappos\fP Map position of current \fBSNP\fP in centimorgans\&. 
+.br
+\fIalleles\fP This string will contain a list of the alleles present at current \fBSNP\fP\&. 
+.br
+\fIallelesSize\fP Size of 'alleles'\&. If allelesSize==0, nothing will be written into alleles\&. In this case, it is OK to pass NULL for the value of alleles\&. 
+.br
+\fIsitedat\fP Unsigned character buffer whose i'th entry will hold the genotype data for the i'th individual\&. This value is an integer that encodes genotypic values as described in the documentation of function encodeGtype, defined in file \fBmisc\&.h\fP\&. 
+.br
+\fIsitedatSize\fP Size of the sitedat array\&. 
+.br
+\fIisDiploid\fP The data are assumed to be diploid if isDiploid is nonzero\&. Otherwise, haploidy is assumed\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A positive number (the number of genotypes) on success, but a negative number (EOF) on end of file\&. 
+.RE
+.PP
+
+.PP
+References encodeDiploid(), and encodeHaploid()\&.
+.PP
+Referenced by FileIndex_readFile(), and Window_nextSNP()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

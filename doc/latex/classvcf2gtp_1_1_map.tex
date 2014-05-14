@@ -1,0 +1,89 @@
+\hypertarget{classvcf2gtp_1_1_map}{\subsection{vcf2gtp.\-Map Class Reference}
+\label{classvcf2gtp_1_1_map}\index{vcf2gtp.\-Map@{vcf2gtp.\-Map}}
+}
+
+
+Represents the genetic map.  
+
+
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classvcf2gtp_1_1_map_ae91bf1ca8c4a1d0c3ab08f68fe04f542}{def {\bfseries \-\_\-\-\_\-init\-\_\-\-\_\-}}\label{classvcf2gtp_1_1_map_ae91bf1ca8c4a1d0c3ab08f68fe04f542}
+
+\item 
+\hypertarget{classvcf2gtp_1_1_map_ae7fc9f1949e6e787cc3313af6663e2c8}{def {\bfseries close}}\label{classvcf2gtp_1_1_map_ae7fc9f1949e6e787cc3313af6663e2c8}
+
+\item 
+def \hyperlink{classvcf2gtp_1_1_map_a35fb2f0350a96accd2a0f4bcb287df4c}{next}
+\item 
+\hypertarget{classvcf2gtp_1_1_map_a989f7705f8ba456cecc54fad3d1db307}{def {\bfseries get\-Map\-Pos}}\label{classvcf2gtp_1_1_map_a989f7705f8ba456cecc54fad3d1db307}
+
+\end{DoxyCompactItemize}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classvcf2gtp_1_1_map_a2967b8aef8b2eb7aab9eac947fb81d45}{{\bfseries eof}}\label{classvcf2gtp_1_1_map_a2967b8aef8b2eb7aab9eac947fb81d45}
+
+\item 
+\hypertarget{classvcf2gtp_1_1_map_a21dce703ab032cc4d779c06208f06dab}{{\bfseries c\-Per\-Base\-Pair}}\label{classvcf2gtp_1_1_map_a21dce703ab032cc4d779c06208f06dab}
+
+\item 
+\hypertarget{classvcf2gtp_1_1_map_a487741e5be4a34eecd3e174cf152e55a}{{\bfseries extrapolate}}\label{classvcf2gtp_1_1_map_a487741e5be4a34eecd3e174cf152e55a}
+
+\item 
+\hypertarget{classvcf2gtp_1_1_map_affa154e1e19dc706a814374efa9a756d}{{\bfseries mfile}}\label{classvcf2gtp_1_1_map_affa154e1e19dc706a814374efa9a756d}
+
+\item 
+\hypertarget{classvcf2gtp_1_1_map_a62cd16c7e7bae966ad76d07c0825273a}{{\bfseries nucpos\-B}}\label{classvcf2gtp_1_1_map_a62cd16c7e7bae966ad76d07c0825273a}
+
+\item 
+\hypertarget{classvcf2gtp_1_1_map_a34f08d58585cc004fed8c3c8a491963d}{{\bfseries mappos\-B}}\label{classvcf2gtp_1_1_map_a34f08d58585cc004fed8c3c8a491963d}
+
+\item 
+\hypertarget{classvcf2gtp_1_1_map_a2e207e82ed5fc9b48badab65f5753e4e}{{\bfseries c\-Mper\-Mb\-B}}\label{classvcf2gtp_1_1_map_a2e207e82ed5fc9b48badab65f5753e4e}
+
+\item 
+\hypertarget{classvcf2gtp_1_1_map_a719d7d02a9295e289b99645514fe51d1}{{\bfseries c\-Mper\-Mb\-A}}\label{classvcf2gtp_1_1_map_a719d7d02a9295e289b99645514fe51d1}
+
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Represents the genetic map. 
+
+\hyperlink{classvcf2gtp_1_1_map}{Map} data can be provided either via a fixed recombination rate per Mb, or via a character, string representing a file name, which should be should be in the format provided by the 1000 Genomes Project. A \hyperlink{classvcf2gtp_1_1_map}{Map} is created like this\-:
+
+mf = Map(c\-Per\-Base\-Pair, map\-File\-Name)
+
+Exactly one of these arguments must equal None. If map\-File\-Name!=None, the class maintains an eof variable (either True or False) and the following data about two adjacent map positions\-: nucpos (nucleotide position, an integer representing the position of the \hyperlink{struct_s_n_p}{S\-N\-P} on the chromosome in base-\/pairs), mappos (genetic map position in c\-M, a float), and c\-Per\-Base\-Pair (local recombination rate per base pair).
+
+If c\-Per\-Base\-Pair!=None, the the class retains only the value of the argument and an eof variable, which is always equal to True. 
+
+\subsubsection{Member Function Documentation}
+\hypertarget{classvcf2gtp_1_1_map_a35fb2f0350a96accd2a0f4bcb287df4c}{\index{vcf2gtp\-::\-Map@{vcf2gtp\-::\-Map}!next@{next}}
+\index{next@{next}!vcf2gtp::Map@{vcf2gtp\-::\-Map}}
+\paragraph[{next}]{\setlength{\rightskip}{0pt plus 5cm}def vcf2gtp.\-Map.\-next (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classvcf2gtp_1_1_map_a35fb2f0350a96accd2a0f4bcb287df4c}
+\begin{DoxyVerb}Move MapFile forward to next mapped SNP. If there is no more
+data, self.eof is set to True, and nothing else changes. Otherwise,
+self.eof is set to False, the values of nucposA, mapposA, and cMperMbA
+are set to the old values of nucposB, mapposB, and cMperMbB,
+and the latter three values are set from the next line of the file.
+\end{DoxyVerb}
+ 
+
+References vcf2gtp.\-Map.\-c\-Mper\-Mb\-A, vcf2gtp.\-Map.\-c\-Mper\-Mb\-B, vcf2gtp.\-Map.\-c\-Per\-Base\-Pair, vcf2gtp.\-Map.\-eof, vcf2gtp.\-Map.\-extrapolate, vcf2gtp.\-Map.\-mappos\-B, Assignment.\-next, Job.\-next, Chain.\-next, Epoch\-Link.\-next, vcf2gtp.\-Map.\-next(), and vcf2gtp.\-Map.\-nucpos\-B.
+
+
+
+Referenced by vcf2gtp.\-Map.\-next().
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{vcf2gtp_8py}{vcf2gtp.\-py}\end{DoxyCompactItemize}

@@ -1,0 +1,324 @@
+.TH "misc.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+misc.h \- 
+.PP
+Header for \fBmisc\&.c\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <gsl/gsl_permutation\&.h>\fP
+.br
+\fC#include <gsl/gsl_linalg\&.h>\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <float\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTRUE\fP   (1)"
+.br
+.ti -1c
+.RI "#define \fBFALSE\fP   (0)"
+.br
+.ti -1c
+.RI "#define \fBUNPHASED_HETEROZYGOTE\fP   4"
+.br
+.ti -1c
+.RI "#define \fBERR\fP(code, msg)"
+.br
+.ti -1c
+.RI "#define \fBmyassert\fP(x)   do { if (!(x)) { dostacktrace(__FILE__,__LINE__,stderr); assert(x); } } while(0)"
+.br
+.ti -1c
+.RI "#define \fBREQUIRE\fP(x, file, lineno)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "static int \fBDbl_near\fP (double x, double y)"
+.br
+.RI "\fIReturn 1 if the relative difference between x and y is less than or equal to DBL_EPSILON\&. \fP"
+.ti -1c
+.RI "int \fBisopt\fP (const char *shortOpt, const char *longOpt, const char *arg)"
+.br
+.RI "\fIReturn 1 if string arg matches either shortOpt or longOpt\&. \fP"
+.ti -1c
+.RI "void \fBtellopt\fP (const char *opt, const char *description)"
+.br
+.ti -1c
+.RI "char * \fBstrlowercase\fP (char *s)"
+.br
+.RI "\fIConvert NULL-terminated string to lower case\&. \fP"
+.ti -1c
+.RI "void \fBcheckmem\fP (void *obj, const char *file, int line)"
+.br
+.ti -1c
+.RI "void \fBprintsqrmat\fP (const char *msg, unsigned dim, double m[][dim])"
+.br
+.ti -1c
+.RI "void \fBprintgslmat\fP (const char *msg, size_t dim, gsl_matrix *m)"
+.br
+.ti -1c
+.RI "double \fBgetreldiff\fP (int dim, double x[], double y[], int verbose)"
+.br
+.ti -1c
+.RI "int \fBmatIsFinite\fP (unsigned dim, double m[][dim])"
+.br
+.ti -1c
+.RI "void \fBassertFiniteArray\fP (const double *x, size_t dim, const char *file, int line)"
+.br
+.ti -1c
+.RI "char * \fBstrcenter\fP (const char *text, unsigned width, char *buff, unsigned buffsize)"
+.br
+.RI "\fICenter string 'text' in a field of width 'width'\&. \fP"
+.ti -1c
+.RI "int \fBstrCountSetChunks\fP (const char *str, const char *sep)"
+.br
+.ti -1c
+.RI "int \fBgetNumCores\fP (void)"
+.br
+.ti -1c
+.RI "long \fBlong_first_geq\fP (long val, long *v, long len)"
+.br
+.ti -1c
+.RI "long \fBlong_last_leq\fP (long val, long *v, long len)"
+.br
+.ti -1c
+.RI "void \fBdie\fP (const char *msg, const char *file, int line)"
+.br
+.ti -1c
+.RI "void \fBeprintf\fP (const char *fmt,\&.\&.\&.)"
+.br
+.ti -1c
+.RI "void * \fBmemdup\fP (const void *p, size_t n)"
+.br
+.ti -1c
+.RI "int \fBstrempty\fP (const char *s)"
+.br
+.RI "\fIReturn 1 if string contains only whitespace; 0 otherwise\&. \fP"
+.ti -1c
+.RI "int \fBstrcomment\fP (const char *s)"
+.br
+.RI "\fIReturn 1 if the first non-white char in string s is '#'; 0 otherwise\&. \fP"
+.ti -1c
+.RI "char * \fBstripComment\fP (char *s)"
+.br
+.RI "\fIstrip comment ('#' to eol) from a string \fP"
+.ti -1c
+.RI "int \fBdblEquals\fP (double x, double y)"
+.br
+.RI "\fITest equality of x and y\&. \fP"
+.ti -1c
+.RI "void \fBdostacktrace\fP (const char *file, int line, FILE *ofp)"
+.br
+.ti -1c
+.RI "double \fBreflect\fP (double x, double lo, double hi)"
+.br
+.RI "\fIFold x back and forth across the boundaries 'lo' and 'hi' to obtain a value y such that lo <= y <= hi\&. \fP"
+.ti -1c
+.RI "void \fBreplaceSuffix\fP (char *str, size_t str_size, const char *suffix, size_t suffix_len)"
+.br
+.RI "\fIReplace suffix (part after last period) of string 'str' with new suffix\&. \fP"
+.ti -1c
+.RI "int \fBpr_gsl_vector\fP (FILE *fp, const char *fmt, const gsl_vector *v)"
+.br
+.ti -1c
+.RI "static int \fBencodeDiploid\fP (unsigned char *gtype, unsigned gtypeSize, const char *str)"
+.br
+.RI "\fIConvert diploid genotype data from the character string format used in input to the binary format used internally\&. \fP"
+.ti -1c
+.RI "static int \fBencodeHaploid\fP (unsigned char *gtype, unsigned gtypeSize, const char *str)"
+.br
+.RI "\fIConvert haploid genotype data from the character string format used in input to the binary format used internally\&. \fP"
+.ti -1c
+.RI "static unsigned \fBencode01\fP (char c)"
+.br
+.RI "\fIEncode a single character, which should equal either '0' or '1' on input\&. \fP"
+.ti -1c
+.RI "void \fBunitTstResult\fP (const char *facility, const char *result)"
+.br
+.ti -1c
+.RI "int \fBcompareLongs\fP (const void *void_x, const void *void_y)"
+.br
+.RI "\fICompare two long ints\&. \fP"
+.ti -1c
+.RI "int \fBcompareDoubles\fP (const void *void_x, const void *void_y)"
+.br
+.RI "\fICompare two doubles\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for \fBmisc\&.c\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ERR(code, msg)"
+\fBValue:\fP
+.PP
+.nf
+do{\
+    fprintf(stderr,"%s:%s:%d: %s %d (%s)\n",\
+            __FILE__,__func__,__LINE__,\
+            (msg), (code), strerror((code)));   \
+    exit(1);\
+}while(0)
+.fi
+.SS "#define REQUIRE(x, file, lineno)"
+\fBValue:\fP
+.PP
+.nf
+do { \
+  if (!(x)) { \
+    dostacktrace(__FILE__,__LINE__,stderr); \
+    eprintf("ERR@%s:%d->%s:%d: Sanity check FAIL\n",\
+            (file),(lineno),__FILE__,__LINE__); \
+   }\
+} while(0)
+.fi
+.SH "Function Documentation"
+.PP 
+.SS "int compareDoubles (const void *void_x, const void *void_y)"
+
+.PP
+Compare two doubles\&. Function interprets its arguments as pointers to doubles\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvoid_x,void_y\fP Pointers to the two doubles, cast as pointers to voids\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+-1, 0, or 1 depending on whether the first arg is <, ==, or > the second\&. 
+.RE
+.PP
+
+.PP
+Referenced by confidenceBounds()\&.
+.SS "int compareLongs (const void *void_x, const void *void_y)"
+
+.PP
+Compare two long ints\&. Function interprets its arguments as pointers to long ints\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvoid_x,void_y\fP Pointers to the two integers, cast as pointers to voids\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+-1, 0, or 1 depending on whether the first arg is <, ==, or > the second\&. 
+.RE
+.PP
+
+.PP
+Referenced by Boot_new()\&.
+.SS "int dblEquals (doublex, doubley)"
+
+.PP
+Test equality of x and y\&. In this test NaN == NaN, Inf == Inf, and -Inf == -Inf\&. 
+.SS "static unsigned encode01 (charc)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Encode a single character, which should equal either '0' or '1' on input\&. Returned value is 0 for '0', 1 for '1', and 255 for anything else\&. 
+.PP
+Referenced by encodeDiploid(), and encodeHaploid()\&.
+.SS "static int encodeDiploid (unsigned char *gtype, unsignedgtypeSize, const char *str)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Convert diploid genotype data from the character string format used in input to the binary format used internally\&. In the input string, a genotype may be any of the following: '00', '01', '10', '11', or 'h'\&. The four 2-character strings represent phased genotypes\&. The 1-character 'h' is an unphased heterozygote\&. This function translates these codes into the integers 0, 1, 2, 3, and UNPHASED_HETEROZYGOTE\&. The latter value is a macro defined elsewhere\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgtype\fP an array of unsigned char values into which the binary-ecoded genotype values will be written\&.
+.br
+\fIgtypeSize\fP the size of the gtype array\&. No more than this number of genotypes will be written into the array\&.
+.br
+\fIstr\fP The input, which represents genotypes as a NULL-terminated character string\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The number of genotypes written into array gtype\&. This is \fInot\fP a NULL-terminated string, as the value 0 is valid in the interior of the array\&. 
+.RE
+.PP
+
+.PP
+References encode01()\&.
+.PP
+Referenced by Gtp_readSNP()\&.
+.SS "static int encodeHaploid (unsigned char *gtype, unsignedgtypeSize, const char *str)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Convert haploid genotype data from the character string format used in input to the binary format used internally\&. In the input buffer a genotype may be either '0' or '1'\&. This function translates these codes into the integers 0 and 1, using the function encode01\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgtype\fP an array of unsigned char values into which the binary-ecoded genotype values will be written\&.
+.br
+\fIgtypeSize\fP the size of the gtype array\&. No more than this number of genotypes will be written into the array\&.
+.br
+\fIstr\fP The input, which represents genotypes as a NULL-terminated character string\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The number of genotypes written into array gtype\&. This is \fInot\fP a NULL-terminated string, as the value 0 is valid in the interior of the array\&. 
+.RE
+.PP
+
+.PP
+References encode01()\&.
+.PP
+Referenced by Gtp_readSNP()\&.
+.SS "int isopt (const char *shortOpt, const char *longOpt, const char *arg)"
+
+.PP
+Return 1 if string arg matches either shortOpt or longOpt\&. ShortOpt and longOpt are ignored if their values are NULL\&. If arg doesn't match either shortOpt or longOpt, then return 0\&. 
+.SS "void replaceSuffix (char *str, size_tstr_size, const char *suffix, size_tsuffix_len)"
+
+.PP
+Replace suffix (part after last period) of string 'str' with new suffix\&. If original string has no suffix, then append one to string\&. Abort if string isn't long enough\&. 
+.SS "char* strcenter (const char *text, unsignedwidth, char *buff, unsignedbuffsize)"
+
+.PP
+Center string 'text' in a field of width 'width'\&. The centered string is written into the character string 'buff', whose size is 'buffsize'\&. 
+.SS "int strcomment (const char *s)"
+
+.PP
+Return 1 if the first non-white char in string s is '#'; 0 otherwise\&. 
+.SS "int strempty (const char *s)"
+
+.PP
+Return 1 if string contains only whitespace; 0 otherwise\&. 
+.PP
+Referenced by Ini_new()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

@@ -1,0 +1,116 @@
+.TH "fithayes.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+fithayes.c \- 
+.PP
+Functions implementing the method of Hayes et al (Genome Research, 13(4): 635-643)\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <gsl/gsl_rng\&.h>\fP
+.br
+\fC#include <gsl/gsl_randist\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <float\&.h>\fP
+.br
+\fC#include <getopt\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'tokenizer\&.h'\fP
+.br
+\fC#include 'assign\&.h'\fP
+.br
+\fC#include 'ini\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNTRIES\fP   20"
+.br
+.ti -1c
+.RI "#define \fBMINKB\fP   1\&.0"
+.br
+.ti -1c
+.RI "#define \fBMAXKB\fP   300\&.0"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBusage\fP (void)"
+.br
+.ti -1c
+.RI "void \fBwrite_data\fP (FILE *outfile, int nvars, int ncc, double *cc, double **ld, const char **lbl)"
+.br
+.ti -1c
+.RI "int \fBread_data\fP (FILE *ifp, int nbins, double *cm, double *rsq, long *nobs)"
+.br
+.RI "\fIRead the data file produced by obsld\&. \fP"
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions implementing the method of Hayes et al (Genome Research, 13(4): 635-643)\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "int read_data (FILE *ifp, intnbins, double *cm, double *rsq, long *nobs)"
+
+.PP
+Read the data file produced by obsld\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIifp\fP Points to file produced by obsld\&. 
+.br
+\fInbins\fP The length of all arrays\&. 
+.br
+\fIcm\fP An array giving the average separation (in centimorgans) between pairs of SNPs within the various bins\&. 
+.br
+\fIrsq\fP An array of estimates of r^2\&. 
+.br
+\fInobs\fP An array whose i'th entry is the number of pairs of SNPs contributing to bin i\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of lines read 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.
