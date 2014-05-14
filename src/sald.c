@@ -1,0 +1,1317 @@
+/**
+@file sald.c
+@anchor sald
+@brief use simplex-simulated annealing to estimate population history
+
+`sald`: use simplex-simulated annealing to estimate population history
+======================================================================
+
+To estimate the parameters describing population history, we need to
+find values that provide the best fit to LD data. This involves
+maximization on a complex surface with lots of local peaks. (To verify
+this for yourself, see \ref mcmcld "mcmcld".) To avoid getting stuck
+on local peaks, `sald` uses the simplex version of simulated
+annealing. 
+
+Usage
+-----
+
+The input data file should be as produced by \ref obsld "obsld".
+
+Although simulated annealing works pretty well, I often find that
+different runs end up on different peaks. Therefore, `sald` is able to
+launch multiple simulated annealing jobs, each from a random starting
+point. These can run in parallel, on separate threads. The number of
+parallel optimizers is set using the `--nOpt` argument described
+below.
+
+The program also deals with bootstrap data, as provided by \ref obsld
+"obsld". The various boostrap data sets also run in parallel if your
+machine has multiple cores.  By default `sald` does not process
+bootstrap replicates: use `--bootfile` if you want it to.
+
+By default `sald` uses as many threads as your machine has cores. This
+is not a good idea if you are sharing a machine with other users. Set
+the number of threads to some smaller number using `--threads`. On
+linux or osx, you can use `top` to figure out how many threads are
+actually running. If you launch 20 threads but only 10 run at any
+given time, your job will run slower. Stop it and launch again with
+`--threads 10`.
+
+Simulated annealing works by beginning with a flattened version of
+your objective function. In this flattened version, all the peaks are
+smaller, so it is easy for the simplex to move from peak to peak. The
+extent of flattening is controlled by a parameter called
+"temperature". High temperature corresponds to lots of flattening.
+The annealing algorithm runs for awhile at a high temperature, then
+lowers the temperature and runs awhile more. The succession of
+temperatures and the number of iterations at each temperature is
+called the "annealing schedule". You can change the performance of the
+algorithm by adjusting this schedule. See the `--initTmptr`,
+`--nPerTmptr` and `--tmptrDecay` arguments.
+
+    usage: sald [options] input_file_name
+       where options may include:
+       -m <method> or --methods <method>
+          specify method "Hill", or "Strobeck", or "Hill,Strobeck"
+       -n <x> or --twoNsmp <x>
+          haploid sample size
+       -t <x> or --threads <x>
+          number of threads (default is auto)
+       -u <x> or --mutation <x>
+          mutation rate/generation
+       -v <x> or --verbose
+          more output
+       -f <x> or --bootfile <x>
+          read bootstrap file x
+       -c <x> or --confidence <x>
+          specify confidence level for CIs of parameters
+       --twoN <x>
+          haploid pop size to x in current epoch
+       -T <x> or --time <x>
+          length of current epoch (generations)
+       -E or --nextepoch
+          move to next earlier epoch
+       --noRandomStart
+          Don't initialize PopHist at random
+       --nOpt <x>
+          optimizers per data set
+       --initTmptr <x>
+          initial temperature
+       --nTmptrs <x>
+          number of temperatures
+       --tmptrDecay <x>
+          ratio of successive temperatures
+       -i <x> or --nItr <x>
+          total number of iterations
+       -h or --help
+          print this message
+
+@copyright Copyright (c) 2014, Alan R. Rogers 
+<rogers@anthro.utah.edu>. This file is released under the Internet
+Systems Consortium License, which can be found in file "LICENSE".
+*/
+#include <stdio.h>
+#include <math.h>
+#include <assert.h>
+#include <gsl/gsl_rng.h>
+#include <gsl/gsl_randist.h>
+#include <float.h>
+#include <getopt.h>
+#include <pthread.h>
+#include <string.h>
+#include <time.h>
+#include <limits.h>
+#include "misc.h"
+#include "boot.h"
+#include "pophist.h"
+#include "sasimplex.h"
+#include "tokenizer.h"
+#include "jobqueue.h"
+#include "hill.h"
+#include "ini.h"
+#include "model.h"
+#include "assign.h"
+#include "annealsched.h"
+#include <time.h>
+
+#if 0
+#define DEBUG
+#else
+#undef DEBUG
+#endif
+
+#ifdef DEBUG
+#define DPRINTF(arg) printf arg
+#else
+#define DPRINTF(arg)
+#endif
+
+#if 0
+extern long tmr_count;
+extern clock_t tmr_cputime;
+#endif
+
+extern const int setSimplexVersion;
+pthread_mutex_t stdoutLock = PTHREAD_MUTEX_INITIALIZER;
+
+/**
+ * The total job is divided into tasks, which are placed on a queue.
+ * Each thread takes a task from the queue and executes it. This continues
+ * until the queue is empty. The TaskArg structure contains the parameters
+ * of a single task.
+ */
+typedef struct TaskArg {
+    unsigned    task;
+    unsigned    seed;
+    int         nbins;
+    size_t      ndim;           /* number of dimensions in state space */
+    double      u;              /* mutation rate */
+    double      ftol, xtol;     /* controls convergence */
+    AnnealSched *sched;         /* annealing schedule */
+    double     *stepsize;       /* size of initial simplex */
+    int         nPerTmptr;      /* number of iterations per temp */
+    int         randomStart;    /* whether to initialize from random ph */
+    int         verbose;
+    double     *sigdsq_obs;
+    double     *c;
+    double     *loBnd;
+    double     *hiBnd;
+    double     *hiInit;
+    ODE        *ode;
+
+    int         status;
+    double      simplexSize;
+    PopHist    *ph;
+    double      cost;
+} TaskArg;
+
+/** Parameters of cost function--that which is minimized. */
+typedef struct CostPar {
+    int         nbins;
+    double      u;
+    double     *sigdsq;
+    double     *c;
+    ODE        *ode;
+    PopHist    *ph;
+} CostPar;
+
+void        usage(void);
+int         read_data(FILE * ifp, int nbins, double *cm, double *sigdsq);
+TaskArg    *TaskArg_new(unsigned task,
+                        unsigned seed,
+                        int nbins,
+                        double u,
+                        double ftol,
+                        double xtol,
+                        double *stepsize,
+                        AnnealSched *sched,
+                        double *loBnd,
+                        double *hiBnd,
+                        double *hiInit,
+                        double odeAbsTol,
+                        double odeRelTol,
+                        int nPerTmptr,
+                        int verbose,
+                        double *sigdsq_obs,
+                        double *c,
+                        Model * model, PopHist * ph_init, int randomStart);
+void        TaskArg_free(TaskArg * targ);
+int         taskfun(void *varg);
+static double costFun(const gsl_vector *x, void *varg);
+void        CostPar_print(CostPar * cp);
+TaskArg    *TaskArg_best(TaskArg ** tpvec, int n);
+void        prHeader(PopHist * ph);
+
+void CostPar_print(CostPar * cp) {
+    int         i;
+
+    printf("CostPar: nbins=%d u=%lg model=%s\n",
+           cp->nbins, cp->u, Model_lbl(ODE_model(cp->ode)));
+    printf("    %15s %15s\n", "c", "sigdsq");
+    for(i = 0; i < cp->nbins; ++i)
+        printf("    %15.8lg %15.8lg\n", cp->c[i], cp->sigdsq[i]);
+    PopHist_print_comment(cp->ph, "    ", stdout);
+}
+
+/** Construct a new TaskArg */
+TaskArg    *TaskArg_new(unsigned task,
+                        unsigned seed,
+                        int nbins,
+                        double u,
+                        double ftol,
+                        double xtol,
+                        double *stepsize,
+                        AnnealSched *sched,
+                        double *loBnd,
+                        double *hiBnd,
+                        double *hiInit,
+                        double odeAbsTol,
+                        double odeRelTol,
+                        int nPerTmptr,
+                        int verbose,
+                        double *sigdsq_obs,
+                        double *c,
+                        Model * model, PopHist * ph_init, int randomStart) {
+    TaskArg    *targ = malloc(sizeof(TaskArg));
+
+    checkmem(targ, __FILE__, __LINE__);
+    assert(targ != NULL);
+
+    targ->ndim = PopHist_nParams(ph_init);
+
+    targ->nbins = nbins;
+    targ->u = u;
+    targ->task = task;
+    /* each task gets different seed */
+    targ->seed = (seed + (unsigned long long) task) % UINT_MAX;  
+
+
+    targ->stepsize = malloc(targ->ndim * sizeof(targ->stepsize[0]));
+    checkmem(targ->stepsize, __FILE__, __LINE__);
+    memcpy(targ->stepsize, stepsize, targ->ndim * sizeof(targ->stepsize[0]));
+
+    targ->sched = AnnealSched_copy(sched);
+
+    targ->loBnd = malloc(targ->ndim * sizeof(targ->loBnd[0]));
+    checkmem(targ->loBnd, __FILE__, __LINE__);
+    memcpy(targ->loBnd, loBnd, targ->ndim * sizeof(targ->loBnd[0]));
+
+    targ->hiBnd = malloc(targ->ndim * sizeof(targ->hiBnd[0]));
+    checkmem(targ->hiBnd, __FILE__, __LINE__);
+    memcpy(targ->hiBnd, hiBnd, targ->ndim * sizeof(targ->hiBnd[0]));
+
+    targ->hiInit = malloc(targ->ndim * sizeof(targ->hiInit[0]));
+    checkmem(targ->hiInit, __FILE__, __LINE__);
+    memcpy(targ->hiInit, hiInit, targ->ndim * sizeof(targ->hiInit[0]));
+
+    targ->nPerTmptr = nPerTmptr;
+    targ->verbose = verbose;
+    targ->cost = -1.0;
+    targ->ftol = ftol;
+    targ->xtol = xtol;
+    targ->ode = ODE_new(model, odeAbsTol, odeRelTol);
+    targ->ph = PopHist_dup(ph_init);
+    targ->randomStart = randomStart;
+    targ->status = 0;
+    targ->simplexSize = DBL_MAX;
+
+    targ->sigdsq_obs = malloc(nbins * sizeof(targ->sigdsq_obs[0]));
+    checkmem(targ->sigdsq_obs, __FILE__, __LINE__);
+    memcpy(targ->sigdsq_obs, sigdsq_obs, nbins * sizeof(targ->sigdsq_obs[0]));
+
+    targ->c = malloc(nbins * sizeof(targ->c[0]));
+    checkmem(targ->c, __FILE__, __LINE__);
+    memcpy(targ->c, c, nbins * sizeof(targ->c[0]));
+
+    return (targ);
+}
+
+void TaskArg_free(TaskArg * targ) {
+    PopHist_free(targ->ph);
+    free(targ->sigdsq_obs);
+    free(targ->c);
+    free(targ->stepsize);
+    free(targ->loBnd);
+    free(targ->hiBnd);
+    free(targ->hiInit);
+    ODE_free(targ->ode);
+    AnnealSched_free(targ->sched);
+    free(targ);
+}
+
+/**
+ * Given a vector of TaskArg pointers, return a pointer to the one
+ * with lowest cost among those that have converged.
+ */
+TaskArg    *TaskArg_best(TaskArg ** tpvec, int n) {
+    double      bestCost = DBL_MAX;
+    int         i, bestNdx = -1;
+
+    for(i = 0; i < n; ++i) {
+        if(tpvec[i]->status==GSL_SUCCESS && tpvec[i]->cost < bestCost) {
+            bestNdx = i;
+            bestCost = tpvec[i]->cost;
+        }
+    }
+    if(bestNdx == -1)
+        return NULL;
+    return tpvec[bestNdx];
+}
+
+void usage(void) {
+    fprintf(stderr, "usage: sald [options] input_file_name\n");
+    fprintf(stderr, "   where options may include:\n");
+
+    /* misc */
+    tellopt("-m <method> or --methods <method>",
+            "specify method \"Hill\", or \"Strobeck\", or \"Hill,Strobeck\"");
+    tellopt("-n <x> or --twoNsmp <x>", "haploid sample size");
+    tellopt("-t <x> or --threads <x>", "number of threads (default is auto)");
+    tellopt("-u <x> or --mutation <x>", "mutation rate/generation");
+    tellopt("-v <x> or --verbose", "more output");
+
+    /* bootstrap */
+    tellopt("-f <x> or --bootfile <x>", "read bootstrap file x");
+    tellopt("-c <x> or --confidence <x>",
+            "specify confidence level for CIs of parameters");
+
+    /* population history */
+    tellopt("--twoN <x>", "haploid pop size to x in current epoch");
+    tellopt("-T <x> or --time <x>", "length of current epoch (generations)");
+    tellopt("-E or --nextepoch", "move to next earlier epoch");
+    tellopt("--noRandomStart", "Don't initialize PopHist at random");
+
+    /* number of parallel optimizers */
+    tellopt("--nOpt <x>", "optimizers per data set");
+
+    /* annealing */
+    tellopt("--initTmptr <x>", "initial temperature");
+    tellopt("--nTmptrs <x>", "number of temperatures");
+    tellopt("--tmptrDecay <x>", "ratio of successive temperatures");
+    tellopt("-i <x> or --nItr <x>", "total number of iterations");
+
+    tellopt("-h or --help", "print this message");
+    exit(1);
+}
+
+/**
+ * Read the data file produced by obsld.
+ *
+ * @param[in] ifp Points to file produced by obsld.
+ * @param[in] nbins The length of all arrays.
+ * @param[out] cm An array giving the average separation (in centimorgans)
+ * between pairs of SNPs within the various bins.
+ * @param[out] sigdsq An array of estimates of sigma_d^2.
+ *
+ * @returns number of lines read
+ */
+int read_data(FILE * ifp, int nbins, double *cm, double *sigdsq) {
+    char        buff[200];
+    int         inData = 0, ntokens, i, tokensExpected = 0;
+    Tokenizer  *tkz = Tokenizer_new(50);
+
+    rewind(ifp);
+    /* skip until beginning of data */
+    while(!inData && fgets(buff, (int) sizeof(buff), ifp) != NULL) {
+
+        if(!strchr(buff, '\n') && !feof(ifp))
+            eprintf("ERR@%s:%d: input buffer overflow."
+                    " buff size: %d\n", __FILE__, __LINE__, sizeof(buff));
+
+        Tokenizer_split(tkz, buff, " \t");  /* tokenize */
+        ntokens = Tokenizer_strip(tkz, " \t\n#");   /* strip extraneous */
+        if(ntokens < 2)
+            continue;
+        if(strcmp(Tokenizer_token(tkz, 0), "cM") == 0) {
+            inData = 1;
+            switch (ntokens) {
+            case 4:
+                /* fall through */
+            case 6:
+                tokensExpected = ntokens;
+                break;
+            default:
+                fprintf(stderr, "Current tokens:");
+                Tokenizer_print(tkz, stderr);
+                eprintf("ERR@%s:%d: got %d tokens rather than 4 or 6",
+                        __FILE__, __LINE__, ntokens);
+            }
+        }
+    }
+
+    if(!inData)
+        die("Couldn't find data in input file", __FILE__, __LINE__);
+
+    /* read data */
+    i = 0;
+    while(i < nbins && fgets(buff, (int) sizeof(buff), ifp) != NULL) {
+
+        if(!strchr(buff, '\n') && !feof(ifp))
+            eprintf("ERR@%s:%d: input buffer overflow."
+                    " buff size: %d\n", __FILE__, __LINE__, sizeof(buff));
+
+        ntokens = Tokenizer_split(tkz, buff, " \t");    /* tokenize */
+        if(ntokens == 0)
+            continue;
+
+        if(ntokens != tokensExpected)
+            eprintf("ERR@%s:%d: got %d tokens rather than %d",
+                    __FILE__, __LINE__, ntokens, tokensExpected);
+
+        cm[i] = strtod(Tokenizer_token(tkz, 0), NULL);
+        sigdsq[i] = strtod(Tokenizer_token(tkz, 1), NULL);
+        ++i;
+    }
+
+    Tokenizer_free(tkz);
+    tkz = NULL;
+    return i;                   /* return number of lines read */
+}
+
+int taskfun(void *varg) {
+    TaskArg    *targ = (TaskArg *) varg;
+    DPRINTF(("%s:%d:%s: task %u entry\n",
+             __FILE__, __LINE__, __func__, targ->task));
+    const int   rotate = 0;
+    gsl_vector *x = gsl_vector_alloc(targ->ndim);
+    gsl_vector_view ss = gsl_vector_view_array(targ->stepsize, targ->ndim);
+    int         i, status;
+    double      size, temperature;
+
+    CostPar     costPar = {
+        .nbins = targ->nbins,
+        .u = targ->u,
+        .sigdsq = targ->sigdsq_obs,
+        .c = targ->c,
+        .ode = targ->ode,
+        .ph = targ->ph
+    };
+
+    /* Starting point */
+    PopHist_to_vector(x, targ->ph);
+
+    /* Initialize method and iterate */
+    gsl_multimin_function minex_func = {
+        .n = targ->ndim,
+        .f = costFun,
+        .params = &costPar
+    };
+    gsl_multimin_fminimizer *minimizer;
+    {
+        const gsl_multimin_fminimizer_type *fmType
+            = gsl_multimin_fminimizer_sasimplex;
+        minimizer = gsl_multimin_fminimizer_alloc(fmType, targ->ndim);
+        checkmem(minimizer, __FILE__, __LINE__);
+    }
+
+    gsl_multimin_fminimizer_set(minimizer, &minex_func, x, &ss.vector);
+    sasimplex_random_seed(minimizer, targ->seed);
+    if(targ->verbose) {
+        printf("Using minimizer %s.\n",
+               gsl_multimin_fminimizer_name(minimizer));
+        printf("%5s %7s %8s %8s %8s\n", "itr",
+               "f", "size", "AbsErr", "temp");
+        fflush(stdout);
+    }
+
+    /* inequality constraints on parameters */
+    gsl_vector_view loBnd =
+        gsl_vector_view_array(targ->loBnd, targ->ndim);
+    gsl_vector_view hiBnd =
+        gsl_vector_view_array(targ->hiBnd, targ->ndim);
+    sasimplex_set_bounds(minimizer, &loBnd.vector, &hiBnd.vector, &ss.vector);
+
+    /* for random restarts */
+    if(targ->randomStart) {
+        gsl_vector_view hiInit =
+            gsl_vector_view_array(targ->hiInit, targ->ndim);
+        sasimplex_randomize_state(minimizer, rotate,
+                                  &loBnd.vector, &hiInit.vector,
+                                  &ss.vector);
+    }
+
+    if(targ->verbose) {
+        printf("%5s %7s %8s %8s\n",
+               "itr", "fval", "size", "tmptr");
+        fflush(stdout);
+    }
+    for(i=0; i < AnnealSched_size(targ->sched); ++i) {
+        temperature = AnnealSched_next(targ->sched);
+        status = sasimplex_n_iterations(minimizer,
+                                        &size,
+                                        targ->ftol,
+                                        targ->xtol,
+                                        (temperature==0.0
+                                         ? 2.0*targ->nPerTmptr
+                                         : targ->nPerTmptr),
+                                        temperature,
+                                        targ->verbose);
+        if(targ->verbose) {
+            printf("%s:tmptr=%6.4lf size=%.5lf vscale=%.5lf badness=%.5lf x=",
+                   __func__,
+                   temperature, size, 
+                   sasimplex_vertical_scale(minimizer),
+				   minimizer->fval);
+            pr_gsl_vector(stdout, "%+7.4le", minimizer->x);
+            putchar('\n');
+            fflush(stdout);
+        }
+        if(status != GSL_CONTINUE)
+            break;
+    }
+#if 0
+    if(!targ->verbose) {
+        fflush(stdout);
+        fprintf(stderr,"%s:size=%.5lf vscale=%.5lf badness=%.5lf x=",
+               __func__,
+               size, sasimplex_vertical_scale(minimizer),
+			   minimizer->fval);
+        pr_gsl_vector(stderr, "%+7.4lf", minimizer->x);
+    }
+    switch (status) {
+    case GSL_SUCCESS:
+        printf(" converged\n");
+        break;
+    case GSL_ETOLF:
+        printf(" converged on suboptimal point\n");
+        break;
+    case GSL_ETOLX:
+        printf(" flat objective function\n");
+        break;
+    case GSL_CONTINUE:
+        printf(" no convergence\n");
+        break;
+    default:
+        printf(" unknown status: %d\n", status);
+    }
+    fflush(stdout);
+#endif
+
+    DPRINTF(("%s:%d:%u done minimizing\n", __func__, __LINE__, targ->task));
+
+    targ->status = status;
+    vector_to_PopHist(targ->ph, minimizer->x);
+    targ->cost = minimizer->fval;
+    targ->simplexSize = size;
+
+    if(targ->verbose) {
+        pthread_mutex_lock(&stdoutLock);
+        printf("# %3s", "");
+        for(i = 0; i < PopHist_nParams(targ->ph); ++i) {
+            if(i % 2 == 0)
+                printf(" %14.6lg", PopHist_paramValue(targ->ph, i));
+            else
+                printf(" %10.3lf", PopHist_paramValue(targ->ph, i));
+        }
+        printf(" %11.4lg", targ->cost);
+        printf(" %11.4lg", targ->simplexSize);
+        printf(" %6d\n", targ->status);
+        fflush(stdout);
+        pthread_mutex_unlock(&stdoutLock);
+    }
+
+    gsl_vector_free(x);
+    gsl_multimin_fminimizer_free(minimizer);
+
+    DPRINTF(("%s:%d:%u exit\n", __func__, __LINE__, targ->task));
+    return 0;
+}
+
+/**
+ * Sum of differences between observed and expected sigma_d^2 vectors.
+ *
+ * @param[in] ph Current population history
+ * @param[in] u mutation rate per site per generation
+ * @param[in] nbins Number of values in vectors obs and c
+ * @param[in] sigdsq Vector of nbins values, the observed values of
+ * sigdsq.
+ * @param[in] c Vector of nbins values, the recombination rates
+ * associated with the values in sigdsq.
+ */
+static double costFun(const gsl_vector *x, void *varg) {
+    CostPar    *arg = (CostPar *) varg;
+    PopHist    *ph = arg->ph;
+    int         nbins = arg->nbins;
+    double      u = arg->u;
+    double     *sigdsq = arg->sigdsq;
+    double     *c = arg->c;
+    ODE        *ode = arg->ode;
+    static const double bigval = 1.0 / DBL_EPSILON;
+
+    double      badness, exp_sigdsq[nbins];
+    int         i;
+
+	/* DEBUG: make a vector xx which is absolute value of x */
+	gsl_vector *xx = gsl_vector_alloc(x->size);
+	checkmem(xx, __FILE__, __LINE__);
+	gsl_vector_memcpy(xx, x);
+	for(i=0; i < x->size; ++i)
+		gsl_vector_set(xx, i, fabs(gsl_vector_get(x, i)));
+
+    vector_to_PopHist(ph, xx);  /* DEBUG: using xx instead of x */
+
+	gsl_vector_free(xx);
+
+#if 0
+    printf("%s:%d:%s: initial PopHist:\n", __FILE__,__LINE__,__func__);
+    fflush(stdout);
+    PopHist_print(ph, stdout);
+    fflush(stdout);
+#endif
+
+    /* get vector of expected values of sigdsq */
+    ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
+
+    badness = 0.0;
+    for(i = 0; i < nbins; ++i) {
+        double      diff = exp_sigdsq[i] - sigdsq[i];
+
+        badness += diff * diff;
+    }
+
+    if(!isfinite(badness)) {
+#ifdef DEBUG
+        char        buff[20];
+
+        fprintf(stderr, "%s:%s:%d: badness=%lg for",
+                __FILE__, __func__, __LINE__, badness);
+        for(i = 0; i < PopHist_nParams(ph); ++i) {
+            PopHist_paramName(ph, buff, sizeof(buff), i);
+            fprintf(stderr, " %s=%lg", buff, PopHist_paramValue(ph, i));
+        }
+        putc('\n', stderr);
+        for(i = 0; i < nbins; ++i) {
+            if(!isfinite(exp_sigdsq[i])) {
+                fprintf(stderr, "WARNING@%s:%d: exp_sigdsq[%d]=%lg\n",
+                        __FILE__, __LINE__, i, exp_sigdsq[i]);
+            }
+            if(!isfinite(sigdsq[i]))
+                eprintf("ERR@%s:%d: obs[%d]=%lg",
+                        __FILE__, __LINE__, i, sigdsq[i]);
+        }
+#endif
+        badness = bigval;
+    }
+
+    return badness;
+}
+
+/** Print header */
+void prHeader(PopHist * ph) {
+    char        buff[30];
+    int         i, nPar = PopHist_nParams(ph);
+
+    printf("# Results from all optimizers\n");
+    printf("# %3s", "");
+    for(i = 0; i < nPar; ++i) {
+        PopHist_paramName(ph, buff, sizeof(buff), i);
+        if(i % 2 == 0)
+            printf(" %14s", buff);
+        else
+            printf(" %10s", buff);
+    }
+    printf(" %11s", "badness");
+    printf(" %11s", "simplexSize");
+    printf(" %6s\n", "convrg");
+    fflush(stdout);
+}
+
+
+int main(int argc, char **argv) {
+    int         optndx;
+    static struct option myopts[] = {
+        /* {char *name, int has_arg, int *flag, int val} */
+        {"bootfile", required_argument, 0, 'f'},
+        {"confidence", required_argument, 0, 'c'},
+        {"nextepoch", no_argument, 0, 'E'},
+        {"tmptrDecay", required_argument, 0, 'd'},
+        {"help", no_argument, 0, 'h'},
+        {"noRandomStart", no_argument, 0, 'R'},
+        {"initTmptr", required_argument, 0, 'I'},
+        {"nItr", required_argument, 0, 'i'},
+        {"nOpt", required_argument, 0, 'o'},
+        {"methods", required_argument, 0, 'm'},
+        {"twoN", required_argument, 0, 'N'},
+        {"twoNsmp", required_argument, 0, 'n'},
+        {"nTmptrs", required_argument, 0, 'p'},
+        {"threads", required_argument, 0, 't'},
+        {"time", required_argument, 0, 'T'},
+        {"mutation", required_argument, 0, 'u'},
+        {"verbose", no_argument, 0, 'v'},
+        {NULL, 0, NULL, 0}
+    };
+
+    double      u = 1e-8;
+    double      ftol = 1e-3;
+    double      xtol = 1e-3;
+    double      odeAbsTol = 1e-7;
+    double      odeRelTol = 1e-3;
+    double      confidence = 0.95;
+    double      initTmptr = 35.0;
+    double      tmptrDecay = 1.0;
+    int         nItr = 5000;     /* total number of iterations */
+    int         nPerTmptr;       /* iterations at each temperature */
+    int         nTmptrs = 7;     /* number of temperatures */
+    double      lo2Ninv = 1e-8, hi2Ninv = 1.0;
+    double      loT = 1.0, hiT = 1e4, hiTinit = 2000.0;
+    double     *stepsize;            /* controls size of initial simplex */
+    double      durationEps = 500.0;
+    double      twoNinvEps = 0.01;
+    double     *cc, *sigdsq_obs;
+
+    int         nbins;
+    int         verbose = 0;
+    int         twoNsmp = 0;    /* number of haploid samples */
+    int         nthreads = 0;   /* number of threads to launch */
+    int         nDataSets = 1;  /* 1 + nBootReps */
+    int         nOpt = 10;      /* parallel optimization threads
+                                 * per data set */
+    int         nTasks = 0;     /* total number of tasks */
+    long        nBootReps = 0;  /* bootstrap replicates */
+    int         randomStart = 1;    /* initialize ph from random values */
+    int         curr_epoch = 0, epochPending = 1, phSetFromFile = 0;
+    double      curr_t = strtod("Inf", 0);
+    double      curr_twoN = 1000.0;
+    double      badness;
+
+    char        method[20] = { 0 };
+    EpochLink  *linkedList = NULL;
+    char        bootfilename[FILENAMESIZE] = { '\0' };
+    char        fname[FILENAMESIZE] = { '\0' };
+    FILE       *ifp = NULL;
+    int         i, j, rval;
+    int         rndx, nparams = 0, pndx;
+    PopHist    *ph_init = NULL;
+    Model      *model = NULL;
+    time_t      currtime = time(NULL);
+    unsigned    baseSeed = currtime % UINT_MAX;
+
+    printf("############################################\n"
+           "# sald: fit population history to LD using #\n"
+           "#       simulated annealing                #\n"
+           "############################################\n");
+
+    putchar('\n');
+#ifdef __TIMESTAMP__
+    printf("# Program was compiled: %s\n", __TIMESTAMP__);
+#endif
+    printf("# Program was run     : %s\n", ctime(&currtime));
+
+    printf("# cmd:");
+    for(i = 0; i < argc; ++i)
+        printf(" %s", argv[i]);
+    putchar('\n');
+
+    /* import definitions from initialization file */
+    Ini        *ini = Ini_new(INIFILE);
+
+    if(ini) {
+        Ini_setDbl(ini, "confidence", &confidence, !MANDATORY);
+        Ini_setString(ini, "methods", method, sizeof(method), !MANDATORY);
+        Ini_setDbl(ini, "mutation", &u, !MANDATORY);
+        Ini_setDbl(ini, "initTmptr", &initTmptr, !MANDATORY);
+        Ini_setDbl(ini, "tmptrDecay", &tmptrDecay, !MANDATORY);
+        Ini_setInt(ini, "nTmptrs", &nTmptrs, !MANDATORY);
+        Ini_setInt(ini, "nthreads", &nthreads, !MANDATORY);
+        Ini_setInt(ini, "nPerTmptr", &nPerTmptr, !MANDATORY);
+        Ini_setInt(ini, "nOpt", &nOpt, !MANDATORY);
+        if(Ini_setEpochLink(ini, &linkedList, !MANDATORY))
+            phSetFromFile = 1;
+        Ini_free(ini);
+        ini = NULL;
+    }
+
+    /* command line arguments */
+    for(;;) {
+        i = getopt_long(argc, argv, "c:d:f:BEhi:m:n:N:s:t:T:u:v",
+                        myopts, &optndx);
+        if(i == -1)
+            break;
+        switch (i) {
+        case ':':
+        case '?':
+            usage();
+            break;
+        case 'c':
+            confidence = strtod(optarg, 0);
+            break;
+        case 'd':
+            tmptrDecay = strtod(optarg, 0);
+            break;
+        case 'E':
+            if(!epochPending) {
+                fprintf(stderr, "Arg out of place: %s\n", "--nextEpoch");
+                usage();
+            }
+            if(phSetFromFile) {
+                /* override PopHist from file */
+                EpochLink_free(linkedList);
+                linkedList = NULL;
+                phSetFromFile = 0;
+            }
+            linkedList = EpochLink_new(linkedList, curr_t, curr_twoN);
+            ++curr_epoch;
+            epochPending = 0;
+            break;
+        case 'f':
+            snprintf(bootfilename, sizeof(bootfilename), "%s", optarg);
+            break;
+        case 'I':
+            assert(optarg);
+            initTmptr = strtod(optarg, 0);
+            break;
+        case 'm':
+            snprintf(method, sizeof(method), "%s", optarg);
+            break;
+        case 'N':
+            myassert(optarg);
+            if(phSetFromFile) {
+                /* override PopHist from file */
+                EpochLink_free(linkedList);
+                linkedList = NULL;
+                phSetFromFile = 0;
+            }
+            curr_twoN = strtod(optarg, 0);
+            epochPending = 1;
+            break;
+        case 'n':
+            twoNsmp = strtol(optarg, NULL, 10);
+            break;
+        case 'R':
+            randomStart = 0;
+            break;
+        case 'i':
+            nItr = strtol(optarg, NULL, 10);
+            break;
+        case 'o':
+            nOpt = strtol(optarg, NULL, 10);
+            break;
+        case 'p':
+            nTmptrs = strtol(optarg, NULL, 10);
+            break;
+        case 't':
+            nthreads = strtol(optarg, NULL, 10);
+            break;
+        case 'T':
+            myassert(optarg);
+            if(phSetFromFile) {
+                /* override PopHist from file */
+                EpochLink_free(linkedList);
+                linkedList = NULL;
+                phSetFromFile = 0;
+            }
+            curr_t = strtod(optarg, 0);
+            epochPending = 1;
+            break;
+        case 'u':
+            assert(optarg);
+            u = strtod(optarg, 0);
+            break;
+        case 'v':
+            verbose = 1;
+            break;
+        case 'h':
+        default:
+            usage();
+        }
+    }
+
+    /* remaining option gives file name */
+    switch (argc - optind) {
+    case 0:
+        fprintf(stderr, "Command line must specify input file\n");
+        usage();
+        break;
+    case 1:
+        snprintf(fname, sizeof(fname), "%s", argv[optind]);
+        ifp = fopen(fname, "r");
+        if(ifp == NULL)
+            eprintf("ERR@%s:%d: Couldn't open %s for input",
+                    __FILE__, __LINE__, fname);
+        break;
+    default:
+        fprintf(stderr, "Only one input file is allowed\n");
+        usage();
+    }
+    assert(fname[0] != '\0');
+    assert(ifp != NULL);
+
+    /* specify default model */
+    if(method[0] == '\0')
+        snprintf(method, sizeof(method), "Hill");
+
+    /* If more than one method was specified, use only first. */
+    char       *p = strchr(method, ',');
+
+    if(p) {
+        fprintf(stderr, "WARNING@%s:%d: Models=\"%s\".",
+                __FILE__, __LINE__, method);
+        *p = '\0';
+        fprintf(stderr, " Using only \"%s\".\n", method);
+    }
+
+    if(epochPending && !phSetFromFile)
+        linkedList = EpochLink_new(linkedList, curr_t, curr_twoN);
+
+    ph_init = PopHist_fromEpochLink(linkedList);
+    nparams = PopHist_nParams(ph_init);
+
+    printf("# Initial PopHist:\n");
+    PopHist_print_comment(ph_init, "# ", stdout);
+
+    stepsize = malloc(nparams * sizeof(double));
+    checkmem(stepsize, __FILE__, __LINE__);
+    PopHist_setAllTwoNinv(stepsize, nparams, twoNinvEps);
+    PopHist_setAllDuration(stepsize, nparams, durationEps);
+
+    double     *loBnd = malloc(nparams * sizeof(loBnd[0]));
+
+    checkmem(loBnd, __FILE__, __LINE__);
+    PopHist_setAllTwoNinv(loBnd, nparams, lo2Ninv);
+    PopHist_setAllDuration(loBnd, nparams, loT);
+
+    double     *hiBnd = malloc(nparams * sizeof(hiBnd[0]));
+
+    checkmem(hiBnd, __FILE__, __LINE__);
+    PopHist_setAllTwoNinv(hiBnd, nparams, hi2Ninv);
+    PopHist_setAllDuration(hiBnd, nparams, hiT);
+
+    double     *hiInit = malloc(nparams * sizeof(hiInit[0]));
+
+    checkmem(hiInit, __FILE__, __LINE__);
+    PopHist_setAllTwoNinv(hiInit, nparams, hi2Ninv);
+    PopHist_setAllDuration(hiInit, nparams, hiTinit);
+
+    /* read assignment statements in input file */
+    Assignment *asmt = Assignment_readObsld(ifp);
+
+    Assignment_setInt(asmt, "nbins", &nbins, MANDATORY);
+    Assignment_setInt(asmt, "Haploid sample size", &twoNsmp, MANDATORY);
+    Assignment_free(asmt);
+    asmt = NULL;
+
+    /* determine number of iterations at each temperature */
+    nPerTmptr = round(nItr/ (double) nTmptrs);
+    if(nPerTmptr <= 0)
+        nPerTmptr = 1;
+    nItr = nPerTmptr * nTmptrs;
+
+    model = Model_alloc(method, twoNsmp);
+    AnnealSched *sched = AnnealSched_alloc(nTmptrs, initTmptr, tmptrDecay);
+
+    printf("# %-35s = %s\n", "Model", method);
+    printf("# %-35s = %lg\n", "mutation rate per nucleotide", u);
+    printf("# %-35s = %lg\n", "ftol", ftol);
+    printf("# %-35s = %lg\n", "xtol", xtol);
+    printf("# %-35s = %lg\n", "odeAbsTol", odeAbsTol);
+    printf("# %-35s = %lg\n", "odeRelTol", odeRelTol);
+
+    printf("# %-35s = %lg\n", "Initial temp", initTmptr);
+    printf("# %-35s = %lg\n", "final temp", 0.0);
+    printf("# %-35s = %lg\n", "tmptr decay", tmptrDecay);
+    printf("# %-35s = %d\n", "nTmptrs", nTmptrs);
+    printf("# %-35s = %d\n", "iterations in total", nItr);
+    printf("# %-35s = %d\n", "iterations/temp", nPerTmptr);
+    printf("# %-35s = %d\n", "optimizers/data set", nOpt);
+    printf("# %-35s = %d\n", "haploid sample size", twoNsmp);
+    printf("# %-35s = [%lg, %lg]\n", "twoNinv range", lo2Ninv, hi2Ninv);
+    printf("# %-35s = [%lg, %lg]\n", "t range", loT, hiT);
+    printf("# %-35s = [", "scale of initial simplex");
+    for(i = 0; i + 1 < nparams; ++i)
+        printf("%lg, ", stepsize[i]);
+    printf("%lg]\n", stepsize[i]);
+
+    cc = (double *) malloc(nbins * sizeof(cc[0]));
+    checkmem(cc, __FILE__, __LINE__);
+
+    sigdsq_obs = (double *) malloc(nbins * sizeof(sigdsq_obs[0]));
+    checkmem(sigdsq_obs, __FILE__, __LINE__);
+
+    rval = read_data(ifp, nbins, cc, sigdsq_obs);
+    if(rval != nbins)
+        eprintf("ERR@%s:%d: Couldn't read %d lines of data from \"%s\"."
+                " Only found %d lines", nbins, fname, rval);
+
+    /* convert centimorgans to recombination rates */
+    for(i = 0; i < nbins; ++i)
+        cc[i] *= 0.01;
+
+    Boot       *boot = NULL;
+    FILE       *bootfile = NULL;
+
+    if(bootfilename[0]) {
+        bootfile = fopen(bootfilename, "r");
+        if(bootfile == NULL)
+            eprintf("ERR@%s:%d: can't open bootfile \"%s\"\n",
+                    __FILE__, __LINE__, bootfilename);
+        boot = Boot_restore(bootfile);
+        if(boot == NULL)
+            eprintf("ERR@%s:%d: can't restore from bootfile \"%s\"\n",
+                    __FILE__, __LINE__, bootfilename);
+        fclose(bootfile);
+        bootfile = NULL;
+    }
+
+    if(boot) {
+        nBootReps = Boot_nReps(boot);
+        Boot_purge(boot);
+        if(nBootReps > Boot_nReps(boot)) {
+            fprintf(stderr, "Boot_purge removed %ld reps\n",
+                    nBootReps - Boot_nReps(boot));
+            nBootReps = Boot_nReps(boot);
+        }
+        assert(nBootReps >= 0);
+    } else
+        nBootReps = 0;
+    printf("# %-35s = %ld\n", "Number of bootstrap replicates", nBootReps);
+
+    nDataSets = 1 + nBootReps;
+    nTasks = nDataSets * nOpt;
+
+    /*
+     * taskarg[i][j] points to the j'th optimizer on the i'th data
+     * set, where the observed data are data set 0. i runs from 0
+     * through nDataSets-1, and j from 0 through nOpt-1.
+     */
+    TaskArg  ***taskarg = malloc(nDataSets * sizeof(taskarg[0]));
+
+    checkmem(taskarg, __FILE__, __LINE__);
+    for(i = 0; i < nDataSets; ++i) {
+        /* allocate a row of pointers for each data set */
+        taskarg[i] = malloc(nOpt * sizeof(taskarg[i][0]));
+        checkmem(taskarg[i], __FILE__, __LINE__);
+    }
+
+    /* create task arguments for the observed sigdsq */
+    for(j = 0; j < nOpt; ++j) {
+        taskarg[0][j] = TaskArg_new(j, baseSeed, nbins, u,
+                                    ftol, xtol,
+                                    stepsize,
+                                    sched,
+                                    loBnd, hiBnd, hiInit,
+                                    odeAbsTol, odeRelTol,
+                                    nPerTmptr,
+                                    verbose,
+                                    sigdsq_obs, cc, model, ph_init,
+                                    randomStart);
+    }
+
+    /* create task arguments for each bootstrap replicate */
+    double     *sigdsq_curr = malloc(nbins * sizeof(sigdsq_curr[0]));
+    checkmem(sigdsq_curr, __FILE__, __LINE__);
+    double     *cc_curr = malloc(nbins * sizeof(cc_curr[0]));
+    checkmem(sigdsq_curr, __FILE__, __LINE__);
+
+    for(rndx = 0; rndx < nBootReps; ++rndx) {
+        Boot_get_rep(boot, sigdsq_curr, NULL, cc_curr, NULL, rndx);
+        for(i = 0; i < nbins; ++i)
+            cc_curr[i] *= 0.01; /* conv. cM to recombination rate */
+        for(j = 0; j < nOpt; ++j)
+            taskarg[rndx + 1][j] = TaskArg_new(j + (1+rndx)*nOpt,
+                                               baseSeed,
+                                               nbins, u, 
+                                               ftol, xtol,
+                                               stepsize,
+                                               sched,
+                                               loBnd, hiBnd, hiInit,
+                                               odeAbsTol, odeRelTol,
+                                               nPerTmptr,
+                                               0, sigdsq_curr, cc_curr,
+                                               model, ph_init, randomStart);
+    }
+
+    if(nthreads == 0)
+        nthreads = getNumCores();
+
+    if(nthreads > nTasks)
+        nthreads = nTasks;
+
+    fflush(stdout);
+    fprintf(stderr, "Creating %d threads to perform %d tasks\n",
+            nthreads, nTasks);
+
+    JobQueue   *jq = JobQueue_new(nthreads);
+
+    if(jq == NULL)
+        eprintf("ERR@%s:%d: Bad return from JobQueue_new",
+                __FILE__, __LINE__);
+
+    for(i = 0; i < nDataSets; ++i)
+        for(j = 0; j < nOpt; ++j)
+            JobQueue_addJob(jq, taskfun, taskarg[i][j]);
+
+    if(verbose)
+        prHeader(ph_init);
+    JobQueue_waitOnJobs(jq);
+
+    fprintf(stderr, "Back from threads\n");
+
+    TaskArg   **best = malloc(nDataSets * sizeof(best[0]));
+    checkmem(best, __FILE__, __LINE__);
+
+	/*
+	 * best[i] points to the best result among all replicate
+	 * optimizers for data set i.
+	 */
+    for(i = 0; i < nDataSets; ++i) {
+        best[i] = TaskArg_best(taskarg[i], nOpt);
+    }
+
+    if(best[0] == NULL)
+        printf("No convergence\n");
+
+    prHeader(ph_init);
+    for(i = 0; i < nOpt; ++i) {
+        printf("# %2d:", i);
+        for(j = 0; j < PopHist_nParams(taskarg[0][i]->ph); ++j) {
+            if(j % 2 == 0)
+                printf(" %14.6lg", PopHist_paramValue(taskarg[0][i]->ph, j));
+            else
+                printf(" %10.3lf", PopHist_paramValue(taskarg[0][i]->ph, j));
+        }
+        printf(" %11.9lf", taskarg[0][i]->cost);
+        printf(" %11.9lf", taskarg[0][i]->simplexSize);
+        switch(taskarg[0][i]->status) {
+        case GSL_SUCCESS:
+            printf(" %-9s\n", "Converg");
+            break;
+        case GSL_ETOLF:
+            printf(" %-9s\n", "ETOLF");
+            break;
+        case GSL_ETOLX:
+            printf(" %-9s\n", "ETOLX");
+            break;
+        case GSL_CONTINUE:
+            printf(" %-9s\n","NoConverg");
+            break;
+        default:
+            printf(" %-9d\n", taskarg[0][i]->status);
+        }
+    }
+
+    if(best[0] != NULL) {
+        badness = best[0]->cost;
+        printf("\n# minimum badness = %lg\n", badness);
+    }
+
+    char        pname[50];
+
+    if(boot) {
+        fprintf(stderr, "Processing bootstrap\n");
+        /* output w/ confidence interval */
+        assert(nBootReps > 0);
+        double      low, high;
+        char        cibuff[50];
+        double     *v = malloc(nBootReps * sizeof(v[0]));
+
+        checkmem(v, __FILE__, __LINE__);
+
+        snprintf(cibuff, sizeof(cibuff), "%2.0lf%%_Conf_Int",
+                 round(100 * confidence));
+        printf("\n# %5s: %10s %10s %23s\n",
+               "param", "initial", "estimated", cibuff);
+
+        for(pndx = 0; pndx < nparams; ++pndx) {
+            long        ngood = 0;
+            double      paramVal;
+
+            for(rndx = 0; rndx < nBootReps; ++rndx) {
+                if(best[1 + rndx] == NULL)
+                    continue;
+                paramVal = PopHist_paramValue(best[1 + rndx]->ph, pndx);
+                v[ngood++] = paramVal;
+            }
+            if(ngood == 0) {
+                fprintf(stderr,
+                        "Warning: All bootstrap reps failed to converge\n");
+                break;
+            }
+            confidenceBounds(&low, &high, confidence, v, ngood);
+            rval = PopHist_paramName(ph_init, pname, sizeof(pname), pndx);
+            if(rval) {
+                fprintf(stderr,
+                        "OOPS@%s:%dBad return from PopHist_paramName\n",
+                        __FILE__, __LINE__);
+            } else if(best[0]) {
+                snprintf(cibuff, sizeof(cibuff), "(%5.5lg,%5.5lg)", low,
+                         high);
+                printf("# %5s: %10.7lg %10.5lg %23s\n", pname,
+                       PopHist_paramValue(ph_init, pndx),
+                       PopHist_paramValue(best[0]->ph, pndx), cibuff);
+            }
+        }
+        free(v);
+    } else if(best[0]) {
+        /* output w/o confidence interval */
+
+        printf("# %10s: %10s %9s\n", "param", "initial", "estimated");
+        for(pndx = 0; pndx < nparams; ++pndx) {
+            rval = PopHist_paramName(ph_init, pname, sizeof(pname), pndx);
+            if(rval)
+                fprintf(stderr,
+                        "%s:%s:%d:Bad return from PopHist_paramName\n",
+                        __func__,__FILE__, __LINE__);
+            printf("# %10s: %10.7lg %9.5lg\n",
+                   pname,
+                   PopHist_paramValue(ph_init, pndx),
+                   PopHist_paramValue(best[0]->ph, pndx));
+        }
+    }
+
+    if(best[0]) {
+        /* find fitted values of sigdsq */
+        double      sigdsq_fit[nbins];
+        ODE        *ode = ODE_new(model, odeAbsTol, odeRelTol);
+
+        ODE_ldVec(ode, sigdsq_fit, nbins, cc, u, best[0]->ph);
+        ODE_free(ode);
+
+        printf("\n# Fitted values of sigma_d^2. (cM = centimorgans)\n");
+        printf("#%10s %10s\n", "cM", "sigma_d^2");
+        for(i = 0; i < nbins; ++i) {
+            printf("%11.8lf %10.8lf\n",
+                   cc[i] * 100.0,  /*convert to cM*/
+                   sigdsq_fit[i]);
+        }
+    }
+
+    /* mean and variance of log badness */
+    double      m = 0.0, v = 0.0;
+
+    for(i = 0; i < nOpt; ++i) {
+        double      lncost = log(taskarg[0][i]->cost);
+
+        m += lncost;
+        v += lncost * lncost;
+    }
+    m /= nOpt;
+    v = (v - nOpt * m * m) / (nOpt - 1);
+    printf("# log badness:m=%lg sd=%lg\n", m, sqrt(v));
+
+	/*
+	 * Generate an fboot file, which is a rectangular table. There is
+	 * one column for each estimated parameter. Row 1 contains the
+	 * parameter labels. Row 2 is the real data. Each succeeding row
+	 * contains the estimate from one bootstrap replicate. Replicates
+	 * that did not converge are omitted.
+	 */
+	if(boot && best[0]) {
+        /* strip suffix from fname; add suffix .fboot; open file */
+        const char *suffix = ".fboot";
+        replaceSuffix(fname, sizeof(fname), suffix, strlen(suffix));
+        bootfile = fopen(fname, "w");
+
+        /* 1st line of fboot file contains parameter names */
+        for(pndx = 0; pndx < nparams; ++pndx) {
+            rval = PopHist_paramName(ph_init, pname, sizeof(pname), pndx);
+            if(rval)
+                fprintf(stderr,
+                        "%s:%s:%d:Bad return from PopHist_paramName: %d\n",
+                        __func__,__FILE__, __LINE__, rval);
+            fprintf(bootfile, " %*s", DBL_DIG + 9, pname);
+        }
+        putc('\n', bootfile); /* end of 1st line */
+
+        /* each subsequent line contains parameter values */
+        for(i=0; i <= nBootReps; ++i) {
+            if(best[i] == NULL)
+                continue;
+
+            /*
+             * Print parameter values in exponential format using
+             * precision DBL_DIG+3.  This is as much as you can do in
+             * decimal format.
+             */
+            for(pndx=0; pndx < nparams; ++pndx)
+                fprintf(bootfile, " %.*le", DBL_DIG+3, PopHist_paramValue(best[i]->ph,
+                                                                            pndx));
+            putc('\n', bootfile);
+        }
+        fclose(bootfile);
+        bootfile = NULL;
+	}
+
+    free(sigdsq_curr);
+    free(best);
+    free(cc_curr);
+    for(i = 0; i < nDataSets; ++i) {
+        for(j = 0; j < nOpt; ++j)
+            TaskArg_free(taskarg[i][j]);
+        free(taskarg[i]);
+    }
+    free(taskarg);
+    free(stepsize);
+    EpochLink_free(linkedList);
+    PopHist_free(ph_init);
+    free(cc);
+    free(sigdsq_obs);
+    if(boot) {
+        Boot_free(boot);
+    }
+    JobQueue_free(jq);
+    AnnealSched_free(sched);
+    fprintf(stderr, "sald is finished\n");
+
+    return 0;
+}

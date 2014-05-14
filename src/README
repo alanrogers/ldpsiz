@@ -1,0 +1,223 @@
+/**
+\mainpage
+# Introduction              {#mainpage}
+
+Ldpsiz is a computer package that estimates the history of population
+size from data on linkage disequilibrium (LD). 
+
+LD is estimated in terms of \f$\sigma_d^2\f$ (Ohta and Kimura, 1971,
+Genetics 68: 571-580). This parameter is usually interpreted as an
+approximation to the expected value of \f$r^2\f$, the squared
+correlation between loci. \f$\sigma_d^2\f$ is a weighted average of
+\f$r^2\f$ values, where the weight given each pair of loci is the
+product of the two heterozygosities. Because of these weights, 
+\f$\sigma_d^2\f$ is not affected much by loci near fixation. For this
+reason, it is ideal for use with low-coverage sequence data. Most of the
+sequencing errors in such data show up as singleton loci, which
+have little effect on \f$\sigma_d^2\f$.
+
+To estimate population history parameters, `ldpsiz` minimizes the
+difference between values of \f$\sigma_d^2\f$ estimated from data and
+values predicted from population history. The predicted values are
+obtained from the recurrence equations either of Hill (1975,
+Theoretical Population Biology 8:117-126) or of Strobeck and Morgan
+(1978, Genetics 88:829-844). This calculation can be done in two
+different ways. The slow way (invoked using the `--exact` option of
+\ref predld "predld") iterates the difference equations one generation
+at a time.  The default method speeds things up by solving
+differential equations that approximate the difference
+equations. These methods are fast enough to allow one to examine a
+large number of hypotheses about history parameters.
+
+To model population history, `ldpsiz` divides the past into a
+fixed number of epochs. Within each epoch, the population is assumed
+constant in size. There is no provision for multiple populations in
+the current version of the code. In the earliest epoch, the population
+is assumed to be at equilibrium with respect to genetic drift,
+mutation, and recombination.
+
+Uncertainties are estimated using a moving-blocks bootstrap. In
+calculating \f$\sigma_d^2\f$, most operations are done only once for
+each pair of sites and are not repeated for each bootstrap
+replicate. Furthermore, calculations are parallelized. These
+provisions make it possible to use hundreds of bootstrap replicates in
+genome-scale analyses, on computers with large numbers of CPU cores.
+
+# Installation and testing
+
+The package is distributed as a gzipped tar file---as a file that ends
+with .tgz. Uncompress this file with `gunzip` and then unpack the
+archive with `tar`. This will unpack into its own directory.
+
+Before compiling, you must install two libraries: `gsl` and
+`pthreads`. You will need not only the libraries themselves but also
+several header files, such as `pthread.h`.
+
+By default, the executable files will be copied into a directory named
+`bin` in your home directory. If you want them to go somewhere else,
+edit the first non-comment line of src/Makefile.
+
+Then 
+
+1. Cd into the src directory.
+2. Type "make".
+3. Type "make install".
+
+This will try to place the executables into directory "bin" in the
+user's home directory. Make sure this directory appears in your
+PATH, so that the shell can find it.
+
+This installation will work under unix-like operating systems, such as
+linux and Apple's osx. I haven't tried to port this software to
+Windows. 
+
+Each file comes with a unit test, which tests all the facilities it
+provides. To test the file `hill.c`, type:
+
+1. make xhill
+2. ./xhill
+
+To run all unit tests, type "make test". This will take awhile, as
+some of the unit tests are slow. 
+
+The unit tests will not compile if `NDEBUG` is defined. If
+optimization is turned on during optimization, some of the unit tests
+may be removed by the optimizer. To avoid these problems, comment out
+the relevant line at the top of src/Makefile.
+
+# Genetic input data
+
+`ldpsiz` reads data files in "gtp" format.  In the distribution, the
+names of all such files end with the suffix ".gtp". Here are the first
+few lines of a sample .gtp file containing haploid data:
+
+    # data source           = /Users/rogers/bin/macs2obsld.py out
+    # time                  = 2012-05-28 09:28:11.098762
+    # ploidy                = 1
+    #   snp_id     nucpos   mappos alleles genotypes
+             0        262   0.0262      AG 0001000000
+             1        362   0.0362      AT 0000010000
+             2        536   0.0536      TC 1000000000
+             3        799   0.0799      TA 0010000000
+             4        861   0.0861      CT 0000000100
+
+The first 3 lines are optional, but the line of column headers is
+not. After the header (the lines beginning with '#'), each line refers
+to a single-nucleotide polymorphism (a SNP). The columns are as follows:
+
+1. snp_id is an arbitrary label associated with the SNP. These labels
+   are not used.
+2. nucpos The position of the SNP on the chromosome, measured in
+   nucleotides.
+3. mappos The position of the SNP on the chromosome, measured in
+   centimorgans (cM).
+4. The alleles present at this SNP locus (for example, AC or 01).
+5. The state of each individual in the sample. State is always either
+   0 or 1. A "1" indicates that the allele at this position was the first
+   allele in the list of alleles. A "0" indicates any of the alternate
+   alleles. For example, if the alleles list was "AT", then genotypes
+   "0110" mean "TAAT". There is no provision for missing values.
+
+For diploid data, the header must contain the line
+
+    # ploidy                = 2
+
+For diploid data, each phased genotype is a *pair* of adjacent
+character values. Homozygotes look like "00" or "11", and phased
+heterozygotes look like "01" or "10". Unphased heterozygotes look like
+"h" and occupy just a single character position.
+
+# Initialization file
+
+Many of the programs read an initialization file called `ldpsiz.ini`,
+which can be used to set various parameters and to specify a
+population history. This makes it easy to use a single set of
+parameters in a variety of operations, involving different programs
+within the package.
+
+Here is an example initialization file:
+
+    # Comments go from "#" to end of line.
+    blocksize       = 300  # SNPs per block in bootstrap
+    bootfilename    = obsld.boot
+    bootreps        = 25   # number of bootstrap replicates
+    recombination   = 2e-7 # per site per generation
+    mutation        = 1e-7 # per site per generation
+    confidence      = 0.8  # size of confidence interval
+    windowCm        = 0.1  # maximum difference (cM) btw SNPs compared
+    loCm            = 0.0  # lowest recombination rate in centimorgans
+    hiCm            = 0.3  # highest
+    methods         = Hill # models of evolution; comma-separated
+    nbins           = 25   # number of bins, each referring to a 
+                           # narrow range of recombination rates
+    nthreads        = 3    # number of threads
+    twoNsmp         = 30   # number of gene copies in sample
+    
+    # Population history must come last in the file. In begins 
+    # with a line containing the single word "PopHist".
+    # Each row defines an epoch of population history. The first row
+    # refers to the most recent epoch.
+    # Column 1: length of epoch in generations
+    # Column 2: haploid population size, 2N
+    PopHist
+    # generations twoN
+               40  1e5   # epoch 0
+              Inf  1e2   # epoch 1
+
+Parameters specified in `ldpsiz.ini` can be overridden by command-line
+arguments. Default values are provided for parameters not specified in
+either of these ways.
+
+# Usage
+
+The `ldpsiz` package is not a single monolithic program, but rather a 
+suite of programs. These programs are designed to be run at the command
+line: there is no graphical user interface. Each program will print a usage
+message in response to the command-line argument `--help` or `-h`.
+The various programs are described briefly below. For more detail, see the
+documentation for each individual program.
+
+## Converting genetic data into .gtp format
+
+The package provides several programs for converting into .gtp format. `ms2gtp`
+and `macs2gtp.py` convert simulated data produced by `ms` and `macs`, and
+`vcf2gtp.py` converts the vcf-format data provided by the 1000 Genomes
+Project. These programs are written in Python, except for `ms2gtp`,
+which is in C.
+
+### Converting data produced by `ms`
+
+`ms` is Dick Hudson's program for doing coalescent simulations with
+recombination. It can be downloaded from Dick's
+[homepage](http://home.uchicago.edu/rhudson1/source.html). The `ldpsiz` package
+provides a program, \ref ms2gtp "ms2gtp", which converts the output of `ms`
+into .gtp format.
+
+This program is written in C, because it involves transposing a large
+matrix. The original version, written in Python, was slow.
+
+### Converting data produced by `macs`
+
+Gary Chen's program, `macs`, uses an approximation to the coalescent algorithm,
+which makes it possible to simulate genome-scale data very fast. You can get it
+from Gary's [homepage](http://www-hsc.usc.edu/~garykche). To translate `macs`
+output into .gtp format, use the program \ref macs2gtp "macs2gtp.py".
+
+### Converting data from the 1000-Genomes Project
+
+To convert data files from the 1000-Genomes Project, use the program 
+\ref vcf2gtp "vcf2gtp.py".
+
+## Predicting \f$\sigma_d^2\f$ from population history
+
+See the documentation for \ref predld "predld".
+
+## Estimating \f$\sigma_d^2\f$
+
+See the documentation for \ref obsld "obsld".
+
+## Estimating parameters of population history
+
+See the documentation for \ref sald "sald" and \ref fitld "fitld".
+
+*/
