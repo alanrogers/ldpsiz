@@ -948,7 +948,6 @@ sasimplex_onestep(void *vstate, gsl_multimin_function * func,
 	double delta = 0.5;
 
 	if(n > 2) {
-		alpha = 1.0;
 		beta = 1.0 + 2.0 / n;
 		gmma = 0.75 - 1.0 / (2.0 * n);
 		delta = 1.0 - 1.0 / n;
