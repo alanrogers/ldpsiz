@@ -1263,10 +1263,11 @@ int sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
         }
 
         if(verbose) {
-            printf(" %5d %7.3f %8.3f %8.4f %8.4f %4d %s\n",
+            printf(" %5d %7.3f %8.3f %8.4f %8.4f %4d",
                    itr, minimizer->fval, *size,
                    sasimplex_vertical_scale(minimizer),
-                   temperature, status, gsl_strerror(status));
+                   temperature, status);
+            printf(" %s\n", gsl_strerror(status));
         }
         ++itr;
     } while(status == GSL_CONTINUE && itr < nItr);

@@ -470,8 +470,6 @@ int taskfun(void *varg) {
     if(targ->verbose) {
         printf("Using minimizer %s.\n",
                gsl_multimin_fminimizer_name(minimizer));
-        printf("%5s %7s %8s %8s %8s\n", "itr",
-               "f", "size", "AbsErr", "temp");
         fflush(stdout);
     }
 
@@ -491,11 +489,6 @@ int taskfun(void *varg) {
                                   &ss.vector);
     }
 
-    if(targ->verbose) {
-        printf("%5s %7s %8s %8s\n",
-               "itr", "fval", "size", "tmptr");
-        fflush(stdout);
-    }
     for(i=0; i < AnnealSched_size(targ->sched); ++i) {
         temperature = AnnealSched_next(targ->sched);
         status = sasimplex_n_iterations(minimizer,

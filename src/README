@@ -45,13 +45,19 @@ genome-scale analyses, on computers with large numbers of CPU cores.
 
 # Installation and testing
 
-The package is distributed as a gzipped tar file---as a file that ends
-with .tgz. Uncompress this file with `gunzip` and then unpack the
-archive with `tar`. This will unpack into its own directory.
+The package is available at [github](github.com/alanrogers/ldpsiz) in
+various formats. Before compiling, you must install two libraries:
+`pthreads` and [`gsl`](http://www.gnu.org/software/gsl). You will need
+not only the libraries themselves but also several header files, such
+as `pthread.h`. I didn't need to install `pthreads`, because it came
+bundled with the Gnu C compiler. But the gsl was an extra. Under ubuntu
+Linux, you can install it like this:
 
-Before compiling, you must install two libraries: `gsl` and
-`pthreads`. You will need not only the libraries themselves but also
-several header files, such as `pthread.h`.
+    sudo apt-get install libgsl0-dev
+
+On the mac, using homebrew, the command is
+
+    brew install gsl
 
 By default, the executable files will be copied into a directory named
 `bin` in your home directory. If you want them to go somewhere else,
@@ -71,14 +77,14 @@ This installation will work under unix-like operating systems, such as
 linux and Apple's osx. I haven't tried to port this software to
 Windows. 
 
-Each file comes with a unit test, which tests all the facilities it
-provides. To test the file `hill.c`, type:
+The directory `test` contains a unit test for many of the .c files in
+directory `src`. Within this directory, type
 
 1. make xhill
 2. ./xhill
 
-To run all unit tests, type "make test". This will take awhile, as
-some of the unit tests are slow. 
+to test the source file `hill.c`.  To run all unit tests, type
+"make". This will take awhile, as some of the unit tests are slow.
 
 The unit tests will not compile if `NDEBUG` is defined. If
 optimization is turned on during optimization, some of the unit tests
