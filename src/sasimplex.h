@@ -45,6 +45,6 @@ int         sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
 int         sasimplex_converged(gsl_multimin_fminimizer * minimizer,
                                 double *size, double tol_fval,
                                 double tol_size);
-void        sasimplex_print(gsl_multimin_fminimizer * minimizer);
+void        fminimizer_print(gsl_multimin_fminimizer * minimizer);
 
 #endif                       /* __GSL_SASIMPLEX_H__ */

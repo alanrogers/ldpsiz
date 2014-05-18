@@ -63,6 +63,18 @@
 #include <gsl/gsl_matrix_double.h>
 #include <execinfo.h>
 
+#if 1
+#define DEBUG
+#else
+#undef DEBUG
+#endif
+
+#ifdef DEBUG
+#define DPRINTF(arg) printf arg
+#else
+#define DPRINTF(arg)
+#endif
+
 /* Abort if random number seed is not yet set */
 #ifndef NDEBUG
 #  define ASSERT_SEED_SET(s) do{ if(!((s)->seedSet)) { \
@@ -125,6 +137,9 @@ static void sasimplex_sanityCheck(const sasimplex_state_t * state,
                                   const char *func);
 static void dostacktrace(const char *file, int line, const char *func,
                          FILE * ofp);
+static void vector_print(gsl_vector *x, FILE *fp);
+static void sasimplex_print(sasimplex_state_t * state);
+
 
 /** The state of the minimizer */
 struct sasimplex_state_t {
@@ -156,6 +171,19 @@ static const gsl_multimin_fminimizer_type sasimplex_type = {
 
 const       gsl_multimin_fminimizer_type
     * gsl_multimin_fminimizer_sasimplex = &sasimplex_type;
+
+/** Print an array of doubles to file fp. len is length of array */
+static void vector_print(gsl_vector *x, FILE *fp) {
+    size_t i;
+
+    fputs("[", fp);
+    for(i=0; i < x->size; ++i) {
+        fprintf(fp, "%lf", gsl_vector_get(x, i));
+        if(i+1 < x->size)
+            fputs(", ", fp);
+    }
+    fputs("]", fp);
+}
 
 static void dostacktrace(const char *file, int line, const char *func,
                          FILE * ofp) {
@@ -240,19 +268,25 @@ static void sasimplex_sanityCheck(const sasimplex_state_t * state,
 #endif
 }
 
-void sasimplex_print(gsl_multimin_fminimizer * minimizer) {
+/** Print state variable of fminimizer */
+void fminimizer_print(gsl_multimin_fminimizer * minimizer) {
     sasimplex_state_t *state = minimizer->state;
+    sasimplex_print(state);
+}
+
+/** Print object of type sasimplex_state_t */
+static void sasimplex_print(sasimplex_state_t *state) {
     size_t      n = state->center->size;    /* dimension of state vector */
     size_t      i, j;
 
     printf("Simplex\n");
     for(i = 0; i <= n; ++i) {
         for(j = 0; j < n; ++j)
-            printf(" %le", gsl_matrix_get(state->x1, i, j));
-        printf(": %le\n", gsl_vector_get(state->f1, i));
+            printf(" %lf", gsl_matrix_get(state->x1, i, j));
+        printf(": %lf\n", gsl_vector_get(state->f1, i));
     }
-    printf(" tmptr=%lf\n", state->temperature);
-    printf(" bestEver=%lf\n", state->bestEver);
+    printf(" tmptr=%lf bestEver=%lf\n", state->temperature, state->bestEver);
+#if 0
     if(state->lbound != NULL) {
         printf(" upper bound:");
         for(i = 0; i < n; ++i)
@@ -265,6 +299,7 @@ void sasimplex_print(gsl_multimin_fminimizer * minimizer) {
             printf(" %lf", gsl_vector_get(state->lbound, i));
         putchar('\n');
     }
+#endif
 }
 
 /*
@@ -320,6 +355,7 @@ sasimplex_converged(gsl_multimin_fminimizer * minimizer, double *size,
 
     double      best, worst, dy, tol1;
     int         status = GSL_ESANITY;
+    int         fvals_eq;    
 
 #if 0
     gsl_vector_minmax(state->f1, &best, &worst);
@@ -332,7 +368,7 @@ sasimplex_converged(gsl_multimin_fminimizer * minimizer, double *size,
     tol1 = 4.0 * tol_fval * (fabs(worst) + fabs(best)) + tol_fval;
     dy = fabs(worst - best);
 
-    int         fvals_eq = (dy < tol1 ? 1 : 0);
+    fvals_eq = (dy < tol1 ? 1 : 0);
     *size = sasimplex_size(state);
     if(*size < tol_size) {
         if(fvals_eq) {
@@ -340,6 +376,10 @@ sasimplex_converged(gsl_multimin_fminimizer * minimizer, double *size,
         } else {
             /* stuck */
             status = GSL_ETOLF;
+            sasimplex_print(state);
+            DPRINTF(("%s:%d:%s: stuck. worst=%lf best=%lf diff=%lf >= %lf = tol1\n",
+                     __FILE__,__LINE__,__func__,
+                     worst, best, dy, tol1)); 
         }
     } else {
         if(fvals_eq) {
@@ -506,6 +546,7 @@ update_point(sasimplex_state_t * state, size_t i,
 
 static inline int
 expand_around_best(sasimplex_state_t * state, gsl_multimin_function * func) {
+    DPRINTF(("%s\n", __func__));
     size_t      best = vector_min_index(state->f1);
     double      inflateBy = 200.0;
     int         status;
@@ -513,7 +554,6 @@ expand_around_best(sasimplex_state_t * state, gsl_multimin_function * func) {
     status = contract_by_best(state, inflateBy, best, state->ws1, func);
     if(status != GSL_SUCCESS)
         GSL_ERROR("contract_by_best failed", status);
-
     return status;
 }
 
@@ -526,7 +566,7 @@ expand_around_best(sasimplex_state_t * state, gsl_multimin_function * func) {
 static int
 contract_by_best(sasimplex_state_t * state, double delta,
                  size_t best, gsl_vector * xc, gsl_multimin_function * f) {
-
+    DPRINTF(("%s\n", __func__));
     /* the xc vector is simply work space here */
     gsl_matrix *x1 = state->x1;
     gsl_vector *f1 = state->f1;
@@ -550,8 +590,9 @@ contract_by_best(sasimplex_state_t * state, double delta,
         gsl_vector_set(f1, i, newval);
 
         if(gsl_finite(newval)) {
-            if(newval < state->bestEver)
+            if(newval < state->bestEver) {
                 state->bestEver = newval;
+            }
         }else
             GSL_ERROR("bad function value", GSL_EBADFUNC);
     }
@@ -911,12 +952,11 @@ sasimplex_set(void *vstate, gsl_multimin_function * func,
     return status;
 }
 
+/** One simplex iteration with simulated annealing. */
 static int
 sasimplex_onestep(void *vstate, gsl_multimin_function * func,
                   gsl_vector * x, double *size, double *fval) {
 
-    /* Simplex iteration tries to minimize function func value */
-    /* Includes corrections from Ivo Alxneit <ivo.alxneit@psi.ch> */
     sasimplex_state_t *state = (sasimplex_state_t *) vstate;
 
     /* xc and xc2 vectors store tried corner point coordinates */
@@ -942,16 +982,11 @@ sasimplex_onestep(void *vstate, gsl_multimin_function * func,
      * Han (Computational Optimization and Applications
      * 51(1):259-277, 2012).
      */
-    double alpha = 1.0;
-    double beta = 2.0;
-	double gmma = 0.5;
-	double delta = 0.5;
-
-	if(n > 2) {
-		beta = 1.0 + 2.0 / n;
-		gmma = 0.75 - 1.0 / (2.0 * n);
-		delta = 1.0 - 1.0 / n;
-	}
+    double s = fmin(2.0, n);
+    const double alpha = 1.0;
+    const double beta = 1.0 + 2.0 / s;
+	const double gmma = 0.75 - 1.0 / (2.0 * s);
+	const double delta = 1.0 - 1.0 / s;
 
     /*
      * Find highest, second highest and lowest point. We need the
@@ -1018,12 +1053,15 @@ sasimplex_onestep(void *vstate, gsl_multimin_function * func,
         pv2 = v2 - ran_expn(&state->seed, temp);
         if(pv2 < pv) {          /* accept expansion */
             update_point(state, hi, xc2, v2);
+            DPRINTF(("%s:%d:%s: expansion\n", __FILE__,__LINE__,__func__));
         } else {                /* accept reflection */
             update_point(state, hi, xc, v);
+            DPRINTF(("%s:%d:%s: reflection\n", __FILE__,__LINE__,__func__));
         }
     } else if(pv < ds_hi) {     /* accept reflection */
         assert(dlo <= pv);
         update_point(state, hi, xc, v);
+        DPRINTF(("%s:%d:%s: reflection\n", __FILE__,__LINE__,__func__));
     } else if(pv < dhi) {       /* try outside contraction */
         assert(ds_hi <= pv);
         v2 = trial_point(-alpha * gmma, xc2, &hvec.vector, state->center,
@@ -1031,10 +1069,12 @@ sasimplex_onestep(void *vstate, gsl_multimin_function * func,
         pv2 = v2 - ran_expn(&state->seed, temp);
         if(pv2 <= pv) {         /* accept outside contraction */
             update_point(state, hi, xc2, v2);
+            DPRINTF(("%s:%d:%s: outside contraction\n", __FILE__,__LINE__,__func__));
         } else {                /* shrink */
             status = contract_by_best(state, delta, lo, xc, func);
             if(status != GSL_SUCCESS)
                 GSL_ERROR("contract_by_best failed", status);
+            DPRINTF(("%s:%d:%s: shrink\n", __FILE__,__LINE__,__func__));
         }
     } else {                    /* try inside contraction */
         assert(dhi <= pv || !gsl_finite(pv));
@@ -1055,10 +1095,12 @@ sasimplex_onestep(void *vstate, gsl_multimin_function * func,
         pv2 = v2 - ran_expn(&state->seed, temp);
         if(pv2 < dhi) {         /* accept inside contraction */
             update_point(state, hi, xc2, v2);
+            DPRINTF(("%s:%d:%s: inside contraction\n", __FILE__,__LINE__,__func__));
         } else {                /* shrink */
             status = contract_by_best(state, delta, lo, xc, func);
             if(status != GSL_SUCCESS)
                 GSL_ERROR("contract_by_best failed", status);
+            DPRINTF(("%s:%d:%s: contract by best\n", __FILE__,__LINE__,__func__));
         }
     }
 
@@ -1220,12 +1262,14 @@ int sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
                            double *size,
                            double tol_fval,
                            double tol_size,
-                           int nItr, double temperature, int verbose) {
+                           int nItr, double tmptr, int verbose) {
     int         itr = 0, status;
 
-    sasimplex_set_temp(minimizer, temperature);
+    DPRINTF(("%s:%d:%s: tmptr=%lf\n", __FILE__,__LINE__,__func__,tmptr));
+
+    sasimplex_set_temp(minimizer, tmptr);
     if(verbose) {
-        printf(" %5s %7s %8s %8s %8s %4s\n",
+        printf(" %5s %7s %8s %8s %8s %8s\n",
                "itr", "fval", "size", "vscale", "tmptr", "stat");
     }
     do {
@@ -1263,11 +1307,30 @@ int sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
         }
 
         if(verbose) {
-            printf(" %5d %7.3f %8.3f %8.4f %8.4f %4d",
+            printf(" %5d %7.3f %8.3f %8.4f %8.4f",
                    itr, minimizer->fval, *size,
                    sasimplex_vertical_scale(minimizer),
-                   temperature, status);
-            printf(" %s\n", gsl_strerror(status));
+                   tmptr);
+            switch(status) {
+            case GSL_SUCCESS:
+                printf(" %8s", "success");
+                break;
+            case GSL_ETOLX:
+                printf(" %8s", "etolx");
+                break;
+            case GSL_ETOLF:
+                printf(" %8s", "etolf");
+                break;
+            case GSL_CONTINUE:
+                printf(" %8s", "continue");
+                break;
+            default:
+                printf(" %8s", "????");
+            }
+            fputs(" x=", stdout);
+            vector_print(minimizer->x, stdout);
+            putchar('\n');
+            fminimizer_print(minimizer);
         }
         ++itr;
     } while(status == GSL_CONTINUE && itr < nItr);

@@ -697,7 +697,7 @@ int main(int argc, char **argv) {
 
     double      u = 1e-8;
     double      ftol = 1e-3;
-    double      xtol = 1e-3;
+    double      xtol = 1e-8;
     double      odeAbsTol = 1e-7;
     double      odeRelTol = 1e-3;
     double      confidence = 0.95;
@@ -706,7 +706,7 @@ int main(int argc, char **argv) {
     int         nItr = 5000;     /* total number of iterations */
     int         nPerTmptr;       /* iterations at each temperature */
     int         nTmptrs = 7;     /* number of temperatures */
-    double      lo2Ninv = 1e-8, hi2Ninv = 1.0;
+    double      lo2Ninv = 1e-8, hi2Ninv = 1.0, hi2NinvInit = 0.1;
     double      loT = 1.0, hiT = 1e4, hiTinit = 2000.0;
     double     *stepsize;            /* controls size of initial simplex */
     double      durationEps = 500.0;
@@ -933,7 +933,7 @@ int main(int argc, char **argv) {
     double     *hiInit = malloc(nparams * sizeof(hiInit[0]));
 
     checkmem(hiInit, __FILE__, __LINE__);
-    PopHist_setAllTwoNinv(hiInit, nparams, hi2Ninv);
+    PopHist_setAllTwoNinv(hiInit, nparams, hi2NinvInit);
     PopHist_setAllDuration(hiInit, nparams, hiTinit);
 
     /* read assignment statements in input file */
