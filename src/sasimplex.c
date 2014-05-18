@@ -63,7 +63,7 @@
 #include <gsl/gsl_matrix_double.h>
 #include <execinfo.h>
 
-#if 1
+#if 0
 #define DEBUG
 #else
 #undef DEBUG
@@ -1268,10 +1268,6 @@ int sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
     DPRINTF(("%s:%d:%s: tmptr=%lf\n", __FILE__,__LINE__,__func__,tmptr));
 
     sasimplex_set_temp(minimizer, tmptr);
-    if(verbose) {
-        printf(" %5s %7s %8s %8s %8s %8s\n",
-               "itr", "fval", "size", "vscale", "tmptr", "stat");
-    }
     do {
         status = gsl_multimin_fminimizer_iterate(minimizer);
         if(status) {
@@ -1307,10 +1303,8 @@ int sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
         }
 
         if(verbose) {
-            printf(" %5d %7.3f %8.3f %8.4f %8.4f",
-                   itr, minimizer->fval, *size,
-                   sasimplex_vertical_scale(minimizer),
-                   tmptr);
+            printf("# itr=%d hsiz=%.3f vsiz=%.4f",
+                   itr, *size, sasimplex_vertical_scale(minimizer));
             switch(status) {
             case GSL_SUCCESS:
                 printf(" %8s", "success");
