@@ -139,6 +139,7 @@ static void dostacktrace(const char *file, int line, const char *func,
                          FILE * ofp);
 static void vector_print(gsl_vector *x, FILE *fp);
 static void sasimplex_print(sasimplex_state_t * state);
+static const char *statusLbl(int status);
 
 
 /** The state of the minimizer */
@@ -171,6 +172,22 @@ static const gsl_multimin_fminimizer_type sasimplex_type = {
 
 const       gsl_multimin_fminimizer_type
     * gsl_multimin_fminimizer_sasimplex = &sasimplex_type;
+
+static const char *statusLbl(int status) {
+            switch(status) {
+            case GSL_SUCCESS:
+                return("success");
+            case GSL_ETOLX:
+                return("etolx");
+            case GSL_ETOLF:
+                return("etolf");
+            case GSL_CONTINUE:
+                return("continue");
+            default:
+                return("????");
+            }
+}
+
 
 /** Print an array of doubles to file fp. len is length of array */
 static void vector_print(gsl_vector *x, FILE *fp) {
@@ -1293,6 +1310,7 @@ int sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
             status = expand_around_best(minimizer->state, minimizer->f);
             if(status != GSL_SUCCESS)
                 GSL_ERROR("expand_around_best failed", GSL_EFAILED);
+            DPRINTF(("%s:%d:%s: expand_around_best\n",__FILE__,__LINE__,__func__));
             status = GSL_CONTINUE;
             break;
         case GSL_CONTINUE:
@@ -1305,24 +1323,9 @@ int sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
         }
 
         if(verbose) {
-            printf("# itr=%d hsiz=%.3f vsiz=%.4f",
-                   itr, *size, sasimplex_vertical_scale(minimizer));
-            switch(status) {
-            case GSL_SUCCESS:
-                printf(" %s", "success");
-                break;
-            case GSL_ETOLX:
-                printf(" %s", "etolx");
-                break;
-            case GSL_ETOLF:
-                printf(" %s", "etolf");
-                break;
-            case GSL_CONTINUE:
-                printf(" %s", "continue");
-                break;
-            default:
-                printf(" %s", "????");
-            }
+            printf("# itr=%d hsiz=%.3f vsiz=%.4f status=%s",
+                   itr, *size, sasimplex_vertical_scale(minimizer),
+                   statusLbl(status));
             fputs(" x=", stdout);
             vector_print(minimizer->x, stdout);
             putchar('\n');

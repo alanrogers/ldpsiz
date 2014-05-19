@@ -501,7 +501,7 @@ int taskfun(void *varg) {
                                         temperature,
                                         targ->verbose);
         if(targ->verbose) {
-            printf("%s:tmptr=%6.4lf size=%.5lf vscale=%.5lf badness=%.5lf x=",
+            printf("%s:tmptr=%6.4lf hsiz=%.5lf vsiz=%.5lf badness=%.5lf x=",
                    __func__,
                    temperature, size, 
                    sasimplex_vertical_scale(minimizer),
@@ -696,16 +696,16 @@ int main(int argc, char **argv) {
     };
 
     double      u = 1e-8;
-    double      ftol = 1e-3;
+    double      ftol = 5e-5;     /* will be multiplied by nbins */
     double      xtol = 1e-6;
     double      odeAbsTol = 1e-7;
     double      odeRelTol = 1e-3;
     double      confidence = 0.95;
-    double      initTmptr = 5.0;
+    double      initTmptr = 2.0;  
     double      tmptrDecay = 1.0;
-    int         nItr = 5000;     /* total number of iterations */
+    int         nItr = 1000;     /* total number of iterations */
     int         nPerTmptr;       /* iterations at each temperature */
-    int         nTmptrs = 7;     /* number of temperatures */
+    int         nTmptrs = 3;     /* number of temperatures */
     double      lo2Ninv = 1e-8, hi2Ninv = 1.0, hi2NinvInit = 0.1;
     double      loT = 1.0, hiT = 1e4, hiTinit = 2000.0;
     double     *stepsize;            /* controls size of initial simplex */
@@ -943,6 +943,9 @@ int main(int argc, char **argv) {
     Assignment_setInt(asmt, "Haploid sample size", &twoNsmp, MANDATORY);
     Assignment_free(asmt);
     asmt = NULL;
+
+    /* scale ftol to number of bins */
+    ftol *= nbins;
 
     /* determine number of iterations at each temperature */
     nPerTmptr = round(nItr/ (double) nTmptrs);
