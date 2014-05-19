@@ -1305,7 +1305,7 @@ int sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
         }
 
         if(verbose) {
-            printf("# itr=%d xsiz=%.4f vsiz=%.4f",
+            printf("# itr=%d hsiz=%.3f vsiz=%.4f",
                    itr, *size, sasimplex_vertical_scale(minimizer));
             switch(status) {
             case GSL_SUCCESS:

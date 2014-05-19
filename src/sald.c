@@ -697,11 +697,11 @@ int main(int argc, char **argv) {
 
     double      u = 1e-8;
     double      ftol = 1e-3;
-    double      xtol = 1e-8;
+    double      xtol = 1e-6;
     double      odeAbsTol = 1e-7;
     double      odeRelTol = 1e-3;
     double      confidence = 0.95;
-    double      initTmptr = 35.0;
+    double      initTmptr = 5.0;
     double      tmptrDecay = 1.0;
     int         nItr = 5000;     /* total number of iterations */
     int         nPerTmptr;       /* iterations at each temperature */
