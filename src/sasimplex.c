@@ -63,7 +63,7 @@
 #include <gsl/gsl_matrix_double.h>
 #include <execinfo.h>
 
-#if 1
+#if 0
 #define DEBUG
 #else
 #undef DEBUG
@@ -376,7 +376,9 @@ sasimplex_converged(gsl_multimin_fminimizer * minimizer, double *size,
         } else {
             /* stuck */
             status = GSL_ETOLF;
+#ifdef DEBUG
             sasimplex_print(state);
+#endif
             DPRINTF(("%s:%d:%s: stuck. worst=%lf best=%lf diff=%lf >= %lf = tol1\n",
                      __FILE__,__LINE__,__func__,
                      worst, best, dy, tol1)); 
@@ -1268,10 +1270,6 @@ int sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
     DPRINTF(("%s:%d:%s: tmptr=%lf\n", __FILE__,__LINE__,__func__,tmptr));
 
     sasimplex_set_temp(minimizer, tmptr);
-    if(verbose) {
-        printf(" %5s %7s %8s %8s %8s %8s\n",
-               "itr", "fval", "size", "vscale", "tmptr", "stat");
-    }
     do {
         status = gsl_multimin_fminimizer_iterate(minimizer);
         if(status) {
@@ -1307,25 +1305,23 @@ int sasimplex_n_iterations(gsl_multimin_fminimizer * minimizer,
         }
 
         if(verbose) {
-            printf(" %5d %7.3f %8.3f %8.4f %8.4f",
-                   itr, minimizer->fval, *size,
-                   sasimplex_vertical_scale(minimizer),
-                   tmptr);
+            printf("# itr=%d xsiz=%.4f vsiz=%.4f",
+                   itr, *size, sasimplex_vertical_scale(minimizer));
             switch(status) {
             case GSL_SUCCESS:
-                printf(" %8s", "success");
+                printf(" %s", "success");
                 break;
             case GSL_ETOLX:
-                printf(" %8s", "etolx");
+                printf(" %s", "etolx");
                 break;
             case GSL_ETOLF:
-                printf(" %8s", "etolf");
+                printf(" %s", "etolf");
                 break;
             case GSL_CONTINUE:
-                printf(" %8s", "continue");
+                printf(" %s", "continue");
                 break;
             default:
-                printf(" %8s", "????");
+                printf(" %s", "????");
             }
             fputs(" x=", stdout);
             vector_print(minimizer->x, stdout);
