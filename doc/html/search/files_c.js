@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['readgtp_2ec',['readgtp.c',['../readgtp_8c.html',1,'']]],
-  ['readgtp_2eh',['readgtp.h',['../readgtp_8h.html',1,'']]],
-  ['rusage_2ec',['rusage.c',['../rusage_8c.html',1,'']]]
+  ['sald_2ec',['sald.c',['../sald_8c.html',1,'']]],
+  ['strobeck_2ec',['strobeck.c',['../strobeck_8c.html',1,'']]],
+  ['strobeck_2eh',['strobeck.h',['../strobeck_8h.html',1,'']]],
+  ['sums_2ec',['sums.c',['../sums_8c.html',1,'']]],
+  ['sums_2eh',['sums.h',['../sums_8h.html',1,'']]]
 ];

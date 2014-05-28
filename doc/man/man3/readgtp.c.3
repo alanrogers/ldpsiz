@@ -4,14 +4,7 @@
 .SH NAME
 readgtp.c \- 
 .PP
-Parse files written in \&.gtp format, which are used as input by eld\&. 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
- 
+Parse files written in \&.gtp format, which are used as input by eld\&.  
 
 .SH SYNOPSIS
 .br
@@ -58,23 +51,24 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 .SH "Detailed Description"
 .PP 
 Parse files written in \&.gtp format, which are used as input by eld\&. 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 
+.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "\fBAssignment\fP* \fBGtp_readHdr\fP (FILE *ifp)"
+.SS "\fBAssignment\fP* Gtp_readHdr (FILE *ifp)"
+
 .PP
 Read header of file ifp in order to parse assignment statements\&. These assignments are stored an a structure of class \fBAssignment\fP, which is returned to the calling function\&.
 .PP
@@ -98,7 +92,8 @@ The file pointer ifp is positioned so that the next line read will be the first 
 References Assignment_new()\&.
 .PP
 Referenced by FileIndex_readFile()\&.
-.SS "int \fBGtp_readSNP\fP (FILE *ifp, char *snpId, size_tsnpIdSize, double *mappos, char *alleles, size_tallelesSize, unsigned char *sitedat, size_tsitedatSize, intisDiploid)"
+.SS "int Gtp_readSNP (FILE *ifp, char *snpId, size_tsnpIdSize, double *mappos, char *alleles, size_tallelesSize, unsigned char *sitedat, size_tsitedatSize, intisDiploid)"
+
 .PP
 Read a \fBSNP\fP from the GTP output file\&. Return 0 on success, 1 on failure\&.
 .PP

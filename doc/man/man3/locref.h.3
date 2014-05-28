@@ -4,14 +4,7 @@
 .SH NAME
 locref.h \- 
 .PP
-Header for \fBlocref\&.c\fP 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. 
-.RE
-.PP
- 
+Header for \fBlocref\&.c\fP\&.  
 
 .SH SYNOPSIS
 .br
@@ -29,7 +22,7 @@ Copyright (c) 2014, Alan R\&.
 .br
 .RI "\fI\fBLocRef\fP facilitates using a single memory block to allocate a structure and all the arrays within it\&. \fP"
 .in -1c
-.SS "Defines"
+.SS "Macros"
 
 .in +1c
 .ti -1c
@@ -62,28 +55,32 @@ Copyright (c) 2014, Alan R\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Header for \fBlocref\&.c\fP 
+Header for \fBlocref\&.c\fP\&. 
+
+
 .PP
 \fBCopyright:\fP
 .RS 4
-Copyright (c) 2014, Alan R\&. 
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
 .RE
 .PP
 
-
-Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
 .SH "Function Documentation"
 .PP 
-.SS "void \fBLocRef_add\fP (\fBLocRef\fP *lr, size_tbytes)"
+.SS "void LocRef_add (\fBLocRef\fP *lr, size_tbytes)"
+
 .PP
 Add an entry of specified size bytes to the \fBLocRef\fP table\&. 
-.SS "void \fBLocRef_init\fP (\fBLocRef\fP *lr)"
+.SS "void LocRef_init (\fBLocRef\fP *lr)"
+
 .PP
 Fill \fBLocRef\fP structure with zeroes\&. 
-.SS "void \fBLocRef_setNext\fP (\fBLocRef\fP *lr, inti)"
+.SS "void LocRef_setNext (\fBLocRef\fP *lr, inti)"
+
 .PP
 Set the index to be returned by the next call to LocRef_next\&. 
-.SS "size_t \fBLocRef_size\fP (\fBLocRef\fP *lr)"
+.SS "size_t LocRef_size (\fBLocRef\fP *lr)"
+
 .PP
 Total size of memory block to be allocated\&. 
 .SH "Author"

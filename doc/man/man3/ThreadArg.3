@@ -66,17 +66,20 @@ Data required by a single thread\&.
 Data required by a single thread\&. 
 .SH "Field Documentation"
 .PP 
-.SS "\fBBoot\fP* \fBThreadArg::boot\fP"
+.SS "\fBBoot\fP* ThreadArg::boot"
+
 .PP
 Data used in bootstrap\&. Not locally owned\&. 
 .PP
 Referenced by threadfun()\&.
-.SS "long \fBThreadArg::sampling_interval\fP"
+.SS "long ThreadArg::sampling_interval"
+
 .PP
 For production, set sampling_interval=1\&. For debugging, set to (say) 5 to process only every 5th \fBSNP\fP\&. This makes execution faster\&. 
 .PP
 Referenced by ThreadArg_print(), and threadfun()\&.
-.SS "\fBThreadBounds\fP* \fBThreadArg::tb\fP"
+.SS "\fBThreadBounds\fP* ThreadArg::tb"
+
 .PP
 In a multithreaded environment, each thread operates only on a portion of the chromosome\&. The Threadbounds object, tb, specifies the SNPs to be considered by the current thread\&. 
 .PP

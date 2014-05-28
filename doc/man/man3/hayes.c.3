@@ -67,6 +67,8 @@ Code for Sved's (1971) formula, as used by Hayes et al\&. 2003\&. Genome Researc
 .PP 
 Code for Sved's (1971) formula, as used by Hayes et al\&. 2003\&. Genome Research 13:635-643\&. 
 
+
+.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
@@ -75,10 +77,11 @@ Alan R\&. Rogers
 
 .SH "Function Documentation"
 .PP 
-.SS "static double \fBsvedRsq\fP (doublec, doubletwoN, inttwoNsmp)\fC [inline, static]\fP"
+.SS "static double svedRsq (doublec, doubletwoN, inttwoNsmp)\fC [inline]\fP, \fC [static]\fP"
+
 .PP
 Sved's (1971; also 2009, p 184) formula for E[r^2], modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624)\&. Hudson uses 'n' throughout his paper without clearly defining it\&. On p 631, he says that 'with probability 1/n the same gamete
- will be drawn from the sample twice' (in random sampling with replacement)\&. Thus, Hudson's 'n' is the number of gametes in the sample, which equals twoNsmp in the notation below\&.
+will be drawn from the sample twice' (in random sampling with replacement)\&. Thus, Hudson's 'n' is the number of gametes in the sample, which equals twoNsmp in the notation below\&.
 .PP
 The HAYES_MUTATION_ADJUSTMENT is based on Tenesa et al (2007, Genome Research, 17(4):520-526)\&. On p 521, these authors say:
 .PP

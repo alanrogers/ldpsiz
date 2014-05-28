@@ -4,14 +4,7 @@
 .SH NAME
 rusage.c \- 
 .PP
-Use getrusage to measure use of system resources\&. 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
- 
+Use getrusage to measure use of system resources\&.  
 
 .SH SYNOPSIS
 .br
@@ -54,30 +47,24 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 .SH "Detailed Description"
 .PP 
 Use getrusage to measure use of system resources\&. 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
-
-Header for \fBrusage\&.c\fP 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&.
-.RE
+Header for \fBrusage\&.c\fP\&.
 .PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "void \fBtms_subtractFrom\fP (struct tms *x, struct tms *y)"
+.SS "void tms_subtractFrom (struct tms *x, struct tms *y)"
+
 .PP
 Subtract each element of y from the corresponding element of x, provided that the result would be >= zero\&. Otherwise, set the element to zero\&. 
 .SH "Author"

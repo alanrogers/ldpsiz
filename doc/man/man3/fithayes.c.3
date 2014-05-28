@@ -4,14 +4,7 @@
 .SH NAME
 fithayes.c \- 
 .PP
-Functions implementing the method of Hayes et al (Genome Research, 13(4): 635-643)\&. 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
- 
+Functions implementing the method of Hayes et al (Genome Research, 13(4): 635-643)\&.  
 
 .SH SYNOPSIS
 .br
@@ -45,7 +38,7 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 \fC#include 'ini\&.h'\fP
 .br
 
-.SS "Defines"
+.SS "Macros"
 
 .in +1c
 .ti -1c
@@ -78,25 +71,28 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 .SH "Detailed Description"
 .PP 
 Functions implementing the method of Hayes et al (Genome Research, 13(4): 635-643)\&. 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 
+.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "int \fBread_data\fP (FILE *ifp, intnbins, double *cm, double *rsq, long *nobs)"
+.SS "int read_data (FILE *ifp, intnbins, double *cm, double *rsq, long *nobs)"
+
 .PP
-Read the data file produced by eld\&. \fBParameters:\fP
+Read the data file produced by eld\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIifp\fP Points to file produced by eld\&. 
 .br

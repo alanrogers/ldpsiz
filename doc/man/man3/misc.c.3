@@ -4,14 +4,7 @@
 .SH NAME
 misc.c \- 
 .PP
-Miscellaneous functions\&. 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
- 
+Miscellaneous functions\&.  
 
 .SH SYNOPSIS
 .br
@@ -41,7 +34,7 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 \fC#include 'misc\&.h'\fP
 .br
 
-.SS "Defines"
+.SS "Macros"
 
 .in +1c
 .ti -1c
@@ -150,23 +143,24 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 .SH "Detailed Description"
 .PP 
 Miscellaneous functions\&. 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 
+.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "int \fBcompareDoubles\fP (const void *void_x, const void *void_y)"
+.SS "int compareDoubles (const void *void_x, const void *void_y)"
+
 .PP
 Compare two doubles\&. Function interprets its arguments as pointers to doubles\&.
 .PP
@@ -183,7 +177,8 @@ Compare two doubles\&. Function interprets its arguments as pointers to doubles\
 
 .PP
 Referenced by confidenceBounds()\&.
-.SS "int \fBcompareLongs\fP (const void *void_x, const void *void_y)"
+.SS "int compareLongs (const void *void_x, const void *void_y)"
+
 .PP
 Compare two long ints\&. Function interprets its arguments as pointers to long ints\&.
 .PP
@@ -200,22 +195,28 @@ Compare two long ints\&. Function interprets its arguments as pointers to long i
 
 .PP
 Referenced by Boot_new()\&.
-.SS "int \fBdblEquals\fP (doublex, doubley)"
+.SS "int dblEquals (doublex, doubley)"
+
 .PP
 Test equality of x and y\&. In this test NaN == NaN, Inf == Inf, and -Inf == -Inf\&. 
-.SS "int \fBisopt\fP (const char *shortOpt, const char *longOpt, const char *arg)"
+.SS "int isopt (const char *shortOpt, const char *longOpt, const char *arg)"
+
 .PP
 Return 1 if string arg matches either shortOpt or longOpt\&. ShortOpt and longOpt are ignored if their values are NULL\&. If arg doesn't match either shortOpt or longOpt, then return 0\&. 
-.SS "void \fBreplaceSuffix\fP (char *str, size_tstr_size, const char *suffix, size_tsuffix_len)"
+.SS "void replaceSuffix (char *str, size_tstr_size, const char *suffix, size_tsuffix_len)"
+
 .PP
 Replace suffix (part after last period) of string 'str' with new suffix\&. If original string has no suffix, then append one to string\&. Abort if string isn't long enough\&. 
-.SS "char* \fBstrcenter\fP (const char *text, unsignedwidth, char *buff, unsignedbuffsize)"
+.SS "char* strcenter (const char *text, unsignedwidth, char *buff, unsignedbuffsize)"
+
 .PP
 Center string 'text' in a field of width 'width'\&. The centered string is written into the character string 'buff', whose size is 'buffsize'\&. 
-.SS "int \fBstrcomment\fP (const char *s)"
+.SS "int strcomment (const char *s)"
+
 .PP
 Return 1 if the first non-white char in string s is '#'; 0 otherwise\&. 
-.SS "int \fBstrempty\fP (const char *s)"
+.SS "int strempty (const char *s)"
+
 .PP
 Return 1 if string contains only whitespace; 0 otherwise\&. 
 .PP

@@ -4,14 +4,7 @@
 .SH NAME
 model.h \- 
 .PP
-Header for \fBmodel\&.c\fP 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
- 
+Header for \fBmodel\&.c\fP\&.  
 
 .SH SYNOPSIS
 .br
@@ -36,7 +29,7 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 .RI "struct \fBModelList\fP"
 .br
 .in -1c
-.SS "Defines"
+.SS "Macros"
 
 .in +1c
 .ti -1c
@@ -141,26 +134,29 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 .in -1c
 .SH "Detailed Description"
 .PP 
-Header for \fBmodel\&.c\fP 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
+Header for \fBmodel\&.c\fP\&. 
 
 
+.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "\fBModel\fP* \fBModel_alloc\fP (const char *method, inttwoNsmp)"
+.SS "\fBModel\fP* Model_alloc (const char *method, inttwoNsmp)"
+
 .PP
-Allocate a new \fBModel\fP of type specified by the character string 'method'\&. \fBParameters:\fP
+Allocate a new \fBModel\fP of type specified by the character string 'method'\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fImethod\fP character string representing a method to be used in predicting LD from population history\&. Legal values: 'hill', 'strobeck', and 'hayes'\&.
 .br
@@ -177,7 +173,8 @@ a pointer to a newly-allocated \fBModel\fP, if successful; or NULL, on failure\&
 References strlowercase()\&.
 .PP
 Referenced by ModelList_addModel()\&.
-.SS "unsigned \fBModelList_addModel\fP (\fBModelList\fP *ml, const char *modelName, inttwoNsmp)"
+.SS "unsigned ModelList_addModel (\fBModelList\fP *ml, const char *modelName, inttwoNsmp)"
+
 .PP
 Add a method to an \fBModelList\fP\&. Return 1 on success, 0 on failure\&.
 .PP
@@ -195,9 +192,12 @@ Add a method to an \fBModelList\fP\&. Return 1 on success, 0 on failure\&.
 References Model_alloc()\&.
 .PP
 Referenced by ModelList_alloc()\&.
-.SS "\fBModelList\fP* \fBModelList_alloc\fP (const char *s0, inttwoNsmp)"
+.SS "\fBModelList\fP* ModelList_alloc (const char *s0, inttwoNsmp)"
+
 .PP
-Allocate a new \fBModelList\fP\&. \fBParameters:\fP
+Allocate a new \fBModelList\fP\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIs0\fP A comma-separated list of \fBModel\fP types, such as 'Hill,Strobeck'\&. 
 .RE
@@ -205,7 +205,8 @@ Allocate a new \fBModelList\fP\&. \fBParameters:\fP
 
 .PP
 References ModelList_addModel()\&.
-.SS "int \fBODE_evolve\fP (\fBODE\fP *ode, double *y, unsignedydim, doublec, doubleu, \fBPopHist\fP *ph, int dydtdouble t_notused, const double y1[], double f[], void *params, intverbose)"
+.SS "int ODE_evolve (\fBODE\fP *ode, double *y, unsignedydim, doublec, doubleu, \fBPopHist\fP *ph, int dydtdouble t_notused, const double y1[], double f[], void *params, intverbose)"
+
 .PP
 Evolve through all Epochs of population history, beginning with initial state given in y\&. Calculation uses \fBODE\fP approximation\&. The initial value of y should be set before calling ODE_evolve\&.
 .PP
@@ -236,9 +237,12 @@ Returns 0 on success, 1 if function didn't run because dydt was not provided\&.
 References PopHist_duration(), PopHist_nepoch(), and PopHist_twoN()\&.
 .PP
 Referenced by Hill_sigdsq(), and Strobeck_sigdsq()\&.
-.SS "void \fBODE_ldVec\fP (\fBODE\fP *ode, double *ld, intnbins, const double *c, doubleu, \fBPopHist\fP *ph)"
+.SS "void ODE_ldVec (\fBODE\fP *ode, double *ld, intnbins, const double *c, doubleu, \fBPopHist\fP *ph)"
+
 .PP
-On entry, c is a list of recombination rates, ph the population history, and odeStepSize is the initial step size\&. \fBParameters:\fP
+On entry, c is a list of recombination rates, ph the population history, and odeStepSize is the initial step size\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fImodel\fP An object of type \fBModel\fP, which specifies the method to be used in evolving across a population history\&. On return, model->y is changed\&. 
 .br
@@ -256,7 +260,8 @@ On entry, c is a list of recombination rates, ph the population history, and ode
 
 .PP
 Referenced by costFun(), and lnObjFun()\&.
-.SS "void \fBODE_ldVecEq\fP (\fBODE\fP *ode, double *eq, intnbins, const double *c, doubleu, \fBPopHist\fP *ph, intwhichEpoch)"
+.SS "void ODE_ldVecEq (\fBODE\fP *ode, double *eq, intnbins, const double *c, doubleu, \fBPopHist\fP *ph, intwhichEpoch)"
+
 .PP
 This function returns 1 vector: eq[i] is sigma_d^2 for a population at equilibrium with parameters as given in the specified \fBPopHist\fP Epoch, and recombination rate as specified by c[i]\&. On entry, c is a list of recombination rates and ep the population history Epoch\&.
 .PP
@@ -266,7 +271,8 @@ This function returns 1 vector: eq[i] is sigma_d^2 for a population at equilibri
 .RE
 .PP
 
-.SS "void \fBODE_printState\fP (const \fBODE\fP *ode, FILE *fp)"
+.SS "void ODE_printState (const \fBODE\fP *ode, FILE *fp)"
+
 .PP
 Print state vector to file fp\&. 
 .SH "Author"

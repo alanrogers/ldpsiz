@@ -4,14 +4,7 @@
 .SH NAME
 assign.h \- 
 .PP
-Header for functions defined in \fBassign\&.c\fP 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
- 
+Header for functions defined in \fBassign\&.c\fP\&.  
 
 .SH SYNOPSIS
 .br
@@ -21,7 +14,7 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 \fC#include <stdio\&.h>\fP
 .br
 
-.SS "Defines"
+.SS "Macros"
 
 .in +1c
 .ti -1c
@@ -73,40 +66,45 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 .in -1c
 .SH "Detailed Description"
 .PP 
-Header for functions defined in \fBassign\&.c\fP 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
+Header for functions defined in \fBassign\&.c\fP\&. 
 
 
+.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "void \fBAssignment_free\fP (\fBAssignment\fP *head)"
+.SS "void Assignment_free (\fBAssignment\fP *head)"
+
 .PP
 Free list of \fBAssignment\fP objects\&. 
 .PP
 References Assignment_free(), Assignment::key, Assignment::next, and Assignment::value\&.
 .PP
 Referenced by Assignment_free(), FileIndex_readFile(), and Ini_free()\&.
-.SS "\fBAssignment\fP* \fBAssignment_new\fP (\fBAssignment\fP *head, const char *key, const char *value)"
+.SS "\fBAssignment\fP* Assignment_new (\fBAssignment\fP *head, const char *key, const char *value)"
+
 .PP
 Insert new assignment\&. 
 .PP
 References Assignment_new(), Assignment::key, Assignment::next, and Assignment::value\&.
 .PP
 Referenced by Assignment_new(), Assignment_readEld(), Gtp_readHdr(), and Ini_new()\&.
-.SS "\fBAssignment\fP* \fBAssignment_readEld\fP (FILE *ifp)"
+.SS "\fBAssignment\fP* Assignment_readEld (FILE *ifp)"
+
 .PP
-Read assignment statements in file produced by eld\&. \fBParameters:\fP
+Read assignment statements in file produced by eld\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIifp\fP Pointer to input file\&.
 .RE
@@ -119,9 +117,12 @@ Pointer to an \fBAssignment\fP object, which contains all the assignments found\
 
 .PP
 References Assignment_new()\&.
-.SS "int \fBAssignment_setDbl\fP (const \fBAssignment\fP *a, const char *key, double *ptr, intmandatory)"
+.SS "int Assignment_setDbl (const \fBAssignment\fP *a, const char *key, double *ptr, intmandatory)"
+
 .PP
-Initialize *ptr do value corresponding to given key\&. \fBParameters:\fP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIa\fP A structure containing the assigned values\&.
 .br
@@ -140,9 +141,12 @@ Initialize *ptr do value corresponding to given key\&. \fBParameters:\fP
 References Assignment_value(), and Assignment::value\&.
 .PP
 Referenced by Ini_setDbl()\&.
-.SS "int \fBAssignment_setInt\fP (const \fBAssignment\fP *a, const char *key, int *ptr, intmandatory)"
+.SS "int Assignment_setInt (const \fBAssignment\fP *a, const char *key, int *ptr, intmandatory)"
+
 .PP
-Initialize *ptr do value corresponding to given key\&. \fBParameters:\fP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIa\fP A structure containing the assigned values\&.
 .br
@@ -161,9 +165,12 @@ Initialize *ptr do value corresponding to given key\&. \fBParameters:\fP
 References Assignment_value(), and Assignment::value\&.
 .PP
 Referenced by FileIndex_readFile(), and Ini_setInt()\&.
-.SS "int \fBAssignment_setLong\fP (const \fBAssignment\fP *a, const char *key, long *ptr, intmandatory)"
+.SS "int Assignment_setLong (const \fBAssignment\fP *a, const char *key, long *ptr, intmandatory)"
+
 .PP
-Initialize *ptr do value corresponding to given key\&. \fBParameters:\fP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIa\fP A structure containing the assigned values\&.
 .br
@@ -182,9 +189,12 @@ Initialize *ptr do value corresponding to given key\&. \fBParameters:\fP
 References Assignment_value(), and Assignment::value\&.
 .PP
 Referenced by Ini_setLong()\&.
-.SS "int \fBAssignment_setString\fP (const \fBAssignment\fP *a, const char *key, char *ptr, intsize, intmandatory)"
+.SS "int Assignment_setString (const \fBAssignment\fP *a, const char *key, char *ptr, intsize, intmandatory)"
+
 .PP
-Initialize *ptr do value corresponding to given key\&. \fBParameters:\fP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIa\fP A structure containing the assigned values\&.
 .br
@@ -203,9 +213,12 @@ Initialize *ptr do value corresponding to given key\&. \fBParameters:\fP
 References Assignment_value(), and Assignment::value\&.
 .PP
 Referenced by Ini_setString()\&.
-.SS "unsigned \fBAssignment_setUnsignedInt\fP (const \fBAssignment\fP *a, const char *key, unsigned *ptr, intmandatory)"
+.SS "unsigned Assignment_setUnsignedInt (const \fBAssignment\fP *a, const char *key, unsigned *ptr, intmandatory)"
+
 .PP
-Initialize *ptr do value corresponding to given key\&. \fBParameters:\fP
+Initialize *ptr do value corresponding to given key\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIa\fP A structure containing the assigned values\&.
 .br

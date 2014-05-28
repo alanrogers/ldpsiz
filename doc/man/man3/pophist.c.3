@@ -40,7 +40,7 @@ Functions for objects of type \fBPopHist\fP, which represent the history of popu
 .br
 .RI "\fIPopulation history represented as a linked list of Epochs\&. \fP"
 .in -1c
-.SS "Defines"
+.SS "Macros"
 
 .in +1c
 .ti -1c
@@ -100,7 +100,7 @@ Functions for objects of type \fBPopHist\fP, which represent the history of popu
 .ti -1c
 .RI "size_t \fBPopHist_size\fP (const \fBPopHist\fP *ph)"
 .br
-.RI "\fIReturn the size of the memory block on which `ph` is allocated\&. \fP"
+.RI "\fIReturn the size of the memory block on which \fCph\fP is allocated\&. \fP"
 .ti -1c
 .RI "size_t \fBPopHist_calcSize\fP (unsigned nepoch)"
 .br
@@ -234,6 +234,8 @@ Functions for objects of type \fBPopHist\fP, which represent the history of popu
 .PP 
 Functions for objects of type \fBPopHist\fP, which represent the history of population size\&. 
 
+
+.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers The entire history of population size, represented as a sequence of Epochs\&. Population parameters may change at Epoch boundaries but are constant within epochs\&.
@@ -243,25 +245,28 @@ In this version, all parameters are in a single array, and twoN parameters are c
 .PP
 \fBCopyright:\fP
 .RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
 .RE
 .PP
 
 .SH "Function Documentation"
 .PP 
-.SS "\fBEpochLink\fP* \fBEpochLink_dup\fP (\fBEpochLink\fP *head)"
+.SS "\fBEpochLink\fP* EpochLink_dup (\fBEpochLink\fP *head)"
+
 .PP
 Return a newly allocated copy of a linked list of epochs\&. 
 .PP
 References EpochLink_dup()\&.
 .PP
 Referenced by EpochLink_dup(), and Ini_setEpochLink()\&.
-.SS "double \fBEpochLink_duration\fP (const \fBEpochLink\fP *link)"
+.SS "double EpochLink_duration (const \fBEpochLink\fP *link)"
+
 .PP
 Return time value from given link\&. 
 .PP
 Referenced by PopHist_fromEpochLink()\&.
-.SS "\fBEpochLink\fP* \fBEpochLink_new\fP (\fBEpochLink\fP *head, doublet, doubletwoN)"
+.SS "\fBEpochLink\fP* EpochLink_new (\fBEpochLink\fP *head, doublet, doubletwoN)"
+
 .PP
 Insert a new link into the list\&. Add item to linked list, allocating as necessary\&. 
 .PP
@@ -273,9 +278,12 @@ pointer to head of list\&.
 
 .PP
 Referenced by Ini_new()\&.
-.SS "int \fBEpochLink_nlinks\fP (const \fBEpochLink\fP *head)"
+.SS "int EpochLink_nlinks (const \fBEpochLink\fP *head)"
+
 .PP
-Count the number of links in a linked list of \fBEpochLink\fP objects\&. \fBParameters:\fP
+Count the number of links in a linked list of \fBEpochLink\fP objects\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIhead\fP pointer to beginning of linked list\&. 
 .RE
@@ -290,9 +298,12 @@ Number of links in the chain beginning with 'head'\&.
 References EpochLink_nlinks()\&.
 .PP
 Referenced by EpochLink_nlinks(), and PopHist_fromEpochLink()\&.
-.SS "void \fBEpochLink_print\fP (intndx, const \fBEpochLink\fP *link, FILE *ofp)"
+.SS "void EpochLink_print (intndx, const \fBEpochLink\fP *link, FILE *ofp)"
+
 .PP
-Print a linked list\&. \fBParameters:\fP
+Print a linked list\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIndx\fP A state variable, which should be zero in the top-level call\&. 
 .br
@@ -306,24 +317,28 @@ Print a linked list\&. \fBParameters:\fP
 References EpochLink_print()\&.
 .PP
 Referenced by EpochLink_print(), and Ini_print()\&.
-.SS "double \fBEpochLink_twoN\fP (const \fBEpochLink\fP *link)"
+.SS "double EpochLink_twoN (const \fBEpochLink\fP *link)"
+
 .PP
 Return twoN value from given link\&. 
 .PP
 Referenced by Ini_twoN0(), and PopHist_fromEpochLink()\&.
-.SS "double \fBPopHist_age\fP (const \fBPopHist\fP *ph, inti)"
+.SS "double PopHist_age (const \fBPopHist\fP *ph, inti)"
+
 .PP
 Return time from leaves to the most recent end of Epoch i\&. Thus, PopHist_age(ph, 0) is 0 and PopHist_age(ph, PopHist_nepoch(ph)) gives the sum of all epoch durations except the final infinite one\&. 
 .PP
 References PopHist_duration()\&.
-.SS "int \fBPopHist_calc_nParams\fP (intnepoch)"
+.SS "int PopHist_calc_nParams (intnepoch)"
+
 .PP
 This is just like PopHist_nParams, except that you don't need to allocate a \fBPopHist\fP object before calling it\&. All you need is the number of epochs\&. 
 .PP
 References PAR_PER_EPOCH\&.
 .PP
 Referenced by PopHist_nParams()\&.
-.SS "void \fBPopHist_copy\fP (\fBPopHist\fP *dest, const \fBPopHist\fP *src)"
+.SS "void PopHist_copy (\fBPopHist\fP *dest, const \fBPopHist\fP *src)"
+
 .PP
 Copy \fBPopHist\fP src into dest\&. The two must have equal values of nepoch\&. Otherwise, the function aborts\&. 
 .PP
@@ -339,14 +354,18 @@ Copy \fBPopHist\fP src into dest\&. The two must have equal values of nepoch\&. 
 References PopHist::size\&.
 .PP
 Referenced by Chain_bestFit(), Chain_publish(), ChainState_new(), and PopHist_perturb()\&.
-.SS "void \fBPopHist_free\fP (\fBPopHist\fP *ph)"
+.SS "void PopHist_free (\fBPopHist\fP *ph)"
+
 .PP
 Destroy a \fBPopHist\fP object\&. 
 .PP
 Referenced by Chain_free()\&.
-.SS "\fBPopHist\fP* \fBPopHist_fromEpochLink\fP (const \fBEpochLink\fP *head)"
+.SS "\fBPopHist\fP* PopHist_fromEpochLink (const \fBEpochLink\fP *head)"
+
 .PP
-Allocate a new \fBPopHist\fP and initialize from a chain of \fBEpochLink\fP objects\&. \fBParameters:\fP
+Allocate a new \fBPopHist\fP and initialize from a chain of \fBEpochLink\fP objects\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIhead\fP Beginning of chain of \fBEpochLink\fP objects\&. 
 .RE
@@ -354,7 +373,8 @@ Allocate a new \fBPopHist\fP and initialize from a chain of \fBEpochLink\fP obje
 
 .PP
 References EpochLink_duration(), EpochLink_next(), EpochLink_nlinks(), EpochLink_twoN(), PopHist::nepoch, PopHist_duration(), PopHist_newEmpty(), PopHist_setDuration(), and PopHist_setTwoN()\&.
-.SS "\fBPopHist\fP* \fBPopHist_newEmpty\fP (unsignednepoch)"
+.SS "\fBPopHist\fP* PopHist_newEmpty (unsignednepoch)"
+
 .PP
 Allocate an empty \fBPopHist\fP\&. The parameters of each epoch are initialized with zeroes, except for the duration of the final (earliest) epoch, which is infinite\&.
 .PP
@@ -373,16 +393,20 @@ a pointer to a newly allocated \fBPopHist\fP object with default values\&.
 References PopHist_calcSize(), and PopHist_init()\&.
 .PP
 Referenced by PopHist_fromEpochLink()\&.
-.SS "unsigned \fBPopHist_nParams\fP (const \fBPopHist\fP *ph)"
+.SS "unsigned PopHist_nParams (const \fBPopHist\fP *ph)"
+
 .PP
 Return the number of parameters in a \fBPopHist\fP\&. There are two adjustable parameters per epoch: N and t, except that t is fixed at infinity in the earliest epoch\&. The number of adjustable parameters is therefore 2*nepochs - 1\&. 
 .PP
 References PopHist::nepoch, and PopHist_calc_nParams()\&.
 .PP
 Referenced by C_array_to_PopHist(), Chain_printHdr(), Chain_printState(), costFun(), Hill_sigdsq(), PopHist_paramName(), PopHist_paramValue(), PopHist_to_C_array(), PopHist_to_vector(), prHeader(), TaskArg_new(), and vector_to_PopHist()\&.
-.SS "int \fBPopHist_paramName\fP (const \fBPopHist\fP *ph, char *buff, intbufflen, intndx)"
+.SS "int PopHist_paramName (const \fBPopHist\fP *ph, char *buff, intbufflen, intndx)"
+
 .PP
-Return the name of a given \fBPopHist\fP parameter\&. \fBParameters:\fP
+Return the name of a given \fBPopHist\fP parameter\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIph\fP A pointer to a \fBPopHist\fP\&. It is used only to determine the number of epochs\&. 
 .br
@@ -403,9 +427,12 @@ Return the name of a given \fBPopHist\fP parameter\&. \fBParameters:\fP
 References epochParamName, PAR_PER_EPOCH, and PopHist_nParams()\&.
 .PP
 Referenced by Chain_printHdr(), costFun(), Hill_sigdsq(), and prHeader()\&.
-.SS "double \fBPopHist_paramValue\fP (const \fBPopHist\fP *ph, intndx)"
+.SS "double PopHist_paramValue (const \fBPopHist\fP *ph, intndx)"
+
 .PP
-Return the value of a given \fBPopHist\fP parameter\&. \fBParameters:\fP
+Return the value of a given \fBPopHist\fP parameter\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIph\fP A pointer to a \fBPopHist\fP\&. 
 .br
@@ -422,7 +449,8 @@ Value of specified parameter within ph\&.
 References PopHist::p, and PopHist_nParams()\&.
 .PP
 Referenced by Chain_printState(), and costFun()\&.
-.SS "\fBPopHist\fP* \fBPopHist_perturb\fP (\fBPopHist\fP *ph, const \fBPopHist\fP *model, doubledt, doubledNinv, gsl_rng *rng)"
+.SS "\fBPopHist\fP* PopHist_perturb (\fBPopHist\fP *ph, const \fBPopHist\fP *model, doubledt, doubledNinv, gsl_rng *rng)"
+
 .PP
 Fill ph with random values based on model\&. The model is first copied into ph\&. Then ph is perturbed as described in the documentation to PopHist_perturbInPlace\&.
 .PP
@@ -447,7 +475,8 @@ ph
 
 .PP
 References PopHist_copy(), and PopHist_perturbInPlace()\&.
-.SS "\fBPopHist\fP* \fBPopHist_perturbInPlace\fP (\fBPopHist\fP *ph, doubledt, doubledNinv, gsl_rng *rng)"
+.SS "\fBPopHist\fP* PopHist_perturbInPlace (\fBPopHist\fP *ph, doubledt, doubledNinv, gsl_rng *rng)"
+
 .PP
 Perturb parameters in \fBPopHist\fP structure ph\&. Each parameter is perturbed away from its initial value\&. The distribution of the perturbations depends on the macros PERTURB_GAUSSIAN and PERTURB_TDIST\&. If the first of these is defined at compile time, then perturbations are Gaussian\&. Otherwise, if the second macro is defined, perturbations are drawn from a t distribution\&. Otherwise they are uniform\&.
 .PP
@@ -474,9 +503,12 @@ ph
 References PopHist::nepoch, PopHist_duration(), PopHist_setDuration(), PopHist_setTwoNinv(), PopHist_twoNinv(), and reflect()\&.
 .PP
 Referenced by PopHist_perturb()\&.
-.SS "void \fBPopHist_print\fP (const \fBPopHist\fP *ph, FILE *outfile)"
+.SS "void PopHist_print (const \fBPopHist\fP *ph, FILE *outfile)"
+
 .PP
-Print a \fBPopHist\fP object\&. \fBParameters:\fP
+Print a \fBPopHist\fP object\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIph\fP \fBPopHist\fP to print\&. 
 .br
@@ -488,9 +520,12 @@ Print a \fBPopHist\fP object\&. \fBParameters:\fP
 References PopHist_print_comment()\&.
 .PP
 Referenced by costFun()\&.
-.SS "void \fBPopHist_print_comment\fP (const \fBPopHist\fP *ph, const char *comstr, FILE *outfile)"
+.SS "void PopHist_print_comment (const \fBPopHist\fP *ph, const char *comstr, FILE *outfile)"
+
 .PP
-Print \fBPopHist\fP, preceding each line with a comment string\&. \fBParameters:\fP
+Print \fBPopHist\fP, preceding each line with a comment string\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIph\fP \fBPopHist\fP to print\&. 
 .br
@@ -504,9 +539,12 @@ Print \fBPopHist\fP, preceding each line with a comment string\&. \fBParameters:
 References PopHist::nepoch, PopHist_duration(), and PopHist_twoNinv()\&.
 .PP
 Referenced by Chain_printFull(), and PopHist_print()\&.
-.SS "void \fBPopHist_setDuration\fP (\fBPopHist\fP *ph, inti, doubleduration)"
+.SS "void PopHist_setDuration (\fBPopHist\fP *ph, inti, doubleduration)"
+
 .PP
-Set duration of the i'th epoch of \fBPopHist\fP structure ph\&. \fBParameters:\fP
+Set duration of the i'th epoch of \fBPopHist\fP structure ph\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIph\fP \fBPopHist\fP object to be modified\&. 
 .br
@@ -520,7 +558,8 @@ Set duration of the i'th epoch of \fBPopHist\fP structure ph\&. \fBParameters:\f
 References PopHist::nepoch, PopHist::p, and PAR_PER_EPOCH\&.
 .PP
 Referenced by PopHist_fromEpochLink(), PopHist_perturbInPlace(), and vector_to_PopHist()\&.
-.SS "void \fBPopHist_setSimplexScale\fP (gsl_vector *scale, const \fBPopHist\fP *ph)"
+.SS "void PopHist_setSimplexScale (gsl_vector *scale, const \fBPopHist\fP *ph)"
+
 .PP
 Set scale vector used by simplex algorithm\&. Each entry receives a value that represents the expected magnitude of the corresponding parameter in \fBPopHist\fP\&.
 .PP
@@ -534,9 +573,12 @@ Set scale vector used by simplex algorithm\&. Each entry receives a value that r
 
 .PP
 References PopHist::nepoch\&.
-.SS "void \fBPopHist_setTwoN\fP (\fBPopHist\fP *ph, inti, doubletwoN)"
+.SS "void PopHist_setTwoN (\fBPopHist\fP *ph, inti, doubletwoN)"
+
 .PP
-Set population size during the i'th epoch of \fBPopHist\fP structure ph\&. \fBParameters:\fP
+Set population size during the i'th epoch of \fBPopHist\fP structure ph\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIph\fP \fBPopHist\fP object to be modified\&. 
 .br
@@ -550,9 +592,12 @@ Set population size during the i'th epoch of \fBPopHist\fP structure ph\&. \fBPa
 References PopHist::p, and PAR_PER_EPOCH\&.
 .PP
 Referenced by PopHist_fromEpochLink()\&.
-.SS "void \fBPopHist_setTwoNinv\fP (\fBPopHist\fP *ph, inti, doubletwoNinv)"
+.SS "void PopHist_setTwoNinv (\fBPopHist\fP *ph, inti, doubletwoNinv)"
+
 .PP
-Set 1/2N during the i'th epoch of \fBPopHist\fP structure ph\&. \fBParameters:\fP
+Set 1/2N during the i'th epoch of \fBPopHist\fP structure ph\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIph\fP \fBPopHist\fP object to be modified\&. 
 .br
@@ -566,14 +611,18 @@ Set 1/2N during the i'th epoch of \fBPopHist\fP structure ph\&. \fBParameters:\f
 References PopHist::p, and PAR_PER_EPOCH\&.
 .PP
 Referenced by PopHist_perturbInPlace(), and vector_to_PopHist()\&.
-.SS "size_t \fBPopHist_size\fP (const \fBPopHist\fP *ph)"
+.SS "size_t PopHist_size (const \fBPopHist\fP *ph)"
+
 .PP
-Return the size of the memory block on which `ph` is allocated\&. 
+Return the size of the memory block on which \fCph\fP is allocated\&. 
 .PP
 References PopHist::size\&.
-.SS "void \fBPopHist_to_C_array\fP (double *v, intdim, const \fBPopHist\fP *ph)"
+.SS "void PopHist_to_C_array (double *v, intdim, const \fBPopHist\fP *ph)"
+
 .PP
-Put \fBPopHist\fP parameters into an ordinary C array\&. \fBParameters:\fP
+Put \fBPopHist\fP parameters into an ordinary C array\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fI\fBPopHist\fP\fP object\&. 
 .br
@@ -585,9 +634,12 @@ Put \fBPopHist\fP parameters into an ordinary C array\&. \fBParameters:\fP
 
 .PP
 References PopHist::p, and PopHist_nParams()\&.
-.SS "void \fBPopHist_to_vector\fP (gsl_vector *v, const \fBPopHist\fP *ph)"
+.SS "void PopHist_to_vector (gsl_vector *v, const \fBPopHist\fP *ph)"
+
 .PP
-Put \fBPopHist\fP parameters into a gsl_vector\&. \fBParameters:\fP
+Put \fBPopHist\fP parameters into a gsl_vector\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fI\fBPopHist\fP\fP object\&. 
 .br
@@ -597,7 +649,8 @@ Put \fBPopHist\fP parameters into a gsl_vector\&. \fBParameters:\fP
 
 .PP
 References PopHist::p, and PopHist_nParams()\&.
-.SS "double \fBPopHist_twoN\fP (const \fBPopHist\fP *ph, inti)"
+.SS "double PopHist_twoN (const \fBPopHist\fP *ph, inti)"
+
 .PP
 Return the haploid population size, 2N, during epoch i\&. 
 .PP

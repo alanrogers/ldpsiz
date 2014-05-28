@@ -1,112 +1,112 @@
-\hypertarget{model_8c}{\subsection{model.\-c \-File \-Reference}
+\hypertarget{model_8c}{\subsection{model.\-c File Reference}
 \label{model_8c}\index{model.\-c@{model.\-c}}
 }
 
 
-\-Functions for objects of type \hyperlink{struct_model}{\-Model}, a generic class whose details are implemented elsewhere.  
+Functions for objects of type \hyperlink{struct_model}{Model}, a generic class whose details are implemented elsewhere.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\*
-{\ttfamily \#include $<$string.\-h$>$}\*
-{\ttfamily \#include $<$math.\-h$>$}\*
-{\ttfamily \#include $<$pthread.\-h$>$}\*
-{\ttfamily \#include $<$gsl/gsl\-\_\-odeiv2.\-h$>$}\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}tokenizer.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}pophist.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}hill.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}strobeck.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}hayes.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}model.\-h\char`\"{}}\*
-\subsubsection*{\-Data \-Structures}
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$pthread.\-h$>$}\\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-odeiv2.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tokenizer.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}pophist.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}hill.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}strobeck.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}hayes.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}model.\-h\char`\"{}}\\*
+\subsubsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{struct_o_d_e}{\-O\-D\-E}
+struct \hyperlink{struct_o_d_e}{O\-D\-E}
 \end{DoxyCompactItemize}
-\subsubsection*{\-Functions}
+\subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{model_8c_a89a35538c55bd17f07e6f40a6ffe05e9}{static \hyperlink{struct_model}{\-Model} $\ast$ {\bfseries \-Model\-\_\-dup} (const \hyperlink{struct_model}{\-Model} $\ast$model)}\label{model_8c_a89a35538c55bd17f07e6f40a6ffe05e9}
+\hypertarget{model_8c_a89a35538c55bd17f07e6f40a6ffe05e9}{static \hyperlink{struct_model}{Model} $\ast$ {\bfseries Model\-\_\-dup} (const \hyperlink{struct_model}{Model} $\ast$model)}\label{model_8c_a89a35538c55bd17f07e6f40a6ffe05e9}
 
 \item 
-\hypertarget{model_8c_afb325f4b19d4094dde269ac488d868b5}{\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ {\bfseries \-O\-D\-E\-\_\-new} (const \hyperlink{struct_model}{\-Model} $\ast$model, double abstol, double reltol)}\label{model_8c_afb325f4b19d4094dde269ac488d868b5}
+\hypertarget{model_8c_afb325f4b19d4094dde269ac488d868b5}{\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ {\bfseries O\-D\-E\-\_\-new} (const \hyperlink{struct_model}{Model} $\ast$model, double abstol, double reltol)}\label{model_8c_afb325f4b19d4094dde269ac488d868b5}
 
 \item 
-\hypertarget{model_8c_ac7a9fbe48467fafe099af088de376713}{void {\bfseries \-O\-D\-E\-\_\-free} (\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode)}\label{model_8c_ac7a9fbe48467fafe099af088de376713}
+\hypertarget{model_8c_ac7a9fbe48467fafe099af088de376713}{void {\bfseries O\-D\-E\-\_\-free} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode)}\label{model_8c_ac7a9fbe48467fafe099af088de376713}
 
 \item 
-\hypertarget{model_8c_a6d6219a4bb104771c033dee78d1b7002}{void $\ast$ {\bfseries \-O\-D\-E\-\_\-state} (\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode)}\label{model_8c_a6d6219a4bb104771c033dee78d1b7002}
+\hypertarget{model_8c_a6d6219a4bb104771c033dee78d1b7002}{void $\ast$ {\bfseries O\-D\-E\-\_\-state} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode)}\label{model_8c_a6d6219a4bb104771c033dee78d1b7002}
 
 \item 
-\hypertarget{model_8c_a1f3203facb60812c253704be76193d2d}{double {\bfseries \-O\-D\-E\-\_\-state\-Val} (const \hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode, unsigned i)}\label{model_8c_a1f3203facb60812c253704be76193d2d}
+\hypertarget{model_8c_a1f3203facb60812c253704be76193d2d}{double {\bfseries O\-D\-E\-\_\-state\-Val} (const \hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode, unsigned i)}\label{model_8c_a1f3203facb60812c253704be76193d2d}
 
 \item 
-\hypertarget{model_8c_a22136a7889945d6d15b5b6e02647cadd}{size\-\_\-t {\bfseries \-O\-D\-E\-\_\-state\-Dim} (const \hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode)}\label{model_8c_a22136a7889945d6d15b5b6e02647cadd}
+\hypertarget{model_8c_a22136a7889945d6d15b5b6e02647cadd}{size\-\_\-t {\bfseries O\-D\-E\-\_\-state\-Dim} (const \hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode)}\label{model_8c_a22136a7889945d6d15b5b6e02647cadd}
 
 \item 
-\hypertarget{model_8c_a3028c117513ff294c22e3e45a7d95512}{\hyperlink{struct_model}{\-Model} $\ast$ {\bfseries \-O\-D\-E\-\_\-model} (\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode)}\label{model_8c_a3028c117513ff294c22e3e45a7d95512}
+\hypertarget{model_8c_a3028c117513ff294c22e3e45a7d95512}{\hyperlink{struct_model}{Model} $\ast$ {\bfseries O\-D\-E\-\_\-model} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode)}\label{model_8c_a3028c117513ff294c22e3e45a7d95512}
 
 \item 
-\hypertarget{model_8c_a89d09aaaf367b0f6ca9be2047fa2a8ce}{struct \hyperlink{structdydt__params}{dydt\-\_\-params} $\ast$ {\bfseries \-O\-D\-E\-\_\-dydt\-Par} (\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode)}\label{model_8c_a89d09aaaf367b0f6ca9be2047fa2a8ce}
+\hypertarget{model_8c_a89d09aaaf367b0f6ca9be2047fa2a8ce}{struct \hyperlink{structdydt__params}{dydt\-\_\-params} $\ast$ {\bfseries O\-D\-E\-\_\-dydt\-Par} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode)}\label{model_8c_a89d09aaaf367b0f6ca9be2047fa2a8ce}
 
 \item 
-\hypertarget{model_8c_adb111df07f4a5c3289bc3185efb2c498}{double {\bfseries \-O\-D\-E\-\_\-ld} (\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode, double c, double u, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph)}\label{model_8c_adb111df07f4a5c3289bc3185efb2c498}
+\hypertarget{model_8c_adb111df07f4a5c3289bc3185efb2c498}{double {\bfseries O\-D\-E\-\_\-ld} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode, double c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)}\label{model_8c_adb111df07f4a5c3289bc3185efb2c498}
 
 \item 
-\hyperlink{struct_model}{\-Model} $\ast$ \hyperlink{model_8c_a1c02862e00fd2fd232c5ba777beadc84}{\-Model\-\_\-alloc} (const char $\ast$method, int two\-Nsmp)
-\begin{DoxyCompactList}\small\item\em \-Allocate a new \hyperlink{struct_model}{\-Model} of type specified by the character string \char`\"{}method\char`\"{}. \end{DoxyCompactList}\item 
-\hypertarget{model_8c_a4a4e2875e3f90a9fdc2855f86b41a28c}{void \hyperlink{model_8c_a4a4e2875e3f90a9fdc2855f86b41a28c}{\-Model\-\_\-free} (\hyperlink{struct_model}{\-Model} $\ast$m)}\label{model_8c_a4a4e2875e3f90a9fdc2855f86b41a28c}
+\hyperlink{struct_model}{Model} $\ast$ \hyperlink{model_8c_a1c02862e00fd2fd232c5ba777beadc84}{Model\-\_\-alloc} (const char $\ast$method, int two\-Nsmp)
+\begin{DoxyCompactList}\small\item\em Allocate a new \hyperlink{struct_model}{Model} of type specified by the character string \char`\"{}method\char`\"{}. \end{DoxyCompactList}\item 
+\hypertarget{model_8c_a4a4e2875e3f90a9fdc2855f86b41a28c}{void \hyperlink{model_8c_a4a4e2875e3f90a9fdc2855f86b41a28c}{Model\-\_\-free} (\hyperlink{struct_model}{Model} $\ast$m)}\label{model_8c_a4a4e2875e3f90a9fdc2855f86b41a28c}
 
-\begin{DoxyCompactList}\small\item\em \-Free an object of type \hyperlink{struct_model}{\-Model}. \end{DoxyCompactList}\item 
-\hypertarget{model_8c_aec391b5f55ce5629b374efa128ada813}{void $\ast$ {\bfseries \-Model\-\_\-new\-State} (const \hyperlink{struct_model}{\-Model} $\ast$m)}\label{model_8c_aec391b5f55ce5629b374efa128ada813}
-
-\item 
-\hypertarget{model_8c_ac7357a387ec713bca5b33bdb77cd1a8e}{void {\bfseries \-Model\-\_\-free\-State} (\hyperlink{struct_model}{\-Model} $\ast$m, void $\ast$state)}\label{model_8c_ac7357a387ec713bca5b33bdb77cd1a8e}
+\begin{DoxyCompactList}\small\item\em Free an object of type \hyperlink{struct_model}{Model}. \end{DoxyCompactList}\item 
+\hypertarget{model_8c_aec391b5f55ce5629b374efa128ada813}{void $\ast$ {\bfseries Model\-\_\-new\-State} (const \hyperlink{struct_model}{Model} $\ast$m)}\label{model_8c_aec391b5f55ce5629b374efa128ada813}
 
 \item 
-\hypertarget{model_8c_a712254dafd524faba1cdb69bebeec9af}{double {\bfseries \-Model\-\_\-exact\-L\-D} (const \hyperlink{struct_model}{\-Model} $\ast$model, \hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode, double c, double u, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph)}\label{model_8c_a712254dafd524faba1cdb69bebeec9af}
+\hypertarget{model_8c_ac7357a387ec713bca5b33bdb77cd1a8e}{void {\bfseries Model\-\_\-free\-State} (\hyperlink{struct_model}{Model} $\ast$m, void $\ast$state)}\label{model_8c_ac7357a387ec713bca5b33bdb77cd1a8e}
 
 \item 
-void \hyperlink{model_8c_a0430f40e0338a89e80ab4fc98a1aedd1}{\-O\-D\-E\-\_\-print\-State} (const \hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode, \-F\-I\-L\-E $\ast$fp)
-\begin{DoxyCompactList}\small\item\em \-Print state vector to file fp. \end{DoxyCompactList}\item 
-int \hyperlink{model_8c_a53b5215058e5f35305bea4e9cca668fb}{\-O\-D\-E\-\_\-evolve} (\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode, double $\ast$y, unsigned ydim, double c, double u, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph, int dydt(double t\-\_\-notused, const double y1\mbox{[}$\,$\mbox{]}, double f\mbox{[}$\,$\mbox{]}, void $\ast$params), int verbose)
-\begin{DoxyCompactList}\small\item\em \-Evolve through all \-Epochs of population history, beginning with initial state given in y. \end{DoxyCompactList}\item 
-void \hyperlink{model_8c_a64672253a3cad1e64368b829f52f252a}{\-O\-D\-E\-\_\-ld\-Vec} (\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode, double $\ast$ld, int nbins, const double $\ast$c, double u, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph)
-\begin{DoxyCompactList}\small\item\em \-On entry, c is a list of recombination rates, ph the population history, and ode\-Step\-Size is the initial step size. \end{DoxyCompactList}\item 
-\hypertarget{model_8c_aa1692308374b651cdfca9a39eb1dfd36}{double {\bfseries \-O\-D\-E\-\_\-ld\-Eq} (\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode, double c, double u, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph, unsigned which\-Epoch)}\label{model_8c_aa1692308374b651cdfca9a39eb1dfd36}
+\hypertarget{model_8c_a712254dafd524faba1cdb69bebeec9af}{double {\bfseries Model\-\_\-exact\-L\-D} (const \hyperlink{struct_model}{Model} $\ast$model, \hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode, double c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)}\label{model_8c_a712254dafd524faba1cdb69bebeec9af}
 
 \item 
-void \hyperlink{model_8c_a51a7fde5f0da4616cf46588d2cdf3f4a}{\-O\-D\-E\-\_\-ld\-Vec\-Eq} (\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode, double $\ast$eq, int nbins, const double $\ast$c, double u, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph, int which\-Epoch)
-\begin{DoxyCompactList}\small\item\em \-This function returns 1 vector\-: eq\mbox{[}i\mbox{]} is sigma\-\_\-d$^\wedge$2 for a population at equilibrium with parameters as given in the specified \hyperlink{struct_pop_hist}{\-Pop\-Hist} \-Epoch, and recombination rate as specified by c\mbox{[}i\mbox{]}. \end{DoxyCompactList}\item 
-\hyperlink{struct_model_list}{\-Model\-List} $\ast$ \hyperlink{model_8c_aaaf1d2838f1a8b09e6c1a13f2c2ceb13}{\-Model\-List\-\_\-alloc} (const char $\ast$s0, int two\-Nsmp)
-\begin{DoxyCompactList}\small\item\em \-Allocate a new \hyperlink{struct_model_list}{\-Model\-List}. \end{DoxyCompactList}\item 
-unsigned \hyperlink{model_8c_a7d48fbf661c4f902af4161fadb286ed1}{\-Model\-List\-\_\-add\-Model} (\hyperlink{struct_model_list}{\-Model\-List} $\ast$ml, const char $\ast$model\-Name, int two\-Nsmp)
-\begin{DoxyCompactList}\small\item\em \-Add a method to an \hyperlink{struct_model_list}{\-Model\-List}. \end{DoxyCompactList}\item 
-\hypertarget{model_8c_a432c8fbbb5e2dbd1894f20afa497e4e0}{void {\bfseries \-Model\-List\-\_\-free} (\hyperlink{struct_model_list}{\-Model\-List} $\ast$el)}\label{model_8c_a432c8fbbb5e2dbd1894f20afa497e4e0}
+void \hyperlink{model_8c_a0430f40e0338a89e80ab4fc98a1aedd1}{O\-D\-E\-\_\-print\-State} (const \hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode, F\-I\-L\-E $\ast$fp)
+\begin{DoxyCompactList}\small\item\em Print state vector to file fp. \end{DoxyCompactList}\item 
+int \hyperlink{model_8c_a53b5215058e5f35305bea4e9cca668fb}{O\-D\-E\-\_\-evolve} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode, double $\ast$y, unsigned ydim, double c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int dydt(double t\-\_\-notused, const double y1\mbox{[}$\,$\mbox{]}, double f\mbox{[}$\,$\mbox{]}, void $\ast$params), int verbose)
+\begin{DoxyCompactList}\small\item\em Evolve through all Epochs of population history, beginning with initial state given in y. \end{DoxyCompactList}\item 
+void \hyperlink{model_8c_a64672253a3cad1e64368b829f52f252a}{O\-D\-E\-\_\-ld\-Vec} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode, double $\ast$ld, int nbins, const double $\ast$c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)
+\begin{DoxyCompactList}\small\item\em On entry, c is a list of recombination rates, ph the population history, and ode\-Step\-Size is the initial step size. \end{DoxyCompactList}\item 
+\hypertarget{model_8c_aa1692308374b651cdfca9a39eb1dfd36}{double {\bfseries O\-D\-E\-\_\-ld\-Eq} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode, double c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, unsigned which\-Epoch)}\label{model_8c_aa1692308374b651cdfca9a39eb1dfd36}
+
+\item 
+void \hyperlink{model_8c_a51a7fde5f0da4616cf46588d2cdf3f4a}{O\-D\-E\-\_\-ld\-Vec\-Eq} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode, double $\ast$eq, int nbins, const double $\ast$c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int which\-Epoch)
+\begin{DoxyCompactList}\small\item\em This function returns 1 vector\-: eq\mbox{[}i\mbox{]} is sigma\-\_\-d$^\wedge$2 for a population at equilibrium with parameters as given in the specified \hyperlink{struct_pop_hist}{Pop\-Hist} Epoch, and recombination rate as specified by c\mbox{[}i\mbox{]}. \end{DoxyCompactList}\item 
+\hyperlink{struct_model_list}{Model\-List} $\ast$ \hyperlink{model_8c_aaaf1d2838f1a8b09e6c1a13f2c2ceb13}{Model\-List\-\_\-alloc} (const char $\ast$s0, int two\-Nsmp)
+\begin{DoxyCompactList}\small\item\em Allocate a new \hyperlink{struct_model_list}{Model\-List}. \end{DoxyCompactList}\item 
+unsigned \hyperlink{model_8c_a7d48fbf661c4f902af4161fadb286ed1}{Model\-List\-\_\-add\-Model} (\hyperlink{struct_model_list}{Model\-List} $\ast$ml, const char $\ast$model\-Name, int two\-Nsmp)
+\begin{DoxyCompactList}\small\item\em Add a method to an \hyperlink{struct_model_list}{Model\-List}. \end{DoxyCompactList}\item 
+\hypertarget{model_8c_a432c8fbbb5e2dbd1894f20afa497e4e0}{void {\bfseries Model\-List\-\_\-free} (\hyperlink{struct_model_list}{Model\-List} $\ast$el)}\label{model_8c_a432c8fbbb5e2dbd1894f20afa497e4e0}
 
 \end{DoxyCompactItemize}
-\subsubsection*{\-Variables}
+\subsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{model_8c_ac588cb830763b4ce1b5f011fd0d7cb28}{pthread\-\_\-mutex\-\_\-t {\bfseries stderr\-\_\-mutex} = \-P\-T\-H\-R\-E\-A\-D\-\_\-\-M\-U\-T\-E\-X\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-E\-R}\label{model_8c_ac588cb830763b4ce1b5f011fd0d7cb28}
+\hypertarget{model_8c_ac588cb830763b4ce1b5f011fd0d7cb28}{pthread\-\_\-mutex\-\_\-t {\bfseries stderr\-\_\-mutex} = P\-T\-H\-R\-E\-A\-D\-\_\-\-M\-U\-T\-E\-X\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-E\-R}\label{model_8c_ac588cb830763b4ce1b5f011fd0d7cb28}
 
 \end{DoxyCompactItemize}
 
 
-\subsubsection{\-Detailed \-Description}
-\-Functions for objects of type \hyperlink{struct_model}{\-Model}, a generic class whose details are implemented elsewhere. \-The \hyperlink{struct_model}{\-Model} class generalizes the task of calculating the expected value of an \-L\-D statistic from parameter values involving recombination rate, c, mutation rate, u, and the history of population size.
+\subsubsection{Detailed Description}
+Functions for objects of type \hyperlink{struct_model}{Model}, a generic class whose details are implemented elsewhere. The \hyperlink{struct_model}{Model} class generalizes the task of calculating the expected value of an L\-D statistic from parameter values involving recombination rate, c, mutation rate, u, and the history of population size.
 
-\-Several of the models involve a vector of state variables, which is iterated forward from generation to generation. \-This file implements a function, ode\-Evolve, which approximates such systems as \-O\-D\-Es.
+Several of the models involve a vector of state variables, which is iterated forward from generation to generation. This file implements a function, ode\-Evolve, which approximates such systems as O\-D\-Es.
 
-\begin{DoxyCopyright}{\-Copyright}
-\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}
 
 
-\subsubsection{\-Function \-Documentation}
-\hypertarget{model_8c_a1c02862e00fd2fd232c5ba777beadc84}{\index{model.\-c@{model.\-c}!\-Model\-\_\-alloc@{\-Model\-\_\-alloc}}
-\index{\-Model\-\_\-alloc@{\-Model\-\_\-alloc}!model.c@{model.\-c}}
-\paragraph[{\-Model\-\_\-alloc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Model}$\ast$ {\bf \-Model\-\_\-alloc} (
+\subsubsection{Function Documentation}
+\hypertarget{model_8c_a1c02862e00fd2fd232c5ba777beadc84}{\index{model.\-c@{model.\-c}!Model\-\_\-alloc@{Model\-\_\-alloc}}
+\index{Model\-\_\-alloc@{Model\-\_\-alloc}!model.c@{model.\-c}}
+\paragraph[{Model\-\_\-alloc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model}$\ast$ Model\-\_\-alloc (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{method, }
 \item[{int}]{two\-Nsmp}
@@ -114,61 +114,61 @@ unsigned \hyperlink{model_8c_a7d48fbf661c4f902af4161fadb286ed1}{\-Model\-List\-\
 )}}\label{model_8c_a1c02862e00fd2fd232c5ba777beadc84}
 
 
-\-Allocate a new \hyperlink{struct_model}{\-Model} of type specified by the character string \char`\"{}method\char`\"{}. 
+Allocate a new \hyperlink{struct_model}{Model} of type specified by the character string \char`\"{}method\char`\"{}. 
 
 
-\begin{DoxyParams}[1]{\-Parameters}
-\mbox{\tt in}  & {\em method} & character string representing a method to be used in predicting \-L\-D from population history. \-Legal values\-: \char`\"{}hill\char`\"{}, \char`\"{}strobeck\char`\"{}, and \char`\"{}hayes\char`\"{}.\\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em method} & character string representing a method to be used in predicting L\-D from population history. Legal values\-: \char`\"{}hill\char`\"{}, \char`\"{}strobeck\char`\"{}, and \char`\"{}hayes\char`\"{}.\\
 \hline
-\mbox{\tt in}  & {\em two\-Nsamp} & haploid sample size, which is used to incorporate sampling bias into predicted values. \-To turn this feature off, use the value 0.\\
+\mbox{\tt in}  & {\em two\-Nsamp} & haploid sample size, which is used to incorporate sampling bias into predicted values. To turn this feature off, use the value 0.\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{\-Returns}
-a pointer to a newly-\/allocated \hyperlink{struct_model}{\-Model}, if successful; or \-N\-U\-L\-L, on failure. 
+\begin{DoxyReturn}{Returns}
+a pointer to a newly-\/allocated \hyperlink{struct_model}{Model}, if successful; or N\-U\-L\-L, on failure. 
 \end{DoxyReturn}
 
 
-\-References strlowercase().
+References strlowercase().
 
 
 
-\-Referenced by \-Model\-List\-\_\-add\-Model().
+Referenced by Model\-List\-\_\-add\-Model().
 
-\hypertarget{model_8c_a7d48fbf661c4f902af4161fadb286ed1}{\index{model.\-c@{model.\-c}!\-Model\-List\-\_\-add\-Model@{\-Model\-List\-\_\-add\-Model}}
-\index{\-Model\-List\-\_\-add\-Model@{\-Model\-List\-\_\-add\-Model}!model.c@{model.\-c}}
-\paragraph[{\-Model\-List\-\_\-add\-Model}]{\setlength{\rightskip}{0pt plus 5cm}unsigned {\bf \-Model\-List\-\_\-add\-Model} (
+\hypertarget{model_8c_a7d48fbf661c4f902af4161fadb286ed1}{\index{model.\-c@{model.\-c}!Model\-List\-\_\-add\-Model@{Model\-List\-\_\-add\-Model}}
+\index{Model\-List\-\_\-add\-Model@{Model\-List\-\_\-add\-Model}!model.c@{model.\-c}}
+\paragraph[{Model\-List\-\_\-add\-Model}]{\setlength{\rightskip}{0pt plus 5cm}unsigned Model\-List\-\_\-add\-Model (
 \begin{DoxyParamCaption}
-\item[{{\bf \-Model\-List} $\ast$}]{ml, }
+\item[{{\bf Model\-List} $\ast$}]{ml, }
 \item[{const char $\ast$}]{model\-Name, }
 \item[{int}]{two\-Nsmp}
 \end{DoxyParamCaption}
 )}}\label{model_8c_a7d48fbf661c4f902af4161fadb286ed1}
 
 
-\-Add a method to an \hyperlink{struct_model_list}{\-Model\-List}. 
+Add a method to an \hyperlink{struct_model_list}{Model\-List}. 
 
-\-Return 1 on success, 0 on failure.
+Return 1 on success, 0 on failure.
 
 
-\begin{DoxyParams}[1]{\-Parameters}
-\mbox{\tt out}  & {\em el} & \-The \hyperlink{struct_model_list}{\-Model\-List}. \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em el} & The \hyperlink{struct_model_list}{Model\-List}. \\
 \hline
-\mbox{\tt in}  & {\em method} & \-A character string such as \char`\"{}hill\char`\"{}, or \char`\"{}strobeck\char`\"{}. \\
+\mbox{\tt in}  & {\em method} & A character string such as \char`\"{}hill\char`\"{}, or \char`\"{}strobeck\char`\"{}. \\
 \hline
-\mbox{\tt in}  & {\em two\-Nsmp} & \-The number of individuals sampled. \\
+\mbox{\tt in}  & {\em two\-Nsmp} & The number of individuals sampled. \\
 \hline
 \end{DoxyParams}
 
 
-\-References \-Model\-\_\-alloc().
+References Model\-\_\-alloc().
 
 
 
-\-Referenced by \-Model\-List\-\_\-alloc().
+Referenced by Model\-List\-\_\-alloc().
 
-\hypertarget{model_8c_aaaf1d2838f1a8b09e6c1a13f2c2ceb13}{\index{model.\-c@{model.\-c}!\-Model\-List\-\_\-alloc@{\-Model\-List\-\_\-alloc}}
-\index{\-Model\-List\-\_\-alloc@{\-Model\-List\-\_\-alloc}!model.c@{model.\-c}}
-\paragraph[{\-Model\-List\-\_\-alloc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Model\-List}$\ast$ {\bf \-Model\-List\-\_\-alloc} (
+\hypertarget{model_8c_aaaf1d2838f1a8b09e6c1a13f2c2ceb13}{\index{model.\-c@{model.\-c}!Model\-List\-\_\-alloc@{Model\-List\-\_\-alloc}}
+\index{Model\-List\-\_\-alloc@{Model\-List\-\_\-alloc}!model.c@{model.\-c}}
+\paragraph[{Model\-List\-\_\-alloc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model\-List}$\ast$ Model\-List\-\_\-alloc (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{s0, }
 \item[{int}]{two\-Nsmp}
@@ -176,133 +176,133 @@ a pointer to a newly-\/allocated \hyperlink{struct_model}{\-Model}, if successfu
 )}}\label{model_8c_aaaf1d2838f1a8b09e6c1a13f2c2ceb13}
 
 
-\-Allocate a new \hyperlink{struct_model_list}{\-Model\-List}. 
+Allocate a new \hyperlink{struct_model_list}{Model\-List}. 
 
 
-\begin{DoxyParams}[1]{\-Parameters}
-\mbox{\tt in}  & {\em s0} & \-A comma-\/separated list of \hyperlink{struct_model}{\-Model} types, such as \char`\"{}\-Hill,\-Strobeck\char`\"{}. \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em s0} & A comma-\/separated list of \hyperlink{struct_model}{Model} types, such as \char`\"{}\-Hill,\-Strobeck\char`\"{}. \\
 \hline
 \end{DoxyParams}
 
 
-\-References \-Model\-List\-\_\-add\-Model().
+References Model\-List\-\_\-add\-Model().
 
-\hypertarget{model_8c_a53b5215058e5f35305bea4e9cca668fb}{\index{model.\-c@{model.\-c}!\-O\-D\-E\-\_\-evolve@{\-O\-D\-E\-\_\-evolve}}
-\index{\-O\-D\-E\-\_\-evolve@{\-O\-D\-E\-\_\-evolve}!model.c@{model.\-c}}
-\paragraph[{\-O\-D\-E\-\_\-evolve}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-O\-D\-E\-\_\-evolve} (
+\hypertarget{model_8c_a53b5215058e5f35305bea4e9cca668fb}{\index{model.\-c@{model.\-c}!O\-D\-E\-\_\-evolve@{O\-D\-E\-\_\-evolve}}
+\index{O\-D\-E\-\_\-evolve@{O\-D\-E\-\_\-evolve}!model.c@{model.\-c}}
+\paragraph[{O\-D\-E\-\_\-evolve}]{\setlength{\rightskip}{0pt plus 5cm}int O\-D\-E\-\_\-evolve (
 \begin{DoxyParamCaption}
-\item[{{\bf \-O\-D\-E} $\ast$}]{ode, }
+\item[{{\bf O\-D\-E} $\ast$}]{ode, }
 \item[{double $\ast$}]{y, }
 \item[{unsigned}]{ydim, }
 \item[{double}]{c, }
 \item[{double}]{u, }
-\item[{{\bf \-Pop\-Hist} $\ast$}]{ph, }
+\item[{{\bf Pop\-Hist} $\ast$}]{ph, }
 \item[{int }]{dydtdouble t\-\_\-notused, const double y1\mbox{[}$\,$\mbox{]}, double f\mbox{[}$\,$\mbox{]},void $\ast$params, }
 \item[{int}]{verbose}
 \end{DoxyParamCaption}
 )}}\label{model_8c_a53b5215058e5f35305bea4e9cca668fb}
 
 
-\-Evolve through all \-Epochs of population history, beginning with initial state given in y. 
+Evolve through all Epochs of population history, beginning with initial state given in y. 
 
-\-Calculation uses \hyperlink{struct_o_d_e}{\-O\-D\-E} approximation. \-The initial value of y should be set before calling \-O\-D\-E\-\_\-evolve.
+Calculation uses \hyperlink{struct_o_d_e}{O\-D\-E} approximation. The initial value of y should be set before calling O\-D\-E\-\_\-evolve.
 
 
-\begin{DoxyParams}[1]{\-Parameters}
-\mbox{\tt in,out}  & {\em model} & \-An object of type \hyperlink{struct_model}{\-Model}, which specifies the method to be used in evolving across a population history. \-The function makes use of model-\/$>$ydim, model-\/$>$y, and model-\/$>$dydt. \-On return, model-\/$>$y contains the state variable the results from this process. \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em model} & An object of type \hyperlink{struct_model}{Model}, which specifies the method to be used in evolving across a population history. The function makes use of model-\/$>$ydim, model-\/$>$y, and model-\/$>$dydt. On return, model-\/$>$y contains the state variable the results from this process. \\
 \hline
-\mbox{\tt in,out}  & {\em y} & \-Vector of state variables. \\
+\mbox{\tt in,out}  & {\em y} & Vector of state variables. \\
 \hline
-\mbox{\tt in}  & {\em ode\-Step\-Size} & \-Controls the size of step taken by the minimizer. \\
+\mbox{\tt in}  & {\em ode\-Step\-Size} & Controls the size of step taken by the minimizer. \\
 \hline
-\mbox{\tt in}  & {\em ph} & \-Describes the population's history. \-If ph contains just one \-Epoch, y gets its equilibrium value. \\
+\mbox{\tt in}  & {\em ph} & Describes the population's history. If ph contains just one Epoch, y gets its equilibrium value. \\
 \hline
-\mbox{\tt in}  & {\em verbose} & \-Verbosity. \\
+\mbox{\tt in}  & {\em verbose} & Verbosity. \\
 \hline
-\mbox{\tt in}  & {\em c} & \-Recombination rate; overrides values in ph. \\
+\mbox{\tt in}  & {\em c} & Recombination rate; overrides values in ph. \\
 \hline
-\mbox{\tt in}  & {\em u} & \-Mutation rate. \\
+\mbox{\tt in}  & {\em u} & Mutation rate. \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{\-Returns}
-\-Returns 0 on success, 1 if function didn't run because dydt was not provided. 
+\begin{DoxyReturn}{Returns}
+Returns 0 on success, 1 if function didn't run because dydt was not provided. 
 \end{DoxyReturn}
 
 
-\-References \-Pop\-Hist\-\_\-duration(), \-Pop\-Hist\-\_\-nepoch(), and \-Pop\-Hist\-\_\-two\-N().
+References Pop\-Hist\-\_\-duration(), Pop\-Hist\-\_\-nepoch(), and Pop\-Hist\-\_\-two\-N().
 
 
 
-\-Referenced by \-Hill\-\_\-sigdsq(), and \-Strobeck\-\_\-sigdsq().
+Referenced by Hill\-\_\-sigdsq(), and Strobeck\-\_\-sigdsq().
 
-\hypertarget{model_8c_a64672253a3cad1e64368b829f52f252a}{\index{model.\-c@{model.\-c}!\-O\-D\-E\-\_\-ld\-Vec@{\-O\-D\-E\-\_\-ld\-Vec}}
-\index{\-O\-D\-E\-\_\-ld\-Vec@{\-O\-D\-E\-\_\-ld\-Vec}!model.c@{model.\-c}}
-\paragraph[{\-O\-D\-E\-\_\-ld\-Vec}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-O\-D\-E\-\_\-ld\-Vec} (
+\hypertarget{model_8c_a64672253a3cad1e64368b829f52f252a}{\index{model.\-c@{model.\-c}!O\-D\-E\-\_\-ld\-Vec@{O\-D\-E\-\_\-ld\-Vec}}
+\index{O\-D\-E\-\_\-ld\-Vec@{O\-D\-E\-\_\-ld\-Vec}!model.c@{model.\-c}}
+\paragraph[{O\-D\-E\-\_\-ld\-Vec}]{\setlength{\rightskip}{0pt plus 5cm}void O\-D\-E\-\_\-ld\-Vec (
 \begin{DoxyParamCaption}
-\item[{{\bf \-O\-D\-E} $\ast$}]{ode, }
+\item[{{\bf O\-D\-E} $\ast$}]{ode, }
 \item[{double $\ast$}]{ld, }
 \item[{int}]{nbins, }
 \item[{const double $\ast$}]{c, }
 \item[{double}]{u, }
-\item[{{\bf \-Pop\-Hist} $\ast$}]{ph}
+\item[{{\bf Pop\-Hist} $\ast$}]{ph}
 \end{DoxyParamCaption}
 )}}\label{model_8c_a64672253a3cad1e64368b829f52f252a}
 
 
-\-On entry, c is a list of recombination rates, ph the population history, and ode\-Step\-Size is the initial step size. 
+On entry, c is a list of recombination rates, ph the population history, and ode\-Step\-Size is the initial step size. 
 
 
-\begin{DoxyParams}[1]{\-Parameters}
-\mbox{\tt in,out}  & {\em model} & \-An object of type \hyperlink{struct_model}{\-Model}, which specifies the method to be used in evolving across a population history. \-On return, model-\/$>$y is changed. \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em model} & An object of type \hyperlink{struct_model}{Model}, which specifies the method to be used in evolving across a population history. On return, model-\/$>$y is changed. \\
 \hline
-\mbox{\tt in}  & {\em c,u} & \-Rates of recombination and mutation. \\
+\mbox{\tt in}  & {\em c,u} & Rates of recombination and mutation. \\
 \hline
-\mbox{\tt in}  & {\em nbins} & \-Size of arrayys sigdsq and c. \\
+\mbox{\tt in}  & {\em nbins} & Size of arrayys sigdsq and c. \\
 \hline
-\mbox{\tt in}  & {\em ph} & \-Population history. \\
+\mbox{\tt in}  & {\em ph} & Population history. \\
 \hline
-\mbox{\tt in}  & {\em ode\-Step\-Size} & \-Controls the step size of the \hyperlink{struct_o_d_e}{\-O\-D\-E} algorithm. \\
+\mbox{\tt in}  & {\em ode\-Step\-Size} & Controls the step size of the \hyperlink{struct_o_d_e}{O\-D\-E} algorithm. \\
 \hline
-\mbox{\tt out}  & {\em ld\mbox{[}i\mbox{]}} & is a vector of \char`\"{}nbins\char`\"{} doubles. \-On return, the i'th entry will contain the value of sigma\-\_\-d$^\wedge$2 implied by recombination rate c\mbox{[}i\mbox{]}, and by the population history in argument \char`\"{}ph\char`\"{}. \\
+\mbox{\tt out}  & {\em ld\mbox{[}i\mbox{]}} & is a vector of \char`\"{}nbins\char`\"{} doubles. On return, the i'th entry will contain the value of sigma\-\_\-d$^\wedge$2 implied by recombination rate c\mbox{[}i\mbox{]}, and by the population history in argument \char`\"{}ph\char`\"{}. \\
 \hline
 \end{DoxyParams}
 
 
-\-Referenced by cost\-Fun(), and ln\-Obj\-Fun().
+Referenced by cost\-Fun(), and ln\-Obj\-Fun().
 
-\hypertarget{model_8c_a51a7fde5f0da4616cf46588d2cdf3f4a}{\index{model.\-c@{model.\-c}!\-O\-D\-E\-\_\-ld\-Vec\-Eq@{\-O\-D\-E\-\_\-ld\-Vec\-Eq}}
-\index{\-O\-D\-E\-\_\-ld\-Vec\-Eq@{\-O\-D\-E\-\_\-ld\-Vec\-Eq}!model.c@{model.\-c}}
-\paragraph[{\-O\-D\-E\-\_\-ld\-Vec\-Eq}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-O\-D\-E\-\_\-ld\-Vec\-Eq} (
+\hypertarget{model_8c_a51a7fde5f0da4616cf46588d2cdf3f4a}{\index{model.\-c@{model.\-c}!O\-D\-E\-\_\-ld\-Vec\-Eq@{O\-D\-E\-\_\-ld\-Vec\-Eq}}
+\index{O\-D\-E\-\_\-ld\-Vec\-Eq@{O\-D\-E\-\_\-ld\-Vec\-Eq}!model.c@{model.\-c}}
+\paragraph[{O\-D\-E\-\_\-ld\-Vec\-Eq}]{\setlength{\rightskip}{0pt plus 5cm}void O\-D\-E\-\_\-ld\-Vec\-Eq (
 \begin{DoxyParamCaption}
-\item[{{\bf \-O\-D\-E} $\ast$}]{ode, }
+\item[{{\bf O\-D\-E} $\ast$}]{ode, }
 \item[{double $\ast$}]{eq, }
 \item[{int}]{nbins, }
 \item[{const double $\ast$}]{c, }
 \item[{double}]{u, }
-\item[{{\bf \-Pop\-Hist} $\ast$}]{ph, }
+\item[{{\bf Pop\-Hist} $\ast$}]{ph, }
 \item[{int}]{which\-Epoch}
 \end{DoxyParamCaption}
 )}}\label{model_8c_a51a7fde5f0da4616cf46588d2cdf3f4a}
 
 
-\-This function returns 1 vector\-: eq\mbox{[}i\mbox{]} is sigma\-\_\-d$^\wedge$2 for a population at equilibrium with parameters as given in the specified \hyperlink{struct_pop_hist}{\-Pop\-Hist} \-Epoch, and recombination rate as specified by c\mbox{[}i\mbox{]}. 
+This function returns 1 vector\-: eq\mbox{[}i\mbox{]} is sigma\-\_\-d$^\wedge$2 for a population at equilibrium with parameters as given in the specified \hyperlink{struct_pop_hist}{Pop\-Hist} Epoch, and recombination rate as specified by c\mbox{[}i\mbox{]}. 
 
-\-On entry, c is a list of recombination rates and ep the population history \-Epoch.
+On entry, c is a list of recombination rates and ep the population history Epoch.
 
 
-\begin{DoxyParams}[1]{\-Parameters}
-\mbox{\tt in,out}  & {\em model} & \-An object of type \hyperlink{struct_model}{\-Model}, which specifies the method to be used in calculating expected \-L\-D. \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em model} & An object of type \hyperlink{struct_model}{Model}, which specifies the method to be used in calculating expected L\-D. \\
 \hline
 \end{DoxyParams}
-\hypertarget{model_8c_a0430f40e0338a89e80ab4fc98a1aedd1}{\index{model.\-c@{model.\-c}!\-O\-D\-E\-\_\-print\-State@{\-O\-D\-E\-\_\-print\-State}}
-\index{\-O\-D\-E\-\_\-print\-State@{\-O\-D\-E\-\_\-print\-State}!model.c@{model.\-c}}
-\paragraph[{\-O\-D\-E\-\_\-print\-State}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-O\-D\-E\-\_\-print\-State} (
+\hypertarget{model_8c_a0430f40e0338a89e80ab4fc98a1aedd1}{\index{model.\-c@{model.\-c}!O\-D\-E\-\_\-print\-State@{O\-D\-E\-\_\-print\-State}}
+\index{O\-D\-E\-\_\-print\-State@{O\-D\-E\-\_\-print\-State}!model.c@{model.\-c}}
+\paragraph[{O\-D\-E\-\_\-print\-State}]{\setlength{\rightskip}{0pt plus 5cm}void O\-D\-E\-\_\-print\-State (
 \begin{DoxyParamCaption}
-\item[{const {\bf \-O\-D\-E} $\ast$}]{ode, }
-\item[{\-F\-I\-L\-E $\ast$}]{fp}
+\item[{const {\bf O\-D\-E} $\ast$}]{ode, }
+\item[{F\-I\-L\-E $\ast$}]{fp}
 \end{DoxyParamCaption}
 )}}\label{model_8c_a0430f40e0338a89e80ab4fc98a1aedd1}
 
 
-\-Print state vector to file fp. 
+Print state vector to file fp. 
 

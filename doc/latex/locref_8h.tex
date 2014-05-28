@@ -1,93 +1,90 @@
-\hypertarget{locref_8h}{\subsection{locref.\-h \-File \-Reference}
+\hypertarget{locref_8h}{\subsection{locref.\-h File Reference}
 \label{locref_8h}\index{locref.\-h@{locref.\-h}}
 }
 
 
-\-Header for \hyperlink{locref_8c}{locref.\-c} \begin{DoxyCopyright}{\-Copyright}
-\-Copyright (c) 2014, \-Alan \-R. 
-\end{DoxyCopyright}
- 
+Header for \hyperlink{locref_8c}{locref.\-c}.  
 
 
-{\ttfamily \#include $<$stddef.\-h$>$}\*
-{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\*
-\subsubsection*{\-Data \-Structures}
+{\ttfamily \#include $<$stddef.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\\*
+\subsubsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{struct_loc_ref}{\-Loc\-Ref}
-\begin{DoxyCompactList}\small\item\em \hyperlink{struct_loc_ref}{\-Loc\-Ref} facilitates using a single memory block to allocate a structure and all the arrays within it. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsubsection*{\-Defines}
+struct \hyperlink{struct_loc_ref}{Loc\-Ref}
+\begin{DoxyCompactList}\small\item\em \hyperlink{struct_loc_ref}{Loc\-Ref} facilitates using a single memory block to allocate a structure and all the arrays within it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{locref_8h_a1b37b5321108737ddeb54368f77b6204}{\#define {\bfseries \-L\-O\-C\-R\-E\-F\-M\-A\-X}~100}\label{locref_8h_a1b37b5321108737ddeb54368f77b6204}
+\hypertarget{locref_8h_a1b37b5321108737ddeb54368f77b6204}{\#define {\bfseries L\-O\-C\-R\-E\-F\-M\-A\-X}~100}\label{locref_8h_a1b37b5321108737ddeb54368f77b6204}
 
 \end{DoxyCompactItemize}
-\subsubsection*{\-Functions}
+\subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{locref_8h_af20741502749736df7127ce8c11e5a21}{\-Loc\-Ref\-\_\-init} (\hyperlink{struct_loc_ref}{\-Loc\-Ref} $\ast$lr)
-\begin{DoxyCompactList}\small\item\em \-Fill \hyperlink{struct_loc_ref}{\-Loc\-Ref} structure with zeroes. \end{DoxyCompactList}\item 
-void \hyperlink{locref_8h_ae764ec84c272463dffabba4b6ba06ba3}{\-Loc\-Ref\-\_\-add} (\hyperlink{struct_loc_ref}{\-Loc\-Ref} $\ast$lr, size\-\_\-t size)
-\begin{DoxyCompactList}\small\item\em \-Add an entry of specified size bytes to the \hyperlink{struct_loc_ref}{\-Loc\-Ref} table. \end{DoxyCompactList}\item 
-size\-\_\-t \hyperlink{locref_8h_ab7a3e99eff61f374603a7663a205c427}{\-Loc\-Ref\-\_\-size} (\hyperlink{struct_loc_ref}{\-Loc\-Ref} $\ast$lr)
-\begin{DoxyCompactList}\small\item\em \-Total size of memory block to be allocated. \end{DoxyCompactList}\item 
-void \hyperlink{locref_8h_a79b1c1436336bbd62fb10f72c6d7a4e8}{\-Loc\-Ref\-\_\-set\-Next} (\hyperlink{struct_loc_ref}{\-Loc\-Ref} $\ast$lr, int i)
-\begin{DoxyCompactList}\small\item\em \-Set the index to be returned by the next call to \-Loc\-Ref\-\_\-next. \end{DoxyCompactList}\item 
-\hypertarget{locref_8h_ad06d7bacfa55d9aac08988a0c501a87a}{void $\ast$ \hyperlink{locref_8h_ad06d7bacfa55d9aac08988a0c501a87a}{\-Loc\-Ref\-\_\-next} (\hyperlink{struct_loc_ref}{\-Loc\-Ref} $\ast$lr, void $\ast$base)}\label{locref_8h_ad06d7bacfa55d9aac08988a0c501a87a}
+void \hyperlink{locref_8h_af20741502749736df7127ce8c11e5a21}{Loc\-Ref\-\_\-init} (\hyperlink{struct_loc_ref}{Loc\-Ref} $\ast$lr)
+\begin{DoxyCompactList}\small\item\em Fill \hyperlink{struct_loc_ref}{Loc\-Ref} structure with zeroes. \end{DoxyCompactList}\item 
+void \hyperlink{locref_8h_ae764ec84c272463dffabba4b6ba06ba3}{Loc\-Ref\-\_\-add} (\hyperlink{struct_loc_ref}{Loc\-Ref} $\ast$lr, size\-\_\-t size)
+\begin{DoxyCompactList}\small\item\em Add an entry of specified size bytes to the \hyperlink{struct_loc_ref}{Loc\-Ref} table. \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{locref_8h_ab7a3e99eff61f374603a7663a205c427}{Loc\-Ref\-\_\-size} (\hyperlink{struct_loc_ref}{Loc\-Ref} $\ast$lr)
+\begin{DoxyCompactList}\small\item\em Total size of memory block to be allocated. \end{DoxyCompactList}\item 
+void \hyperlink{locref_8h_a79b1c1436336bbd62fb10f72c6d7a4e8}{Loc\-Ref\-\_\-set\-Next} (\hyperlink{struct_loc_ref}{Loc\-Ref} $\ast$lr, int i)
+\begin{DoxyCompactList}\small\item\em Set the index to be returned by the next call to Loc\-Ref\-\_\-next. \end{DoxyCompactList}\item 
+\hypertarget{locref_8h_ad06d7bacfa55d9aac08988a0c501a87a}{void $\ast$ \hyperlink{locref_8h_ad06d7bacfa55d9aac08988a0c501a87a}{Loc\-Ref\-\_\-next} (\hyperlink{struct_loc_ref}{Loc\-Ref} $\ast$lr, void $\ast$base)}\label{locref_8h_ad06d7bacfa55d9aac08988a0c501a87a}
 
-\begin{DoxyCompactList}\small\item\em \-Return a pointer to the next object in \hyperlink{struct_loc_ref}{\-Loc\-Ref}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Return a pointer to the next object in \hyperlink{struct_loc_ref}{Loc\-Ref}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\subsubsection{\-Detailed \-Description}
-\-Header for \hyperlink{locref_8c}{locref.\-c} \begin{DoxyCopyright}{\-Copyright}
-\-Copyright (c) 2014, \-Alan \-R. 
+\subsubsection{Detailed Description}
+Header for \hyperlink{locref_8c}{locref.\-c}. \begin{DoxyCopyright}{Copyright}
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}
-\-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 
-\subsubsection{\-Function \-Documentation}
-\hypertarget{locref_8h_ae764ec84c272463dffabba4b6ba06ba3}{\index{locref.\-h@{locref.\-h}!\-Loc\-Ref\-\_\-add@{\-Loc\-Ref\-\_\-add}}
-\index{\-Loc\-Ref\-\_\-add@{\-Loc\-Ref\-\_\-add}!locref.h@{locref.\-h}}
-\paragraph[{\-Loc\-Ref\-\_\-add}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Loc\-Ref\-\_\-add} (
+
+\subsubsection{Function Documentation}
+\hypertarget{locref_8h_ae764ec84c272463dffabba4b6ba06ba3}{\index{locref.\-h@{locref.\-h}!Loc\-Ref\-\_\-add@{Loc\-Ref\-\_\-add}}
+\index{Loc\-Ref\-\_\-add@{Loc\-Ref\-\_\-add}!locref.h@{locref.\-h}}
+\paragraph[{Loc\-Ref\-\_\-add}]{\setlength{\rightskip}{0pt plus 5cm}void Loc\-Ref\-\_\-add (
 \begin{DoxyParamCaption}
-\item[{{\bf \-Loc\-Ref} $\ast$}]{lr, }
+\item[{{\bf Loc\-Ref} $\ast$}]{lr, }
 \item[{size\-\_\-t}]{bytes}
 \end{DoxyParamCaption}
 )}}\label{locref_8h_ae764ec84c272463dffabba4b6ba06ba3}
 
 
-\-Add an entry of specified size bytes to the \hyperlink{struct_loc_ref}{\-Loc\-Ref} table. 
+Add an entry of specified size bytes to the \hyperlink{struct_loc_ref}{Loc\-Ref} table. 
 
-\hypertarget{locref_8h_af20741502749736df7127ce8c11e5a21}{\index{locref.\-h@{locref.\-h}!\-Loc\-Ref\-\_\-init@{\-Loc\-Ref\-\_\-init}}
-\index{\-Loc\-Ref\-\_\-init@{\-Loc\-Ref\-\_\-init}!locref.h@{locref.\-h}}
-\paragraph[{\-Loc\-Ref\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Loc\-Ref\-\_\-init} (
+\hypertarget{locref_8h_af20741502749736df7127ce8c11e5a21}{\index{locref.\-h@{locref.\-h}!Loc\-Ref\-\_\-init@{Loc\-Ref\-\_\-init}}
+\index{Loc\-Ref\-\_\-init@{Loc\-Ref\-\_\-init}!locref.h@{locref.\-h}}
+\paragraph[{Loc\-Ref\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void Loc\-Ref\-\_\-init (
 \begin{DoxyParamCaption}
-\item[{{\bf \-Loc\-Ref} $\ast$}]{lr}
+\item[{{\bf Loc\-Ref} $\ast$}]{lr}
 \end{DoxyParamCaption}
 )}}\label{locref_8h_af20741502749736df7127ce8c11e5a21}
 
 
-\-Fill \hyperlink{struct_loc_ref}{\-Loc\-Ref} structure with zeroes. 
+Fill \hyperlink{struct_loc_ref}{Loc\-Ref} structure with zeroes. 
 
-\hypertarget{locref_8h_a79b1c1436336bbd62fb10f72c6d7a4e8}{\index{locref.\-h@{locref.\-h}!\-Loc\-Ref\-\_\-set\-Next@{\-Loc\-Ref\-\_\-set\-Next}}
-\index{\-Loc\-Ref\-\_\-set\-Next@{\-Loc\-Ref\-\_\-set\-Next}!locref.h@{locref.\-h}}
-\paragraph[{\-Loc\-Ref\-\_\-set\-Next}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Loc\-Ref\-\_\-set\-Next} (
+\hypertarget{locref_8h_a79b1c1436336bbd62fb10f72c6d7a4e8}{\index{locref.\-h@{locref.\-h}!Loc\-Ref\-\_\-set\-Next@{Loc\-Ref\-\_\-set\-Next}}
+\index{Loc\-Ref\-\_\-set\-Next@{Loc\-Ref\-\_\-set\-Next}!locref.h@{locref.\-h}}
+\paragraph[{Loc\-Ref\-\_\-set\-Next}]{\setlength{\rightskip}{0pt plus 5cm}void Loc\-Ref\-\_\-set\-Next (
 \begin{DoxyParamCaption}
-\item[{{\bf \-Loc\-Ref} $\ast$}]{lr, }
+\item[{{\bf Loc\-Ref} $\ast$}]{lr, }
 \item[{int}]{i}
 \end{DoxyParamCaption}
 )}}\label{locref_8h_a79b1c1436336bbd62fb10f72c6d7a4e8}
 
 
-\-Set the index to be returned by the next call to \-Loc\-Ref\-\_\-next. 
+Set the index to be returned by the next call to Loc\-Ref\-\_\-next. 
 
-\hypertarget{locref_8h_ab7a3e99eff61f374603a7663a205c427}{\index{locref.\-h@{locref.\-h}!\-Loc\-Ref\-\_\-size@{\-Loc\-Ref\-\_\-size}}
-\index{\-Loc\-Ref\-\_\-size@{\-Loc\-Ref\-\_\-size}!locref.h@{locref.\-h}}
-\paragraph[{\-Loc\-Ref\-\_\-size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-Loc\-Ref\-\_\-size} (
+\hypertarget{locref_8h_ab7a3e99eff61f374603a7663a205c427}{\index{locref.\-h@{locref.\-h}!Loc\-Ref\-\_\-size@{Loc\-Ref\-\_\-size}}
+\index{Loc\-Ref\-\_\-size@{Loc\-Ref\-\_\-size}!locref.h@{locref.\-h}}
+\paragraph[{Loc\-Ref\-\_\-size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t Loc\-Ref\-\_\-size (
 \begin{DoxyParamCaption}
-\item[{{\bf \-Loc\-Ref} $\ast$}]{lr}
+\item[{{\bf Loc\-Ref} $\ast$}]{lr}
 \end{DoxyParamCaption}
 )}}\label{locref_8h_ab7a3e99eff61f374603a7663a205c427}
 
 
-\-Total size of memory block to be allocated. 
+Total size of memory block to be allocated. 
 

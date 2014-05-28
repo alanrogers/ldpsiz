@@ -36,7 +36,7 @@ Calculate sigma_d^2 using recurrence equations of Strobeck and Morgan (1978), an
 .RI "struct \fBStrobeckData\fP"
 .br
 .in -1c
-.SS "Defines"
+.SS "Macros"
 
 .in +1c
 .ti -1c
@@ -115,6 +115,8 @@ Calculate sigma_d^2 using recurrence equations of Strobeck and Morgan (1978), an
 .PP 
 Calculate sigma_d^2 using recurrence equations of Strobeck and Morgan (1978), and Hudson (1985)\&. 
 
+
+.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers Strobeck and Morgan\&. 1978\&. The effect of intragenic recombination on the number of alleles in a finite population\&. Genetics 88: 829-844\&.
@@ -144,15 +146,18 @@ The code below uses the formulas of Strobeck and Morgan to calculate the 5 ident
 .PP
 \fBCopyright:\fP
 .RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
 .RE
 .PP
 
 .SH "Function Documentation"
 .PP 
-.SS "static int \fBonestep\fP (const doubleyy1[], doubley2[], doubletwoN, doublec, doubleu)\fC [static]\fP"
+.SS "static int onestep (const doubleyy1[], doubley2[], doubletwoN, doublec, doubleu)\fC [static]\fP"
+
 .PP
-Move the state vector forward one generation, using recurrence equations of Strobeck and Morgan (1978, see Eqn 3, p 833)\&. \fBParameters:\fP
+Move the state vector forward one generation, using recurrence equations of Strobeck and Morgan (1978, see Eqn 3, p 833)\&. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fIinput]\fP yy1 is the initial state vector\&. 
 .br
@@ -161,8 +166,9 @@ Move the state vector forward one generation, using recurrence equations of Stro
 .PP
 
 .PP
-Referenced by Strobeck_dydt(), and Strobeck_get_sigdsq()\&.
-.SS "int \fBStrobeck_dydt\fP (doublet_notused, const doubleyy1[], doublef[], void *params)"
+Referenced by iterate(), Strobeck_dydt(), and Strobeck_get_sigdsq()\&.
+.SS "int Strobeck_dydt (doublet_notused, const doubleyy1[], doublef[], void *params)"
+
 .PP
 This function calculates the difference, from one generation to the next, for each of the 5 identity coefficients\&. It is based on equation 3 of Strobeck and Morgan\&.
 .PP
@@ -182,7 +188,8 @@ y[0] = phiA y[1] = phiB y[2] = phiAB y[3] = gammaAB y[4] = deltaAB
 References onestep()\&.
 .PP
 Referenced by Strobeck_sigdsq()\&.
-.SS "int \fBStrobeck_evolveDiscrete\fP (doubley[], \fBPopHist\fP *ph, doublec, doubleu)"
+.SS "int Strobeck_evolveDiscrete (doubley[], \fBPopHist\fP *ph, doublec, doubleu)"
+
 .PP
 Evolve through all epochs of population history, using step size h and beginning with initial equilibrium\&. Calculation iterates difference equation\&. The initial value of y is set to equilibrium equation for equilibrium\&.
 .PP
@@ -205,7 +212,8 @@ Always returns 0\&.
 
 .PP
 References iterate(), PopHist_duration(), PopHist_nepoch(), PopHist_twoN(), and Strobeck_geteq()\&.
-.SS "double \fBStrobeck_get_sigdsq\fP (doubley[], inttwoNsmp)"
+.SS "double Strobeck_get_sigdsq (doubley[], inttwoNsmp)"
+
 .PP
 Calculate sigma_d^2 from state vector\&. The formulas involved are in the comment at the top of this file\&.
 .PP
@@ -221,21 +229,23 @@ Calculate sigma_d^2 from state vector\&. The formulas involved are in the commen
 References onestep()\&.
 .PP
 Referenced by Strobeck_sigdsq(), and Strobeck_sigdsqEq()\&.
-.SS "int \fBStrobeck_geteq\fP (doublex[], doubletwoN, doublec, doubleu)"
+.SS "int Strobeck_geteq (doublex[], doubletwoN, doublec, doubleu)"
+
 .PP
 Fill x vector with equilibrium values given on pp 833-834 of Strobeck and Morgan\&. Strobeck and Morgan separate 3 cases, for c << u, c >> u, and c ~= u\&. I did some experiments to figure out how to bound these ranges, and decided never to use the formula for large c\&. 
 .PP
 Referenced by Strobeck_evolveDiscrete(), Strobeck_sigdsq(), and Strobeck_sigdsqEq()\&.
 .SH "Variable Documentation"
 .PP 
-.SS "const char* stateLbl[DIM]\fC [static]\fP"\fBInitial value:\fP
+.SS "const char* stateLbl[DIM]\fC [static]\fP"
+\fBInitial value:\fP
 .PP
 .nf
- { 'phiA',
-    'phiB',
-    'phiAB',
-    'gammaAB',
-    'deltaAB'
+= { "phiA",
+    "phiB",
+    "phiAB",
+    "gammaAB",
+    "deltaAB"
 }
 .fi
 .SH "Author"

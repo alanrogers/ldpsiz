@@ -4,14 +4,7 @@
 .SH NAME
 misc.h \- 
 .PP
-Header for \fBmisc\&.c\fP 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
- 
+Header for \fBmisc\&.c\fP\&.  
 
 .SH SYNOPSIS
 .br
@@ -29,7 +22,7 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 \fC#include <assert\&.h>\fP
 .br
 
-.SS "Defines"
+.SS "Macros"
 
 .in +1c
 .ti -1c
@@ -168,47 +161,50 @@ Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is re
 .in -1c
 .SH "Detailed Description"
 .PP 
-Header for \fBmisc\&.c\fP 
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
+Header for \fBmisc\&.c\fP\&. 
 
 
+.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
 
-.SH "Define Documentation"
+.SH "Macro Definition Documentation"
 .PP 
-.SS "#define ERR(code, msg)"\fBValue:\fP
+.SS "#define ERR(code, msg)"
+\fBValue:\fP
 .PP
 .nf
 do{\
-    fprintf(stderr,'%s:%s:%d: %s %d (%s)\n',\
+    fprintf(stderr,"%s:%s:%d: %s %d (%s)\n",\
             __FILE__,__func__,__LINE__,\
             (msg), (code), strerror((code)));   \
     exit(1);\
 }while(0)
 .fi
-.SS "#define REQUIRE(x, file, lineno)"\fBValue:\fP
+.SS "#define REQUIRE(x, file, lineno)"
+\fBValue:\fP
 .PP
 .nf
 do { \
   if (!(x)) { \
     dostacktrace(__FILE__,__LINE__,stderr); \
-    eprintf('ERR@%s:%d->%s:%d: Sanity check FAIL\n',\
+    eprintf("ERR@%s:%d->%s:%d: Sanity check FAIL\n",\
             (file),(lineno),__FILE__,__LINE__); \
    }\
 } while(0)
 .fi
 .SH "Function Documentation"
 .PP 
-.SS "int \fBcompareDoubles\fP (const void *void_x, const void *void_y)"
+.SS "int compareDoubles (const void *void_x, const void *void_y)"
+
 .PP
 Compare two doubles\&. Function interprets its arguments as pointers to doubles\&.
 .PP
@@ -225,7 +221,8 @@ Compare two doubles\&. Function interprets its arguments as pointers to doubles\
 
 .PP
 Referenced by confidenceBounds()\&.
-.SS "int \fBcompareLongs\fP (const void *void_x, const void *void_y)"
+.SS "int compareLongs (const void *void_x, const void *void_y)"
+
 .PP
 Compare two long ints\&. Function interprets its arguments as pointers to long ints\&.
 .PP
@@ -242,15 +239,18 @@ Compare two long ints\&. Function interprets its arguments as pointers to long i
 
 .PP
 Referenced by Boot_new()\&.
-.SS "int \fBdblEquals\fP (doublex, doubley)"
+.SS "int dblEquals (doublex, doubley)"
+
 .PP
 Test equality of x and y\&. In this test NaN == NaN, Inf == Inf, and -Inf == -Inf\&. 
-.SS "static unsigned \fBencode01\fP (charc)\fC [inline, static]\fP"
+.SS "static unsigned encode01 (charc)\fC [inline]\fP, \fC [static]\fP"
+
 .PP
 Encode a single character, which should equal either '0' or '1' on input\&. Returned value is 0 for '0', 1 for '1', and 255 for anything else\&. 
 .PP
 Referenced by encodeDiploid(), and encodeHaploid()\&.
-.SS "static int \fBencodeDiploid\fP (unsigned char *gtype, unsignedgtypeSize, const char *str)\fC [inline, static]\fP"
+.SS "static int encodeDiploid (unsigned char *gtype, unsignedgtypeSize, const char *str)\fC [inline]\fP, \fC [static]\fP"
+
 .PP
 Convert diploid genotype data from the character string format used in input to the binary format used internally\&. In the input string, a genotype may be any of the following: '00', '01', '10', '11', or 'h'\&. The four 2-character strings represent phased genotypes\&. The 1-character 'h' is an unphased heterozygote\&. This function translates these codes into the integers 0, 1, 2, 3, and UNPHASED_HETEROZYGOTE\&. The latter value is a macro defined elsewhere\&.
 .PP
@@ -265,7 +265,7 @@ Convert diploid genotype data from the character string format used in input to 
 .PP
 \fBReturns:\fP
 .RS 4
-The number of genotypes written into array gtype\&. This is *not* a NULL-terminated string, as the value 0 is valid in the interior of the array\&. 
+The number of genotypes written into array gtype\&. This is \fInot\fP a NULL-terminated string, as the value 0 is valid in the interior of the array\&. 
 .RE
 .PP
 
@@ -273,7 +273,8 @@ The number of genotypes written into array gtype\&. This is *not* a NULL-termina
 References encode01()\&.
 .PP
 Referenced by Gtp_readSNP()\&.
-.SS "static int \fBencodeHaploid\fP (unsigned char *gtype, unsignedgtypeSize, const char *str)\fC [inline, static]\fP"
+.SS "static int encodeHaploid (unsigned char *gtype, unsignedgtypeSize, const char *str)\fC [inline]\fP, \fC [static]\fP"
+
 .PP
 Convert haploid genotype data from the character string format used in input to the binary format used internally\&. In the input buffer a genotype may be either '0' or '1'\&. This function translates these codes into the integers 0 and 1, using the function encode01\&.
 .PP
@@ -288,7 +289,7 @@ Convert haploid genotype data from the character string format used in input to 
 .PP
 \fBReturns:\fP
 .RS 4
-The number of genotypes written into array gtype\&. This is *not* a NULL-terminated string, as the value 0 is valid in the interior of the array\&. 
+The number of genotypes written into array gtype\&. This is \fInot\fP a NULL-terminated string, as the value 0 is valid in the interior of the array\&. 
 .RE
 .PP
 
@@ -296,19 +297,24 @@ The number of genotypes written into array gtype\&. This is *not* a NULL-termina
 References encode01()\&.
 .PP
 Referenced by Gtp_readSNP()\&.
-.SS "int \fBisopt\fP (const char *shortOpt, const char *longOpt, const char *arg)"
+.SS "int isopt (const char *shortOpt, const char *longOpt, const char *arg)"
+
 .PP
 Return 1 if string arg matches either shortOpt or longOpt\&. ShortOpt and longOpt are ignored if their values are NULL\&. If arg doesn't match either shortOpt or longOpt, then return 0\&. 
-.SS "void \fBreplaceSuffix\fP (char *str, size_tstr_size, const char *suffix, size_tsuffix_len)"
+.SS "void replaceSuffix (char *str, size_tstr_size, const char *suffix, size_tsuffix_len)"
+
 .PP
 Replace suffix (part after last period) of string 'str' with new suffix\&. If original string has no suffix, then append one to string\&. Abort if string isn't long enough\&. 
-.SS "char* \fBstrcenter\fP (const char *text, unsignedwidth, char *buff, unsignedbuffsize)"
+.SS "char* strcenter (const char *text, unsignedwidth, char *buff, unsignedbuffsize)"
+
 .PP
 Center string 'text' in a field of width 'width'\&. The centered string is written into the character string 'buff', whose size is 'buffsize'\&. 
-.SS "int \fBstrcomment\fP (const char *s)"
+.SS "int strcomment (const char *s)"
+
 .PP
 Return 1 if the first non-white char in string s is '#'; 0 otherwise\&. 
-.SS "int \fBstrempty\fP (const char *s)"
+.SS "int strempty (const char *s)"
+
 .PP
 Return 1 if string contains only whitespace; 0 otherwise\&. 
 .PP

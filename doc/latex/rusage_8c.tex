@@ -1,18 +1,15 @@
-\hypertarget{rusage_8c}{\subsection{rusage.\-c \-File \-Reference}
+\hypertarget{rusage_8c}{\subsection{rusage.\-c File Reference}
 \label{rusage_8c}\index{rusage.\-c@{rusage.\-c}}
 }
 
 
-\-Use getrusage to measure use of system resources. \begin{DoxyCopyright}{\-Copyright}
-\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
-\end{DoxyCopyright}
- 
+Use getrusage to measure use of system resources.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\*
-{\ttfamily \#include $<$time.\-h$>$}\*
-{\ttfamily \#include \char`\"{}rusage.\-h\char`\"{}}\*
-\subsubsection*{\-Functions}
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$time.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}rusage.\-h\char`\"{}}\\*
+\subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{rusage_8c_ad5e6dde36d5d2a0b3f286863e72cb334}{void {\bfseries print\-\_\-rusage} (const char $\ast$lbl, struct rusage $\ast$ru)}\label{rusage_8c_ad5e6dde36d5d2a0b3f286863e72cb334}
@@ -23,10 +20,10 @@
 \item 
 \hypertarget{rusage_8c_ac450df6905c8589f06f1c72741b5eece}{void \hyperlink{rusage_8c_ac450df6905c8589f06f1c72741b5eece}{rusage\-\_\-subtract\-From} (struct rusage $\ast$x, struct rusage $\ast$y)}\label{rusage_8c_ac450df6905c8589f06f1c72741b5eece}
 
-\begin{DoxyCompactList}\small\item\em \-Subtract each element of y from the corresponding element of x. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Subtract each element of y from the corresponding element of x. \end{DoxyCompactList}\item 
 \hypertarget{rusage_8c_a8a5b0b658b83c67536013da604d2f38c}{void \hyperlink{rusage_8c_a8a5b0b658b83c67536013da604d2f38c}{rusage\-\_\-add\-To} (struct rusage $\ast$x, struct rusage $\ast$y)}\label{rusage_8c_a8a5b0b658b83c67536013da604d2f38c}
 
-\begin{DoxyCompactList}\small\item\em \-Add each element of y from the corresponding element of x. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Add each element of y from the corresponding element of x. \end{DoxyCompactList}\item 
 \hypertarget{rusage_8c_a70530fc08ce5565d83f21dae001b0d2f}{void {\bfseries tms\-\_\-print\-\_\-header} (void)}\label{rusage_8c_a70530fc08ce5565d83f21dae001b0d2f}
 
 \item 
@@ -34,25 +31,24 @@
 
 \item 
 void \hyperlink{rusage_8c_a015a7527bff562ed5e214e731d4543b1}{tms\-\_\-subtract\-From} (struct tms $\ast$x, struct tms $\ast$y)
-\begin{DoxyCompactList}\small\item\em \-Subtract each element of y from the corresponding element of x, provided that the result would be $>$= zero. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Subtract each element of y from the corresponding element of x, provided that the result would be $>$= zero. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\subsubsection{\-Detailed \-Description}
-\-Use getrusage to measure use of system resources. \begin{DoxyCopyright}{\-Copyright}
-\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
-\end{DoxyCopyright}
-\-Header for \hyperlink{rusage_8c}{rusage.\-c} \begin{DoxyCopyright}{\-Copyright}
-\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}.
-\end{DoxyCopyright}
-\begin{DoxyAuthor}{\-Author}
-\-Alan \-R. \-Rogers 
+\subsubsection{Detailed Description}
+Use getrusage to measure use of system resources. Header for \hyperlink{rusage_8c}{rusage.\-c}.
+
+\begin{DoxyAuthor}{Author}
+Alan R. Rogers 
 \end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}
 
 
-\subsubsection{\-Function \-Documentation}
+\subsubsection{Function Documentation}
 \hypertarget{rusage_8c_a015a7527bff562ed5e214e731d4543b1}{\index{rusage.\-c@{rusage.\-c}!tms\-\_\-subtract\-From@{tms\-\_\-subtract\-From}}
 \index{tms\-\_\-subtract\-From@{tms\-\_\-subtract\-From}!rusage.c@{rusage.\-c}}
-\paragraph[{tms\-\_\-subtract\-From}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tms\-\_\-subtract\-From} (
+\paragraph[{tms\-\_\-subtract\-From}]{\setlength{\rightskip}{0pt plus 5cm}void tms\-\_\-subtract\-From (
 \begin{DoxyParamCaption}
 \item[{struct tms $\ast$}]{x, }
 \item[{struct tms $\ast$}]{y}
@@ -60,6 +56,6 @@ void \hyperlink{rusage_8c_a015a7527bff562ed5e214e731d4543b1}{tms\-\_\-subtract\-
 )}}\label{rusage_8c_a015a7527bff562ed5e214e731d4543b1}
 
 
-\-Subtract each element of y from the corresponding element of x, provided that the result would be $>$= zero. 
+Subtract each element of y from the corresponding element of x, provided that the result would be $>$= zero. 
 
-\-Otherwise, set the element to zero. 
+Otherwise, set the element to zero. 

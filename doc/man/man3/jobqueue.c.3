@@ -34,7 +34,7 @@ Multithreaded job queue\&.
 .br
 .RI "\fIAll data used by job queue\&. \fP"
 .in -1c
-.SS "Defines"
+.SS "Macros"
 
 .in +1c
 .ti -1c
@@ -69,6 +69,8 @@ Multithreaded job queue\&.
 .PP 
 Multithreaded job queue\&. 
 
+
+.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers This file implements a multithreaded job queue\&. Jobs are pushed onto a queue by the main program\&. Each thread (or worker) removes a job from the queue, executes it, and then goes back for another\&. When all jobs are finished, control returns to the main function\&.
@@ -76,15 +78,18 @@ Alan R\&. Rogers This file implements a multithreaded job queue\&. Jobs are push
 .PP
 \fBCopyright:\fP
 .RS 4
-Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
 .RE
 .PP
 
 .SH "Function Documentation"
 .PP 
-.SS "void* \fBthreadfun\fP (void *vjq)"
+.SS "void* threadfun (void *vjq)"
+
 .PP
 Waits until there is a job in the queue, pops it off and executes it, then waits for another\&. Runs until jobs are completed and main thread sets acceptingJobs=0\&. 
+.PP
+References JobQueue::acceptingJobs, Job::jobfun, JobQueue::lock, Job::next, JobQueue::nthreads, Job::param, JobQueue::threadsStopped, JobQueue::todo, JobQueue::wakeMain, and JobQueue::wakeWorker\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for ldpsiz from the source code\&.
