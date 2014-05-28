@@ -1,36 +1,39 @@
-\hypertarget{jobqueue_8h}{\subsection{jobqueue.\-h File Reference}
+\hypertarget{jobqueue_8h}{\subsection{jobqueue.\-h \-File \-Reference}
 \label{jobqueue_8h}\index{jobqueue.\-h@{jobqueue.\-h}}
 }
 
 
-Header for \hyperlink{jobqueue_8c}{jobqueue.\-c}.  
+\-Header for \hyperlink{jobqueue_8c}{jobqueue.\-c} \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}
+ 
 
 
-{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\\*
-\subsubsection*{Functions}
+{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\*
+\subsubsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{jobqueue_8h_a14520cbed7fa8d303959b53f7ff6b876}{\hyperlink{struct_job_queue}{Job\-Queue} $\ast$ {\bfseries Job\-Queue\-\_\-new} (int nthreads)}\label{jobqueue_8h_a14520cbed7fa8d303959b53f7ff6b876}
+\hypertarget{jobqueue_8h_a14520cbed7fa8d303959b53f7ff6b876}{\hyperlink{struct_job_queue}{\-Job\-Queue} $\ast$ {\bfseries \-Job\-Queue\-\_\-new} (int nthreads)}\label{jobqueue_8h_a14520cbed7fa8d303959b53f7ff6b876}
 
 \item 
-\hypertarget{jobqueue_8h_ac313ae5575261d4ad4e756df6481f731}{void {\bfseries Job\-Queue\-\_\-add\-Job} (\hyperlink{struct_job_queue}{Job\-Queue} $\ast$jq, int($\ast$jobfun)(void $\ast$), void $\ast$param)}\label{jobqueue_8h_ac313ae5575261d4ad4e756df6481f731}
+\hypertarget{jobqueue_8h_ac313ae5575261d4ad4e756df6481f731}{void {\bfseries \-Job\-Queue\-\_\-add\-Job} (\hyperlink{struct_job_queue}{\-Job\-Queue} $\ast$jq, int($\ast$jobfun)(void $\ast$), void $\ast$param)}\label{jobqueue_8h_ac313ae5575261d4ad4e756df6481f731}
 
 \item 
-\hypertarget{jobqueue_8h_acfe3e79624d8b6d5a375c3268d7f07db}{void {\bfseries Job\-Queue\-\_\-add\-Task} (\hyperlink{struct_job_queue}{Job\-Queue} $\ast$jq, int($\ast$taskfun)(void $\ast$), void $\ast$param)}\label{jobqueue_8h_acfe3e79624d8b6d5a375c3268d7f07db}
+\hypertarget{jobqueue_8h_acfe3e79624d8b6d5a375c3268d7f07db}{void {\bfseries \-Job\-Queue\-\_\-add\-Task} (\hyperlink{struct_job_queue}{\-Job\-Queue} $\ast$jq, int($\ast$taskfun)(void $\ast$), void $\ast$param)}\label{jobqueue_8h_acfe3e79624d8b6d5a375c3268d7f07db}
 
 \item 
-\hypertarget{jobqueue_8h_a4d8078d2d1828a13abf90fc053ea40e0}{void \hyperlink{jobqueue_8h_a4d8078d2d1828a13abf90fc053ea40e0}{Job\-Queue\-\_\-wait\-On\-Jobs} (\hyperlink{struct_job_queue}{Job\-Queue} $\ast$jq)}\label{jobqueue_8h_a4d8078d2d1828a13abf90fc053ea40e0}
+\hypertarget{jobqueue_8h_a4d8078d2d1828a13abf90fc053ea40e0}{void \hyperlink{jobqueue_8h_a4d8078d2d1828a13abf90fc053ea40e0}{\-Job\-Queue\-\_\-wait\-On\-Jobs} (\hyperlink{struct_job_queue}{\-Job\-Queue} $\ast$jq)}\label{jobqueue_8h_a4d8078d2d1828a13abf90fc053ea40e0}
 
-\begin{DoxyCompactList}\small\item\em Wait until jobs are completed. \end{DoxyCompactList}\item 
-\hypertarget{jobqueue_8h_af087113038efdd335ea087d35437ccd9}{void {\bfseries Job\-Queue\-\_\-free} (\hyperlink{struct_job_queue}{Job\-Queue} $\ast$jq)}\label{jobqueue_8h_af087113038efdd335ea087d35437ccd9}
+\begin{DoxyCompactList}\small\item\em \-Wait until jobs are completed. \end{DoxyCompactList}\item 
+\hypertarget{jobqueue_8h_af087113038efdd335ea087d35437ccd9}{void {\bfseries \-Job\-Queue\-\_\-free} (\hyperlink{struct_job_queue}{\-Job\-Queue} $\ast$jq)}\label{jobqueue_8h_af087113038efdd335ea087d35437ccd9}
 
 \end{DoxyCompactItemize}
 
 
-\subsubsection{Detailed Description}
-Header for \hyperlink{jobqueue_8c}{jobqueue.\-c}. \begin{DoxyAuthor}{Author}
-Alan R. Rogers 
-\end{DoxyAuthor}
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\subsubsection{\-Detailed \-Description}
+\-Header for \hyperlink{jobqueue_8c}{jobqueue.\-c} \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}
+\begin{DoxyAuthor}{\-Author}
+\-Alan \-R. \-Rogers 
+\end{DoxyAuthor}

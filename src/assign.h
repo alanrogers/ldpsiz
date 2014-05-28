@@ -28,6 +28,6 @@ unsigned    Assignment_setUnsignedInt(const Assignment * a, const char *key,
                                       unsigned *ptr, int mandatory);
 int         Assignment_setString(const Assignment * a, const char *key,
                                  char *ptr, int size, int mandatory);
-Assignment *Assignment_readObsld(FILE * ifp);
+Assignment *Assignment_readEld(FILE * ifp);
 
 #endif

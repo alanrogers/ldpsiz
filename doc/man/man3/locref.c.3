@@ -1,4 +1,4 @@
-.TH "locref.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "locref.c" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -44,30 +44,26 @@ locref.c \-
 .PP 
 \fBLocRef\fP is a class that facilitates using a single memory block to allocate a structure and all the arrays within it\&. 
 
-\fBLocRef\fP is facilitates using a single memory block to allocate a structure and all the arrays within it\&. This trick is called the 'struct hack' in C programming\&.
+ \fBLocRef\fP is facilitates using a single memory block to allocate a structure and all the arrays within it\&. This trick is called the 'struct hack' in C programming\&.
 .PP
 \fBCopyright:\fP
 .RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
 .RE
 .PP
 
 .SH "Function Documentation"
 .PP 
-.SS "void LocRef_add (\fBLocRef\fP *lr, size_tbytes)"
-
+.SS "void \fBLocRef_add\fP (\fBLocRef\fP *lr, size_tbytes)"
 .PP
 Add an entry of specified size bytes to the \fBLocRef\fP table\&. 
-.SS "void LocRef_init (\fBLocRef\fP *lr)"
-
+.SS "void \fBLocRef_init\fP (\fBLocRef\fP *lr)"
 .PP
 Fill \fBLocRef\fP structure with zeroes\&. 
-.SS "void LocRef_setNext (\fBLocRef\fP *lr, inti)"
-
+.SS "void \fBLocRef_setNext\fP (\fBLocRef\fP *lr, inti)"
 .PP
 Set the index to be returned by the next call to LocRef_next\&. 
-.SS "size_t LocRef_size (\fBLocRef\fP *lr)"
-
+.SS "size_t \fBLocRef_size\fP (\fBLocRef\fP *lr)"
 .PP
 Total size of memory block to be allocated\&. 
 .SH "Author"

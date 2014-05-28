@@ -16,10 +16,10 @@
 #include "misc.h"
 
 /**
- * obsld: estimate the linkage disequilibrium (LD) between single
- * nucleotide polymorphisms (SNPs) as a function of the map distance
- * between those SNPs. Definition is provided openly here (rather than
- * hidden in window.h) so that functions can be inlined.
+ * Estimate the linkage disequilibrium (LD) between single nucleotide
+ * polymorphisms (SNPs) as a function of the map distance between
+ * those SNPs. Definition is provided openly here (rather than hidden
+ * in window.h) so that functions can be inlined. 
  *
  * @copyright Copyright (c) 2014, Alan R. Rogers
  * <rogers@anthro.utah.edu>. This file is released under the Internet

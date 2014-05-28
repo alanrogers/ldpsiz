@@ -1,4 +1,4 @@
-.TH "ThreadArg" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "ThreadArg" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -66,20 +66,17 @@ Data required by a single thread\&.
 Data required by a single thread\&. 
 .SH "Field Documentation"
 .PP 
-.SS "\fBBoot\fP* ThreadArg::boot"
-
+.SS "\fBBoot\fP* \fBThreadArg::boot\fP"
 .PP
 Data used in bootstrap\&. Not locally owned\&. 
 .PP
 Referenced by threadfun()\&.
-.SS "long ThreadArg::sampling_interval"
-
+.SS "long \fBThreadArg::sampling_interval\fP"
 .PP
 For production, set sampling_interval=1\&. For debugging, set to (say) 5 to process only every 5th \fBSNP\fP\&. This makes execution faster\&. 
 .PP
 Referenced by ThreadArg_print(), and threadfun()\&.
-.SS "\fBThreadBounds\fP* ThreadArg::tb"
-
+.SS "\fBThreadBounds\fP* \fBThreadArg::tb\fP"
 .PP
 In a multithreaded environment, each thread operates only on a portion of the chromosome\&. The Threadbounds object, tb, specifies the SNPs to be considered by the current thread\&. 
 .PP

@@ -21,23 +21,23 @@
 /*
  *     Parameters         Used in
  *
- *     basepairs          ms fitld predld
- *     PopHist            fitld predld
- *     blocksize          obsld
- *     bootfilename       obsld fitld
- *     bootreps           obsld
+ *     basepairs          ms fitld preld
+ *     PopHist            fitld preld
+ *     blocksize          eld
+ *     bootfilename       eld fitld
+ *     bootreps           eld
  *     confidence         fitld
- *     doEquilibria       predld
- *     hiC               predld
- *     loC               predld
- *     methods            fitld predld
- *     nbins              obsld predld
- *     nthreads           obsld fitld
- *     samplingInterval  obsld
- *     twoNsmp            fitld predld
- *     u                  fitld predld
- *     verbose            obsld
- *     windowsize_cm      obsld
+ *     doEquilibria       preld
+ *     hiC               preld
+ *     loC               preld
+ *     methods            fitld preld
+ *     nbins              eld preld
+ *     nthreads           eld fitld
+ *     samplingInterval  eld
+ *     twoNsmp            fitld preld
+ *     u                  fitld preld
+ *     verbose            eld
+ *     windowsize_cm      eld
  */
 
 /** The information read from an initialization file. */

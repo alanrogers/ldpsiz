@@ -1,11 +1,11 @@
 /**
-@file predld.c
-@anchor predld
-@brief This file contains code related predld, a program that
+@file preld.c
+@anchor preld
+@brief This file contains code related preld, a program that
 predicts \f$\sigma_d^2\f$ from assumptions about population 
 history.
 
-`predld`, a program that predicts \f$\sigma_d^2\f$ from population history
+`preld`, a program that predicts \f$\sigma_d^2\f$ from population history
 ==========================================================================
 
 Parameter values, including those describing population history, may
@@ -19,7 +19,7 @@ of available methods, see \ref Model_alloc "Model_alloc".
 Usage
 -----
 
-    usage: predld [options]
+    usage: preld [options]
        where options may include:
        -u <x> or --mutation <x>
           set mutation rate/generation
@@ -77,7 +77,7 @@ void        usage(void);
 void        check_tn(double t, double n);
 
 void usage(void) {
-    fprintf(stderr, "usage: predld [options]\n");
+    fprintf(stderr, "usage: preld [options]\n");
     fprintf(stderr, "   where options may include:\n");
     tellopt("-u <x> or --mutation <x>", "set mutation rate/generation");
     tellopt("-b <x> or --nbins <x>",
@@ -169,7 +169,7 @@ int main(int argc, char **argv) {
     0};
 
     printf("##########################################\n");
-    printf("# predld: predict linkage disequilibrium #\n");
+    printf("# preld: predict linkage disequilibrium #\n");
     printf("##########################################\n");
 
     putchar('\n');

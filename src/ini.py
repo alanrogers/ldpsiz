@@ -13,22 +13,22 @@
 #      Parameters         Used in
 # 
 #      PopHist            fitld predld
-#      blocksize          obsld
-#      bootfilename       obsld fitld
-#      bootreps           obsld
-#      c_per_nucleotide   obsld fitld
+#      blocksize          eld
+#      bootfilename       eld fitld
+#      bootreps           eld
+#      c_per_nucleotide   eld fitld
 #      confidence         fitld
 #      doEquilibria       predld
 #      hiC               predld
 #      loC               predld
 #      methods            fitld predld
-#      nbins              obsld predld
-#      nthreads           obsld fitld
-#      samplingInterval  obsld
+#      nbins              eld predld
+#      nthreads           eld fitld
+#      samplingInterval  eld
 #      twoNsmp            fitld predld
 #      u                  fitld predld
-#      verbose            obsld
-#      windowsize_cm      obsld
+#      verbose            eld
+#      windowsize_cm      eld
 #
 # @param[in] ifname A string, the name of the input file. For the
 # format of this file, see ldpsiz.ini.

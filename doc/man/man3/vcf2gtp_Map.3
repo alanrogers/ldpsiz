@@ -1,4 +1,4 @@
-.TH "vcf2gtp.Map" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "vcf2gtp.Map" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -66,21 +66,19 @@ Exactly one of these arguments must equal None\&. If mapFileName!=None, the clas
 If cPerBasePair!=None, the the class retains only the value of the argument and an eof variable, which is always equal to True\&. 
 .SH "Member Function Documentation"
 .PP 
-.SS "def vcf2gtp\&.Map\&.next (self)"
-
-.PP
+.SS "def \fBvcf2gtp\&.Map\&.next\fP (self)".PP
 .nf
+
 Move MapFile forward to next mapped SNP. If there is no more
 data, self.eof is set to True, and nothing else changes. Otherwise,
 self.eof is set to False, the values of nucposA, mapposA, and cMperMbA
 are set to the old values of nucposB, mapposB, and cMperMbB,
 and the latter three values are set from the next line of the file.
-
 .fi
 .PP
  
 .PP
-References vcf2gtp\&.Map\&.cMperMbA, vcf2gtp\&.Map\&.cMperMbB, vcf2gtp\&.Map\&.cPerBasePair, vcf2gtp\&.Map\&.eof, vcf2gtp\&.Map\&.extrapolate, vcf2gtp\&.Map\&.mapposB, Assignment\&.next, Job\&.next, Chain\&.next, EpochLink\&.next, vcf2gtp\&.Map\&.next(), and vcf2gtp\&.Map\&.nucposB\&.
+References vcf2gtp\&.Map\&.cMperMbA, vcf2gtp\&.Map\&.cMperMbB, vcf2gtp\&.Map\&.cPerBasePair, vcf2gtp\&.Map\&.eof, vcf2gtp\&.Map\&.extrapolate, vcf2gtp\&.Map\&.mapposB, Assignment\&.next, Job\&.next, Chain\&.next, EpochLink\&.next, vcf2gtp\&.Map\&.next(), vcf2gtp\&.Map\&.nucposB, and usage()\&.
 .PP
 Referenced by vcf2gtp\&.Map\&.next()\&.
 

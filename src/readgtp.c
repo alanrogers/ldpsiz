@@ -1,7 +1,7 @@
 /**
  * @file readgtp.c
  * @author Alan R. Rogers
- * @brief Parse files written in .gtp format, which are used as input by obsld.
+ * @brief Parse files written in .gtp format, which are used as input by eld.
  * @copyright Copyright (c) 2014, Alan R. Rogers 
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".

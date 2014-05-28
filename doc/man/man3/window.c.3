@@ -1,4 +1,4 @@
-.TH "window.c" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "window.c" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -150,8 +150,6 @@ A window that slides across the chromosome\&.
 .PP 
 A window that slides across the chromosome\&. 
 
-
-.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers LD is calculated from pairs of sites within a window, which slides across the chromosome\&. This file implements \fBWindow\fP, which represents that sliding window\&.
@@ -159,20 +157,18 @@ Alan R\&. Rogers LD is calculated from pairs of sites within a window, which sli
 .PP
 \fBCopyright:\fP
 .RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
 .RE
 .PP
 
 .SH "Function Documentation"
 .PP 
-.SS "void SNP_clear (\fBSNP\fP *snp)"
-
+.SS "void \fBSNP_clear\fP (\fBSNP\fP *snp)"
 .PP
 Set values to initial states\&. This function does not initialize snp->prev, because doing so risks a memory leak\&. 
 .PP
 Referenced by SNP_new(), and SNPstore_checkout()\&.
-.SS "\fBSNP\fP* SNP_connect (\fBSNP\fP *list1, \fBSNP\fP *list2)"
-
+.SS "\fBSNP\fP* \fBSNP_connect\fP (\fBSNP\fP *list1, \fBSNP\fP *list2)"
 .PP
 Connect list2 to the tail of list1 and return a pointer to list1\&. Usage: list1 = SNP_connect(list1, list2)
 .PP
@@ -189,20 +185,17 @@ A pointer to the head of the combined list\&. If list1 is nonNULL, this returned
 
 .PP
 Referenced by SNPstore_checkin()\&.
-.SS "double SNP_getDsq (double *pqpq, \fBSNP\fP *x, \fBSNP\fP *y, unsignedploidy)"
-
+.SS "double \fBSNP_getDsq\fP (double *pqpq, \fBSNP\fP *x, \fBSNP\fP *y, unsignedploidy)"
 .PP
 Calculate D squared\&. Use two SNPs to calculate D*D (where D is the standard LD coefficient) and the product of the pq values at the two SNPs\&. Function also sets the value of *pqpq\&. This version uses the EM algorithm to get a maximum-likelihood estimate of D\&. This also provides a ML estimate of Dsq=D*D because of the invariant property of ML estimates\&. 
 .PP
 References DsqData_print(), DsqData::hiD, hiD(), DsqData::loD, loD(), MAKE_PHASED, minimize1D(), DsqData::nGam, DsqData::nUnphased, DsqData::px, DsqData::py, DsqData::tol, trBits(), and UNPHASED_PAIR\&.
 .PP
 Referenced by Window_advance()\&.
-.SS "double SNP_getDsq_haploid (double *pqpq, \fBSNP\fP *x, \fBSNP\fP *y)"
-
+.SS "double \fBSNP_getDsq_haploid\fP (double *pqpq, \fBSNP\fP *x, \fBSNP\fP *y)"
 .PP
 Calculate D squared from pair of haploid SNPs\&. Use two SNPs to calculate D*D (where D is the standard LD coefficient)\&. Also calculates the product of the pq values at the two SNPs\&. Function returns the value of D*D and sets the value of *pqpq\&. This version is for haploid genotypes, with each genotype equal either to 0 or 1\&. 
-.SS "\fBSNP\fP* SNP_new (unsignednGtype, intbootreps)"
-
+.SS "\fBSNP\fP* \fBSNP_new\fP (unsignednGtype, intbootreps)"
 .PP
 Allocate a new \fBSNP\fP, including the arrays used to store genotype data and bootstrap multiplicity values\&. In order to improve efficiency, these allocations are all done with a single call to malloc\&. That way, data for each \fBSNP\fP is in contiguous memory, and we minimize cache misses\&.
 .PP
@@ -223,12 +216,9 @@ pointer to newly-allocated \fBSNP\fP\&.
 References SNP_clear()\&.
 .PP
 Referenced by SNPstore_checkout()\&.
-.SS "int SNP_set (\fBSNP\fP *snp, longndx, doublemappos, const unsigned char *gtype, const \fBBoot\fP *boot, unsignedploidy)"
-
+.SS "int \fBSNP_set\fP (\fBSNP\fP *snp, longndx, doublemappos, const unsigned char *gtype, const \fBBoot\fP *boot, unsignedploidy)"
 .PP
-Initialize a \fBSNP\fP using the data given by the other parameters\&. 
-.PP
-\fBParameters:\fP
+Initialize a \fBSNP\fP using the data given by the other parameters\&. \fBParameters:\fP
 .RS 4
 \fIndx\fP SNPs are indexed (numbered) starting with 0\&. ndx is the index of the current \fBSNP\fP\&.
 .br
@@ -249,28 +239,23 @@ Initialize a \fBSNP\fP using the data given by the other parameters\&.
 
 .PP
 Referenced by Window_nextSNP()\&.
-.SS "void SNPstore_checkin (\fBSNPstore\fP *store, \fBSNP\fP *snp)"
-
+.SS "void \fBSNPstore_checkin\fP (\fBSNPstore\fP *store, \fBSNP\fP *snp)"
 .PP
 Check a \fBSNP\fP back into the store\&. 
 .PP
 References SNPstore::head, and SNP_connect()\&.
 .PP
 Referenced by Window_advance()\&.
-.SS "\fBSNP\fP* SNPstore_checkout (\fBSNPstore\fP *store)"
-
+.SS "\fBSNP\fP* \fBSNPstore_checkout\fP (\fBSNPstore\fP *store)"
 .PP
 Obtain a \fBSNP\fP from the store, allocating if necessary\&. 
 .PP
 References SNPstore::bootreps, SNPstore::head, SNPstore::nGtype, SNP_clear(), and SNP_new()\&.
 .PP
 Referenced by Window_nextSNP()\&.
-.SS "\fBSNPstore\fP* SNPstore_new (unsignednGtype, intbootreps)"
-
+.SS "\fBSNPstore\fP* \fBSNPstore_new\fP (unsignednGtype, intbootreps)"
 .PP
-Allocate a new object of type \fBSNPstore\fP\&. 
-.PP
-\fBParameters:\fP
+Allocate a new object of type \fBSNPstore\fP\&. \fBParameters:\fP
 .RS 4
 \fInGtype\fP number of genotypes 
 .br
@@ -282,20 +267,16 @@ Allocate a new object of type \fBSNPstore\fP\&.
 References SNPstore::bootreps, SNPstore::head, and SNPstore::nGtype\&.
 .PP
 Referenced by Window_nextSNP()\&.
-.SS "int Window_advance (\fBWindow\fP *window, \fBTabulation\fP *tab, \fBBoot\fP *boot, longcount)"
-
+.SS "int \fBWindow_advance\fP (\fBWindow\fP *window, \fBTabulation\fP *tab, \fBBoot\fP *boot, longcount)"
 .PP
 Add a new \fBSNP\fP to the window\&. 
 .PP
 References Window::curr, Dbl_near(), Window::ploidy, Window::sampling_interval, SNP_getDsq(), SNPstore_checkin(), Window::store, Window::width_cm, and Window_nextSNP()\&.
 .PP
 Referenced by threadfun()\&.
-.SS "\fBWindow\fP* Window_new (doublewidth_cm, FILE *ifp, long intsampling_interval, unsignedploidy)"
-
+.SS "\fBWindow\fP* \fBWindow_new\fP (doublewidth_cm, FILE *ifp, long intsampling_interval, unsignedploidy)"
 .PP
-Allocate a new \fBWindow\fP\&. 
-.PP
-\fBParameters:\fP
+Allocate a new \fBWindow\fP\&. \fBParameters:\fP
 .RS 4
 \fIwidth_cm\fP width of \fBWindow\fP in centimorgans
 .br
@@ -309,16 +290,14 @@ Allocate a new \fBWindow\fP\&.
 References Window::curr, Window::ifp, Window::nGtype, Window::nSNPs, Window::ploidy, Window::sampling_interval, Window::store, and Window::width_cm\&.
 .PP
 Referenced by threadfun()\&.
-.SS "int Window_nextSNP (\fBWindow\fP *window, \fBBoot\fP *boot)"
-
+.SS "int \fBWindow_nextSNP\fP (\fBWindow\fP *window, \fBBoot\fP *boot)"
 .PP
 Get next \fBSNP\fP from input file and link it into the linked list pointed to by window->curr\&. Return 0 on success, EOF if end of file is reached, and 1 on any other error\&. 
 .PP
 References Window::curr, Dbl_near(), Gtp_readSNP(), Window::gtype, Window::ifp, Window::nGtype, Window::nSNPs, Window::ploidy, SNP_set(), SNPstore_checkout(), SNPstore_new(), and Window::store\&.
 .PP
 Referenced by threadfun(), and Window_advance()\&.
-.SS "long Window_nSNPsRead (const \fBWindow\fP *window)"
-
+.SS "long \fBWindow_nSNPsRead\fP (const \fBWindow\fP *window)"
 .PP
 Return the number of SNPs that have been read\&. 
 .PP

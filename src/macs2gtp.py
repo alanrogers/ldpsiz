@@ -3,7 +3,7 @@
 #@page macs2gtp.py
 #@anchor macs2gtp
 #@file macs2gtp.py
-#@brief Parse output of macs, produce gtp format, the input for obsld.
+#@brief Parse output of macs, produce gtp format, the input for eld.
 #
 #macs2gtp.py, a program that converts `macs` output into .gtp format 
 #===================================================================

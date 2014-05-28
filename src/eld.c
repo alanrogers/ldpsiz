@@ -1,9 +1,9 @@
 /**
-@file obsld.c
-@anchor obsld
+@file eld.c
+@anchor eld
 @brief Estimate LD from genetic data.
 
-`obsld`, a program that estimates LD from genetic data
+`eld`, a program that estimates LD from genetic data
 ==================================================================
 
 Parameter values, including those describing population history, may
@@ -11,7 +11,7 @@ be read either from the initialization file `ldpsiz.ini` or specified
 on the command line. Command-line arguments override values in the
 initialization file. 
 
-`obsld` reads data in "gtp" format and estimates two measures of LD:
+`eld` reads data in "gtp" format and estimates two measures of LD:
 \f$\hat\sigma_d^2\f$ and \f$r^2\f$. The program compares all pairs of
 sites within a window that slides across the data set. These pairs are
 tabulated into bins based on the distance (in cM) that separates
@@ -33,7 +33,7 @@ By default, the program uses as many threads as there are cores on the
 machine. To change this, use the command-line option `--threads` or
 set `nthreads` in the file `ldpsiz.ini`.
 
-    usage: obsld [options] input_file_name
+    usage: eld [options] input_file_name
        where options may include:
        -b <x> or --blocksize <x>
           SNPs per bootstrap block
@@ -146,7 +146,7 @@ void ThreadArg_print(ThreadArg * targ, FILE * ofp) {
 }
 
 /**
- * `obsld` runs a copy of this function within each thread. The
+ * `eld` runs a copy of this function within each thread. The
  * function opens the input file, which gives the thread its own input
  * buffer so that it can move around in the file without locking it.
  * Then it examines pairs of SNPs within a window that slides across
@@ -209,7 +209,7 @@ void       *threadfun(void *varg) {
 
 /** Print usage message and abort */
 static void usage(void) {
-    fprintf(stderr, "usage: obsld [options] input_file_name\n");
+    fprintf(stderr, "usage: eld [options] input_file_name\n");
     fprintf(stderr, "   where options may include:\n");
     tellopt("-b <x> or --blocksize <x>", "SNPs per bootstrap block");
     tellopt("-f <x> or --bootfile <x>", "name of bootstrap output file");
@@ -271,7 +271,7 @@ int main(int argc, char **argv) {
     char        simcmd[1000] = { '\0' };
 
     printf("##########################################\n");
-    printf("# obsld: estimate linkage disequilibrium #\n");
+    printf("# eld: estimate linkage disequilibrium #\n");
     printf("##########################################\n");
 
     putchar('\n');
@@ -282,7 +282,7 @@ int main(int argc, char **argv) {
 #endif
     printf("# Program was run     : %s\n", ctime(&currtime));
 
-    printf("# obsld cmd:");
+    printf("# eld cmd:");
     for(i = 0; i < argc; ++i)
         printf(" %s", argv[i]);
     putchar('\n');

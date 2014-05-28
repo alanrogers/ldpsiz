@@ -1,10 +1,17 @@
-.TH "strobeck.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "strobeck.h" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 strobeck.h \- 
 .PP
-Header for \fBstrobeck\&.c\fP\&.  
+Header for \fBstrobeck\&.c\fP 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
@@ -63,25 +70,24 @@ Header for \fBstrobeck\&.c\fP\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Header for \fBstrobeck\&.c\fP\&. 
-
-
+Header for \fBstrobeck\&.c\fP 
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "int Strobeck_dydt (doublet_notused, const doubleyy1[], doublef[], void *params)"
-
+.SS "int \fBStrobeck_dydt\fP (doublet_notused, const doubleyy1[], doublef[], void *params)"
 .PP
 This function calculates the difference, from one generation to the next, for each of the 5 identity coefficients\&. It is based on equation 3 of Strobeck and Morgan\&.
 .PP
@@ -101,8 +107,7 @@ y[0] = phiA y[1] = phiB y[2] = phiAB y[3] = gammaAB y[4] = deltaAB
 References onestep()\&.
 .PP
 Referenced by Strobeck_sigdsq()\&.
-.SS "int Strobeck_evolveDiscrete (doubley[], \fBPopHist\fP *ph, doublec, doubleu)"
-
+.SS "int \fBStrobeck_evolveDiscrete\fP (doubley[], \fBPopHist\fP *ph, doublec, doubleu)"
 .PP
 Evolve through all epochs of population history, using step size h and beginning with initial equilibrium\&. Calculation iterates difference equation\&. The initial value of y is set to equilibrium equation for equilibrium\&.
 .PP
@@ -125,8 +130,7 @@ Always returns 0\&.
 
 .PP
 References iterate(), PopHist_duration(), PopHist_nepoch(), PopHist_twoN(), and Strobeck_geteq()\&.
-.SS "double Strobeck_get_sigdsq (doubley[], inttwoNsmp)"
-
+.SS "double \fBStrobeck_get_sigdsq\fP (doubley[], inttwoNsmp)"
 .PP
 Calculate sigma_d^2 from state vector\&. The formulas involved are in the comment at the top of this file\&.
 .PP
@@ -142,8 +146,7 @@ Calculate sigma_d^2 from state vector\&. The formulas involved are in the commen
 References onestep()\&.
 .PP
 Referenced by Strobeck_sigdsq(), and Strobeck_sigdsqEq()\&.
-.SS "int Strobeck_geteq (doublex[], doubletwoN, doublec, doubleu)"
-
+.SS "int \fBStrobeck_geteq\fP (doublex[], doubletwoN, doublec, doubleu)"
 .PP
 Fill x vector with equilibrium values given on pp 833-834 of Strobeck and Morgan\&. Strobeck and Morgan separate 3 cases, for c << u, c >> u, and c ~= u\&. I did some experiments to figure out how to bound these ranges, and decided never to use the formula for large c\&. 
 .PP

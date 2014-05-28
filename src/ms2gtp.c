@@ -91,7 +91,7 @@
 void        usage(void);
 
 /**
- * Parse output of MS, produce gtp format, the input for obsld.
+ * Parse output of MS, produce gtp format, the input for eld.
  */
 void usage(void) {
     fprintf(stderr, "usage: ms2gtp [options] [input_file_name]\n");

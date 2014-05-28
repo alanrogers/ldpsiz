@@ -1,0 +1,81 @@
+.TH "preld.c" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+preld.c \- 
+.PP
+This file contains code related preld, a program that predicts $\sigma_d^2$ from assumptions about population history\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <getopt\&.h>\fP
+.br
+\fC#include <gsl/gsl_errno\&.h>\fP
+.br
+\fC#include <gsl/gsl_matrix\&.h>\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+\fC#include 'tokenizer\&.h'\fP
+.br
+\fC#include 'hill\&.h'\fP
+.br
+\fC#include 'hayes\&.h'\fP
+.br
+\fC#include 'strobeck\&.h'\fP
+.br
+\fC#include 'model\&.h'\fP
+.br
+\fC#include 'ini\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBusage\fP (void)"
+.br
+.ti -1c
+.RI "void \fBcheck_tn\fP (double t, double n)"
+.br
+.RI "\fIMake sure values of t and N are valid\&. \fP"
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+This file contains code related preld, a program that predicts $\sigma_d^2$ from assumptions about population history\&. 
+
+`preld`, a program that predicts $\sigma_d^2$ from population history ==========================================================================
+.PP
+Parameter values, including those describing population history, may be read either from the initialization file `ldpsiz\&.ini` or specified on the command line\&. Command-line arguments override values in the initialization file\&. Several methods are implemented for predicting LD, and one or more of these may be specified either in the initialization file or via the `--methods` argument\&. For the current list of available methods, see \fBModel_alloc\fP\&.
+.PP
+Usage -----
+.PP
+usage: preld [options] where options may include: -u <x> or --mutation <x> set mutation rate/generation -b <x> or --nbins <x> specify the number of recombination rates -r <x> or --lo_r <x> low end of range of recombination rates in centimorgans -R <x> or --hi_r <x> high end of range of recombination rates in centimorgans -e or --equilibria show equilibrium for each epoch --log print log10 of sigdsq values -n or --twoNsmp set haploid sample size -E or --nextepoch move to next earlier epoch --twoN <x> set haploid pop size to x in current epoch -T <x> or --time <x> set length of current epoch to x generations -S or --printState print state vectors -m <method list>=''> or --methods <method list>=''> specify methods --exact don't use \fBODE\fP to approximate difference equations -h or --help print this message
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

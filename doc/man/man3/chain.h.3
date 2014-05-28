@@ -1,10 +1,17 @@
-.TH "chain.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "chain.h" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 chain.h \- 
 .PP
-Header for \fBchain\&.c\fP\&.  
+Header for \fBchain\&.c\fP 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
@@ -14,7 +21,7 @@ Header for \fBchain\&.c\fP\&.
 \fC#include <stdio\&.h>\fP
 .br
 
-.SS "Macros"
+.SS "Defines"
 
 .in +1c
 .ti -1c
@@ -133,29 +140,26 @@ Header for \fBchain\&.c\fP\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Header for \fBchain\&.c\fP\&. 
-
-
+Header for \fBchain\&.c\fP 
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "void Chain_bestFit (\fBChain\fP *chain, double *bestLnObj, \fBPopHist\fP *bestPh)"
-
+.SS "void \fBChain_bestFit\fP (\fBChain\fP *chain, double *bestLnObj, \fBPopHist\fP *bestPh)"
 .PP
-Return values corresponding to the best fit\&. 
-.PP
-\fBParameters:\fP
+Return values corresponding to the best fit\&. \fBParameters:\fP
 .RS 4
 \fIbestLnObj\fP Pointer to double, into which the function will write the value of the log objective function\&.
 .br
@@ -165,48 +169,38 @@ Return values corresponding to the best fit\&.
 
 .PP
 References PopHist_copy()\&.
-.SS "double Chain_flatness (\fBChain\fP *chain)"
-
+.SS "double \fBChain_flatness\fP (\fBChain\fP *chain)"
 .PP
 Return flatness parameter of chain\&. 
 .PP
 References Chain::flatness\&.
-.SS "double Chain_lnObj (\fBChain\fP *chain)"
-
+.SS "double \fBChain_lnObj\fP (\fBChain\fP *chain)"
 .PP
 Log of objective function\&. Does not calculate function\&. Just returns current stored value\&. 
 .PP
 Referenced by Chain_printState()\&.
-.SS "void Chain_setDataAvailable (\fBChain\fP *chain)"
-
+.SS "void \fBChain_setDataAvailable\fP (\fBChain\fP *chain)"
 .PP
 Indicate that data are available\&. \fBChain\fP should be locked before calling this function\&. 
 .PP
 Referenced by Chain_publish()\&.
-.SS "void Chain_setDataNeeded (\fBChain\fP *chain)"
-
+.SS "void \fBChain_setDataNeeded\fP (\fBChain\fP *chain)"
 .PP
 Indicate that data are needed\&. \fBChain\fP should be locked before calling this function\&. 
-.SS "void Chain_swapState (\fBChain\fP *c)"
-
+.SS "void \fBChain_swapState\fP (\fBChain\fP *c)"
 .PP
 Swap states of chains c and c->next\&. Lock both chains before calling this function\&. 
 .PP
 References Chain::next\&.
-.SS "void Chain_waitForData (\fBChain\fP *chain)"
-
+.SS "void \fBChain_waitForData\fP (\fBChain\fP *chain)"
 .PP
 Wait until thread has completed another iteration and made the resulting data available\&. On return, chain will be locked\&. 
-.SS "void Chain_waitUntilDataNeeded (\fBChain\fP *chain)"
-
+.SS "void \fBChain_waitUntilDataNeeded\fP (\fBChain\fP *chain)"
 .PP
 Wait until main thread has finished with data from last iteration\&. On return, the chain will be locked\&. 
-.SS "double lnObjFun (\fBPopHist\fP *ph, doubleu, \fBODE\fP *ode, intnbins, double *sigdsq, double *c)"
-
+.SS "double \fBlnObjFun\fP (\fBPopHist\fP *ph, doubleu, \fBODE\fP *ode, intnbins, double *sigdsq, double *c)"
 .PP
-Log of objective function: negative of sum of squared differences between observed and expected sigma_d^2 vectors\&. 
-.PP
-\fBParameters:\fP
+Log of objective function: negative of sum of squared differences between observed and expected sigma_d^2 vectors\&. \fBParameters:\fP
 .RS 4
 \fIph\fP Current population history 
 .br

@@ -1,9 +1,9 @@
 Here are the commands that generated the files in this directory:
 ############################################
-predld > predld.out
+preld > preld.out
 domacs.py -r
 macs2gtp.py macs.out > macs.gtp
-obsld macs.gtp > macs.obsld
-fitld macs.obsld > macs.fitld
+eld macs.gtp > macs.eld
+sald macs.eld > macs.sald
 gnuplot doplot.gp
 ############################################

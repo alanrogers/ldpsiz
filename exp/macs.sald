@@ -1,0 +1,78 @@
+############################################
+# sald: fit population history to LD using #
+#       simulated annealing                #
+############################################
+
+# Program was compiled: Wed May 28 13:23:23 2014
+# Program was run     : Wed May 28 13:39:16 2014
+
+# cmd: sald macs.eld
+# Initial PopHist:
+# epoch duration       1/2N
+#     0       40      1e-05
+#     1      inf       0.01
+# Model                               = Hill
+# mutation rate per nucleotide        = 1e-07
+# ftol                                = 0.00125
+# xtol                                = 1e-06
+# odeAbsTol                           = 1e-07
+# odeRelTol                           = 0.001
+# Initial temp                        = 2
+# final temp                          = 0
+# tmptr decay                         = 1
+# nTmptrs                             = 3
+# iterations in total                 = 999
+# iterations/temp                     = 333
+# optimizers/data set                 = 10
+# haploid sample size                 = 30
+# twoNinv range                       = [1e-08, 1]
+# t range                             = [1, 10000]
+# scale of initial simplex            = [0.01, 500, 0.01]
+# Number of bootstrap replicates      = 0
+# Results from all optimizers
+#           twoNinv0         t0       twoNinv1     badness simplexSize convrg
+#  0:          1e-08     62.840     0.00468971 0.565442474 0.000009685 NoConverg
+#  1:      0.0412081   1059.063      0.0146835 3.605604723 0.000000786 Converg  
+#  2:          1e-08     62.840     0.00468971 0.565442474 0.000000754 Converg  
+#  3:          1e-08     62.840     0.00468971 0.565442474 0.000000544 Converg  
+#  4:      0.0118859   1111.356     0.00677732 0.866231505 0.000004649 NoConverg
+#  5:      0.0322844   1503.793      0.0802823 2.746776264 0.000000001 Converg  
+#  6:     0.00148986    170.591      0.0042765 0.565639314 0.000000052 Converg  
+#  7:          1e-08     62.840     0.00468971 0.565442474 0.000000843 Converg  
+#  8:          1e-08     62.840     0.00468971 0.565442474 0.000000760 Converg  
+#  9:      0.0350871    168.577     0.00993444 0.659402336 0.000000623 Converg  
+
+# minimum badness = 0.565442
+#      param:    initial estimated
+#   twoNinv0:      1e-05     1e-08
+#         t0:         40     62.84
+#   twoNinv1:       0.01 0.0046897
+
+# Fitted values of sigma_d^2. (cM = centimorgans)
+#        cM  sigma_d^2
+ 0.00196308 0.32156442
+ 0.00607694 0.31750609
+ 0.00992424 0.31378461
+ 0.01400506 0.30991317
+ 0.01820000 0.30601272
+ 0.02189376 0.30264303
+ 0.02582055 0.29912554
+ 0.03003350 0.29542403
+ 0.03385425 0.29213018
+ 0.03800113 0.28862128
+ 0.04192049 0.28536656
+ 0.04607761 0.28197819
+ 0.05018000 0.27869716
+ 0.05398549 0.27570792
+ 0.05791797 0.27267251
+ 0.06217257 0.26944831
+ 0.06610270 0.26652389
+ 0.06975403 0.26385222
+ 0.07412545 0.26070965
+ 0.07801528 0.25796339
+ 0.08197800 0.25521302
+ 0.08604938 0.25243583
+ 0.09013772 0.24969547
+ 0.09399887 0.24715091
+ 0.09821893 0.24441702
+# log badness:m=-0.168764 sd=0.709066

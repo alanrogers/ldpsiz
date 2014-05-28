@@ -1,207 +1,210 @@
-\hypertarget{em_8c}{\subsection{em.\-c File Reference}
+\hypertarget{em_8c}{\subsection{em.\-c \-File \-Reference}
 \label{em_8c}\index{em.\-c@{em.\-c}}
 }
 
 
-Estimate D from partially phased diploid data using the E\-M algorithm.  
+\-Estimate \-D from partially phased diploid data using the \-E\-M algorithm. \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}
+ 
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include $<$float.\-h$>$}\\*
-{\ttfamily \#include $<$assert.\-h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\-\_\-errno.\-h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\-\_\-math.\-h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\-\_\-min.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}em.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
-\subsubsection*{Macros}
+{\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include $<$math.\-h$>$}\*
+{\ttfamily \#include $<$float.\-h$>$}\*
+{\ttfamily \#include $<$assert.\-h$>$}\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-errno.\-h$>$}\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-math.\-h$>$}\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-min.\-h$>$}\*
+{\ttfamily \#include \char`\"{}em.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\*
+\subsubsection*{\-Defines}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{em_8c_a42aac61d69eca504560d930902cc22ef}{\#define {\bfseries G\-O\-\_\-\-R\-I\-G\-H\-T}(F, A, X, B)~((X) + (F)$\ast$((B)-\/(X)))}\label{em_8c_a42aac61d69eca504560d930902cc22ef}
+\hypertarget{em_8c_a42aac61d69eca504560d930902cc22ef}{\#define {\bfseries \-G\-O\-\_\-\-R\-I\-G\-H\-T}(\-F, \-A, \-X, \-B)~((\-X) + (\-F)$\ast$((\-B)-\/(\-X)))}\label{em_8c_a42aac61d69eca504560d930902cc22ef}
 
 \item 
-\hypertarget{em_8c_a12ba8f06480b6cab4520a49677436fa4}{\#define {\bfseries G\-O\-\_\-\-L\-E\-F\-T}(F, A, X, B)~((X) -\/ (F)$\ast$((X)-\/(A)))}\label{em_8c_a12ba8f06480b6cab4520a49677436fa4}
+\hypertarget{em_8c_a12ba8f06480b6cab4520a49677436fa4}{\#define {\bfseries \-G\-O\-\_\-\-L\-E\-F\-T}(\-F, \-A, \-X, \-B)~((\-X) -\/ (\-F)$\ast$((\-X)-\/(\-A)))}\label{em_8c_a12ba8f06480b6cab4520a49677436fa4}
 
 \end{DoxyCompactItemize}
-\subsubsection*{Functions}
+\subsubsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{em_8c_aca8aadc79c96e7549ed3d87b9ab34a08}{double \hyperlink{em_8c_aca8aadc79c96e7549ed3d87b9ab34a08}{neg\-Ln\-L} (double D, void $\ast$data)}\label{em_8c_aca8aadc79c96e7549ed3d87b9ab34a08}
+\hypertarget{em_8c_aca8aadc79c96e7549ed3d87b9ab34a08}{double \hyperlink{em_8c_aca8aadc79c96e7549ed3d87b9ab34a08}{neg\-Ln\-L} (double \-D, void $\ast$data)}\label{em_8c_aca8aadc79c96e7549ed3d87b9ab34a08}
 
-\begin{DoxyCompactList}\small\item\em Negative of log Likelihood of given value of D. \end{DoxyCompactList}\item 
-double \hyperlink{em_8c_ac62cd04463d127258ef6e76bb67294ce}{neg\-Ln\-L\-\_\-df} (double D, void $\ast$data)
-\begin{DoxyCompactList}\small\item\em Negative of log Likelihood of given value of D. \end{DoxyCompactList}\item 
-void \hyperlink{em_8c_a763cb7889838068344aefd1eb170e94a}{neg\-Ln\-L\-\_\-fdf} (double D, double $\ast$f, double $\ast$df, void $\ast$data)
-\begin{DoxyCompactList}\small\item\em Negative of log Likelihood of given value of D. \end{DoxyCompactList}\item 
-void \hyperlink{em_8c_a29b4d31a97204bcb067c077c1b16dd3a}{neg\-Ln\-L\-\_\-fddf} (double D, double $\ast$f, double $\ast$df, double $\ast$ddf, void $\ast$data)
-\begin{DoxyCompactList}\small\item\em Negative of log Likelihood of given value of D. \end{DoxyCompactList}\item 
-void \hyperlink{em_8c_aff767b1a15cee1790a925391115f111f}{neg\-Ln\-L\-\_\-df12} (double D, double $\ast$df, double $\ast$ddf, void $\ast$data)
-\begin{DoxyCompactList}\small\item\em Negative of log Likelihood of given value of D. \end{DoxyCompactList}\item 
-\hypertarget{em_8c_a638346b09068d817fcb23ebc995291a5}{static double \hyperlink{em_8c_a638346b09068d817fcb23ebc995291a5}{get\-\_\-w} (double D, \hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd)}\label{em_8c_a638346b09068d817fcb23ebc995291a5}
+\begin{DoxyCompactList}\small\item\em \-Negative of log \-Likelihood of given value of \-D. \end{DoxyCompactList}\item 
+double \hyperlink{em_8c_ac62cd04463d127258ef6e76bb67294ce}{neg\-Ln\-L\-\_\-df} (double \-D, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em \-Negative of log \-Likelihood of given value of \-D. \end{DoxyCompactList}\item 
+void \hyperlink{em_8c_a763cb7889838068344aefd1eb170e94a}{neg\-Ln\-L\-\_\-fdf} (double \-D, double $\ast$f, double $\ast$df, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em \-Negative of log \-Likelihood of given value of \-D. \end{DoxyCompactList}\item 
+void \hyperlink{em_8c_a29b4d31a97204bcb067c077c1b16dd3a}{neg\-Ln\-L\-\_\-fddf} (double \-D, double $\ast$f, double $\ast$df, double $\ast$ddf, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em \-Negative of log \-Likelihood of given value of \-D. \end{DoxyCompactList}\item 
+void \hyperlink{em_8c_aff767b1a15cee1790a925391115f111f}{neg\-Ln\-L\-\_\-df12} (double \-D, double $\ast$df, double $\ast$ddf, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em \-Negative of log \-Likelihood of given value of \-D. \end{DoxyCompactList}\item 
+\hypertarget{em_8c_a638346b09068d817fcb23ebc995291a5}{static double \hyperlink{em_8c_a638346b09068d817fcb23ebc995291a5}{get\-\_\-w} (double \-D, \hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd)}\label{em_8c_a638346b09068d817fcb23ebc995291a5}
 
-\begin{DoxyCompactList}\small\item\em Return value of w implied by D, and the parameters in d. \end{DoxyCompactList}\item 
-static double \hyperlink{em_8c_aff0275c84deb2d4b7de0f4748eec1256}{get\-D} (double w, \hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd)
-\begin{DoxyCompactList}\small\item\em Return value of D implied by given value of w. \end{DoxyCompactList}\item 
-static double \hyperlink{em_8c_adb1dfc954ce3aba4150aba1ca6dbeedc}{next\-\_\-w} (double w, \hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd)
-\begin{DoxyCompactList}\small\item\em One step of E\-M algorithm. \end{DoxyCompactList}\item 
-double \hyperlink{em_8c_a3dc3d753ab71ff84227bd31d9f407915}{find\-\_\-\-D} (double D0, \hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd)
-\begin{DoxyCompactList}\small\item\em Ad hoc iterations to find D. \end{DoxyCompactList}\item 
-\hypertarget{em_8c_ac6b55dd3fa20189828cd95479cf123b6}{static double \hyperlink{em_8c_ac6b55dd3fa20189828cd95479cf123b6}{initial\-D} (\hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd)}\label{em_8c_ac6b55dd3fa20189828cd95479cf123b6}
+\begin{DoxyCompactList}\small\item\em \-Return value of w implied by \-D, and the parameters in d. \end{DoxyCompactList}\item 
+static double \hyperlink{em_8c_aff0275c84deb2d4b7de0f4748eec1256}{get\-D} (double w, \hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd)
+\begin{DoxyCompactList}\small\item\em \-Return value of \-D implied by given value of w. \end{DoxyCompactList}\item 
+static double \hyperlink{em_8c_adb1dfc954ce3aba4150aba1ca6dbeedc}{next\-\_\-w} (double w, \hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd)
+\begin{DoxyCompactList}\small\item\em \-One step of \-E\-M algorithm. \end{DoxyCompactList}\item 
+double \hyperlink{em_8c_a3dc3d753ab71ff84227bd31d9f407915}{find\-\_\-\-D} (double \-D0, \hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd)
+\begin{DoxyCompactList}\small\item\em \-Ad hoc iterations to find \-D. \end{DoxyCompactList}\item 
+\hypertarget{em_8c_ac6b55dd3fa20189828cd95479cf123b6}{static double \hyperlink{em_8c_ac6b55dd3fa20189828cd95479cf123b6}{initial\-D} (\hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd)}\label{em_8c_ac6b55dd3fa20189828cd95479cf123b6}
 
-\begin{DoxyCompactList}\small\item\em Initialize \hyperlink{struct_dsq_data}{Dsq\-Data} object from current data, assuming that half of unphased heterozygotes have 2-\/locus genotype 11/00 and the other half have 10/01. \end{DoxyCompactList}\item 
-\hypertarget{em_8c_ac7a72db338562cbc0b59de2fdd7ea383}{void \hyperlink{em_8c_ac7a72db338562cbc0b59de2fdd7ea383}{Dsq\-Data\-\_\-print} (\hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd, const char $\ast$file, int line, F\-I\-L\-E $\ast$fp)}\label{em_8c_ac7a72db338562cbc0b59de2fdd7ea383}
+\begin{DoxyCompactList}\small\item\em \-Initialize \hyperlink{struct_dsq_data}{\-Dsq\-Data} object from current data, assuming that half of unphased heterozygotes have 2-\/locus genotype 11/00 and the other half have 10/01. \end{DoxyCompactList}\item 
+\hypertarget{em_8c_ac7a72db338562cbc0b59de2fdd7ea383}{void \hyperlink{em_8c_ac7a72db338562cbc0b59de2fdd7ea383}{\-Dsq\-Data\-\_\-print} (\hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd, const char $\ast$file, int line, \-F\-I\-L\-E $\ast$fp)}\label{em_8c_ac7a72db338562cbc0b59de2fdd7ea383}
 
-\begin{DoxyCompactList}\small\item\em Print an object of type \hyperlink{struct_dsq_data}{Dsq\-Data}. \end{DoxyCompactList}\item 
-void \hyperlink{em_8c_a70f8344502c41e439800cf30e69c3217}{Dsq\-Data\-\_\-reset} (\hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd)
-\begin{DoxyCompactList}\small\item\em Make \hyperlink{struct_dsq_data}{Dsq\-Data} object consistent with its current allele freqs. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Print an object of type \hyperlink{struct_dsq_data}{\-Dsq\-Data}. \end{DoxyCompactList}\item 
+void \hyperlink{em_8c_a70f8344502c41e439800cf30e69c3217}{\-Dsq\-Data\-\_\-reset} (\hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd)
+\begin{DoxyCompactList}\small\item\em \-Make \hyperlink{struct_dsq_data}{\-Dsq\-Data} object consistent with its current allele freqs. \end{DoxyCompactList}\item 
 \hypertarget{em_8c_a08218d02cbbe98122c481c1db576efee}{double \hyperlink{em_8c_a08218d02cbbe98122c481c1db576efee}{lo\-D} (double p\-A, double p\-B, unsigned $\ast$n\-Gam)}\label{em_8c_a08218d02cbbe98122c481c1db576efee}
 
-\begin{DoxyCompactList}\small\item\em Lowest feasible value of D, given allele frequencies. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Lowest feasible value of \-D, given allele frequencies. \end{DoxyCompactList}\item 
 \hypertarget{em_8c_a9519759fd7d57cd97eab1c8ac0126a9f}{double \hyperlink{em_8c_a9519759fd7d57cd97eab1c8ac0126a9f}{hi\-D} (double p\-A, double p\-B, unsigned $\ast$n\-Gam)}\label{em_8c_a9519759fd7d57cd97eab1c8ac0126a9f}
 
-\begin{DoxyCompactList}\small\item\em Highest feasible value of D, given allele frequencies. \end{DoxyCompactList}\item 
-int \hyperlink{em_8c_a87c044fe7efd7a666e878823e35eeae2}{minimize1\-D} (double $\ast$D, \hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd)
-\begin{DoxyCompactList}\small\item\em This algorithm finds the minimum of function neg\-Ln\-L within the range \mbox{[}a,b\mbox{]}, where a = dd-\/$>$lo\-D, and b=dd-\/$>$hi\-D. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Highest feasible value of \-D, given allele frequencies. \end{DoxyCompactList}\item 
+int \hyperlink{em_8c_a87c044fe7efd7a666e878823e35eeae2}{minimize1\-D} (double $\ast$\-D, \hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd)
+\begin{DoxyCompactList}\small\item\em \-This algorithm finds the minimum of function neg\-Ln\-L within the range \mbox{[}a,b\mbox{]}, where a = dd-\/$>$lo\-D, and b=dd-\/$>$hi\-D. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\subsubsection{Detailed Description}
-Estimate D from partially phased diploid data using the E\-M algorithm. \begin{DoxyAuthor}{Author}
-Alan R. Rogers 
-\end{DoxyAuthor}
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\subsubsection{\-Detailed \-Description}
+\-Estimate \-D from partially phased diploid data using the \-E\-M algorithm. \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}
+\begin{DoxyAuthor}{\-Author}
+\-Alan \-R. \-Rogers 
+\end{DoxyAuthor}
 
 
-\subsubsection{Function Documentation}
-\hypertarget{em_8c_a70f8344502c41e439800cf30e69c3217}{\index{em.\-c@{em.\-c}!Dsq\-Data\-\_\-reset@{Dsq\-Data\-\_\-reset}}
-\index{Dsq\-Data\-\_\-reset@{Dsq\-Data\-\_\-reset}!em.c@{em.\-c}}
-\paragraph[{Dsq\-Data\-\_\-reset}]{\setlength{\rightskip}{0pt plus 5cm}void Dsq\-Data\-\_\-reset (
+\subsubsection{\-Function \-Documentation}
+\hypertarget{em_8c_a70f8344502c41e439800cf30e69c3217}{\index{em.\-c@{em.\-c}!\-Dsq\-Data\-\_\-reset@{\-Dsq\-Data\-\_\-reset}}
+\index{\-Dsq\-Data\-\_\-reset@{\-Dsq\-Data\-\_\-reset}!em.c@{em.\-c}}
+\paragraph[{\-Dsq\-Data\-\_\-reset}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Dsq\-Data\-\_\-reset} (
 \begin{DoxyParamCaption}
-\item[{{\bf Dsq\-Data} $\ast$}]{dd}
+\item[{{\bf \-Dsq\-Data} $\ast$}]{dd}
 \end{DoxyParamCaption}
 )}}\label{em_8c_a70f8344502c41e439800cf30e69c3217}
 
 
-Make \hyperlink{struct_dsq_data}{Dsq\-Data} object consistent with its current allele freqs. 
+\-Make \hyperlink{struct_dsq_data}{\-Dsq\-Data} object consistent with its current allele freqs. 
 
 
 
-References Dsq\-Data\-::alpha, Dsq\-Data\-::beta, Dsq\-Data\-::hi\-D, hi\-D(), Dsq\-Data\-::lo\-D, lo\-D(), Dsq\-Data\-::n\-Gam, Dsq\-Data\-::px, and Dsq\-Data\-::py.
+\-References \-Dsq\-Data\-::alpha, \-Dsq\-Data\-::beta, \-Dsq\-Data\-::hi\-D, hi\-D(), \-Dsq\-Data\-::lo\-D, lo\-D(), \-Dsq\-Data\-::n\-Gam, \-Dsq\-Data\-::px, and \-Dsq\-Data\-::py.
 
 \hypertarget{em_8c_a3dc3d753ab71ff84227bd31d9f407915}{\index{em.\-c@{em.\-c}!find\-\_\-\-D@{find\-\_\-\-D}}
 \index{find\-\_\-\-D@{find\-\_\-\-D}!em.c@{em.\-c}}
-\paragraph[{find\-\_\-\-D}]{\setlength{\rightskip}{0pt plus 5cm}double find\-\_\-\-D (
+\paragraph[{find\-\_\-\-D}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf find\-\_\-\-D} (
 \begin{DoxyParamCaption}
-\item[{double}]{D0, }
-\item[{{\bf Dsq\-Data} $\ast$}]{dd}
+\item[{double}]{\-D0, }
+\item[{{\bf \-Dsq\-Data} $\ast$}]{dd}
 \end{DoxyParamCaption}
 )}}\label{em_8c_a3dc3d753ab71ff84227bd31d9f407915}
 
 
-Ad hoc iterations to find D. 
+\-Ad hoc iterations to find \-D. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em w0} & Starting value for E\-M algorithm. \\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em w0} & \-Starting value for \-E\-M algorithm. \\
 \hline
-\mbox{\tt in}  & {\em d} & Points to a structure containing data. \\
+\mbox{\tt in}  & {\em d} & \-Points to a structure containing data. \\
 \hline
 \end{DoxyParams}
 
 
-References get\-\_\-w(), get\-D(), and Dsq\-Data\-::tol.
+\-References get\-\_\-w(), get\-D(), and \-Dsq\-Data\-::tol.
 
 \hypertarget{em_8c_aff0275c84deb2d4b7de0f4748eec1256}{\index{em.\-c@{em.\-c}!get\-D@{get\-D}}
 \index{get\-D@{get\-D}!em.c@{em.\-c}}
-\paragraph[{get\-D}]{\setlength{\rightskip}{0pt plus 5cm}static double get\-D (
+\paragraph[{get\-D}]{\setlength{\rightskip}{0pt plus 5cm}static double {\bf get\-D} (
 \begin{DoxyParamCaption}
 \item[{double}]{w, }
-\item[{{\bf Dsq\-Data} $\ast$}]{dd}
+\item[{{\bf \-Dsq\-Data} $\ast$}]{dd}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{em_8c_aff0275c84deb2d4b7de0f4748eec1256}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, static\mbox{]}}}}\label{em_8c_aff0275c84deb2d4b7de0f4748eec1256}
 
 
-Return value of D implied by given value of w. 
+\-Return value of \-D implied by given value of w. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em w} & Current guess as to fraction of unphased double-\/heterozygotes with two-\/locus genotype 11/00 rather than 10/01.\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em w} & \-Current guess as to fraction of unphased double-\/heterozygotes with two-\/locus genotype 11/00 rather than 10/01.\\
 \hline
-\mbox{\tt in}  & {\em dd} & pointer to object of type \hyperlink{struct_dsq_data}{Dsq\-Data}\\
+\mbox{\tt in}  & {\em dd} & pointer to object of type \hyperlink{struct_dsq_data}{\-Dsq\-Data}\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 improved estimate of w 
 \end{DoxyReturn}
 
 
-References Dsq\-Data\-::n\-Gam, Dsq\-Data\-::n\-Gtype, Dsq\-Data\-::n\-Unphased, Dsq\-Data\-::px, and Dsq\-Data\-::py.
+\-References \-Dsq\-Data\-::n\-Gam, \-Dsq\-Data\-::n\-Gtype, \-Dsq\-Data\-::n\-Unphased, \-Dsq\-Data\-::px, and \-Dsq\-Data\-::py.
 
 
 
-Referenced by find\-\_\-\-D(), and next\-\_\-w().
+\-Referenced by find\-\_\-\-D(), and next\-\_\-w().
 
 \hypertarget{em_8c_a87c044fe7efd7a666e878823e35eeae2}{\index{em.\-c@{em.\-c}!minimize1\-D@{minimize1\-D}}
 \index{minimize1\-D@{minimize1\-D}!em.c@{em.\-c}}
-\paragraph[{minimize1\-D}]{\setlength{\rightskip}{0pt plus 5cm}int minimize1\-D (
+\paragraph[{minimize1\-D}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf minimize1\-D} (
 \begin{DoxyParamCaption}
-\item[{double $\ast$}]{D, }
-\item[{{\bf Dsq\-Data} $\ast$}]{dd}
+\item[{double $\ast$}]{\-D, }
+\item[{{\bf \-Dsq\-Data} $\ast$}]{dd}
 \end{DoxyParamCaption}
 )}}\label{em_8c_a87c044fe7efd7a666e878823e35eeae2}
 
 
-This algorithm finds the minimum of function neg\-Ln\-L within the range \mbox{[}a,b\mbox{]}, where a = dd-\/$>$lo\-D, and b=dd-\/$>$hi\-D. 
+\-This algorithm finds the minimum of function neg\-Ln\-L within the range \mbox{[}a,b\mbox{]}, where a = dd-\/$>$lo\-D, and b=dd-\/$>$hi\-D. 
 
-The algorithm uses Newton steps when these go downhill, and otherwise bisects in the downhill direction.
+\-The algorithm uses \-Newton steps when these go downhill, and otherwise bisects in the downhill direction.
 
-When Newton fails, the next step is in the downhill direction, as indicated by the derivative. If the derivative at the boundary has the same sign as that at the current point, the algorithm bets that the function is monotonic and takes a big step. Otherwise, there must be an intermediate minimum, so the algorithm bisects.
+\-When \-Newton fails, the next step is in the downhill direction, as indicated by the derivative. \-If the derivative at the boundary has the same sign as that at the current point, the algorithm bets that the function is monotonic and takes a big step. \-Otherwise, there must be an intermediate minimum, so the algorithm bisects.
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em D} & Lewontin's original measure of linkage disequilibrium,\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt out}  & {\em \-D} & \-Lewontin's original measure of linkage disequilibrium,\\
 \hline
-\mbox{\tt in}  & {\em dd} & pointer to object of type \hyperlink{struct_dsq_data}{Dsq\-Data}\\
+\mbox{\tt in}  & {\em dd} & pointer to object of type \hyperlink{struct_dsq_data}{\-Dsq\-Data}\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 the integer 0 
 \end{DoxyReturn}
 
 
-References Dsq\-Data\-::hi\-D, initial\-D(), Dsq\-Data\-::lo\-D, neg\-Ln\-L\-\_\-df(), neg\-Ln\-L\-\_\-df12(), and Dsq\-Data\-::tol.
+\-References \-Dsq\-Data\-::hi\-D, initial\-D(), \-Dsq\-Data\-::lo\-D, neg\-Ln\-L\-\_\-df(), neg\-Ln\-L\-\_\-df12(), and \-Dsq\-Data\-::tol.
 
 
 
-Referenced by S\-N\-P\-\_\-get\-Dsq().
+\-Referenced by \-S\-N\-P\-\_\-get\-Dsq().
 
 \hypertarget{em_8c_ac62cd04463d127258ef6e76bb67294ce}{\index{em.\-c@{em.\-c}!neg\-Ln\-L\-\_\-df@{neg\-Ln\-L\-\_\-df}}
 \index{neg\-Ln\-L\-\_\-df@{neg\-Ln\-L\-\_\-df}!em.c@{em.\-c}}
-\paragraph[{neg\-Ln\-L\-\_\-df}]{\setlength{\rightskip}{0pt plus 5cm}double neg\-Ln\-L\-\_\-df (
+\paragraph[{neg\-Ln\-L\-\_\-df}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf neg\-Ln\-L\-\_\-df} (
 \begin{DoxyParamCaption}
-\item[{double}]{D, }
+\item[{double}]{\-D, }
 \item[{void $\ast$}]{data}
 \end{DoxyParamCaption}
 )}}\label{em_8c_ac62cd04463d127258ef6e76bb67294ce}
 
 
-Negative of log Likelihood of given value of D. 
+\-Negative of log \-Likelihood of given value of \-D. 
 
-This version returns only the 1st derivative. 
+\-This version returns only the 1st derivative. 
 
-References get\-\_\-w(), Dsq\-Data\-::n\-Gam, Dsq\-Data\-::n\-Unphased, Dsq\-Data\-::px, and Dsq\-Data\-::py.
+\-References get\-\_\-w(), \-Dsq\-Data\-::n\-Gam, \-Dsq\-Data\-::n\-Unphased, \-Dsq\-Data\-::px, and \-Dsq\-Data\-::py.
 
 
 
-Referenced by minimize1\-D().
+\-Referenced by minimize1\-D().
 
 \hypertarget{em_8c_aff767b1a15cee1790a925391115f111f}{\index{em.\-c@{em.\-c}!neg\-Ln\-L\-\_\-df12@{neg\-Ln\-L\-\_\-df12}}
 \index{neg\-Ln\-L\-\_\-df12@{neg\-Ln\-L\-\_\-df12}!em.c@{em.\-c}}
-\paragraph[{neg\-Ln\-L\-\_\-df12}]{\setlength{\rightskip}{0pt plus 5cm}void neg\-Ln\-L\-\_\-df12 (
+\paragraph[{neg\-Ln\-L\-\_\-df12}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf neg\-Ln\-L\-\_\-df12} (
 \begin{DoxyParamCaption}
-\item[{double}]{D, }
+\item[{double}]{\-D, }
 \item[{double $\ast$}]{df, }
 \item[{double $\ast$}]{ddf, }
 \item[{void $\ast$}]{data}
@@ -209,21 +212,21 @@ Referenced by minimize1\-D().
 )}}\label{em_8c_aff767b1a15cee1790a925391115f111f}
 
 
-Negative of log Likelihood of given value of D. 
+\-Negative of log \-Likelihood of given value of \-D. 
 
-This version calculates the 1st derivative (placed in $\ast$df), and the 2nd derivative (in ddf). 
+\-This version calculates the 1st derivative (placed in $\ast$df), and the 2nd derivative (in ddf). 
 
-References get\-\_\-w(), Dsq\-Data\-::n\-Gam, Dsq\-Data\-::n\-Unphased, Dsq\-Data\-::px, and Dsq\-Data\-::py.
+\-References get\-\_\-w(), \-Dsq\-Data\-::n\-Gam, \-Dsq\-Data\-::n\-Unphased, \-Dsq\-Data\-::px, and \-Dsq\-Data\-::py.
 
 
 
-Referenced by minimize1\-D().
+\-Referenced by minimize1\-D().
 
 \hypertarget{em_8c_a29b4d31a97204bcb067c077c1b16dd3a}{\index{em.\-c@{em.\-c}!neg\-Ln\-L\-\_\-fddf@{neg\-Ln\-L\-\_\-fddf}}
 \index{neg\-Ln\-L\-\_\-fddf@{neg\-Ln\-L\-\_\-fddf}!em.c@{em.\-c}}
-\paragraph[{neg\-Ln\-L\-\_\-fddf}]{\setlength{\rightskip}{0pt plus 5cm}void neg\-Ln\-L\-\_\-fddf (
+\paragraph[{neg\-Ln\-L\-\_\-fddf}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf neg\-Ln\-L\-\_\-fddf} (
 \begin{DoxyParamCaption}
-\item[{double}]{D, }
+\item[{double}]{\-D, }
 \item[{double $\ast$}]{f, }
 \item[{double $\ast$}]{df, }
 \item[{double $\ast$}]{ddf, }
@@ -232,17 +235,17 @@ Referenced by minimize1\-D().
 )}}\label{em_8c_a29b4d31a97204bcb067c077c1b16dd3a}
 
 
-Negative of log Likelihood of given value of D. 
+\-Negative of log \-Likelihood of given value of \-D. 
 
-This version calculates, the function value (placed in $\ast$f), its 1st derivative (placed in $\ast$df), and its 2nd derivative (in ddf). 
+\-This version calculates, the function value (placed in $\ast$f), its 1st derivative (placed in $\ast$df), and its 2nd derivative (in ddf). 
 
-References get\-\_\-w(), Dsq\-Data\-::n\-Gam, Dsq\-Data\-::n\-Unphased, Dsq\-Data\-::px, and Dsq\-Data\-::py.
+\-References get\-\_\-w(), \-Dsq\-Data\-::n\-Gam, \-Dsq\-Data\-::n\-Unphased, \-Dsq\-Data\-::px, and \-Dsq\-Data\-::py.
 
 \hypertarget{em_8c_a763cb7889838068344aefd1eb170e94a}{\index{em.\-c@{em.\-c}!neg\-Ln\-L\-\_\-fdf@{neg\-Ln\-L\-\_\-fdf}}
 \index{neg\-Ln\-L\-\_\-fdf@{neg\-Ln\-L\-\_\-fdf}!em.c@{em.\-c}}
-\paragraph[{neg\-Ln\-L\-\_\-fdf}]{\setlength{\rightskip}{0pt plus 5cm}void neg\-Ln\-L\-\_\-fdf (
+\paragraph[{neg\-Ln\-L\-\_\-fdf}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf neg\-Ln\-L\-\_\-fdf} (
 \begin{DoxyParamCaption}
-\item[{double}]{D, }
+\item[{double}]{\-D, }
 \item[{double $\ast$}]{f, }
 \item[{double $\ast$}]{df, }
 \item[{void $\ast$}]{data}
@@ -250,35 +253,35 @@ References get\-\_\-w(), Dsq\-Data\-::n\-Gam, Dsq\-Data\-::n\-Unphased, Dsq\-Dat
 )}}\label{em_8c_a763cb7889838068344aefd1eb170e94a}
 
 
-Negative of log Likelihood of given value of D. 
+\-Negative of log \-Likelihood of given value of \-D. 
 
-This version calculates both the function value (placed in $\ast$f) and its derivative (placed in $\ast$df). 
+\-This version calculates both the function value (placed in $\ast$f) and its derivative (placed in $\ast$df). 
 
-References get\-\_\-w(), Dsq\-Data\-::n\-Gam, Dsq\-Data\-::n\-Unphased, Dsq\-Data\-::px, and Dsq\-Data\-::py.
+\-References get\-\_\-w(), \-Dsq\-Data\-::n\-Gam, \-Dsq\-Data\-::n\-Unphased, \-Dsq\-Data\-::px, and \-Dsq\-Data\-::py.
 
 \hypertarget{em_8c_adb1dfc954ce3aba4150aba1ca6dbeedc}{\index{em.\-c@{em.\-c}!next\-\_\-w@{next\-\_\-w}}
 \index{next\-\_\-w@{next\-\_\-w}!em.c@{em.\-c}}
-\paragraph[{next\-\_\-w}]{\setlength{\rightskip}{0pt plus 5cm}static double next\-\_\-w (
+\paragraph[{next\-\_\-w}]{\setlength{\rightskip}{0pt plus 5cm}static double {\bf next\-\_\-w} (
 \begin{DoxyParamCaption}
 \item[{double}]{w, }
-\item[{{\bf Dsq\-Data} $\ast$}]{dd}
+\item[{{\bf \-Dsq\-Data} $\ast$}]{dd}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{em_8c_adb1dfc954ce3aba4150aba1ca6dbeedc}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, static\mbox{]}}}}\label{em_8c_adb1dfc954ce3aba4150aba1ca6dbeedc}
 
 
-One step of E\-M algorithm. 
+\-One step of \-E\-M algorithm. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em w} & Current guess as to fraction of unphased double-\/heterozygotes with two-\/locus genotype 11/00 rather than 10/01.\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em w} & \-Current guess as to fraction of unphased double-\/heterozygotes with two-\/locus genotype 11/00 rather than 10/01.\\
 \hline
-\mbox{\tt in}  & {\em dd} & pointer to object of type \hyperlink{struct_dsq_data}{Dsq\-Data}\\
+\mbox{\tt in}  & {\em dd} & pointer to object of type \hyperlink{struct_dsq_data}{\-Dsq\-Data}\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 improved estimate of w 
 \end{DoxyReturn}
 
 
-References get\-\_\-w(), and get\-D().
+\-References get\-\_\-w(), and get\-D().
 

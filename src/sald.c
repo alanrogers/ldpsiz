@@ -16,7 +16,7 @@ annealing.
 Usage
 -----
 
-The input data file should be as produced by \ref obsld "obsld".
+The input data file should be as produced by \ref eld "eld".
 
 Although simulated annealing works pretty well, I often find that
 different runs end up on different peaks. Therefore, `sald` is able to
@@ -25,8 +25,8 @@ point. These can run in parallel, on separate threads. The number of
 parallel optimizers is set using the `--nOpt` argument described
 below.
 
-The program also deals with bootstrap data, as provided by \ref obsld
-"obsld". The various boostrap data sets also run in parallel if your
+The program also deals with bootstrap data, as provided by \ref eld
+"eld". The various boostrap data sets also run in parallel if your
 machine has multiple cores.  By default `sald` does not process
 bootstrap replicates: use `--bootfile` if you want it to.
 
@@ -356,9 +356,9 @@ void usage(void) {
 }
 
 /**
- * Read the data file produced by obsld.
+ * Read the data file produced by eld.
  *
- * @param[in] ifp Points to file produced by obsld.
+ * @param[in] ifp Points to file produced by eld.
  * @param[in] nbins The length of all arrays.
  * @param[out] cm An array giving the average separation (in centimorgans)
  * between pairs of SNPs within the various bins.
@@ -937,7 +937,7 @@ int main(int argc, char **argv) {
     PopHist_setAllDuration(hiInit, nparams, hiTinit);
 
     /* read assignment statements in input file */
-    Assignment *asmt = Assignment_readObsld(ifp);
+    Assignment *asmt = Assignment_readEld(ifp);
 
     Assignment_setInt(asmt, "nbins", &nbins, MANDATORY);
     Assignment_setInt(asmt, "Haploid sample size", &twoNsmp, MANDATORY);

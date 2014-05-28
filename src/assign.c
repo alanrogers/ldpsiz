@@ -248,14 +248,14 @@ int Assignment_setString(const Assignment * a, const char *key, char *ptr,
 }
 
 /**
- * Read assignment statements in file produced by obsld.
+ * Read assignment statements in file produced by eld.
  *
  * @param[in] ifp Pointer to input file.
  *
  * @returns Pointer to an Assignment object, which contains all the
  * assignments found.
  */
-Assignment *Assignment_readObsld(FILE * ifp) {
+Assignment *Assignment_readEld(FILE * ifp) {
     char        buff[500];
     int         ntokens = -1;
     Tokenizer  *tkz = Tokenizer_new(50);

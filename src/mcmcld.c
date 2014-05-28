@@ -106,9 +106,9 @@ double lnObjFun(PopHist * ph, double u, ODE * ode,
 }
 
 /**
- * Read the data file produced by obsld.
+ * Read the data file produced by eld.
  *
- * @param[in] ifp Points to file produced by obsld.
+ * @param[in] ifp Points to file produced by eld.
  * @param[in] nbins The length of all arrays.
  * @param[out] twoNsmp Number of gene copies sampled per locus.
  * @param[out] cm An array giving the average separation (in centimorgans)
@@ -375,7 +375,7 @@ int main(int argc, char **argv) {
     PopHist_print_comment(ph_init, "# ", stdout);
 
     /* read assignment statements in input file */
-    Assignment *asmt = Assignment_readObsld(ifp);
+    Assignment *asmt = Assignment_readEld(ifp);
 
     Assignment_setInt(asmt, "nbins", &nbins, MANDATORY);
     Assignment_setInt(asmt, "Haploid sample size", &twoNsmp, MANDATORY);

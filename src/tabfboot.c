@@ -1,7 +1,7 @@
 /**
  * @file tabfboot.c
  * @author Alan R. Rogers
- * @brief Tabulate bootstrap parameter estimates produced by obsld.
+ * @brief Tabulate bootstrap parameter estimates produced by eld.
  * @copyright Copyright (c) 2014, Alan R. Rogers 
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".

@@ -1,143 +1,146 @@
-\hypertarget{boot_8c}{\subsection{boot.\-c File Reference}
+\hypertarget{boot_8c}{\subsection{boot.\-c \-File \-Reference}
 \label{boot_8c}\index{boot.\-c@{boot.\-c}}
 }
 
 
-Functions for a moving blocks bootstrap.  
+\-Functions for a moving blocks bootstrap. \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}
+ 
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$stdlib.\-h$>$}\\*
-{\ttfamily \#include $<$string.\-h$>$}\\*
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include $<$assert.\-h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\-\_\-rng.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}tabulation.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}window.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}boot.\-h\char`\"{}}\\*
-\subsubsection*{Data Structures}
+{\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\*
+{\ttfamily \#include $<$string.\-h$>$}\*
+{\ttfamily \#include $<$math.\-h$>$}\*
+{\ttfamily \#include $<$assert.\-h$>$}\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-rng.\-h$>$}\*
+{\ttfamily \#include \char`\"{}tabulation.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}window.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}boot.\-h\char`\"{}}\*
+\subsubsection*{\-Data \-Structures}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{struct_boot}{Boot}
-\begin{DoxyCompactList}\small\item\em Contains the all data involved in a moving blocks bootstrap. \end{DoxyCompactList}\item 
-struct \hyperlink{struct_boot_conf}{Boot\-Conf}
-\begin{DoxyCompactList}\small\item\em Contains the data for a bootstrap confidence interval. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsubsection*{Functions}
+struct \hyperlink{struct_boot}{\-Boot}
+\begin{DoxyCompactList}\small\item\em \-Contains the all data involved in a moving blocks bootstrap. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_boot_conf}{\-Boot\-Conf}
+\begin{DoxyCompactList}\small\item\em \-Contains the data for a bootstrap confidence interval. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
-static void \hyperlink{boot_8c_a135d56fa4a177cf870202d4e1517e074}{Boot\-\_\-alloc\-Arrays} (\hyperlink{struct_boot}{Boot} $\ast$boot)
-\begin{DoxyCompactList}\small\item\em Allocate \hyperlink{struct_boot}{Boot}'s arrays. \end{DoxyCompactList}\item 
-\hypertarget{boot_8c_a381199685b121f31455b527892a8985a}{\hyperlink{struct_boot}{Boot} $\ast$ \hyperlink{boot_8c_a381199685b121f31455b527892a8985a}{Boot\-\_\-new} (long n\-S\-N\-Ps, long n\-Reps, long block\-Length, double windowcm, int n\-Bins, gsl\-\_\-rng $\ast$rng)}\label{boot_8c_a381199685b121f31455b527892a8985a}
+static void \hyperlink{boot_8c_a135d56fa4a177cf870202d4e1517e074}{\-Boot\-\_\-alloc\-Arrays} (\hyperlink{struct_boot}{\-Boot} $\ast$boot)
+\begin{DoxyCompactList}\small\item\em \-Allocate \hyperlink{struct_boot}{\-Boot}'s arrays. \end{DoxyCompactList}\item 
+\hypertarget{boot_8c_a381199685b121f31455b527892a8985a}{\hyperlink{struct_boot}{\-Boot} $\ast$ \hyperlink{boot_8c_a381199685b121f31455b527892a8985a}{\-Boot\-\_\-new} (long n\-S\-N\-Ps, long n\-Reps, long block\-Length, double windowcm, int n\-Bins, gsl\-\_\-rng $\ast$rng)}\label{boot_8c_a381199685b121f31455b527892a8985a}
 
-\begin{DoxyCompactList}\small\item\em Constructor for class \hyperlink{struct_boot}{Boot}. \end{DoxyCompactList}\item 
-\hypertarget{boot_8c_a4ea0429def43af604accb15a32721db1}{long {\bfseries Boot\-\_\-multiplicity} (const \hyperlink{struct_boot}{Boot} $\ast$boot, long snp, long rep)}\label{boot_8c_a4ea0429def43af604accb15a32721db1}
-
-\item 
-\hypertarget{boot_8c_a570331cecb71403b8689a9e1f6b9ba92}{void {\bfseries Boot\-\_\-add\-L\-D} (\hyperlink{struct_boot}{Boot} $\ast$boot, double Dsq, double pqpq, double sep\-\_\-cm, const \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp1, const \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp2)}\label{boot_8c_a570331cecb71403b8689a9e1f6b9ba92}
+\begin{DoxyCompactList}\small\item\em \-Constructor for class \hyperlink{struct_boot}{\-Boot}. \end{DoxyCompactList}\item 
+\hypertarget{boot_8c_a4ea0429def43af604accb15a32721db1}{long {\bfseries \-Boot\-\_\-multiplicity} (const \hyperlink{struct_boot}{\-Boot} $\ast$boot, long snp, long rep)}\label{boot_8c_a4ea0429def43af604accb15a32721db1}
 
 \item 
-\hypertarget{boot_8c_a5ef76ea2f896762e2a1d0cafbbbcad82}{\hyperlink{struct_boot}{Boot} $\ast$ {\bfseries Boot\-\_\-dup} (const \hyperlink{struct_boot}{Boot} $\ast$old)}\label{boot_8c_a5ef76ea2f896762e2a1d0cafbbbcad82}
+\hypertarget{boot_8c_a570331cecb71403b8689a9e1f6b9ba92}{void {\bfseries \-Boot\-\_\-add\-L\-D} (\hyperlink{struct_boot}{\-Boot} $\ast$boot, double \-Dsq, double pqpq, double sep\-\_\-cm, const \hyperlink{struct_s_n_p}{\-S\-N\-P} $\ast$snp1, const \hyperlink{struct_s_n_p}{\-S\-N\-P} $\ast$snp2)}\label{boot_8c_a570331cecb71403b8689a9e1f6b9ba92}
 
 \item 
-\hypertarget{boot_8c_affbd5a4026288a3f3ba6c8f8a7921578}{long {\bfseries Boot\-\_\-n\-Reps} (const \hyperlink{struct_boot}{Boot} $\ast$boot)}\label{boot_8c_affbd5a4026288a3f3ba6c8f8a7921578}
+\hypertarget{boot_8c_a5ef76ea2f896762e2a1d0cafbbbcad82}{\hyperlink{struct_boot}{\-Boot} $\ast$ {\bfseries \-Boot\-\_\-dup} (const \hyperlink{struct_boot}{\-Boot} $\ast$old)}\label{boot_8c_a5ef76ea2f896762e2a1d0cafbbbcad82}
 
 \item 
-\hypertarget{boot_8c_af5488b72882d0695dc3a7173379df964}{int {\bfseries Boot\-\_\-n\-Bins} (const \hyperlink{struct_boot}{Boot} $\ast$boot)}\label{boot_8c_af5488b72882d0695dc3a7173379df964}
+\hypertarget{boot_8c_affbd5a4026288a3f3ba6c8f8a7921578}{long {\bfseries \-Boot\-\_\-n\-Reps} (const \hyperlink{struct_boot}{\-Boot} $\ast$boot)}\label{boot_8c_affbd5a4026288a3f3ba6c8f8a7921578}
 
 \item 
-\hypertarget{boot_8c_ada0424143637a7bf8bb4e787b377c10c}{long \hyperlink{boot_8c_ada0424143637a7bf8bb4e787b377c10c}{Boot\-\_\-n\-Blocks} (const \hyperlink{struct_boot}{Boot} $\ast$boot)}\label{boot_8c_ada0424143637a7bf8bb4e787b377c10c}
+\hypertarget{boot_8c_af5488b72882d0695dc3a7173379df964}{int {\bfseries \-Boot\-\_\-n\-Bins} (const \hyperlink{struct_boot}{\-Boot} $\ast$boot)}\label{boot_8c_af5488b72882d0695dc3a7173379df964}
 
-\begin{DoxyCompactList}\small\item\em Return number of blocks. \end{DoxyCompactList}\item 
-\hypertarget{boot_8c_abddbe58519543b769e12fdd7bb940d9a}{long \hyperlink{boot_8c_abddbe58519543b769e12fdd7bb940d9a}{Boot\-\_\-n\-S\-N\-Ps} (const \hyperlink{struct_boot}{Boot} $\ast$boot)}\label{boot_8c_abddbe58519543b769e12fdd7bb940d9a}
+\item 
+\hypertarget{boot_8c_ada0424143637a7bf8bb4e787b377c10c}{long \hyperlink{boot_8c_ada0424143637a7bf8bb4e787b377c10c}{\-Boot\-\_\-n\-Blocks} (const \hyperlink{struct_boot}{\-Boot} $\ast$boot)}\label{boot_8c_ada0424143637a7bf8bb4e787b377c10c}
 
-\begin{DoxyCompactList}\small\item\em Return number of S\-N\-Ps. \end{DoxyCompactList}\item 
-\hypertarget{boot_8c_afed6dd9b519d14b5ac015adbbd7344ff}{void {\bfseries Boot\-\_\-free} (\hyperlink{struct_boot}{Boot} $\ast$boot)}\label{boot_8c_afed6dd9b519d14b5ac015adbbd7344ff}
+\begin{DoxyCompactList}\small\item\em \-Return number of blocks. \end{DoxyCompactList}\item 
+\hypertarget{boot_8c_abddbe58519543b769e12fdd7bb940d9a}{long \hyperlink{boot_8c_abddbe58519543b769e12fdd7bb940d9a}{\-Boot\-\_\-n\-S\-N\-Ps} (const \hyperlink{struct_boot}{\-Boot} $\ast$boot)}\label{boot_8c_abddbe58519543b769e12fdd7bb940d9a}
+
+\begin{DoxyCompactList}\small\item\em \-Return number of \-S\-N\-Ps. \end{DoxyCompactList}\item 
+\hypertarget{boot_8c_afed6dd9b519d14b5ac015adbbd7344ff}{void {\bfseries \-Boot\-\_\-free} (\hyperlink{struct_boot}{\-Boot} $\ast$boot)}\label{boot_8c_afed6dd9b519d14b5ac015adbbd7344ff}
 
 \item 
 double \hyperlink{boot_8c_ad50eea9b7a2a52b39359590f368d93ca}{interpolate} (double p, double $\ast$v, long len)
-\begin{DoxyCompactList}\small\item\em Interpolate in order to approximate the value v\mbox{[}p$\ast$(len-\/1)\mbox{]}. \end{DoxyCompactList}\item 
-\hypertarget{boot_8c_adf90473ab18c54532e3d8658f376fe21}{int {\bfseries Boot\-\_\-equals} (const \hyperlink{struct_boot}{Boot} $\ast$x, const \hyperlink{struct_boot}{Boot} $\ast$y)}\label{boot_8c_adf90473ab18c54532e3d8658f376fe21}
+\begin{DoxyCompactList}\small\item\em \-Interpolate in order to approximate the value v\mbox{[}p$\ast$(len-\/1)\mbox{]}. \end{DoxyCompactList}\item 
+\hypertarget{boot_8c_adf90473ab18c54532e3d8658f376fe21}{int {\bfseries \-Boot\-\_\-equals} (const \hyperlink{struct_boot}{\-Boot} $\ast$x, const \hyperlink{struct_boot}{\-Boot} $\ast$y)}\label{boot_8c_adf90473ab18c54532e3d8658f376fe21}
 
 \item 
-\hypertarget{boot_8c_a42b227cf9820329a128a892e17655fc5}{void {\bfseries Boot\-\_\-plus\-\_\-equals} (\hyperlink{struct_boot}{Boot} $\ast$x, const \hyperlink{struct_boot}{Boot} $\ast$y)}\label{boot_8c_a42b227cf9820329a128a892e17655fc5}
+\hypertarget{boot_8c_a42b227cf9820329a128a892e17655fc5}{void {\bfseries \-Boot\-\_\-plus\-\_\-equals} (\hyperlink{struct_boot}{\-Boot} $\ast$x, const \hyperlink{struct_boot}{\-Boot} $\ast$y)}\label{boot_8c_a42b227cf9820329a128a892e17655fc5}
 
 \item 
-\hypertarget{boot_8c_a5e2b16c73c4e3c40e3f7fe381dc7d1b4}{void {\bfseries Boot\-\_\-dump} (const \hyperlink{struct_boot}{Boot} $\ast$boot, F\-I\-L\-E $\ast$ofp)}\label{boot_8c_a5e2b16c73c4e3c40e3f7fe381dc7d1b4}
+\hypertarget{boot_8c_a5e2b16c73c4e3c40e3f7fe381dc7d1b4}{void {\bfseries \-Boot\-\_\-dump} (const \hyperlink{struct_boot}{\-Boot} $\ast$boot, \-F\-I\-L\-E $\ast$ofp)}\label{boot_8c_a5e2b16c73c4e3c40e3f7fe381dc7d1b4}
 
 \item 
-\hypertarget{boot_8c_ae61bee1eb2c62caacdaa45a84cc76bd1}{\hyperlink{struct_boot}{Boot} $\ast$ {\bfseries Boot\-\_\-restore} (F\-I\-L\-E $\ast$ifp)}\label{boot_8c_ae61bee1eb2c62caacdaa45a84cc76bd1}
+\hypertarget{boot_8c_ae61bee1eb2c62caacdaa45a84cc76bd1}{\hyperlink{struct_boot}{\-Boot} $\ast$ {\bfseries \-Boot\-\_\-restore} (\-F\-I\-L\-E $\ast$ifp)}\label{boot_8c_ae61bee1eb2c62caacdaa45a84cc76bd1}
 
 \item 
-void \hyperlink{boot_8c_a4d997bec2585c4fb475df47f768a357b}{Boot\-\_\-get\-\_\-rep} (\hyperlink{struct_boot}{Boot} $\ast$boot, double $\ast$sigdsq, double $\ast$rsq, double $\ast$cm, long unsigned $\ast$nobs, int rep)
-\begin{DoxyCompactList}\small\item\em Fill arrays sigdsq, cm, and nobs with values for bootstrap repetition \char`\"{}rep\char`\"{}. \end{DoxyCompactList}\item 
-\hypertarget{boot_8c_a72d4fec0d453a058cef16c2017413ef0}{long unsigned {\bfseries Boot\-\_\-raw\-Counts} (const \hyperlink{struct_boot}{Boot} $\ast$boot, int rep, int bin, double $\ast$numerator, double $\ast$denominator, double $\ast$sum\-Rsq, double $\ast$sep\-\_\-cm)}\label{boot_8c_a72d4fec0d453a058cef16c2017413ef0}
+void \hyperlink{boot_8c_a4d997bec2585c4fb475df47f768a357b}{\-Boot\-\_\-get\-\_\-rep} (\hyperlink{struct_boot}{\-Boot} $\ast$boot, double $\ast$sigdsq, double $\ast$rsq, double $\ast$cm, long unsigned $\ast$nobs, int rep)
+\begin{DoxyCompactList}\small\item\em \-Fill arrays sigdsq, cm, and nobs with values for bootstrap repetition \char`\"{}rep\char`\"{}. \end{DoxyCompactList}\item 
+\hypertarget{boot_8c_a72d4fec0d453a058cef16c2017413ef0}{long unsigned {\bfseries \-Boot\-\_\-raw\-Counts} (const \hyperlink{struct_boot}{\-Boot} $\ast$boot, int rep, int bin, double $\ast$numerator, double $\ast$denominator, double $\ast$sum\-Rsq, double $\ast$sep\-\_\-cm)}\label{boot_8c_a72d4fec0d453a058cef16c2017413ef0}
 
 \item 
-long \hyperlink{boot_8c_a1df4684393afa6180e2eb8fb70b472a9}{Boot\-\_\-purge} (\hyperlink{struct_boot}{Boot} $\ast$boot)
-\begin{DoxyCompactList}\small\item\em Remove replicates in which some bins have zero observations. \end{DoxyCompactList}\item 
-\hypertarget{boot_8c_a1ba55d774c66e8ad41fc46a392d0d757}{void \hyperlink{boot_8c_a1ba55d774c66e8ad41fc46a392d0d757}{Boot\-\_\-print} (const \hyperlink{struct_boot}{Boot} $\ast$boot, F\-I\-L\-E $\ast$ofp)}\label{boot_8c_a1ba55d774c66e8ad41fc46a392d0d757}
+long \hyperlink{boot_8c_a1df4684393afa6180e2eb8fb70b472a9}{\-Boot\-\_\-purge} (\hyperlink{struct_boot}{\-Boot} $\ast$boot)
+\begin{DoxyCompactList}\small\item\em \-Remove replicates in which some bins have zero observations. \end{DoxyCompactList}\item 
+\hypertarget{boot_8c_a1ba55d774c66e8ad41fc46a392d0d757}{void \hyperlink{boot_8c_a1ba55d774c66e8ad41fc46a392d0d757}{\-Boot\-\_\-print} (const \hyperlink{struct_boot}{\-Boot} $\ast$boot, \-F\-I\-L\-E $\ast$ofp)}\label{boot_8c_a1ba55d774c66e8ad41fc46a392d0d757}
 
-\begin{DoxyCompactList}\small\item\em Print a \hyperlink{struct_boot}{Boot} object. \end{DoxyCompactList}\item 
-\hypertarget{boot_8c_a3993cbb5f605fe387bf9e774c0183854}{long {\bfseries Boot\-\_\-multiplicity\-\_\-slow} (\hyperlink{struct_boot}{Boot} $\ast$boot, long snp, long rep)}\label{boot_8c_a3993cbb5f605fe387bf9e774c0183854}
+\begin{DoxyCompactList}\small\item\em \-Print a \hyperlink{struct_boot}{\-Boot} object. \end{DoxyCompactList}\item 
+\hypertarget{boot_8c_a3993cbb5f605fe387bf9e774c0183854}{long {\bfseries \-Boot\-\_\-multiplicity\-\_\-slow} (\hyperlink{struct_boot}{\-Boot} $\ast$boot, long snp, long rep)}\label{boot_8c_a3993cbb5f605fe387bf9e774c0183854}
 
 \item 
-\hypertarget{boot_8c_a74496c22fe5fae5375fbc6ce308adacf}{\hyperlink{struct_boot_conf}{Boot\-Conf} $\ast$ {\bfseries Boot\-Conf\-\_\-new} (\hyperlink{struct_boot}{Boot} $\ast$boot, double confidence)}\label{boot_8c_a74496c22fe5fae5375fbc6ce308adacf}
+\hypertarget{boot_8c_a74496c22fe5fae5375fbc6ce308adacf}{\hyperlink{struct_boot_conf}{\-Boot\-Conf} $\ast$ {\bfseries \-Boot\-Conf\-\_\-new} (\hyperlink{struct_boot}{\-Boot} $\ast$boot, double confidence)}\label{boot_8c_a74496c22fe5fae5375fbc6ce308adacf}
 
 \item 
 void \hyperlink{boot_8c_a7bcdf296769ab230446519338b332e98}{confidence\-Bounds} (double $\ast$low\-Bnd, double $\ast$high\-Bnd, double confidence, double $\ast$v, long len)
-\begin{DoxyCompactList}\small\item\em Calculate confidence bounds from a vector of values representing samples drawn from the sampling distribution of some estimator. \end{DoxyCompactList}\item 
-\hypertarget{boot_8c_ab2b2f15f1376723c8f6c6e021cdf6c86}{void {\bfseries Boot\-Conf\-\_\-print\-Hdr} (const \hyperlink{struct_boot_conf}{Boot\-Conf} $\ast$bc, F\-I\-L\-E $\ast$ofp)}\label{boot_8c_ab2b2f15f1376723c8f6c6e021cdf6c86}
+\begin{DoxyCompactList}\small\item\em \-Calculate confidence bounds from a vector of values representing samples drawn from the sampling distribution of some estimator. \end{DoxyCompactList}\item 
+\hypertarget{boot_8c_ab2b2f15f1376723c8f6c6e021cdf6c86}{void {\bfseries \-Boot\-Conf\-\_\-print\-Hdr} (const \hyperlink{struct_boot_conf}{\-Boot\-Conf} $\ast$bc, \-F\-I\-L\-E $\ast$ofp)}\label{boot_8c_ab2b2f15f1376723c8f6c6e021cdf6c86}
 
 \item 
-\hypertarget{boot_8c_ab9a1903ccdba3432f322ef1448dce9cc}{double {\bfseries Boot\-Conf\-\_\-low\-Bound} (const \hyperlink{struct_boot_conf}{Boot\-Conf} $\ast$bc, long bin)}\label{boot_8c_ab9a1903ccdba3432f322ef1448dce9cc}
+\hypertarget{boot_8c_ab9a1903ccdba3432f322ef1448dce9cc}{double {\bfseries \-Boot\-Conf\-\_\-low\-Bound} (const \hyperlink{struct_boot_conf}{\-Boot\-Conf} $\ast$bc, long bin)}\label{boot_8c_ab9a1903ccdba3432f322ef1448dce9cc}
 
 \item 
-\hypertarget{boot_8c_a9e8db6edab9ddff2cca97e878aec581b}{double {\bfseries Boot\-Conf\-\_\-high\-Bound} (const \hyperlink{struct_boot_conf}{Boot\-Conf} $\ast$bc, long bin)}\label{boot_8c_a9e8db6edab9ddff2cca97e878aec581b}
+\hypertarget{boot_8c_a9e8db6edab9ddff2cca97e878aec581b}{double {\bfseries \-Boot\-Conf\-\_\-high\-Bound} (const \hyperlink{struct_boot_conf}{\-Boot\-Conf} $\ast$bc, long bin)}\label{boot_8c_a9e8db6edab9ddff2cca97e878aec581b}
 
 \item 
-\hypertarget{boot_8c_af2817ac0714ff91b24eddaa039d671e7}{void {\bfseries Boot\-Conf\-\_\-print} (const \hyperlink{struct_boot_conf}{Boot\-Conf} $\ast$bc, F\-I\-L\-E $\ast$ofp)}\label{boot_8c_af2817ac0714ff91b24eddaa039d671e7}
+\hypertarget{boot_8c_af2817ac0714ff91b24eddaa039d671e7}{void {\bfseries \-Boot\-Conf\-\_\-print} (const \hyperlink{struct_boot_conf}{\-Boot\-Conf} $\ast$bc, \-F\-I\-L\-E $\ast$ofp)}\label{boot_8c_af2817ac0714ff91b24eddaa039d671e7}
 
 \item 
-\hypertarget{boot_8c_aab1fd1ddacd018039be6a1c27286c1fe}{void {\bfseries Boot\-Conf\-\_\-free} (\hyperlink{struct_boot_conf}{Boot\-Conf} $\ast$bc)}\label{boot_8c_aab1fd1ddacd018039be6a1c27286c1fe}
+\hypertarget{boot_8c_aab1fd1ddacd018039be6a1c27286c1fe}{void {\bfseries \-Boot\-Conf\-\_\-free} (\hyperlink{struct_boot_conf}{\-Boot\-Conf} $\ast$bc)}\label{boot_8c_aab1fd1ddacd018039be6a1c27286c1fe}
 
 \end{DoxyCompactItemize}
 
 
-\subsubsection{Detailed Description}
-Functions for a moving blocks bootstrap. \begin{DoxyAuthor}{Author}
-Alan R. Rogers 
-\end{DoxyAuthor}
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\subsubsection{\-Detailed \-Description}
+\-Functions for a moving blocks bootstrap. \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}
+\begin{DoxyAuthor}{\-Author}
+\-Alan \-R. \-Rogers 
+\end{DoxyAuthor}
 
 
-\subsubsection{Function Documentation}
-\hypertarget{boot_8c_a135d56fa4a177cf870202d4e1517e074}{\index{boot.\-c@{boot.\-c}!Boot\-\_\-alloc\-Arrays@{Boot\-\_\-alloc\-Arrays}}
-\index{Boot\-\_\-alloc\-Arrays@{Boot\-\_\-alloc\-Arrays}!boot.c@{boot.\-c}}
-\paragraph[{Boot\-\_\-alloc\-Arrays}]{\setlength{\rightskip}{0pt plus 5cm}static void Boot\-\_\-alloc\-Arrays (
+\subsubsection{\-Function \-Documentation}
+\hypertarget{boot_8c_a135d56fa4a177cf870202d4e1517e074}{\index{boot.\-c@{boot.\-c}!\-Boot\-\_\-alloc\-Arrays@{\-Boot\-\_\-alloc\-Arrays}}
+\index{\-Boot\-\_\-alloc\-Arrays@{\-Boot\-\_\-alloc\-Arrays}!boot.c@{boot.\-c}}
+\paragraph[{\-Boot\-\_\-alloc\-Arrays}]{\setlength{\rightskip}{0pt plus 5cm}static void {\bf \-Boot\-\_\-alloc\-Arrays} (
 \begin{DoxyParamCaption}
-\item[{{\bf Boot} $\ast$}]{boot}
+\item[{{\bf \-Boot} $\ast$}]{boot}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}}\label{boot_8c_a135d56fa4a177cf870202d4e1517e074}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{boot_8c_a135d56fa4a177cf870202d4e1517e074}
 
 
-Allocate \hyperlink{struct_boot}{Boot}'s arrays. 
+\-Allocate \hyperlink{struct_boot}{\-Boot}'s arrays. 
 
-This code is used in several places, and I have it here to ensure consistency. 
+\-This code is used in several places, and \-I have it here to ensure consistency. 
 
-References Boot\-::n\-Blocks, Boot\-::n\-Reps, Boot\-::start, and Boot\-::tab.
+\-References \-Boot\-::n\-Blocks, \-Boot\-::n\-Reps, \-Boot\-::start, and \-Boot\-::tab.
 
 
 
-Referenced by Boot\-\_\-new().
+\-Referenced by \-Boot\-\_\-new().
 
-\hypertarget{boot_8c_a4d997bec2585c4fb475df47f768a357b}{\index{boot.\-c@{boot.\-c}!Boot\-\_\-get\-\_\-rep@{Boot\-\_\-get\-\_\-rep}}
-\index{Boot\-\_\-get\-\_\-rep@{Boot\-\_\-get\-\_\-rep}!boot.c@{boot.\-c}}
-\paragraph[{Boot\-\_\-get\-\_\-rep}]{\setlength{\rightskip}{0pt plus 5cm}void Boot\-\_\-get\-\_\-rep (
+\hypertarget{boot_8c_a4d997bec2585c4fb475df47f768a357b}{\index{boot.\-c@{boot.\-c}!\-Boot\-\_\-get\-\_\-rep@{\-Boot\-\_\-get\-\_\-rep}}
+\index{\-Boot\-\_\-get\-\_\-rep@{\-Boot\-\_\-get\-\_\-rep}!boot.c@{boot.\-c}}
+\paragraph[{\-Boot\-\_\-get\-\_\-rep}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Boot\-\_\-get\-\_\-rep} (
 \begin{DoxyParamCaption}
-\item[{{\bf Boot} $\ast$}]{boot, }
+\item[{{\bf \-Boot} $\ast$}]{boot, }
 \item[{double $\ast$}]{sigdsq, }
 \item[{double $\ast$}]{rsq, }
 \item[{double $\ast$}]{cm, }
@@ -147,30 +150,30 @@ Referenced by Boot\-\_\-new().
 )}}\label{boot_8c_a4d997bec2585c4fb475df47f768a357b}
 
 
-Fill arrays sigdsq, cm, and nobs with values for bootstrap repetition \char`\"{}rep\char`\"{}. 
+\-Fill arrays sigdsq, cm, and nobs with values for bootstrap repetition \char`\"{}rep\char`\"{}. 
 
-If nobs==N\-U\-L\-L, nothing is stored there. 
+\-If nobs==\-N\-U\-L\-L, nothing is stored there. 
 
-References Boot\-::tab.
+\-References \-Boot\-::tab.
 
-\hypertarget{boot_8c_a1df4684393afa6180e2eb8fb70b472a9}{\index{boot.\-c@{boot.\-c}!Boot\-\_\-purge@{Boot\-\_\-purge}}
-\index{Boot\-\_\-purge@{Boot\-\_\-purge}!boot.c@{boot.\-c}}
-\paragraph[{Boot\-\_\-purge}]{\setlength{\rightskip}{0pt plus 5cm}long Boot\-\_\-purge (
+\hypertarget{boot_8c_a1df4684393afa6180e2eb8fb70b472a9}{\index{boot.\-c@{boot.\-c}!\-Boot\-\_\-purge@{\-Boot\-\_\-purge}}
+\index{\-Boot\-\_\-purge@{\-Boot\-\_\-purge}!boot.c@{boot.\-c}}
+\paragraph[{\-Boot\-\_\-purge}]{\setlength{\rightskip}{0pt plus 5cm}long {\bf \-Boot\-\_\-purge} (
 \begin{DoxyParamCaption}
-\item[{{\bf Boot} $\ast$}]{boot}
+\item[{{\bf \-Boot} $\ast$}]{boot}
 \end{DoxyParamCaption}
 )}}\label{boot_8c_a1df4684393afa6180e2eb8fb70b472a9}
 
 
-Remove replicates in which some bins have zero observations. 
+\-Remove replicates in which some bins have zero observations. 
 
-These would generate Na\-N values in the calculation of sigdsq, which are not handled by the minimizer. Return revised number of bootstrap replicates. 
+\-These would generate \-Na\-N values in the calculation of sigdsq, which are not handled by the minimizer. \-Return revised number of bootstrap replicates. 
 
-References Boot\-::n\-Bins, Boot\-::n\-Reps, Boot\-::start, and Boot\-::tab.
+\-References \-Boot\-::n\-Bins, \-Boot\-::n\-Reps, \-Boot\-::start, and \-Boot\-::tab.
 
 \hypertarget{boot_8c_a7bcdf296769ab230446519338b332e98}{\index{boot.\-c@{boot.\-c}!confidence\-Bounds@{confidence\-Bounds}}
 \index{confidence\-Bounds@{confidence\-Bounds}!boot.c@{boot.\-c}}
-\paragraph[{confidence\-Bounds}]{\setlength{\rightskip}{0pt plus 5cm}void confidence\-Bounds (
+\paragraph[{confidence\-Bounds}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf confidence\-Bounds} (
 \begin{DoxyParamCaption}
 \item[{double $\ast$}]{low\-Bnd, }
 \item[{double $\ast$}]{high\-Bnd, }
@@ -181,33 +184,33 @@ References Boot\-::n\-Bins, Boot\-::n\-Reps, Boot\-::start, and Boot\-::tab.
 )}}\label{boot_8c_a7bcdf296769ab230446519338b332e98}
 
 
-Calculate confidence bounds from a vector of values representing samples drawn from the sampling distribution of some estimator. 
+\-Calculate confidence bounds from a vector of values representing samples drawn from the sampling distribution of some estimator. 
 
-To calculate the lower bound ($\ast$low\-Bnd), the function calculates the total probability mass in the tails (1 -\/ confidence) and divides this into two equal parts to find p, the probability mass in each tail. It then estimates a value L such that a fraction p of the data values are less than or equal to L. To find this value, the function uses linear interpolation between the sorted list of data values.
+\-To calculate the lower bound ($\ast$low\-Bnd), the function calculates the total probability mass in the tails (1 -\/ confidence) and divides this into two equal parts to find p, the probability mass in each tail. \-It then estimates a value \-L such that a fraction p of the data values are less than or equal to \-L. \-To find this value, the function uses linear interpolation between the sorted list of data values.
 
-The upper bound ($\ast$high\-Bnd) is calculated in an analogous fashion.
+\-The upper bound ($\ast$high\-Bnd) is calculated in an analogous fashion.
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em low\-Bnd,high\-Bnd} & Calculated results will be written into these memory locations. \\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt out}  & {\em low\-Bnd,high\-Bnd} & \-Calculated results will be written into these memory locations. \\
 \hline
-\mbox{\tt in}  & {\em confidence} & Fraction of sampling distribution that lies inside the confidence bounds. \\
+\mbox{\tt in}  & {\em confidence} & \-Fraction of sampling distribution that lies inside the confidence bounds. \\
 \hline
-\mbox{\tt in}  & {\em v} & The vector of values. \\
+\mbox{\tt in}  & {\em v} & \-The vector of values. \\
 \hline
-\mbox{\tt in}  & {\em len} & The number of values inf v. \\
+\mbox{\tt in}  & {\em len} & \-The number of values inf v. \\
 \hline
 \end{DoxyParams}
-\begin{DoxyParagraph}{Side Effects\-:}
-The function sorts the vector v. 
+\begin{DoxyParagraph}{\-Side \-Effects\-:}
+\-The function sorts the vector v. 
 \end{DoxyParagraph}
 
 
-References compare\-Doubles(), and interpolate().
+\-References compare\-Doubles(), and interpolate().
 
 \hypertarget{boot_8c_ad50eea9b7a2a52b39359590f368d93ca}{\index{boot.\-c@{boot.\-c}!interpolate@{interpolate}}
 \index{interpolate@{interpolate}!boot.c@{boot.\-c}}
-\paragraph[{interpolate}]{\setlength{\rightskip}{0pt plus 5cm}double interpolate (
+\paragraph[{interpolate}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf interpolate} (
 \begin{DoxyParamCaption}
 \item[{double}]{p, }
 \item[{double $\ast$}]{v, }
@@ -216,9 +219,9 @@ References compare\-Doubles(), and interpolate().
 )}}\label{boot_8c_ad50eea9b7a2a52b39359590f368d93ca}
 
 
-Interpolate in order to approximate the value v\mbox{[}p$\ast$(len-\/1)\mbox{]}. 
+\-Interpolate in order to approximate the value v\mbox{[}p$\ast$(len-\/1)\mbox{]}. 
 
-Return Na\-N if len==0. 
+\-Return \-Na\-N if len==0. 
 
-Referenced by confidence\-Bounds().
+\-Referenced by confidence\-Bounds().
 

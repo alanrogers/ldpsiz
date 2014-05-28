@@ -1,172 +1,175 @@
-\hypertarget{em_8h}{\subsection{em.\-h File Reference}
+\hypertarget{em_8h}{\subsection{em.\-h \-File \-Reference}
 \label{em_8h}\index{em.\-h@{em.\-h}}
 }
 
 
-Header for \hyperlink{em_8c}{em.\-c}.  
+\-Header for \hyperlink{em_8c}{em.\-c}. \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}
+ 
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$assert.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}window.\-h\char`\"{}}\\*
-\subsubsection*{Data Structures}
+{\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include $<$assert.\-h$>$}\*
+{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}window.\-h\char`\"{}}\*
+\subsubsection*{\-Data \-Structures}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{struct_dsq_data}{Dsq\-Data}
-\begin{DoxyCompactList}\small\item\em Data used by E\-M algorithm in estimating Dsq from partially phased diploid data. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsubsection*{Macros}
+struct \hyperlink{struct_dsq_data}{\-Dsq\-Data}
+\begin{DoxyCompactList}\small\item\em \-Data used by \-E\-M algorithm in estimating \-Dsq from partially phased diploid data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{\-Defines}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{em_8h_a93b7cf745acae7e2576794d4c249b54a}{\#define \hyperlink{em_8h_a93b7cf745acae7e2576794d4c249b54a}{H\-O\-M\-O\-Z\-Y\-G\-O\-T\-E}(A)~((A)==0 $\vert$$\vert$ (A)==3)}\label{em_8h_a93b7cf745acae7e2576794d4c249b54a}
+\hypertarget{em_8h_a93b7cf745acae7e2576794d4c249b54a}{\#define \hyperlink{em_8h_a93b7cf745acae7e2576794d4c249b54a}{\-H\-O\-M\-O\-Z\-Y\-G\-O\-T\-E}(\-A)~((\-A)==0 $|$$|$ (\-A)==3)}\label{em_8h_a93b7cf745acae7e2576794d4c249b54a}
 
-\begin{DoxyCompactList}\small\item\em Is A a homozygote? \end{DoxyCompactList}\item 
-\#define \hyperlink{em_8h_af87ac73700dde449611bc66b21933e05}{U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R}(A, B)
-\begin{DoxyCompactList}\small\item\em True if A and B are both heterozygotes and at least one is unphased. \end{DoxyCompactList}\item 
-\#define \hyperlink{em_8h_aa2ec8b4ffcd44be3d58ca9ab1515e61c}{M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D}(A)~((A)==U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-H\-E\-T\-E\-R\-O\-Z\-Y\-G\-O\-T\-E ? 1 \-: (A))
-\begin{DoxyCompactList}\small\item\em If A is an unphased heterozygote, then convert it to a phased one (genotype 1). \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsubsection*{Functions}
+\begin{DoxyCompactList}\small\item\em \-Is \-A a homozygote? \end{DoxyCompactList}\item 
+\#define \hyperlink{em_8h_af87ac73700dde449611bc66b21933e05}{\-U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R}(\-A, \-B)
+\begin{DoxyCompactList}\small\item\em \-True if \-A and \-B are both heterozygotes and at least one is unphased. \end{DoxyCompactList}\item 
+\#define \hyperlink{em_8h_aa2ec8b4ffcd44be3d58ca9ab1515e61c}{\-M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D}(\-A)~((\-A)==\-U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-H\-E\-T\-E\-R\-O\-Z\-Y\-G\-O\-T\-E ? 1 \-: (\-A))
+\begin{DoxyCompactList}\small\item\em \-If \-A is an unphased heterozygote, then convert it to a phased one (genotype 1). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{em_8h_ac7a72db338562cbc0b59de2fdd7ea383}{void \hyperlink{em_8h_ac7a72db338562cbc0b59de2fdd7ea383}{Dsq\-Data\-\_\-print} (\hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd, const char $\ast$file, int line, F\-I\-L\-E $\ast$fp)}\label{em_8h_ac7a72db338562cbc0b59de2fdd7ea383}
+\hypertarget{em_8h_ac7a72db338562cbc0b59de2fdd7ea383}{void \hyperlink{em_8h_ac7a72db338562cbc0b59de2fdd7ea383}{\-Dsq\-Data\-\_\-print} (\hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd, const char $\ast$file, int line, \-F\-I\-L\-E $\ast$fp)}\label{em_8h_ac7a72db338562cbc0b59de2fdd7ea383}
 
-\begin{DoxyCompactList}\small\item\em Print an object of type \hyperlink{struct_dsq_data}{Dsq\-Data}. \end{DoxyCompactList}\item 
-void \hyperlink{em_8h_a70f8344502c41e439800cf30e69c3217}{Dsq\-Data\-\_\-reset} (\hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd)
-\begin{DoxyCompactList}\small\item\em Make \hyperlink{struct_dsq_data}{Dsq\-Data} object consistent with its current allele freqs. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Print an object of type \hyperlink{struct_dsq_data}{\-Dsq\-Data}. \end{DoxyCompactList}\item 
+void \hyperlink{em_8h_a70f8344502c41e439800cf30e69c3217}{\-Dsq\-Data\-\_\-reset} (\hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd)
+\begin{DoxyCompactList}\small\item\em \-Make \hyperlink{struct_dsq_data}{\-Dsq\-Data} object consistent with its current allele freqs. \end{DoxyCompactList}\item 
 \hypertarget{em_8h_a08218d02cbbe98122c481c1db576efee}{double \hyperlink{em_8h_a08218d02cbbe98122c481c1db576efee}{lo\-D} (double p\-A, double p\-B, unsigned $\ast$n\-Gam)}\label{em_8h_a08218d02cbbe98122c481c1db576efee}
 
-\begin{DoxyCompactList}\small\item\em Lowest feasible value of D, given allele frequencies. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Lowest feasible value of \-D, given allele frequencies. \end{DoxyCompactList}\item 
 \hypertarget{em_8h_a9519759fd7d57cd97eab1c8ac0126a9f}{double \hyperlink{em_8h_a9519759fd7d57cd97eab1c8ac0126a9f}{hi\-D} (double p\-A, double p\-B, unsigned $\ast$n\-Gam)}\label{em_8h_a9519759fd7d57cd97eab1c8ac0126a9f}
 
-\begin{DoxyCompactList}\small\item\em Highest feasible value of D, given allele frequencies. \end{DoxyCompactList}\item 
-int \hyperlink{em_8h_a87c044fe7efd7a666e878823e35eeae2}{minimize1\-D} (double $\ast$D, \hyperlink{struct_dsq_data}{Dsq\-Data} $\ast$dd)
-\begin{DoxyCompactList}\small\item\em This algorithm finds the minimum of function neg\-Ln\-L within the range \mbox{[}a,b\mbox{]}, where a = dd-\/$>$lo\-D, and b=dd-\/$>$hi\-D. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Highest feasible value of \-D, given allele frequencies. \end{DoxyCompactList}\item 
+int \hyperlink{em_8h_a87c044fe7efd7a666e878823e35eeae2}{minimize1\-D} (double $\ast$\-D, \hyperlink{struct_dsq_data}{\-Dsq\-Data} $\ast$dd)
+\begin{DoxyCompactList}\small\item\em \-This algorithm finds the minimum of function neg\-Ln\-L within the range \mbox{[}a,b\mbox{]}, where a = dd-\/$>$lo\-D, and b=dd-\/$>$hi\-D. \end{DoxyCompactList}\item 
 static void \hyperlink{em_8h_ad62d2aed5f4185224b6a4115f01f5322}{tr\-Bits} (unsigned char $\ast$x, unsigned char $\ast$y)
-\begin{DoxyCompactList}\small\item\em Think of x and y as the two rows of a matrix, with the columns of the matrix equal to the bits of x and y. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Think of x and y as the two rows of a matrix, with the columns of the matrix equal to the bits of x and y. \end{DoxyCompactList}\item 
 \hypertarget{em_8h_a9f4e32e6073a95ad0248d522fa65aed1}{static unsigned char {\bfseries gamete} (unsigned char x, unsigned char y)}\label{em_8h_a9f4e32e6073a95ad0248d522fa65aed1}
 
 \end{DoxyCompactItemize}
 
 
-\subsubsection{Detailed Description}
-Header for \hyperlink{em_8c}{em.\-c}. \begin{DoxyAuthor}{Author}
-Alan R. Rogers 
-\end{DoxyAuthor}
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\subsubsection{\-Detailed \-Description}
+\-Header for \hyperlink{em_8c}{em.\-c}. \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}
+\begin{DoxyAuthor}{\-Author}
+\-Alan \-R. \-Rogers 
+\end{DoxyAuthor}
 
 
-\subsubsection{Macro Definition Documentation}
-\hypertarget{em_8h_aa2ec8b4ffcd44be3d58ca9ab1515e61c}{\index{em.\-h@{em.\-h}!M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D@{M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D}}
-\index{M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D@{M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D}!em.h@{em.\-h}}
-\paragraph[{M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D(
+\subsubsection{\-Define \-Documentation}
+\hypertarget{em_8h_aa2ec8b4ffcd44be3d58ca9ab1515e61c}{\index{em.\-h@{em.\-h}!\-M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D@{\-M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D}}
+\index{\-M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D@{\-M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D}!em.h@{em.\-h}}
+\paragraph[{\-M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D}(
 \begin{DoxyParamCaption}
-\item[{}]{A}
+\item[{}]{\-A}
 \end{DoxyParamCaption}
-)~((A)==U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-H\-E\-T\-E\-R\-O\-Z\-Y\-G\-O\-T\-E ? 1 \-: (A))}}\label{em_8h_aa2ec8b4ffcd44be3d58ca9ab1515e61c}
+)~((\-A)==\-U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-H\-E\-T\-E\-R\-O\-Z\-Y\-G\-O\-T\-E ? 1 \-: (\-A))}}\label{em_8h_aa2ec8b4ffcd44be3d58ca9ab1515e61c}
 
 
-If A is an unphased heterozygote, then convert it to a phased one (genotype 1). 
+\-If \-A is an unphased heterozygote, then convert it to a phased one (genotype 1). 
 
-Otherwise leave it alone. 
+\-Otherwise leave it alone. 
 
-Referenced by S\-N\-P\-\_\-get\-Dsq().
+\-Referenced by \-S\-N\-P\-\_\-get\-Dsq().
 
-\hypertarget{em_8h_af87ac73700dde449611bc66b21933e05}{\index{em.\-h@{em.\-h}!U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R@{U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R}}
-\index{U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R@{U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R}!em.h@{em.\-h}}
-\paragraph[{U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R(
+\hypertarget{em_8h_af87ac73700dde449611bc66b21933e05}{\index{em.\-h@{em.\-h}!\-U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R@{\-U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R}}
+\index{\-U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R@{\-U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R}!em.h@{em.\-h}}
+\paragraph[{\-U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R}(
 \begin{DoxyParamCaption}
-\item[{}]{A, }
-\item[{}]{B}
+\item[{}]{\-A, }
+\item[{}]{\-B}
 \end{DoxyParamCaption}
 )}}\label{em_8h_af87ac73700dde449611bc66b21933e05}
-{\bfseries Value\-:}
+{\bfseries \-Value\-:}
 \begin{DoxyCode}
-(((A)==UNPHASED\_HETEROZYGOTE && !\hyperlink{em_8h_a93b7cf745acae7e2576794d4c249b54a}{HOMOZYGOTE}(B)) \(\backslash\)
-                            || ((B)==UNPHASED\_HETEROZYGOTE && !\hyperlink{em_8h_a93b7cf745acae7e2576794d4c249b54a}{HOMOZYGOTE}(A)))
+(((A)==UNPHASED_HETEROZYGOTE && !HOMOZYGOTE(B)) \
+                            || ((B)==UNPHASED_HETEROZYGOTE && !HOMOZYGOTE(A)))
 \end{DoxyCode}
 
 
-True if A and B are both heterozygotes and at least one is unphased. 
+\-True if \-A and \-B are both heterozygotes and at least one is unphased. 
 
 
 
-Referenced by S\-N\-P\-\_\-get\-Dsq().
+\-Referenced by \-S\-N\-P\-\_\-get\-Dsq().
 
 
 
-\subsubsection{Function Documentation}
-\hypertarget{em_8h_a70f8344502c41e439800cf30e69c3217}{\index{em.\-h@{em.\-h}!Dsq\-Data\-\_\-reset@{Dsq\-Data\-\_\-reset}}
-\index{Dsq\-Data\-\_\-reset@{Dsq\-Data\-\_\-reset}!em.h@{em.\-h}}
-\paragraph[{Dsq\-Data\-\_\-reset}]{\setlength{\rightskip}{0pt plus 5cm}void Dsq\-Data\-\_\-reset (
+\subsubsection{\-Function \-Documentation}
+\hypertarget{em_8h_a70f8344502c41e439800cf30e69c3217}{\index{em.\-h@{em.\-h}!\-Dsq\-Data\-\_\-reset@{\-Dsq\-Data\-\_\-reset}}
+\index{\-Dsq\-Data\-\_\-reset@{\-Dsq\-Data\-\_\-reset}!em.h@{em.\-h}}
+\paragraph[{\-Dsq\-Data\-\_\-reset}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Dsq\-Data\-\_\-reset} (
 \begin{DoxyParamCaption}
-\item[{{\bf Dsq\-Data} $\ast$}]{dd}
+\item[{{\bf \-Dsq\-Data} $\ast$}]{dd}
 \end{DoxyParamCaption}
 )}}\label{em_8h_a70f8344502c41e439800cf30e69c3217}
 
 
-Make \hyperlink{struct_dsq_data}{Dsq\-Data} object consistent with its current allele freqs. 
+\-Make \hyperlink{struct_dsq_data}{\-Dsq\-Data} object consistent with its current allele freqs. 
 
 
 
-References Dsq\-Data\-::alpha, Dsq\-Data\-::beta, Dsq\-Data\-::hi\-D, hi\-D(), Dsq\-Data\-::lo\-D, lo\-D(), Dsq\-Data\-::n\-Gam, Dsq\-Data\-::px, and Dsq\-Data\-::py.
+\-References \-Dsq\-Data\-::alpha, \-Dsq\-Data\-::beta, \-Dsq\-Data\-::hi\-D, hi\-D(), \-Dsq\-Data\-::lo\-D, lo\-D(), \-Dsq\-Data\-::n\-Gam, \-Dsq\-Data\-::px, and \-Dsq\-Data\-::py.
 
 \hypertarget{em_8h_a87c044fe7efd7a666e878823e35eeae2}{\index{em.\-h@{em.\-h}!minimize1\-D@{minimize1\-D}}
 \index{minimize1\-D@{minimize1\-D}!em.h@{em.\-h}}
-\paragraph[{minimize1\-D}]{\setlength{\rightskip}{0pt plus 5cm}int minimize1\-D (
+\paragraph[{minimize1\-D}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf minimize1\-D} (
 \begin{DoxyParamCaption}
-\item[{double $\ast$}]{D, }
-\item[{{\bf Dsq\-Data} $\ast$}]{dd}
+\item[{double $\ast$}]{\-D, }
+\item[{{\bf \-Dsq\-Data} $\ast$}]{dd}
 \end{DoxyParamCaption}
 )}}\label{em_8h_a87c044fe7efd7a666e878823e35eeae2}
 
 
-This algorithm finds the minimum of function neg\-Ln\-L within the range \mbox{[}a,b\mbox{]}, where a = dd-\/$>$lo\-D, and b=dd-\/$>$hi\-D. 
+\-This algorithm finds the minimum of function neg\-Ln\-L within the range \mbox{[}a,b\mbox{]}, where a = dd-\/$>$lo\-D, and b=dd-\/$>$hi\-D. 
 
-The algorithm uses Newton steps when these go downhill, and otherwise bisects in the downhill direction.
+\-The algorithm uses \-Newton steps when these go downhill, and otherwise bisects in the downhill direction.
 
-When Newton fails, the next step is in the downhill direction, as indicated by the derivative. If the derivative at the boundary has the same sign as that at the current point, the algorithm bets that the function is monotonic and takes a big step. Otherwise, there must be an intermediate minimum, so the algorithm bisects.
+\-When \-Newton fails, the next step is in the downhill direction, as indicated by the derivative. \-If the derivative at the boundary has the same sign as that at the current point, the algorithm bets that the function is monotonic and takes a big step. \-Otherwise, there must be an intermediate minimum, so the algorithm bisects.
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em D} & Lewontin's original measure of linkage disequilibrium,\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt out}  & {\em \-D} & \-Lewontin's original measure of linkage disequilibrium,\\
 \hline
-\mbox{\tt in}  & {\em dd} & pointer to object of type \hyperlink{struct_dsq_data}{Dsq\-Data}\\
+\mbox{\tt in}  & {\em dd} & pointer to object of type \hyperlink{struct_dsq_data}{\-Dsq\-Data}\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 the integer 0 
 \end{DoxyReturn}
 
 
-References Dsq\-Data\-::hi\-D, initial\-D(), Dsq\-Data\-::lo\-D, neg\-Ln\-L\-\_\-df(), neg\-Ln\-L\-\_\-df12(), and Dsq\-Data\-::tol.
+\-References \-Dsq\-Data\-::hi\-D, initial\-D(), \-Dsq\-Data\-::lo\-D, neg\-Ln\-L\-\_\-df(), neg\-Ln\-L\-\_\-df12(), and \-Dsq\-Data\-::tol.
 
 
 
-Referenced by S\-N\-P\-\_\-get\-Dsq().
+\-Referenced by \-S\-N\-P\-\_\-get\-Dsq().
 
 \hypertarget{em_8h_ad62d2aed5f4185224b6a4115f01f5322}{\index{em.\-h@{em.\-h}!tr\-Bits@{tr\-Bits}}
 \index{tr\-Bits@{tr\-Bits}!em.h@{em.\-h}}
-\paragraph[{tr\-Bits}]{\setlength{\rightskip}{0pt plus 5cm}static void tr\-Bits (
+\paragraph[{tr\-Bits}]{\setlength{\rightskip}{0pt plus 5cm}static void {\bf tr\-Bits} (
 \begin{DoxyParamCaption}
 \item[{unsigned char $\ast$}]{x, }
 \item[{unsigned char $\ast$}]{y}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{em_8h_ad62d2aed5f4185224b6a4115f01f5322}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, static\mbox{]}}}}\label{em_8h_ad62d2aed5f4185224b6a4115f01f5322}
 
 
-Think of x and y as the two rows of a matrix, with the columns of the matrix equal to the bits of x and y. 
+\-Think of x and y as the two rows of a matrix, with the columns of the matrix equal to the bits of x and y. 
 
-We are only interested in the low-\/order (rightmost) pair of bits. Transpose that 2\-X2 matrix, so that x and y are set equal to the bits that had previously been in the columns.
+\-We are only interested in the low-\/order (rightmost) pair of bits. \-Transpose that 2\-X2 matrix, so that x and y are set equal to the bits that had previously been in the columns.
 
-In other words, if \mbox{[}i,j\mbox{]} are the right-\/most two bits of x, and \mbox{[}k,l\mbox{]} are the right-\/most two bits of y, then the function does the following transformation\-:
+\-In other words, if \mbox{[}i,j\mbox{]} are the right-\/most two bits of x, and \mbox{[}k,l\mbox{]} are the right-\/most two bits of y, then the function does the following transformation\-:
 
-x\-: i j x\-: i k -\/---$>$ y\-: k l y\-: j l
+x\-: i j x\-: i k -\/-\/-\/-\/$>$ y\-: k l y\-: j l
 
-Suppose, for example, that x=2, or in binary, x=0b10. Furthermore, suppose that y=3=0b11. Then after a call to tr\-Bits, we'll have x=3=0b11 and y=1=0b01.
+\-Suppose, for example, that x=2, or in binary, x=0b10. \-Furthermore, suppose that y=3=0b11. \-Then after a call to tr\-Bits, we'll have x=3=0b11 and y=1=0b01.
 
-Any higher-\/order bits are ignored. For example, the preceding example still generates x=3 and y=1, even if on input y=7=0b111. 
+\-Any higher-\/order bits are ignored. \-For example, the preceding example still generates x=3 and y=1, even if on input y=7=0b111. 
 
-Referenced by S\-N\-P\-\_\-get\-Dsq().
+\-Referenced by \-S\-N\-P\-\_\-get\-Dsq().
 

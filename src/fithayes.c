@@ -64,9 +64,9 @@ write_data(FILE * outfile, int nvars, int ncc, double *cc,
 }
 
 /**
- * Read the data file produced by obsld.
+ * Read the data file produced by eld.
  *
- * @param[in] ifp Points to file produced by obsld.
+ * @param[in] ifp Points to file produced by eld.
  * @param[in] nbins The length of all arrays.
  * @param[out] cm An array giving the average separation (in centimorgans)
  * between pairs of SNPs within the various bins.
@@ -230,7 +230,7 @@ int main(int argc, char **argv) {
     snprintf(method, sizeof(method), "Hayes");
 
     /* read assignment statements in input file */
-    Assignment *asmt = Assignment_readObsld(ifp);
+    Assignment *asmt = Assignment_readEld(ifp);
 
     Assignment_setInt(asmt, "nbins", &nbins, MANDATORY);
     Assignment_setInt(asmt, "Haploid sample size", &twoNsmp, MANDATORY);

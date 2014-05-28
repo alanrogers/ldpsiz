@@ -8,7 +8,7 @@ prof :=
 incl := -I/usr/local/include -I/opt/local/include
 
 pytargets := macs2gtp.py vcf2gtp.py ini.py domacs.py 
-ctargets := predld obsld fithayes ms2gtp boot2tbl fwdsim mcmcld sald \
+ctargets := preld eld fithayes ms2gtp boot2tbl fwdsim mcmcld sald \
    tabfboot
 alltargets := $(ctargets) $(pytargets)
 
@@ -42,16 +42,16 @@ lib := -L/usr/local/lib -lgsl -lgslcblas -lpthread -lm
 
 all : $(ctargets)
 
-PREDLD := predld.o pophist.o hayes.o hill.o strobeck.o misc.o \
+PRELD := preld.o pophist.o hayes.o hill.o strobeck.o misc.o \
           tokenizer.o model.o ini.o assign.o
-predld : $(PREDLD)
-	$(CC) $(CFLAGS) -o $@ $(PREDLD) $(lib)
+preld : $(PRELD)
+	$(CC) $(CFLAGS) -o $@ $(PRELD) $(lib)
 
-OBSLD := obsld.o readgtp.o misc.o tabulation.o window.o assign.o \
+ELD := eld.o readgtp.o misc.o tabulation.o window.o assign.o \
          fileindex.o boot.o sums.o tokenizer.o ini.o pophist.o \
          em.o
-obsld : $(OBSLD)
-	$(CC) $(CFLAGS) -o $@ $(OBSLD) $(lib)
+eld : $(ELD)
+	$(CC) $(CFLAGS) -o $@ $(ELD) $(lib)
 
 # use MCMCMC to fit pophist parameters to data
 MCMCLD := mcmcld.o pophist.o hill.o strobeck.o misc.o \

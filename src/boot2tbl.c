@@ -1,7 +1,7 @@
 /**
  * @file boot2tbl.c
  * @author Alan R. Rogers
- * @brief Read a block bootstrap file, as produced by obsld, and
+ * @brief Read a block bootstrap file, as produced by eld, and
  * print it in tabular form.
  * @copyright Copyright (c) 2014, Alan R. Rogers
  * <rogers@anthro.utah.edu>. This file is released under the Internet

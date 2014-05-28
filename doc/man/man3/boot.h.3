@@ -1,10 +1,17 @@
-.TH "boot.h" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "boot.h" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 boot.h \- 
 .PP
-Header for \fBboot\&.c\fP\&.  
+Header for \fBboot\&.c\fP\&. 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
@@ -107,36 +114,33 @@ Header for \fBboot\&.c\fP\&.
 .SH "Detailed Description"
 .PP 
 Header for \fBboot\&.c\fP\&. 
-
-
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "void Boot_get_rep (\fBBoot\fP *boot, double *sigdsq, double *rsq, double *cm, long unsigned *nobs, intrep)"
-
+.SS "void \fBBoot_get_rep\fP (\fBBoot\fP *boot, double *sigdsq, double *rsq, double *cm, long unsigned *nobs, intrep)"
 .PP
 Fill arrays sigdsq, cm, and nobs with values for bootstrap repetition 'rep'\&. If nobs==NULL, nothing is stored there\&. 
 .PP
 References Boot::tab\&.
-.SS "long Boot_purge (\fBBoot\fP *boot)"
-
+.SS "long \fBBoot_purge\fP (\fBBoot\fP *boot)"
 .PP
 Remove replicates in which some bins have zero observations\&. These would generate NaN values in the calculation of sigdsq, which are not handled by the minimizer\&. Return revised number of bootstrap replicates\&. 
 .PP
 References Boot::nBins, Boot::nReps, Boot::start, and Boot::tab\&.
-.SS "void confidenceBounds (double *lowBnd, double *highBnd, doubleconfidence, double *v, longlen)"
-
+.SS "void \fBconfidenceBounds\fP (double *lowBnd, double *highBnd, doubleconfidence, double *v, longlen)"
 .PP
 Calculate confidence bounds from a vector of values representing samples drawn from the sampling distribution of some estimator\&. To calculate the lower bound (*lowBnd), the function calculates the total probability mass in the tails (1 - confidence) and divides this into two equal parts to find p, the probability mass in each tail\&. It then estimates a value L such that a fraction p of the data values are less than or equal to L\&. To find this value, the function uses linear interpolation between the sorted list of data values\&.
 .PP
@@ -161,8 +165,7 @@ The function sorts the vector v\&.
 
 .PP
 References compareDoubles(), and interpolate()\&.
-.SS "double interpolate (doublep, double *v, longlen)"
-
+.SS "double \fBinterpolate\fP (doublep, double *v, longlen)"
 .PP
 Interpolate in order to approximate the value v[p*(len-1)]\&. Return NaN if len==0\&. 
 .PP

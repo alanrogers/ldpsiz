@@ -1,5 +1,109 @@
-.TH "vcf2gtp.py" 3 "Wed May 14 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "vcf2gtp.py" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 vcf2gtp.py \- 
+.PP
+Convert \&.vcf files into \&.gtp format\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "class \fBvcf2gtp\&.Map\fP"
+.br
+.RI "\fIRepresents the genetic map\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fBvcf2gtp\&.usage\fP"
+.br
+.ti -1c
+.RI "def \fBvcf2gtp\&.VCFparse\fP"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBvcf2gtp\&.mapFname\fP = None"
+.br
+.ti -1c
+.RI "\fBvcf2gtp\&.map\fP = None"
+.br
+.ti -1c
+.RI "\fBvcf2gtp\&.vcfFile\fP = None"
+.br
+.ti -1c
+.RI "float \fBvcf2gtp\&.recomb\fP = 0\&.0"
+.br
+.ti -1c
+.RI "\fBvcf2gtp\&.extrapolate\fP = False"
+.br
+.ti -1c
+.RI "int \fBvcf2gtp\&.i\fP = 1"
+.br
+.ti -1c
+.RI "list \fBvcf2gtp\&.vcfFname\fP = sys\&.argv[i]"
+.br
+.ti -1c
+.RI "tuple \fBvcf2gtp\&.line\fP = vcfFile\&.readline()"
+.br
+.ti -1c
+.RI "int \fBvcf2gtp\&.snpid\fP = 0"
+.br
+.ti -1c
+.RI "tuple \fBvcf2gtp\&.mappos\fP = map\&.getMapPos(nucpos0)"
+.br
+.ti -1c
+.RI "string \fBvcf2gtp\&.msg\fP = 'ERR: vcf file contains multiple chromosomes: %s, %s\&.\\n'"
+.br
+.ti -1c
+.RI "\fBvcf2gtp\&.nucpos0\fP = nucpos"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Convert \&.vcf files into \&.gtp format\&. 
+
+\fBvcf2gtp\&.py\fP, a program that converts \&.vcf files into \&.gtp format ===============================================================
+.PP
+usage: vcf2gtp [options filename\&.vcf geneticMapFile] where options may include:
+.PP
+-r <x> or --recombPerBP <x> Set recombination rate per nucleotide\&.
+.PP
+If two filenames are provided, the first must be a vcf file and the second a file of recombination rates\&. In this case, the -r option is not allowed\&.
+.PP
+If one filename is provided, it must be a vcf file, and the -r option is mandatory\&.
+.PP
+If no filename is provided, the program reads vcf data from standard input and the -r option is mandatory\&.
+.PP
+The program writes to standard output\&.
+.PP
+If no file is provided for recombination rates, the rate must be specified using the `-r` or `--recombPerBP` option, and the program generates map distances assuming that the recombination rate between two sites is proportional to the number of nucleotides that separate them\&.
+.PP
+The genetic map file must have a format like this:
+.PP
+position COMBINED_rate(cM/Mb) Genetic_Map(cM) 14431347 9\&.6640973708 0 14432618 9\&.7078062447 0\&.0122830678 14433624 9\&.7138922111 0\&.0220491208 14433659 9\&.7163435060 0\&.0223891071 14433758 9\&.7078087850 0\&.0233510251
+.PP
+The first line is a list of column labels\&. After that, each row corresponds to a \fBSNP\fP\&. The first column gives the position, in nucleotides from the end of the chromosome\&. The second column gives the recombination rate, in cM per Mb, between that \fBSNP\fP and the next one, and the third column gives the map distance in cM\&. This is the format used by the 1000-Genomes Project
+.PP
+\fBAuthor:\fP
+.RS 4
+Ryan Bohlender and Alan Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Ryan Bohlender and Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.
