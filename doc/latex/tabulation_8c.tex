@@ -1,0 +1,123 @@
+\hypertarget{tabulation_8c}{\subsection{tabulation.\+c File Reference}
+\label{tabulation_8c}\index{tabulation.\+c@{tabulation.\+c}}
+}
+
+
+Class \hyperlink{struct_tabulation}{Tabulation} tabulates data used to calculate $sigma_d^2$.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$float.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tabulation.\+h\char`\"{}}\\*
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{tabulation_8c_add8919dea508dc4bab14b7f911e1f783}{static void {\bfseries Tabulation\+\_\+init\+Arrays} (\hyperlink{struct_tabulation}{Tabulation} $\ast$tab)}\label{tabulation_8c_add8919dea508dc4bab14b7f911e1f783}
+
+\item 
+\hypertarget{tabulation_8c_a5b52f1d78f2401860c29fb43648bf113}{static void {\bfseries tst\+Get\+Bin} (double sep\+\_\+cm, double windowcm, int trubin, int nbins, const char $\ast$file, int line)}\label{tabulation_8c_a5b52f1d78f2401860c29fb43648bf113}
+
+\item 
+\hypertarget{tabulation_8c_ac5a72b0991f173041794a1fe1bf5f03e}{static size\+\_\+t {\bfseries Tabulation\+\_\+size} (int nbins)}\label{tabulation_8c_ac5a72b0991f173041794a1fe1bf5f03e}
+
+\item 
+\hypertarget{tabulation_8c_ae713ad7c9e3c64a1dc8af26fd6b5b67d}{static double {\bfseries get\+\_\+bins\+\_\+per\+\_\+cm} (int nbins, double windowcm)}\label{tabulation_8c_ae713ad7c9e3c64a1dc8af26fd6b5b67d}
+
+\item 
+\hyperlink{struct_tabulation}{Tabulation} $\ast$ \hyperlink{tabulation_8c_ad41564c78533d6f472ec0bc78b5007c3}{Tabulation\+\_\+new} (double windowcm, int nbins)
+\begin{DoxyCompactList}\small\item\em Allocate a new object of type \hyperlink{struct_tabulation}{Tabulation}. \end{DoxyCompactList}\item 
+\hypertarget{tabulation_8c_a7beb0cb3b084e6fd329683b2205b15d8}{\hyperlink{struct_tabulation}{Tabulation} $\ast$ {\bfseries Tabulation\+\_\+dup} (\hyperlink{struct_tabulation}{Tabulation} $\ast$old)}\label{tabulation_8c_a7beb0cb3b084e6fd329683b2205b15d8}
+
+\item 
+\hypertarget{tabulation_8c_a6d7fce7ae77d0ed4483e7453d687397b}{void {\bfseries Tabulation\+\_\+sanity\+Check} (\hyperlink{struct_tabulation}{Tabulation} $\ast$tab, const char $\ast$file, int line)}\label{tabulation_8c_a6d7fce7ae77d0ed4483e7453d687397b}
+
+\item 
+\hypertarget{tabulation_8c_ae40028affe31e853583827d64a92b677}{int \hyperlink{tabulation_8c_ae40028affe31e853583827d64a92b677}{Tabulation\+\_\+overflow} (\hyperlink{struct_tabulation}{Tabulation} $\ast$tab)}\label{tabulation_8c_ae40028affe31e853583827d64a92b677}
+
+\begin{DoxyCompactList}\small\item\em Check for overflow. \end{DoxyCompactList}\item 
+\hypertarget{tabulation_8c_a4ba48be2de7528cca7a4bcee611faba2}{int {\bfseries Tabulation\+\_\+equals} (const \hyperlink{struct_tabulation}{Tabulation} $\ast$x, const \hyperlink{struct_tabulation}{Tabulation} $\ast$y)}\label{tabulation_8c_a4ba48be2de7528cca7a4bcee611faba2}
+
+\item 
+\hypertarget{tabulation_8c_ac2d189ea81cb8a42550fa0fd6cfc8226}{void {\bfseries Tabulation\+\_\+print} (\hyperlink{struct_tabulation}{Tabulation} $\ast$tab, F\+I\+L\+E $\ast$ofp)}\label{tabulation_8c_ac2d189ea81cb8a42550fa0fd6cfc8226}
+
+\item 
+\hypertarget{tabulation_8c_a90239c089150d85148f635d68cb28765}{void {\bfseries Tabulation\+\_\+free} (\hyperlink{struct_tabulation}{Tabulation} $\ast$tab)}\label{tabulation_8c_a90239c089150d85148f635d68cb28765}
+
+\item 
+\hypertarget{tabulation_8c_a02819d8491310d65280b7df66d71ee44}{int \hyperlink{tabulation_8c_a02819d8491310d65280b7df66d71ee44}{Tabulation\+\_\+isfinite} (const \hyperlink{struct_tabulation}{Tabulation} $\ast$tab)}\label{tabulation_8c_a02819d8491310d65280b7df66d71ee44}
+
+\begin{DoxyCompactList}\small\item\em Return 1 if tab is free of non-\/finite values, 0 otherwise. \end{DoxyCompactList}\item 
+\hypertarget{tabulation_8c_adbf41e2920f1934a56548363a0a3190c}{int {\bfseries Tabulation\+\_\+report} (\hyperlink{struct_tabulation}{Tabulation} $\ast$tab, double $\ast$sep\+\_\+cm, long unsigned $\ast$nobs, double $\ast$sigdsq, double $\ast$rsq)}\label{tabulation_8c_adbf41e2920f1934a56548363a0a3190c}
+
+\item 
+\hypertarget{tabulation_8c_ab5e78d38154811f2b0bec1bcabf5173a}{double {\bfseries Tabulation\+\_\+sigdsq} (\hyperlink{struct_tabulation}{Tabulation} $\ast$tab, int bin, double $\ast$sep\+\_\+cm, long unsigned $\ast$nobs)}\label{tabulation_8c_ab5e78d38154811f2b0bec1bcabf5173a}
+
+\item 
+\hypertarget{tabulation_8c_ab12c16844239e19fd2d3fd1810aa1f06}{double {\bfseries Tabulation\+\_\+rsq} (\hyperlink{struct_tabulation}{Tabulation} $\ast$tab, int bin, double $\ast$sep\+\_\+cm, long unsigned $\ast$nobs)}\label{tabulation_8c_ab12c16844239e19fd2d3fd1810aa1f06}
+
+\item 
+\hypertarget{tabulation_8c_a0f960faf2d252ebfdbb25e75e51f007f}{long unsigned {\bfseries Tabulation\+\_\+raw\+Counts} (\hyperlink{struct_tabulation}{Tabulation} $\ast$tab, int bin, double $\ast$numerator, double $\ast$denominator, double $\ast$sum\+Rsq, double $\ast$sep\+\_\+cm)}\label{tabulation_8c_a0f960faf2d252ebfdbb25e75e51f007f}
+
+\item 
+\hypertarget{tabulation_8c_a86b84a767cdafed5d8a538cbd74bdde5}{long unsigned \hyperlink{tabulation_8c_a86b84a767cdafed5d8a538cbd74bdde5}{Tabulation\+\_\+n\+Obs} (const \hyperlink{struct_tabulation}{Tabulation} $\ast$tab, int i)}\label{tabulation_8c_a86b84a767cdafed5d8a538cbd74bdde5}
+
+\begin{DoxyCompactList}\small\item\em Return the number of observations in the i'th bin. \end{DoxyCompactList}\item 
+\hypertarget{tabulation_8c_a1db1e916e10eccfa0ef9c59a753487a1}{void {\bfseries Tabulation\+\_\+plus\+\_\+equals} (\hyperlink{struct_tabulation}{Tabulation} $\ast$x, const \hyperlink{struct_tabulation}{Tabulation} $\ast$y)}\label{tabulation_8c_a1db1e916e10eccfa0ef9c59a753487a1}
+
+\item 
+\hypertarget{tabulation_8c_ac091409cae0b73ec6ea7656d0c3b9497}{void {\bfseries Tabulation\+\_\+dump} (const \hyperlink{struct_tabulation}{Tabulation} $\ast$tab, F\+I\+L\+E $\ast$ofp)}\label{tabulation_8c_ac091409cae0b73ec6ea7656d0c3b9497}
+
+\item 
+\hypertarget{tabulation_8c_ae7da6673dc36028f33e75649714e40e8}{\hyperlink{struct_tabulation}{Tabulation} $\ast$ {\bfseries Tabulation\+\_\+restore} (F\+I\+L\+E $\ast$ifp)}\label{tabulation_8c_ae7da6673dc36028f33e75649714e40e8}
+
+\item 
+\hypertarget{tabulation_8c_ae634c2f95ed8fce9e86d0e6f3e2dd382}{void {\bfseries Tabulation\+\_\+test} (int verbose)}\label{tabulation_8c_ae634c2f95ed8fce9e86d0e6f3e2dd382}
+
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Class \hyperlink{struct_tabulation}{Tabulation} tabulates data used to calculate $sigma_d^2$. 
+
+\begin{DoxyAuthor}{Author}
+Alan R. Rogers 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
+\end{DoxyCopyright}
+
+
+\subsubsection{Function Documentation}
+\hypertarget{tabulation_8c_ad41564c78533d6f472ec0bc78b5007c3}{\index{tabulation.\+c@{tabulation.\+c}!Tabulation\+\_\+new@{Tabulation\+\_\+new}}
+\index{Tabulation\+\_\+new@{Tabulation\+\_\+new}!tabulation.\+c@{tabulation.\+c}}
+\paragraph[{Tabulation\+\_\+new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Tabulation}$\ast$ Tabulation\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{double}]{windowcm, }
+\item[{int}]{nbins}
+\end{DoxyParamCaption}
+)}}\label{tabulation_8c_ad41564c78533d6f472ec0bc78b5007c3}
+
+
+Allocate a new object of type \hyperlink{struct_tabulation}{Tabulation}. 
+
+This is accomplished via a single call to malloc, so that the entire object will reside in contiguous memory. This minimizes page faults and should make time-\/critical functions such as Tabulation\+\_\+record run faster.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em windowcm} & The size in centimorgans of the window used to scan the genome.\\
+\hline
+\mbox{\tt in}  & {\em nbins} & The number of bins in which to tabulate values.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A newly allocated object of type \hyperlink{struct_tabulation}{Tabulation}, which should be freed with Tabulation\+\_\+free. 
+\end{DoxyReturn}
+
+
+Referenced by Boot\+\_\+new().
+
