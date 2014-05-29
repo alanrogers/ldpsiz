@@ -39,6 +39,7 @@ var searchData=
   ['strobeck_5fsigdsq',['Strobeck_sigdsq',['../strobeck_8c.html#a346f3df822942789dfd5d46f211736c7',1,'Strobeck_sigdsq(ODE *ode, double c, double u, PopHist *ph, int twoNsmp):&#160;strobeck.c'],['../strobeck_8h.html#a346f3df822942789dfd5d46f211736c7',1,'Strobeck_sigdsq(ODE *ode, double c, double u, PopHist *ph, int twoNsmp):&#160;strobeck.c']]],
   ['strobeck_5fsigdsqeq',['Strobeck_sigdsqEq',['../strobeck_8c.html#a368f39d3cffc05d916109d9f3fcf458b',1,'Strobeck_sigdsqEq(double c, double u, PopHist *ph, unsigned whichEpoch, int twoNsmp, void *vdata):&#160;strobeck.c'],['../strobeck_8h.html#a34a9ecc144c98ac86b96d9546e801b81',1,'Strobeck_sigdsqEq(double c, double u, PopHist *ph, unsigned whichEpoch, int twoNsmp, void *data):&#160;strobeck.c']]],
   ['strobeckdata',['StrobeckData',['../struct_strobeck_data.html',1,'']]],
+  ['strobeckdata_5fnew',['StrobeckData_new',['../strobeck_8c.html#ae0fa2b2f6b433f96da3cdaf7d1889ad4',1,'StrobeckData_new(void):&#160;strobeck.c'],['../strobeck_8h.html#ae0fa2b2f6b433f96da3cdaf7d1889ad4',1,'StrobeckData_new(void):&#160;strobeck.c']]],
   ['strobeckdata_5fstateval',['StrobeckData_stateVal',['../strobeck_8c.html#a3c5be8fa6be11c1ee3e655f5466adb92',1,'StrobeckData_stateVal(void *vdata, unsigned i):&#160;strobeck.c'],['../strobeck_8h.html#a3c5be8fa6be11c1ee3e655f5466adb92',1,'StrobeckData_stateVal(void *vdata, unsigned i):&#160;strobeck.c']]],
   ['sums_2ec',['sums.c',['../sums_8c.html',1,'']]],
   ['sums_2eh',['sums.h',['../sums_8h.html',1,'']]],

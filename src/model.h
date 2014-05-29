@@ -61,6 +61,7 @@ struct Model {
     void        (*freeState) (void *vdata);
 };
 
+/** A list of models */
 struct ModelList {
     unsigned    nModels;
     Model      *m[MAXMODELS];

@@ -35,23 +35,23 @@ set `nthreads` in the file `ldpsiz.ini`.
 
     usage: eld [options] input_file_name
        where options may include:
-       -b <x> or --blocksize <x>
+       -b \<x\> or --blocksize \<x\>
           SNPs per bootstrap block
-       -f <x> or --bootfile <x>
+       -f \<x\> or --bootfile \<x\>
           name of bootstrap output file
        -h or --help
           print this message
-       -i <x> or --interval <x>
+       -i \<x\> or --interval \<x\>
           for debugging: increase speed by examining every x'th focal SNP
-       -n <x> or --nbins <x>
+       -n \<x\> or --nbins \<x\>
           tablulate values into x bins
-       -r <x> or --bootreps <x>
+       -r \<x\> or --bootreps \<x\>
           number of bootstrap replicates (def: 0)
-       -t <x> or --threads <x>
+       -t \<x\> or --threads \<x\>
           number of threads (default is auto)
        -v     or --verbose
           more output
-       -w <x> or --window <x>
+       -w \<x\> or --window \<x\>
           window size in cM
 
 @copyright Copyright (c) 2014, Alan R. Rogers 

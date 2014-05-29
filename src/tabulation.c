@@ -1,7 +1,7 @@
 /**
  * @file tabulation.c
  * @author Alan R. Rogers
- * @brief Class Tabulation tabulates data used to calculate \f$sigma_d^2$\f.
+ * @brief Class Tabulation tabulates data used to calculate \f$sigma_d^2\f$.
  * @copyright Copyright (c) 2014, Alan R. Rogers 
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".

@@ -1,4 +1,4 @@
-.TH "pophist.c" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "pophist.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -210,9 +210,9 @@ Functions for objects of type \fBPopHist\fP, which represent the history of popu
 .br
 .RI "\fICopy \fBPopHist\fP src into dest\&. \fP"
 .ti -1c
-.RI "\fBPopHist\fP * \fBPopHist_perturb\fP (\fBPopHist\fP *ph, const \fBPopHist\fP *model, double dt, double dNinv, gsl_rng *rng)"
+.RI "\fBPopHist\fP * \fBPopHist_perturb\fP (\fBPopHist\fP *ph, const \fBPopHist\fP *ph0, double dt, double dNinv, gsl_rng *rng)"
 .br
-.RI "\fIFill ph with random values based on model\&. \fP"
+.RI "\fIFill ph with random values based on ph0\&. \fP"
 .ti -1c
 .RI "\fBPopHist\fP * \fBPopHist_perturbInPlace\fP (\fBPopHist\fP *ph, double dt, double dNinv, gsl_rng *rng)"
 .br
@@ -449,20 +449,20 @@ Value of specified parameter within ph\&.
 References PopHist::p, and PopHist_nParams()\&.
 .PP
 Referenced by Chain_printState(), and costFun()\&.
-.SS "\fBPopHist\fP* PopHist_perturb (\fBPopHist\fP *ph, const \fBPopHist\fP *model, doubledt, doubledNinv, gsl_rng *rng)"
+.SS "\fBPopHist\fP* PopHist_perturb (\fBPopHist\fP *ph, const \fBPopHist\fP *ph0, doubledt, doubledNinv, gsl_rng *rng)"
 
 .PP
-Fill ph with random values based on model\&. The model is first copied into ph\&. Then ph is perturbed as described in the documentation to PopHist_perturbInPlace\&.
+Fill ph with random values based on ph0\&. ph0 is first copied into ph\&. Then ph is perturbed as described in the documentation to PopHist_perturbInPlace\&.
 .PP
 \fBParameters:\fP
 .RS 4
 \fIph\fP \fBPopHist\fP into which new values will be written\&. 
 .br
-\fImodel\fP \fBPopHist\fP whose values are perturbed to obtain new values\&. The values within model are unchanged\&. 
+\fIph0\fP \fBPopHist\fP whose values are perturbed to obtain new values\&. The values within ph0 are unchanged\&. 
 .br
 \fIdt\fP controls the magnitude of perturbations in the duration variable\&. 
 .br
-\fIdN\fP controls the magnitude of perturbations in population size\&. 
+\fIdNinv\fP controls the magnitude of perturbations in population size\&. 
 .br
 \fIrng\fP random number generator\&. 
 .RE
@@ -550,7 +550,7 @@ Set duration of the i'th epoch of \fBPopHist\fP structure ph\&.
 .br
 \fIi\fP index of epoch to be modified\&. Must be less than ph->nepoch-1\&. 
 .br
-\fIt\fP new value of duration of i'th epoch\&. 
+\fIduration\fP new value of duration of i'th epoch\&. 
 .RE
 .PP
 

@@ -1,141 +1,143 @@
-\hypertarget{pophist_8h}{\subsection{pophist.\-h File Reference}
-\label{pophist_8h}\index{pophist.\-h@{pophist.\-h}}
+\hypertarget{pophist_8h}{\subsection{pophist.\+h File Reference}
+\label{pophist_8h}\index{pophist.\+h@{pophist.\+h}}
 }
 
 
-Header for \hyperlink{pophist_8c}{pophist.\-c}.  
+Header for \hyperlink{pophist_8c}{pophist.\+c}.  
 
 
-{\ttfamily \#include $<$gsl/gsl\-\_\-vector.\-h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\-\_\-rng.\-h$>$}\\*
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$stddef.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$gsl/gsl\+\_\+vector.\+h$>$}\\*
+{\ttfamily \#include $<$gsl/gsl\+\_\+rng.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}typedefs.\+h\char`\"{}}\\*
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$ \hyperlink{pophist_8h_adf220315a26ff5eaeb907e4a69938b58}{Epoch\-Link\-\_\-new} (\hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$head, double t, double n)
+\hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$ \hyperlink{pophist_8h_adf220315a26ff5eaeb907e4a69938b58}{Epoch\+Link\+\_\+new} (\hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$head, double t, double n)
 \begin{DoxyCompactList}\small\item\em Insert a new link into the list. \end{DoxyCompactList}\item 
-\hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$ \hyperlink{pophist_8h_a6b9033dee565cb759d3df91e3e2d99fc}{Epoch\-Link\-\_\-dup} (\hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$head)
+\hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$ \hyperlink{pophist_8h_a6b9033dee565cb759d3df91e3e2d99fc}{Epoch\+Link\+\_\+dup} (\hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$head)
 \begin{DoxyCompactList}\small\item\em Return a newly allocated copy of a linked list of epochs. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_a787120f6d9bca05a3ca54fa2e154b9dc}{void \hyperlink{pophist_8h_a787120f6d9bca05a3ca54fa2e154b9dc}{Epoch\-Link\-\_\-free} (\hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$link)}\label{pophist_8h_a787120f6d9bca05a3ca54fa2e154b9dc}
+\hypertarget{pophist_8h_a787120f6d9bca05a3ca54fa2e154b9dc}{void \hyperlink{pophist_8h_a787120f6d9bca05a3ca54fa2e154b9dc}{Epoch\+Link\+\_\+free} (\hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$link)}\label{pophist_8h_a787120f6d9bca05a3ca54fa2e154b9dc}
 
 \begin{DoxyCompactList}\small\item\em free linked list \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_ac1fe84164580f9f6bccec764debe6a42}{Epoch\-Link\-\_\-print} (int ndx, const \hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$link, F\-I\-L\-E $\ast$ofp)
+void \hyperlink{pophist_8h_ac1fe84164580f9f6bccec764debe6a42}{Epoch\+Link\+\_\+print} (int ndx, const \hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$link, F\+I\+L\+E $\ast$ofp)
 \begin{DoxyCompactList}\small\item\em Print a linked list. \end{DoxyCompactList}\item 
-int \hyperlink{pophist_8h_a6011f14fab17c89dbea6f05666747b56}{Epoch\-Link\-\_\-nlinks} (const \hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$head)
-\begin{DoxyCompactList}\small\item\em Count the number of links in a linked list of \hyperlink{struct_epoch_link}{Epoch\-Link} objects. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_a24dbb1ca82e6478362fee4cbcb7c3ced}{const \hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$ \hyperlink{pophist_8h_a24dbb1ca82e6478362fee4cbcb7c3ced}{Epoch\-Link\-\_\-next} (const \hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$link)}\label{pophist_8h_a24dbb1ca82e6478362fee4cbcb7c3ced}
+int \hyperlink{pophist_8h_a6011f14fab17c89dbea6f05666747b56}{Epoch\+Link\+\_\+nlinks} (const \hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$head)
+\begin{DoxyCompactList}\small\item\em Count the number of links in a linked list of \hyperlink{struct_epoch_link}{Epoch\+Link} objects. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_a24dbb1ca82e6478362fee4cbcb7c3ced}{const \hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$ \hyperlink{pophist_8h_a24dbb1ca82e6478362fee4cbcb7c3ced}{Epoch\+Link\+\_\+next} (const \hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$link)}\label{pophist_8h_a24dbb1ca82e6478362fee4cbcb7c3ced}
 
-\begin{DoxyCompactList}\small\item\em Return a pointer to the next link in a chain of Epoch\-Links. \end{DoxyCompactList}\item 
-double \hyperlink{pophist_8h_a5c07d02bd9d6d3afe55d501b26154404}{Epoch\-Link\-\_\-duration} (const \hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$link)
+\begin{DoxyCompactList}\small\item\em Return a pointer to the next link in a chain of Epoch\+Links. \end{DoxyCompactList}\item 
+double \hyperlink{pophist_8h_a5c07d02bd9d6d3afe55d501b26154404}{Epoch\+Link\+\_\+duration} (const \hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$link)
 \begin{DoxyCompactList}\small\item\em Return time value from given link. \end{DoxyCompactList}\item 
-double \hyperlink{pophist_8h_aee2e6a621ee28c97fe2a0b97fa2990fa}{Epoch\-Link\-\_\-two\-N} (const \hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$link)
-\begin{DoxyCompactList}\small\item\em Return two\-N value from given link. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_a7dae39a11d3f0001216331aaeee33f43}{void {\bfseries Epoch\-Link\-\_\-test} (void)}\label{pophist_8h_a7dae39a11d3f0001216331aaeee33f43}
+double \hyperlink{pophist_8h_aee2e6a621ee28c97fe2a0b97fa2990fa}{Epoch\+Link\+\_\+two\+N} (const \hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$link)
+\begin{DoxyCompactList}\small\item\em Return two\+N value from given link. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_a7dae39a11d3f0001216331aaeee33f43}{void {\bfseries Epoch\+Link\+\_\+test} (void)}\label{pophist_8h_a7dae39a11d3f0001216331aaeee33f43}
 
 \item 
-\hypertarget{pophist_8h_ad41efa6911c6d815d7462767ea4cba11}{void \hyperlink{pophist_8h_ad41efa6911c6d815d7462767ea4cba11}{Pop\-Hist\-\_\-init} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, unsigned nepoch, size\-\_\-t size)}\label{pophist_8h_ad41efa6911c6d815d7462767ea4cba11}
+\hypertarget{pophist_8h_ad41efa6911c6d815d7462767ea4cba11}{void \hyperlink{pophist_8h_ad41efa6911c6d815d7462767ea4cba11}{Pop\+Hist\+\_\+init} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, unsigned nepoch, size\+\_\+t size)}\label{pophist_8h_ad41efa6911c6d815d7462767ea4cba11}
 
-\begin{DoxyCompactList}\small\item\em Set up a \hyperlink{struct_pop_hist}{Pop\-Hist} object, which has previously been allocated as a contiguous memory block. \end{DoxyCompactList}\item 
-\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ \hyperlink{pophist_8h_ae7b6a8832ecadc26ba34d80a1c6071d1}{Pop\-Hist\-\_\-new\-Empty} (unsigned nepoch)
-\begin{DoxyCompactList}\small\item\em Allocate an empty \hyperlink{struct_pop_hist}{Pop\-Hist}. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_aaf270cd3c5a7d1b1e412a3c4d88eb3ef}{size\-\_\-t \hyperlink{pophist_8h_aaf270cd3c5a7d1b1e412a3c4d88eb3ef}{Pop\-Hist\-\_\-calc\-Size} (unsigned nepoch)}\label{pophist_8h_aaf270cd3c5a7d1b1e412a3c4d88eb3ef}
+\begin{DoxyCompactList}\small\item\em Set up a \hyperlink{struct_pop_hist}{Pop\+Hist} object, which has previously been allocated as a contiguous memory block. \end{DoxyCompactList}\item 
+\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ \hyperlink{pophist_8h_ae7b6a8832ecadc26ba34d80a1c6071d1}{Pop\+Hist\+\_\+new\+Empty} (unsigned nepoch)
+\begin{DoxyCompactList}\small\item\em Allocate an empty \hyperlink{struct_pop_hist}{Pop\+Hist}. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_aaf270cd3c5a7d1b1e412a3c4d88eb3ef}{size\+\_\+t \hyperlink{pophist_8h_aaf270cd3c5a7d1b1e412a3c4d88eb3ef}{Pop\+Hist\+\_\+calc\+Size} (unsigned nepoch)}\label{pophist_8h_aaf270cd3c5a7d1b1e412a3c4d88eb3ef}
 
-\begin{DoxyCompactList}\small\item\em Return the number of bytes occupied by a \hyperlink{struct_pop_hist}{Pop\-Hist} with \char`\"{}nepoch\char`\"{} epochs. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_aef36a3b58a3ad58da9cd0421761cf4a7}{double \hyperlink{pophist_8h_aef36a3b58a3ad58da9cd0421761cf4a7}{Pop\-Hist\-\_\-duration} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int i)}\label{pophist_8h_aef36a3b58a3ad58da9cd0421761cf4a7}
+\begin{DoxyCompactList}\small\item\em Return the number of bytes occupied by a \hyperlink{struct_pop_hist}{Pop\+Hist} with \char`\"{}nepoch\char`\"{} epochs. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_aef36a3b58a3ad58da9cd0421761cf4a7}{double \hyperlink{pophist_8h_aef36a3b58a3ad58da9cd0421761cf4a7}{Pop\+Hist\+\_\+duration} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int i)}\label{pophist_8h_aef36a3b58a3ad58da9cd0421761cf4a7}
 
 \begin{DoxyCompactList}\small\item\em Return duration of Epoch i. \end{DoxyCompactList}\item 
-double \hyperlink{pophist_8h_a4cfc4c367fb7371b09e31cdff53aff5c}{Pop\-Hist\-\_\-age} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int i)
+double \hyperlink{pophist_8h_a4cfc4c367fb7371b09e31cdff53aff5c}{Pop\+Hist\+\_\+age} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int i)
 \begin{DoxyCompactList}\small\item\em Return time from leaves to the most recent end of Epoch i. \end{DoxyCompactList}\item 
-double \hyperlink{pophist_8h_ac4e38db175894b4ab1f6f7cf0c4c928b}{Pop\-Hist\-\_\-two\-N} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int i)
-\begin{DoxyCompactList}\small\item\em Return the haploid population size, 2\-N, during epoch i. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_a3dc6370b6292d6dd020a962125220792}{int \hyperlink{pophist_8h_a3dc6370b6292d6dd020a962125220792}{Pop\-Hist\-\_\-find\-Epoch} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, double age)}\label{pophist_8h_a3dc6370b6292d6dd020a962125220792}
+double \hyperlink{pophist_8h_ac4e38db175894b4ab1f6f7cf0c4c928b}{Pop\+Hist\+\_\+two\+N} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int i)
+\begin{DoxyCompactList}\small\item\em Return the haploid population size, 2\+N, during epoch i. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_a3dc6370b6292d6dd020a962125220792}{int \hyperlink{pophist_8h_a3dc6370b6292d6dd020a962125220792}{Pop\+Hist\+\_\+find\+Epoch} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, double age)}\label{pophist_8h_a3dc6370b6292d6dd020a962125220792}
 
 \begin{DoxyCompactList}\small\item\em Find epoch that covers a given age. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_a2eff8b247021c34b8c1c86b0eeeaaac0}{double \hyperlink{pophist_8h_a2eff8b247021c34b8c1c86b0eeeaaac0}{Pop\-Hist\-\_\-two\-Ninv} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int i)}\label{pophist_8h_a2eff8b247021c34b8c1c86b0eeeaaac0}
+\hypertarget{pophist_8h_a2eff8b247021c34b8c1c86b0eeeaaac0}{double \hyperlink{pophist_8h_a2eff8b247021c34b8c1c86b0eeeaaac0}{Pop\+Hist\+\_\+two\+Ninv} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int i)}\label{pophist_8h_a2eff8b247021c34b8c1c86b0eeeaaac0}
 
-\begin{DoxyCompactList}\small\item\em Return 1/2\-N for the relevant epoch. \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_ab411170a33d32d51012bfd8d7de18a72}{Pop\-Hist\-\_\-set\-Duration} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int i, double duration)
-\begin{DoxyCompactList}\small\item\em Set duration of the i'th epoch of \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph. \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_a16ac7d6ae66be63a857f9341f3f60944}{Pop\-Hist\-\_\-set\-Two\-N} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int i, double two\-N)
-\begin{DoxyCompactList}\small\item\em Set population size during the i'th epoch of \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph. \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_a7bcb9b8b73c75f3db2b749e7984149bb}{Pop\-Hist\-\_\-set\-Two\-Ninv} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int i, double two\-Ninv)
-\begin{DoxyCompactList}\small\item\em Set 1/2\-N during the i'th epoch of \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph. \end{DoxyCompactList}\item 
-\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ \hyperlink{pophist_8h_a50e2953d018cb80dd0616758bb321326}{Pop\-Hist\-\_\-from\-Epoch\-Link} (const \hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$head)
-\begin{DoxyCompactList}\small\item\em Allocate a new \hyperlink{struct_pop_hist}{Pop\-Hist} and initialize from a chain of \hyperlink{struct_epoch_link}{Epoch\-Link} objects. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_aa094322e8786413384d9d23165498f1e}{unsigned \hyperlink{pophist_8h_aa094322e8786413384d9d23165498f1e}{Pop\-Hist\-\_\-nepoch} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)}\label{pophist_8h_aa094322e8786413384d9d23165498f1e}
+\begin{DoxyCompactList}\small\item\em Return 1/2\+N for the relevant epoch. \end{DoxyCompactList}\item 
+void \hyperlink{pophist_8h_ab411170a33d32d51012bfd8d7de18a72}{Pop\+Hist\+\_\+set\+Duration} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int i, double duration)
+\begin{DoxyCompactList}\small\item\em Set duration of the i'th epoch of \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph. \end{DoxyCompactList}\item 
+void \hyperlink{pophist_8h_a16ac7d6ae66be63a857f9341f3f60944}{Pop\+Hist\+\_\+set\+Two\+N} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int i, double two\+N)
+\begin{DoxyCompactList}\small\item\em Set population size during the i'th epoch of \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph. \end{DoxyCompactList}\item 
+void \hyperlink{pophist_8h_a7bcb9b8b73c75f3db2b749e7984149bb}{Pop\+Hist\+\_\+set\+Two\+Ninv} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int i, double two\+Ninv)
+\begin{DoxyCompactList}\small\item\em Set 1/2\+N during the i'th epoch of \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph. \end{DoxyCompactList}\item 
+\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ \hyperlink{pophist_8h_a50e2953d018cb80dd0616758bb321326}{Pop\+Hist\+\_\+from\+Epoch\+Link} (const \hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$head)
+\begin{DoxyCompactList}\small\item\em Allocate a new \hyperlink{struct_pop_hist}{Pop\+Hist} and initialize from a chain of \hyperlink{struct_epoch_link}{Epoch\+Link} objects. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_aa094322e8786413384d9d23165498f1e}{unsigned \hyperlink{pophist_8h_aa094322e8786413384d9d23165498f1e}{Pop\+Hist\+\_\+nepoch} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)}\label{pophist_8h_aa094322e8786413384d9d23165498f1e}
 
 \begin{DoxyCompactList}\small\item\em return the number of epochs \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_a9d38c9b90aaabb25fc756460b4d2ed02}{Pop\-Hist\-\_\-print\-\_\-comment} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, const char $\ast$comstr, F\-I\-L\-E $\ast$outfile)
-\begin{DoxyCompactList}\small\item\em Print \hyperlink{struct_pop_hist}{Pop\-Hist}, preceding each line with a comment string. \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_aaa5796bc8091de8e006e670763b4c306}{Pop\-Hist\-\_\-print} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, F\-I\-L\-E $\ast$outfile)
-\begin{DoxyCompactList}\small\item\em Print a \hyperlink{struct_pop_hist}{Pop\-Hist} object. \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_a5f2dfe7e1821acd6bbcffad8dab3201c}{Pop\-Hist\-\_\-free} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)
-\begin{DoxyCompactList}\small\item\em Destroy a \hyperlink{struct_pop_hist}{Pop\-Hist} object. \end{DoxyCompactList}\item 
-unsigned \hyperlink{pophist_8h_ae4d28244de462cde7a4aa8e6fe4da627}{Pop\-Hist\-\_\-n\-Params} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)
-\begin{DoxyCompactList}\small\item\em Return the number of parameters in a \hyperlink{struct_pop_hist}{Pop\-Hist}. \end{DoxyCompactList}\item 
-int \hyperlink{pophist_8h_ac9dbfb2caae1f94acdb3e9dc93dda327}{Pop\-Hist\-\_\-param\-Name} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, char $\ast$buff, int bufflen, int ndx)
-\begin{DoxyCompactList}\small\item\em Return the name of a given \hyperlink{struct_pop_hist}{Pop\-Hist} parameter. \end{DoxyCompactList}\item 
-double \hyperlink{pophist_8h_ac5ced8d9ab6d10c1b6b78b34af548f0c}{Pop\-Hist\-\_\-param\-Value} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int ndx)
-\begin{DoxyCompactList}\small\item\em Return the value of a given \hyperlink{struct_pop_hist}{Pop\-Hist} parameter. \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_ae6c55cf5ca5d2dbb54b2b40f1f0a2823}{Pop\-Hist\-\_\-to\-\_\-vector} (gsl\-\_\-vector $\ast$v, const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)
-\begin{DoxyCompactList}\small\item\em Put \hyperlink{struct_pop_hist}{Pop\-Hist} parameters into a gsl\-\_\-vector. \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_a21a09cf26079e73a55e06a35c6966a5c}{Pop\-Hist\-\_\-to\-\_\-\-C\-\_\-array} (double $\ast$v, int dim, const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)
-\begin{DoxyCompactList}\small\item\em Put \hyperlink{struct_pop_hist}{Pop\-Hist} parameters into an ordinary C array. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_a747f7864ce2622cb058d21d13c3b4b2f}{void {\bfseries Pop\-Hist\-\_\-to\-\_\-\-C\-\_\-array\-\_\-invert\-\_\-\-N} (double $\ast$v, int dim, const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)}\label{pophist_8h_a747f7864ce2622cb058d21d13c3b4b2f}
+void \hyperlink{pophist_8h_a9d38c9b90aaabb25fc756460b4d2ed02}{Pop\+Hist\+\_\+print\+\_\+comment} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, const char $\ast$comstr, F\+I\+L\+E $\ast$outfile)
+\begin{DoxyCompactList}\small\item\em Print \hyperlink{struct_pop_hist}{Pop\+Hist}, preceding each line with a comment string. \end{DoxyCompactList}\item 
+void \hyperlink{pophist_8h_aaa5796bc8091de8e006e670763b4c306}{Pop\+Hist\+\_\+print} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, F\+I\+L\+E $\ast$outfile)
+\begin{DoxyCompactList}\small\item\em Print a \hyperlink{struct_pop_hist}{Pop\+Hist} object. \end{DoxyCompactList}\item 
+void \hyperlink{pophist_8h_a5f2dfe7e1821acd6bbcffad8dab3201c}{Pop\+Hist\+\_\+free} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)
+\begin{DoxyCompactList}\small\item\em Destroy a \hyperlink{struct_pop_hist}{Pop\+Hist} object. \end{DoxyCompactList}\item 
+unsigned \hyperlink{pophist_8h_ae4d28244de462cde7a4aa8e6fe4da627}{Pop\+Hist\+\_\+n\+Params} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)
+\begin{DoxyCompactList}\small\item\em Return the number of parameters in a \hyperlink{struct_pop_hist}{Pop\+Hist}. \end{DoxyCompactList}\item 
+int \hyperlink{pophist_8h_ac9dbfb2caae1f94acdb3e9dc93dda327}{Pop\+Hist\+\_\+param\+Name} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, char $\ast$buff, int bufflen, int ndx)
+\begin{DoxyCompactList}\small\item\em Return the name of a given \hyperlink{struct_pop_hist}{Pop\+Hist} parameter. \end{DoxyCompactList}\item 
+double \hyperlink{pophist_8h_ac5ced8d9ab6d10c1b6b78b34af548f0c}{Pop\+Hist\+\_\+param\+Value} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int ndx)
+\begin{DoxyCompactList}\small\item\em Return the value of a given \hyperlink{struct_pop_hist}{Pop\+Hist} parameter. \end{DoxyCompactList}\item 
+void \hyperlink{pophist_8h_ae6c55cf5ca5d2dbb54b2b40f1f0a2823}{Pop\+Hist\+\_\+to\+\_\+vector} (gsl\+\_\+vector $\ast$v, const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)
+\begin{DoxyCompactList}\small\item\em Put \hyperlink{struct_pop_hist}{Pop\+Hist} parameters into a gsl\+\_\+vector. \end{DoxyCompactList}\item 
+void \hyperlink{pophist_8h_a21a09cf26079e73a55e06a35c6966a5c}{Pop\+Hist\+\_\+to\+\_\+\+C\+\_\+array} (double $\ast$v, int dim, const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)
+\begin{DoxyCompactList}\small\item\em Put \hyperlink{struct_pop_hist}{Pop\+Hist} parameters into an ordinary C array. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_a747f7864ce2622cb058d21d13c3b4b2f}{void {\bfseries Pop\+Hist\+\_\+to\+\_\+\+C\+\_\+array\+\_\+invert\+\_\+\+N} (double $\ast$v, int dim, const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)}\label{pophist_8h_a747f7864ce2622cb058d21d13c3b4b2f}
 
 \item 
-\hypertarget{pophist_8h_a9c13fa126ca492dde926758c73e6743b}{void \hyperlink{pophist_8h_a9c13fa126ca492dde926758c73e6743b}{C\-\_\-array\-\_\-to\-\_\-\-Pop\-Hist} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, const double $\ast$v, int dim)}\label{pophist_8h_a9c13fa126ca492dde926758c73e6743b}
+\hypertarget{pophist_8h_a9c13fa126ca492dde926758c73e6743b}{void \hyperlink{pophist_8h_a9c13fa126ca492dde926758c73e6743b}{C\+\_\+array\+\_\+to\+\_\+\+Pop\+Hist} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, const double $\ast$v, int dim)}\label{pophist_8h_a9c13fa126ca492dde926758c73e6743b}
 
-\begin{DoxyCompactList}\small\item\em Adjust the parameters in \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph to reflect the values in C array p, of dimension \char`\"{}dim\char`\"{}. \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_abf958de381896ca75f8e1ab74a0c633d}{Pop\-Hist\-\_\-set\-Simplex\-Scale} (gsl\-\_\-vector $\ast$scale, const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)
+\begin{DoxyCompactList}\small\item\em Adjust the parameters in \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph to reflect the values in C array p, of dimension \char`\"{}dim\char`\"{}. \end{DoxyCompactList}\item 
+void \hyperlink{pophist_8h_abf958de381896ca75f8e1ab74a0c633d}{Pop\+Hist\+\_\+set\+Simplex\+Scale} (gsl\+\_\+vector $\ast$scale, const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)
 \begin{DoxyCompactList}\small\item\em Set scale vector used by simplex algorithm. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_a9a1029069e8f20c196810ebb01fa3b5e}{void \hyperlink{pophist_8h_a9a1029069e8f20c196810ebb01fa3b5e}{Pop\-Hist\-\_\-set\-All\-Two\-Ninv} (double $\ast$x, int dim, double value)}\label{pophist_8h_a9a1029069e8f20c196810ebb01fa3b5e}
+\hypertarget{pophist_8h_a9a1029069e8f20c196810ebb01fa3b5e}{void \hyperlink{pophist_8h_a9a1029069e8f20c196810ebb01fa3b5e}{Pop\+Hist\+\_\+set\+All\+Two\+Ninv} (double $\ast$x, int dim, double value)}\label{pophist_8h_a9a1029069e8f20c196810ebb01fa3b5e}
 
-\begin{DoxyCompactList}\small\item\em Assign the same value to all positions in array corresponding to two\-Ninv values in the parameter vector of a \hyperlink{struct_pop_hist}{Pop\-Hist} object. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_adb8994e28a29605db354fc3e8eda7f9f}{void \hyperlink{pophist_8h_adb8994e28a29605db354fc3e8eda7f9f}{Pop\-Hist\-\_\-set\-All\-Duration} (double $\ast$x, int dim, double value)}\label{pophist_8h_adb8994e28a29605db354fc3e8eda7f9f}
+\begin{DoxyCompactList}\small\item\em Assign the same value to all positions in array corresponding to two\+Ninv values in the parameter vector of a \hyperlink{struct_pop_hist}{Pop\+Hist} object. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_adb8994e28a29605db354fc3e8eda7f9f}{void \hyperlink{pophist_8h_adb8994e28a29605db354fc3e8eda7f9f}{Pop\+Hist\+\_\+set\+All\+Duration} (double $\ast$x, int dim, double value)}\label{pophist_8h_adb8994e28a29605db354fc3e8eda7f9f}
 
-\begin{DoxyCompactList}\small\item\em Assign the same value to all positions in array corresponding to duration values in the parameter vector of a \hyperlink{struct_pop_hist}{Pop\-Hist} object. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_a73315ddb22b4f172a82fb97ff2c7ad4c}{void \hyperlink{pophist_8h_a73315ddb22b4f172a82fb97ff2c7ad4c}{vector\-\_\-to\-\_\-\-Pop\-Hist} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, const gsl\-\_\-vector $\ast$v)}\label{pophist_8h_a73315ddb22b4f172a82fb97ff2c7ad4c}
+\begin{DoxyCompactList}\small\item\em Assign the same value to all positions in array corresponding to duration values in the parameter vector of a \hyperlink{struct_pop_hist}{Pop\+Hist} object. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_a73315ddb22b4f172a82fb97ff2c7ad4c}{void \hyperlink{pophist_8h_a73315ddb22b4f172a82fb97ff2c7ad4c}{vector\+\_\+to\+\_\+\+Pop\+Hist} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, const gsl\+\_\+vector $\ast$v)}\label{pophist_8h_a73315ddb22b4f172a82fb97ff2c7ad4c}
 
-\begin{DoxyCompactList}\small\item\em Adjust the parameters in \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph to reflect the values in gsl vector p. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_ae8abd1dc7dbda0cfd1c76339a5c44d1f}{\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ \hyperlink{pophist_8h_ae8abd1dc7dbda0cfd1c76339a5c44d1f}{Pop\-Hist\-\_\-dup} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)}\label{pophist_8h_ae8abd1dc7dbda0cfd1c76339a5c44d1f}
+\begin{DoxyCompactList}\small\item\em Adjust the parameters in \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph to reflect the values in gsl vector p. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_ae8abd1dc7dbda0cfd1c76339a5c44d1f}{\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ \hyperlink{pophist_8h_ae8abd1dc7dbda0cfd1c76339a5c44d1f}{Pop\+Hist\+\_\+dup} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)}\label{pophist_8h_ae8abd1dc7dbda0cfd1c76339a5c44d1f}
 
-\begin{DoxyCompactList}\small\item\em Return a pointer to a newly allocated copy of \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph. \end{DoxyCompactList}\item 
-void \hyperlink{pophist_8h_a8889aa7823b0d6cf94bc053b80e43c3c}{Pop\-Hist\-\_\-copy} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$dest, const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$src)
-\begin{DoxyCompactList}\small\item\em Copy \hyperlink{struct_pop_hist}{Pop\-Hist} src into dest. \end{DoxyCompactList}\item 
-\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ \hyperlink{pophist_8h_a3a36813899cde3c78be85d39c3fec971}{Pop\-Hist\-\_\-perturb} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$model, double dt, double d\-N, gsl\-\_\-rng $\ast$rng)
-\begin{DoxyCompactList}\small\item\em Fill ph with random values based on model. \end{DoxyCompactList}\item 
-\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ \hyperlink{pophist_8h_a71a4f5b1e4f4879a862c0c66234b5866}{Pop\-Hist\-\_\-perturb\-In\-Place} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, double dt, double d\-N, gsl\-\_\-rng $\ast$rng)
-\begin{DoxyCompactList}\small\item\em Perturb parameters in \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph. \end{DoxyCompactList}\item 
-\hypertarget{pophist_8h_a91b3d9fbbb3b513a17d8c27c8c7346f0}{void {\bfseries Pop\-Hist\-\_\-sanity\-Check} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, const char $\ast$file, int line)}\label{pophist_8h_a91b3d9fbbb3b513a17d8c27c8c7346f0}
+\begin{DoxyCompactList}\small\item\em Return a pointer to a newly allocated copy of \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph. \end{DoxyCompactList}\item 
+void \hyperlink{pophist_8h_a8889aa7823b0d6cf94bc053b80e43c3c}{Pop\+Hist\+\_\+copy} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$dest, const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$src)
+\begin{DoxyCompactList}\small\item\em Copy \hyperlink{struct_pop_hist}{Pop\+Hist} src into dest. \end{DoxyCompactList}\item 
+\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ \hyperlink{pophist_8h_a3a36813899cde3c78be85d39c3fec971}{Pop\+Hist\+\_\+perturb} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$model, double dt, double d\+N, gsl\+\_\+rng $\ast$rng)
+\begin{DoxyCompactList}\small\item\em Fill ph with random values based on ph0. \end{DoxyCompactList}\item 
+\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ \hyperlink{pophist_8h_a71a4f5b1e4f4879a862c0c66234b5866}{Pop\+Hist\+\_\+perturb\+In\+Place} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, double dt, double d\+N, gsl\+\_\+rng $\ast$rng)
+\begin{DoxyCompactList}\small\item\em Perturb parameters in \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph. \end{DoxyCompactList}\item 
+\hypertarget{pophist_8h_a91b3d9fbbb3b513a17d8c27c8c7346f0}{void {\bfseries Pop\+Hist\+\_\+sanity\+Check} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, const char $\ast$file, int line)}\label{pophist_8h_a91b3d9fbbb3b513a17d8c27c8c7346f0}
 
 \item 
-\hypertarget{pophist_8h_a6ccafb268ba933cdfa18374b30cc713d}{double \hyperlink{pophist_8h_a6ccafb268ba933cdfa18374b30cc713d}{Pop\-Hist\-\_\-distance} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph1, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph2)}\label{pophist_8h_a6ccafb268ba933cdfa18374b30cc713d}
+\hypertarget{pophist_8h_a6ccafb268ba933cdfa18374b30cc713d}{double \hyperlink{pophist_8h_a6ccafb268ba933cdfa18374b30cc713d}{Pop\+Hist\+\_\+distance} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph1, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph2)}\label{pophist_8h_a6ccafb268ba933cdfa18374b30cc713d}
 
-\begin{DoxyCompactList}\small\item\em Measure the distance between two \hyperlink{struct_pop_hist}{Pop\-Hist} objects. \end{DoxyCompactList}\item 
-size\-\_\-t \hyperlink{pophist_8h_a6d1b299d267c1f9944a70055bc5ba2d6}{Pop\-Hist\-\_\-size} (const \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)
+\begin{DoxyCompactList}\small\item\em Measure the distance between two \hyperlink{struct_pop_hist}{Pop\+Hist} objects. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{pophist_8h_a6d1b299d267c1f9944a70055bc5ba2d6}{Pop\+Hist\+\_\+size} (const \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)
 \begin{DoxyCompactList}\small\item\em Return the size of the memory block on which {\ttfamily ph} is allocated. \end{DoxyCompactList}\item 
-int \hyperlink{pophist_8h_a4bbdf86438c29e8b521924873764798e}{Pop\-Hist\-\_\-calc\-\_\-n\-Params} (int nepoch)
-\begin{DoxyCompactList}\small\item\em This is just like Pop\-Hist\-\_\-n\-Params, except that you don't need to allocate a \hyperlink{struct_pop_hist}{Pop\-Hist} object before calling it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int \hyperlink{pophist_8h_a4bbdf86438c29e8b521924873764798e}{Pop\+Hist\+\_\+calc\+\_\+n\+Params} (int nepoch)
+\begin{DoxyCompactList}\small\item\em This is just like Pop\+Hist\+\_\+n\+Params, except that you don't need to allocate a \hyperlink{struct_pop_hist}{Pop\+Hist} object before calling it. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
-Header for \hyperlink{pophist_8c}{pophist.\-c}. \begin{DoxyAuthor}{Author}
+Header for \hyperlink{pophist_8c}{pophist.\+c}. 
+
+\begin{DoxyAuthor}{Author}
 Alan R. Rogers 
 \end{DoxyAuthor}
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
 \end{DoxyCopyright}
 
 
 \subsubsection{Function Documentation}
-\hypertarget{pophist_8h_a6b9033dee565cb759d3df91e3e2d99fc}{\index{pophist.\-h@{pophist.\-h}!Epoch\-Link\-\_\-dup@{Epoch\-Link\-\_\-dup}}
-\index{Epoch\-Link\-\_\-dup@{Epoch\-Link\-\_\-dup}!pophist.h@{pophist.\-h}}
-\paragraph[{Epoch\-Link\-\_\-dup}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Epoch\-Link}$\ast$ Epoch\-Link\-\_\-dup (
+\hypertarget{pophist_8h_a6b9033dee565cb759d3df91e3e2d99fc}{\index{pophist.\+h@{pophist.\+h}!Epoch\+Link\+\_\+dup@{Epoch\+Link\+\_\+dup}}
+\index{Epoch\+Link\+\_\+dup@{Epoch\+Link\+\_\+dup}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Epoch\+Link\+\_\+dup}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Epoch\+Link}$\ast$ Epoch\+Link\+\_\+dup (
 \begin{DoxyParamCaption}
-\item[{{\bf Epoch\-Link} $\ast$}]{head}
+\item[{{\bf Epoch\+Link} $\ast$}]{head}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a6b9033dee565cb759d3df91e3e2d99fc}
 
@@ -144,17 +146,17 @@ Return a newly allocated copy of a linked list of epochs.
 
 
 
-References Epoch\-Link\-\_\-dup().
+References Epoch\+Link\+\_\+dup().
 
 
 
-Referenced by Epoch\-Link\-\_\-dup(), and Ini\-\_\-set\-Epoch\-Link().
+Referenced by Epoch\+Link\+\_\+dup(), and Ini\+\_\+set\+Epoch\+Link().
 
-\hypertarget{pophist_8h_a5c07d02bd9d6d3afe55d501b26154404}{\index{pophist.\-h@{pophist.\-h}!Epoch\-Link\-\_\-duration@{Epoch\-Link\-\_\-duration}}
-\index{Epoch\-Link\-\_\-duration@{Epoch\-Link\-\_\-duration}!pophist.h@{pophist.\-h}}
-\paragraph[{Epoch\-Link\-\_\-duration}]{\setlength{\rightskip}{0pt plus 5cm}double Epoch\-Link\-\_\-duration (
+\hypertarget{pophist_8h_a5c07d02bd9d6d3afe55d501b26154404}{\index{pophist.\+h@{pophist.\+h}!Epoch\+Link\+\_\+duration@{Epoch\+Link\+\_\+duration}}
+\index{Epoch\+Link\+\_\+duration@{Epoch\+Link\+\_\+duration}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Epoch\+Link\+\_\+duration}]{\setlength{\rightskip}{0pt plus 5cm}double Epoch\+Link\+\_\+duration (
 \begin{DoxyParamCaption}
-\item[{const {\bf Epoch\-Link} $\ast$}]{link}
+\item[{const {\bf Epoch\+Link} $\ast$}]{link}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a5c07d02bd9d6d3afe55d501b26154404}
 
@@ -163,15 +165,15 @@ Return time value from given link.
 
 
 
-Referenced by Pop\-Hist\-\_\-from\-Epoch\-Link().
+Referenced by Pop\+Hist\+\_\+from\+Epoch\+Link().
 
-\hypertarget{pophist_8h_adf220315a26ff5eaeb907e4a69938b58}{\index{pophist.\-h@{pophist.\-h}!Epoch\-Link\-\_\-new@{Epoch\-Link\-\_\-new}}
-\index{Epoch\-Link\-\_\-new@{Epoch\-Link\-\_\-new}!pophist.h@{pophist.\-h}}
-\paragraph[{Epoch\-Link\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Epoch\-Link}$\ast$ Epoch\-Link\-\_\-new (
+\hypertarget{pophist_8h_adf220315a26ff5eaeb907e4a69938b58}{\index{pophist.\+h@{pophist.\+h}!Epoch\+Link\+\_\+new@{Epoch\+Link\+\_\+new}}
+\index{Epoch\+Link\+\_\+new@{Epoch\+Link\+\_\+new}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Epoch\+Link\+\_\+new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Epoch\+Link}$\ast$ Epoch\+Link\+\_\+new (
 \begin{DoxyParamCaption}
-\item[{{\bf Epoch\-Link} $\ast$}]{head, }
+\item[{{\bf Epoch\+Link} $\ast$}]{head, }
 \item[{double}]{t, }
-\item[{double}]{two\-N}
+\item[{double}]{two\+N}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_adf220315a26ff5eaeb907e4a69938b58}
 
@@ -183,18 +185,18 @@ pointer to head of list.
 \end{DoxyReturn}
 
 
-Referenced by Ini\-\_\-new().
+Referenced by Ini\+\_\+new().
 
-\hypertarget{pophist_8h_a6011f14fab17c89dbea6f05666747b56}{\index{pophist.\-h@{pophist.\-h}!Epoch\-Link\-\_\-nlinks@{Epoch\-Link\-\_\-nlinks}}
-\index{Epoch\-Link\-\_\-nlinks@{Epoch\-Link\-\_\-nlinks}!pophist.h@{pophist.\-h}}
-\paragraph[{Epoch\-Link\-\_\-nlinks}]{\setlength{\rightskip}{0pt plus 5cm}int Epoch\-Link\-\_\-nlinks (
+\hypertarget{pophist_8h_a6011f14fab17c89dbea6f05666747b56}{\index{pophist.\+h@{pophist.\+h}!Epoch\+Link\+\_\+nlinks@{Epoch\+Link\+\_\+nlinks}}
+\index{Epoch\+Link\+\_\+nlinks@{Epoch\+Link\+\_\+nlinks}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Epoch\+Link\+\_\+nlinks}]{\setlength{\rightskip}{0pt plus 5cm}int Epoch\+Link\+\_\+nlinks (
 \begin{DoxyParamCaption}
-\item[{const {\bf Epoch\-Link} $\ast$}]{head}
+\item[{const {\bf Epoch\+Link} $\ast$}]{head}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a6011f14fab17c89dbea6f05666747b56}
 
 
-Count the number of links in a linked list of \hyperlink{struct_epoch_link}{Epoch\-Link} objects. 
+Count the number of links in a linked list of \hyperlink{struct_epoch_link}{Epoch\+Link} objects. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -206,19 +208,19 @@ Number of links in the chain beginning with \char`\"{}head\char`\"{}.
 \end{DoxyReturn}
 
 
-References Epoch\-Link\-\_\-nlinks().
+References Epoch\+Link\+\_\+nlinks().
 
 
 
-Referenced by Epoch\-Link\-\_\-nlinks(), and Pop\-Hist\-\_\-from\-Epoch\-Link().
+Referenced by Epoch\+Link\+\_\+nlinks(), and Pop\+Hist\+\_\+from\+Epoch\+Link().
 
-\hypertarget{pophist_8h_ac1fe84164580f9f6bccec764debe6a42}{\index{pophist.\-h@{pophist.\-h}!Epoch\-Link\-\_\-print@{Epoch\-Link\-\_\-print}}
-\index{Epoch\-Link\-\_\-print@{Epoch\-Link\-\_\-print}!pophist.h@{pophist.\-h}}
-\paragraph[{Epoch\-Link\-\_\-print}]{\setlength{\rightskip}{0pt plus 5cm}void Epoch\-Link\-\_\-print (
+\hypertarget{pophist_8h_ac1fe84164580f9f6bccec764debe6a42}{\index{pophist.\+h@{pophist.\+h}!Epoch\+Link\+\_\+print@{Epoch\+Link\+\_\+print}}
+\index{Epoch\+Link\+\_\+print@{Epoch\+Link\+\_\+print}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Epoch\+Link\+\_\+print}]{\setlength{\rightskip}{0pt plus 5cm}void Epoch\+Link\+\_\+print (
 \begin{DoxyParamCaption}
 \item[{int}]{ndx, }
-\item[{const {\bf Epoch\-Link} $\ast$}]{link, }
-\item[{F\-I\-L\-E $\ast$}]{ofp}
+\item[{const {\bf Epoch\+Link} $\ast$}]{link, }
+\item[{F\+I\+L\+E $\ast$}]{ofp}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_ac1fe84164580f9f6bccec764debe6a42}
 
@@ -236,32 +238,32 @@ Print a linked list.
 \end{DoxyParams}
 
 
-References Epoch\-Link\-\_\-print().
+References Epoch\+Link\+\_\+print().
 
 
 
-Referenced by Epoch\-Link\-\_\-print(), and Ini\-\_\-print().
+Referenced by Epoch\+Link\+\_\+print(), and Ini\+\_\+print().
 
-\hypertarget{pophist_8h_aee2e6a621ee28c97fe2a0b97fa2990fa}{\index{pophist.\-h@{pophist.\-h}!Epoch\-Link\-\_\-two\-N@{Epoch\-Link\-\_\-two\-N}}
-\index{Epoch\-Link\-\_\-two\-N@{Epoch\-Link\-\_\-two\-N}!pophist.h@{pophist.\-h}}
-\paragraph[{Epoch\-Link\-\_\-two\-N}]{\setlength{\rightskip}{0pt plus 5cm}double Epoch\-Link\-\_\-two\-N (
+\hypertarget{pophist_8h_aee2e6a621ee28c97fe2a0b97fa2990fa}{\index{pophist.\+h@{pophist.\+h}!Epoch\+Link\+\_\+two\+N@{Epoch\+Link\+\_\+two\+N}}
+\index{Epoch\+Link\+\_\+two\+N@{Epoch\+Link\+\_\+two\+N}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Epoch\+Link\+\_\+two\+N}]{\setlength{\rightskip}{0pt plus 5cm}double Epoch\+Link\+\_\+two\+N (
 \begin{DoxyParamCaption}
-\item[{const {\bf Epoch\-Link} $\ast$}]{link}
+\item[{const {\bf Epoch\+Link} $\ast$}]{link}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_aee2e6a621ee28c97fe2a0b97fa2990fa}
 
 
-Return two\-N value from given link. 
+Return two\+N value from given link. 
 
 
 
-Referenced by Ini\-\_\-two\-N0(), and Pop\-Hist\-\_\-from\-Epoch\-Link().
+Referenced by Ini\+\_\+two\+N0(), and Pop\+Hist\+\_\+from\+Epoch\+Link().
 
-\hypertarget{pophist_8h_a4cfc4c367fb7371b09e31cdff53aff5c}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-age@{Pop\-Hist\-\_\-age}}
-\index{Pop\-Hist\-\_\-age@{Pop\-Hist\-\_\-age}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}double Pop\-Hist\-\_\-age (
+\hypertarget{pophist_8h_a4cfc4c367fb7371b09e31cdff53aff5c}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+age@{Pop\+Hist\+\_\+age}}
+\index{Pop\+Hist\+\_\+age@{Pop\+Hist\+\_\+age}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+age}]{\setlength{\rightskip}{0pt plus 5cm}double Pop\+Hist\+\_\+age (
 \begin{DoxyParamCaption}
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{int}]{i}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a4cfc4c367fb7371b09e31cdff53aff5c}
@@ -269,144 +271,144 @@ Referenced by Ini\-\_\-two\-N0(), and Pop\-Hist\-\_\-from\-Epoch\-Link().
 
 Return time from leaves to the most recent end of Epoch i. 
 
-Thus, Pop\-Hist\-\_\-age(ph, 0) is 0 and Pop\-Hist\-\_\-age(ph, Pop\-Hist\-\_\-nepoch(ph)) gives the sum of all epoch durations except the final infinite one. 
+Thus, Pop\+Hist\+\_\+age(ph, 0) is 0 and Pop\+Hist\+\_\+age(ph, Pop\+Hist\+\_\+nepoch(ph)) gives the sum of all epoch durations except the final infinite one. 
 
-References Pop\-Hist\-\_\-duration().
+References Pop\+Hist\+\_\+duration().
 
-\hypertarget{pophist_8h_a4bbdf86438c29e8b521924873764798e}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-calc\-\_\-n\-Params@{Pop\-Hist\-\_\-calc\-\_\-n\-Params}}
-\index{Pop\-Hist\-\_\-calc\-\_\-n\-Params@{Pop\-Hist\-\_\-calc\-\_\-n\-Params}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-calc\-\_\-n\-Params}]{\setlength{\rightskip}{0pt plus 5cm}int Pop\-Hist\-\_\-calc\-\_\-n\-Params (
+\hypertarget{pophist_8h_a4bbdf86438c29e8b521924873764798e}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+calc\+\_\+n\+Params@{Pop\+Hist\+\_\+calc\+\_\+n\+Params}}
+\index{Pop\+Hist\+\_\+calc\+\_\+n\+Params@{Pop\+Hist\+\_\+calc\+\_\+n\+Params}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+calc\+\_\+n\+Params}]{\setlength{\rightskip}{0pt plus 5cm}int Pop\+Hist\+\_\+calc\+\_\+n\+Params (
 \begin{DoxyParamCaption}
 \item[{int}]{nepoch}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a4bbdf86438c29e8b521924873764798e}
 
 
-This is just like Pop\-Hist\-\_\-n\-Params, except that you don't need to allocate a \hyperlink{struct_pop_hist}{Pop\-Hist} object before calling it. 
+This is just like Pop\+Hist\+\_\+n\+Params, except that you don't need to allocate a \hyperlink{struct_pop_hist}{Pop\+Hist} object before calling it. 
 
 All you need is the number of epochs. 
 
-References P\-A\-R\-\_\-\-P\-E\-R\-\_\-\-E\-P\-O\-C\-H.
+References P\+A\+R\+\_\+\+P\+E\+R\+\_\+\+E\+P\+O\+C\+H.
 
 
 
-Referenced by Pop\-Hist\-\_\-n\-Params().
+Referenced by Pop\+Hist\+\_\+n\+Params().
 
-\hypertarget{pophist_8h_a8889aa7823b0d6cf94bc053b80e43c3c}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-copy@{Pop\-Hist\-\_\-copy}}
-\index{Pop\-Hist\-\_\-copy@{Pop\-Hist\-\_\-copy}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-copy}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\-Hist\-\_\-copy (
+\hypertarget{pophist_8h_a8889aa7823b0d6cf94bc053b80e43c3c}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+copy@{Pop\+Hist\+\_\+copy}}
+\index{Pop\+Hist\+\_\+copy@{Pop\+Hist\+\_\+copy}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+copy}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\+Hist\+\_\+copy (
 \begin{DoxyParamCaption}
-\item[{{\bf Pop\-Hist} $\ast$}]{dest, }
-\item[{const {\bf Pop\-Hist} $\ast$}]{src}
+\item[{{\bf Pop\+Hist} $\ast$}]{dest, }
+\item[{const {\bf Pop\+Hist} $\ast$}]{src}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a8889aa7823b0d6cf94bc053b80e43c3c}
 
 
-Copy \hyperlink{struct_pop_hist}{Pop\-Hist} src into dest. 
+Copy \hyperlink{struct_pop_hist}{Pop\+Hist} src into dest. 
 
 The two must have equal values of nepoch. Otherwise, the function aborts. 
 \begin{DoxyParams}{Parameters}
-{\em src} & The source \hyperlink{struct_pop_hist}{Pop\-Hist}. \\
+{\em src} & The source \hyperlink{struct_pop_hist}{Pop\+Hist}. \\
 \hline
-{\em dest} & The destination \hyperlink{struct_pop_hist}{Pop\-Hist}. \\
+{\em dest} & The destination \hyperlink{struct_pop_hist}{Pop\+Hist}. \\
 \hline
 \end{DoxyParams}
 
 
-References Pop\-Hist\-::size.
+References Pop\+Hist\+::size.
 
 
 
-Referenced by Chain\-\_\-best\-Fit(), Chain\-\_\-publish(), Chain\-State\-\_\-new(), and Pop\-Hist\-\_\-perturb().
+Referenced by Chain\+\_\+best\+Fit(), Chain\+\_\+publish(), Chain\+State\+\_\+new(), and Pop\+Hist\+\_\+perturb().
 
-\hypertarget{pophist_8h_a5f2dfe7e1821acd6bbcffad8dab3201c}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-free@{Pop\-Hist\-\_\-free}}
-\index{Pop\-Hist\-\_\-free@{Pop\-Hist\-\_\-free}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\-Hist\-\_\-free (
+\hypertarget{pophist_8h_a5f2dfe7e1821acd6bbcffad8dab3201c}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+free@{Pop\+Hist\+\_\+free}}
+\index{Pop\+Hist\+\_\+free@{Pop\+Hist\+\_\+free}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+free}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\+Hist\+\_\+free (
 \begin{DoxyParamCaption}
-\item[{{\bf Pop\-Hist} $\ast$}]{ph}
+\item[{{\bf Pop\+Hist} $\ast$}]{ph}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a5f2dfe7e1821acd6bbcffad8dab3201c}
 
 
-Destroy a \hyperlink{struct_pop_hist}{Pop\-Hist} object. 
+Destroy a \hyperlink{struct_pop_hist}{Pop\+Hist} object. 
 
 
 
-Referenced by Chain\-\_\-free().
+Referenced by Chain\+\_\+free().
 
-\hypertarget{pophist_8h_a50e2953d018cb80dd0616758bb321326}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-from\-Epoch\-Link@{Pop\-Hist\-\_\-from\-Epoch\-Link}}
-\index{Pop\-Hist\-\_\-from\-Epoch\-Link@{Pop\-Hist\-\_\-from\-Epoch\-Link}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-from\-Epoch\-Link}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pop\-Hist}$\ast$ Pop\-Hist\-\_\-from\-Epoch\-Link (
+\hypertarget{pophist_8h_a50e2953d018cb80dd0616758bb321326}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+from\+Epoch\+Link@{Pop\+Hist\+\_\+from\+Epoch\+Link}}
+\index{Pop\+Hist\+\_\+from\+Epoch\+Link@{Pop\+Hist\+\_\+from\+Epoch\+Link}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+from\+Epoch\+Link}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pop\+Hist}$\ast$ Pop\+Hist\+\_\+from\+Epoch\+Link (
 \begin{DoxyParamCaption}
-\item[{const {\bf Epoch\-Link} $\ast$}]{head}
+\item[{const {\bf Epoch\+Link} $\ast$}]{head}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a50e2953d018cb80dd0616758bb321326}
 
 
-Allocate a new \hyperlink{struct_pop_hist}{Pop\-Hist} and initialize from a chain of \hyperlink{struct_epoch_link}{Epoch\-Link} objects. 
+Allocate a new \hyperlink{struct_pop_hist}{Pop\+Hist} and initialize from a chain of \hyperlink{struct_epoch_link}{Epoch\+Link} objects. 
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em head} & Beginning of chain of \hyperlink{struct_epoch_link}{Epoch\-Link} objects. \\
+\mbox{\tt in}  & {\em head} & Beginning of chain of \hyperlink{struct_epoch_link}{Epoch\+Link} objects. \\
 \hline
 \end{DoxyParams}
 
 
-References Epoch\-Link\-\_\-duration(), Epoch\-Link\-\_\-next(), Epoch\-Link\-\_\-nlinks(), Epoch\-Link\-\_\-two\-N(), Pop\-Hist\-::nepoch, Pop\-Hist\-\_\-duration(), Pop\-Hist\-\_\-new\-Empty(), Pop\-Hist\-\_\-set\-Duration(), and Pop\-Hist\-\_\-set\-Two\-N().
+References Epoch\+Link\+\_\+duration(), Epoch\+Link\+\_\+next(), Epoch\+Link\+\_\+nlinks(), Epoch\+Link\+\_\+two\+N(), Pop\+Hist\+::nepoch, Pop\+Hist\+\_\+duration(), Pop\+Hist\+\_\+new\+Empty(), Pop\+Hist\+\_\+set\+Duration(), and Pop\+Hist\+\_\+set\+Two\+N().
 
-\hypertarget{pophist_8h_ae7b6a8832ecadc26ba34d80a1c6071d1}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-new\-Empty@{Pop\-Hist\-\_\-new\-Empty}}
-\index{Pop\-Hist\-\_\-new\-Empty@{Pop\-Hist\-\_\-new\-Empty}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-new\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pop\-Hist}$\ast$ Pop\-Hist\-\_\-new\-Empty (
+\hypertarget{pophist_8h_ae7b6a8832ecadc26ba34d80a1c6071d1}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+new\+Empty@{Pop\+Hist\+\_\+new\+Empty}}
+\index{Pop\+Hist\+\_\+new\+Empty@{Pop\+Hist\+\_\+new\+Empty}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+new\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pop\+Hist}$\ast$ Pop\+Hist\+\_\+new\+Empty (
 \begin{DoxyParamCaption}
 \item[{unsigned}]{nepoch}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_ae7b6a8832ecadc26ba34d80a1c6071d1}
 
 
-Allocate an empty \hyperlink{struct_pop_hist}{Pop\-Hist}. 
+Allocate an empty \hyperlink{struct_pop_hist}{Pop\+Hist}. 
 
 The parameters of each epoch are initialized with zeroes, except for the duration of the final (earliest) epoch, which is infinite.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em nepoch} & Number of epochs in the new \hyperlink{struct_pop_hist}{Pop\-Hist}.\\
+\mbox{\tt in}  & {\em nepoch} & Number of epochs in the new \hyperlink{struct_pop_hist}{Pop\+Hist}.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-a pointer to a newly allocated \hyperlink{struct_pop_hist}{Pop\-Hist} object with default values. 
+a pointer to a newly allocated \hyperlink{struct_pop_hist}{Pop\+Hist} object with default values. 
 \end{DoxyReturn}
 
 
-References Pop\-Hist\-\_\-calc\-Size(), and Pop\-Hist\-\_\-init().
+References Pop\+Hist\+\_\+calc\+Size(), and Pop\+Hist\+\_\+init().
 
 
 
-Referenced by Pop\-Hist\-\_\-from\-Epoch\-Link().
+Referenced by Pop\+Hist\+\_\+from\+Epoch\+Link().
 
-\hypertarget{pophist_8h_ae4d28244de462cde7a4aa8e6fe4da627}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-n\-Params@{Pop\-Hist\-\_\-n\-Params}}
-\index{Pop\-Hist\-\_\-n\-Params@{Pop\-Hist\-\_\-n\-Params}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-n\-Params}]{\setlength{\rightskip}{0pt plus 5cm}unsigned Pop\-Hist\-\_\-n\-Params (
+\hypertarget{pophist_8h_ae4d28244de462cde7a4aa8e6fe4da627}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+n\+Params@{Pop\+Hist\+\_\+n\+Params}}
+\index{Pop\+Hist\+\_\+n\+Params@{Pop\+Hist\+\_\+n\+Params}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+n\+Params}]{\setlength{\rightskip}{0pt plus 5cm}unsigned Pop\+Hist\+\_\+n\+Params (
 \begin{DoxyParamCaption}
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph}
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_ae4d28244de462cde7a4aa8e6fe4da627}
 
 
-Return the number of parameters in a \hyperlink{struct_pop_hist}{Pop\-Hist}. 
+Return the number of parameters in a \hyperlink{struct_pop_hist}{Pop\+Hist}. 
 
-There are two adjustable parameters per epoch\-: N and t, except that t is fixed at infinity in the earliest epoch. The number of adjustable parameters is therefore 2$\ast$nepochs -\/ 1. 
+There are two adjustable parameters per epoch\+: N and t, except that t is fixed at infinity in the earliest epoch. The number of adjustable parameters is therefore 2$\ast$nepochs -\/ 1. 
 
-References Pop\-Hist\-::nepoch, and Pop\-Hist\-\_\-calc\-\_\-n\-Params().
+References Pop\+Hist\+::nepoch, and Pop\+Hist\+\_\+calc\+\_\+n\+Params().
 
 
 
-Referenced by C\-\_\-array\-\_\-to\-\_\-\-Pop\-Hist(), Chain\-\_\-print\-Hdr(), Chain\-\_\-print\-State(), cost\-Fun(), Hill\-\_\-sigdsq(), Pop\-Hist\-\_\-param\-Name(), Pop\-Hist\-\_\-param\-Value(), Pop\-Hist\-\_\-to\-\_\-\-C\-\_\-array(), Pop\-Hist\-\_\-to\-\_\-vector(), pr\-Header(), Task\-Arg\-\_\-new(), and vector\-\_\-to\-\_\-\-Pop\-Hist().
+Referenced by C\+\_\+array\+\_\+to\+\_\+\+Pop\+Hist(), Chain\+\_\+print\+Hdr(), Chain\+\_\+print\+State(), cost\+Fun(), Hill\+\_\+sigdsq(), Pop\+Hist\+\_\+param\+Name(), Pop\+Hist\+\_\+param\+Value(), Pop\+Hist\+\_\+to\+\_\+\+C\+\_\+array(), Pop\+Hist\+\_\+to\+\_\+vector(), pr\+Header(), Task\+Arg\+\_\+new(), and vector\+\_\+to\+\_\+\+Pop\+Hist().
 
-\hypertarget{pophist_8h_ac9dbfb2caae1f94acdb3e9dc93dda327}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-param\-Name@{Pop\-Hist\-\_\-param\-Name}}
-\index{Pop\-Hist\-\_\-param\-Name@{Pop\-Hist\-\_\-param\-Name}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-param\-Name}]{\setlength{\rightskip}{0pt plus 5cm}int Pop\-Hist\-\_\-param\-Name (
+\hypertarget{pophist_8h_ac9dbfb2caae1f94acdb3e9dc93dda327}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+param\+Name@{Pop\+Hist\+\_\+param\+Name}}
+\index{Pop\+Hist\+\_\+param\+Name@{Pop\+Hist\+\_\+param\+Name}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+param\+Name}]{\setlength{\rightskip}{0pt plus 5cm}int Pop\+Hist\+\_\+param\+Name (
 \begin{DoxyParamCaption}
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{char $\ast$}]{buff, }
 \item[{int}]{bufflen, }
 \item[{int}]{ndx}
@@ -414,17 +416,17 @@ Referenced by C\-\_\-array\-\_\-to\-\_\-\-Pop\-Hist(), Chain\-\_\-print\-Hdr(), 
 )}}\label{pophist_8h_ac9dbfb2caae1f94acdb3e9dc93dda327}
 
 
-Return the name of a given \hyperlink{struct_pop_hist}{Pop\-Hist} parameter. 
+Return the name of a given \hyperlink{struct_pop_hist}{Pop\+Hist} parameter. 
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ph} & A pointer to a \hyperlink{struct_pop_hist}{Pop\-Hist}. It is used only to determine the number of epochs. \\
+\mbox{\tt in}  & {\em ph} & A pointer to a \hyperlink{struct_pop_hist}{Pop\+Hist}. It is used only to determine the number of epochs. \\
 \hline
 \mbox{\tt out}  & {\em buff} & A character buffer into which the parameter's name will be written. If bufflen is too short, the name will be truncated. \\
 \hline
 \mbox{\tt in}  & {\em bufflen} & The length of the buffer. \\
 \hline
-\mbox{\tt in}  & {\em ndx} & The index of the parameter, a positive integer less than the number of \hyperlink{struct_pop_hist}{Pop\-Hist} parameters, as given by Pop\-Hist\-\_\-n\-Params. \\
+\mbox{\tt in}  & {\em ndx} & The index of the parameter, a positive integer less than the number of \hyperlink{struct_pop_hist}{Pop\+Hist} parameters, as given by Pop\+Hist\+\_\+n\+Params. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -432,29 +434,29 @@ Return the name of a given \hyperlink{struct_pop_hist}{Pop\-Hist} parameter.
 \end{DoxyReturn}
 
 
-References epoch\-Param\-Name, P\-A\-R\-\_\-\-P\-E\-R\-\_\-\-E\-P\-O\-C\-H, and Pop\-Hist\-\_\-n\-Params().
+References epoch\+Param\+Name, P\+A\+R\+\_\+\+P\+E\+R\+\_\+\+E\+P\+O\+C\+H, and Pop\+Hist\+\_\+n\+Params().
 
 
 
-Referenced by Chain\-\_\-print\-Hdr(), cost\-Fun(), Hill\-\_\-sigdsq(), and pr\-Header().
+Referenced by Chain\+\_\+print\+Hdr(), cost\+Fun(), Hill\+\_\+sigdsq(), and pr\+Header().
 
-\hypertarget{pophist_8h_ac5ced8d9ab6d10c1b6b78b34af548f0c}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-param\-Value@{Pop\-Hist\-\_\-param\-Value}}
-\index{Pop\-Hist\-\_\-param\-Value@{Pop\-Hist\-\_\-param\-Value}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-param\-Value}]{\setlength{\rightskip}{0pt plus 5cm}double Pop\-Hist\-\_\-param\-Value (
+\hypertarget{pophist_8h_ac5ced8d9ab6d10c1b6b78b34af548f0c}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+param\+Value@{Pop\+Hist\+\_\+param\+Value}}
+\index{Pop\+Hist\+\_\+param\+Value@{Pop\+Hist\+\_\+param\+Value}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+param\+Value}]{\setlength{\rightskip}{0pt plus 5cm}double Pop\+Hist\+\_\+param\+Value (
 \begin{DoxyParamCaption}
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{int}]{ndx}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_ac5ced8d9ab6d10c1b6b78b34af548f0c}
 
 
-Return the value of a given \hyperlink{struct_pop_hist}{Pop\-Hist} parameter. 
+Return the value of a given \hyperlink{struct_pop_hist}{Pop\+Hist} parameter. 
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ph} & A pointer to a \hyperlink{struct_pop_hist}{Pop\-Hist}. \\
+\mbox{\tt in}  & {\em ph} & A pointer to a \hyperlink{struct_pop_hist}{Pop\+Hist}. \\
 \hline
-\mbox{\tt in}  & {\em ndx} & The index of the parameter, a positive integer less than the number of \hyperlink{struct_pop_hist}{Pop\-Hist} parameters, as given by Pop\-Hist\-\_\-n\-Params. \\
+\mbox{\tt in}  & {\em ndx} & The index of the parameter, a positive integer less than the number of \hyperlink{struct_pop_hist}{Pop\+Hist} parameters, as given by Pop\+Hist\+\_\+n\+Params. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -462,38 +464,38 @@ Value of specified parameter within ph.
 \end{DoxyReturn}
 
 
-References Pop\-Hist\-::p, and Pop\-Hist\-\_\-n\-Params().
+References Pop\+Hist\+::p, and Pop\+Hist\+\_\+n\+Params().
 
 
 
-Referenced by Chain\-\_\-print\-State(), and cost\-Fun().
+Referenced by Chain\+\_\+print\+State(), and cost\+Fun().
 
-\hypertarget{pophist_8h_a3a36813899cde3c78be85d39c3fec971}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-perturb@{Pop\-Hist\-\_\-perturb}}
-\index{Pop\-Hist\-\_\-perturb@{Pop\-Hist\-\_\-perturb}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-perturb}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pop\-Hist}$\ast$ Pop\-Hist\-\_\-perturb (
+\hypertarget{pophist_8h_a3a36813899cde3c78be85d39c3fec971}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+perturb@{Pop\+Hist\+\_\+perturb}}
+\index{Pop\+Hist\+\_\+perturb@{Pop\+Hist\+\_\+perturb}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+perturb}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pop\+Hist}$\ast$ Pop\+Hist\+\_\+perturb (
 \begin{DoxyParamCaption}
-\item[{{\bf Pop\-Hist} $\ast$}]{ph, }
-\item[{const {\bf Pop\-Hist} $\ast$}]{model, }
+\item[{{\bf Pop\+Hist} $\ast$}]{ph, }
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph0, }
 \item[{double}]{dt, }
-\item[{double}]{d\-Ninv, }
-\item[{gsl\-\_\-rng $\ast$}]{rng}
+\item[{double}]{d\+Ninv, }
+\item[{gsl\+\_\+rng $\ast$}]{rng}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a3a36813899cde3c78be85d39c3fec971}
 
 
-Fill ph with random values based on model. 
+Fill ph with random values based on ph0. 
 
-The model is first copied into ph. Then ph is perturbed as described in the documentation to Pop\-Hist\-\_\-perturb\-In\-Place.
+ph0 is first copied into ph. Then ph is perturbed as described in the documentation to Pop\+Hist\+\_\+perturb\+In\+Place.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em ph} & \hyperlink{struct_pop_hist}{Pop\-Hist} into which new values will be written. \\
+\mbox{\tt out}  & {\em ph} & \hyperlink{struct_pop_hist}{Pop\+Hist} into which new values will be written. \\
 \hline
-\mbox{\tt in}  & {\em model} & \hyperlink{struct_pop_hist}{Pop\-Hist} whose values are perturbed to obtain new values. The values within model are unchanged. \\
+\mbox{\tt in}  & {\em ph0} & \hyperlink{struct_pop_hist}{Pop\+Hist} whose values are perturbed to obtain new values. The values within ph0 are unchanged. \\
 \hline
 \mbox{\tt in}  & {\em dt} & controls the magnitude of perturbations in the duration variable. \\
 \hline
-\mbox{\tt in}  & {\em d\-N} & controls the magnitude of perturbations in population size. \\
+\mbox{\tt in}  & {\em d\+Ninv} & controls the magnitude of perturbations in population size. \\
 \hline
 \mbox{\tt in}  & {\em rng} & random number generator. \\
 \hline
@@ -503,33 +505,33 @@ ph
 \end{DoxyReturn}
 
 
-References Pop\-Hist\-\_\-copy(), and Pop\-Hist\-\_\-perturb\-In\-Place().
+References Pop\+Hist\+\_\+copy(), and Pop\+Hist\+\_\+perturb\+In\+Place().
 
-\hypertarget{pophist_8h_a71a4f5b1e4f4879a862c0c66234b5866}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-perturb\-In\-Place@{Pop\-Hist\-\_\-perturb\-In\-Place}}
-\index{Pop\-Hist\-\_\-perturb\-In\-Place@{Pop\-Hist\-\_\-perturb\-In\-Place}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-perturb\-In\-Place}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pop\-Hist}$\ast$ Pop\-Hist\-\_\-perturb\-In\-Place (
+\hypertarget{pophist_8h_a71a4f5b1e4f4879a862c0c66234b5866}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+perturb\+In\+Place@{Pop\+Hist\+\_\+perturb\+In\+Place}}
+\index{Pop\+Hist\+\_\+perturb\+In\+Place@{Pop\+Hist\+\_\+perturb\+In\+Place}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+perturb\+In\+Place}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pop\+Hist}$\ast$ Pop\+Hist\+\_\+perturb\+In\+Place (
 \begin{DoxyParamCaption}
-\item[{{\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{{\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{double}]{dt, }
-\item[{double}]{d\-Ninv, }
-\item[{gsl\-\_\-rng $\ast$}]{rng}
+\item[{double}]{d\+Ninv, }
+\item[{gsl\+\_\+rng $\ast$}]{rng}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a71a4f5b1e4f4879a862c0c66234b5866}
 
 
-Perturb parameters in \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph. 
+Perturb parameters in \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph. 
 
-Each parameter is perturbed away from its initial value. The distribution of the perturbations depends on the macros P\-E\-R\-T\-U\-R\-B\-\_\-\-G\-A\-U\-S\-S\-I\-A\-N and P\-E\-R\-T\-U\-R\-B\-\_\-\-T\-D\-I\-S\-T. If the first of these is defined at compile time, then perturbations are Gaussian. Otherwise, if the second macro is defined, perturbations are drawn from a t distribution. Otherwise they are uniform.
+Each parameter is perturbed away from its initial value. The distribution of the perturbations depends on the macros P\+E\+R\+T\+U\+R\+B\+\_\+\+G\+A\+U\+S\+S\+I\+A\+N and P\+E\+R\+T\+U\+R\+B\+\_\+\+T\+D\+I\+S\+T. If the first of these is defined at compile time, then perturbations are Gaussian. Otherwise, if the second macro is defined, perturbations are drawn from a t distribution. Otherwise they are uniform.
 
-1/2\-N values are reflected back and forth so that the perturbed value lies within \mbox{[}lo\-Two\-Ninv, hi\-Two\-Ninv\mbox{]}.
+1/2\+N values are reflected back and forth so that the perturbed value lies within \mbox{[}lo\+Two\+Ninv, hi\+Two\+Ninv\mbox{]}.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in,out}  & {\em ph} & The \hyperlink{struct_pop_hist}{Pop\-Hist} to be perturbed. \\
+\mbox{\tt in,out}  & {\em ph} & The \hyperlink{struct_pop_hist}{Pop\+Hist} to be perturbed. \\
 \hline
 \mbox{\tt in}  & {\em dt} & controls the magnitude of perturbations in the duration variable. \\
 \hline
-\mbox{\tt in}  & {\em d\-Ninv} & controls the magnitude of perturbations in 1/2\-N. \\
+\mbox{\tt in}  & {\em d\+Ninv} & controls the magnitude of perturbations in 1/2\+N. \\
 \hline
 \mbox{\tt in}  & {\em rng} & random number generator. \\
 \hline
@@ -539,55 +541,55 @@ ph
 \end{DoxyReturn}
 
 
-References Pop\-Hist\-::nepoch, Pop\-Hist\-\_\-duration(), Pop\-Hist\-\_\-set\-Duration(), Pop\-Hist\-\_\-set\-Two\-Ninv(), Pop\-Hist\-\_\-two\-Ninv(), and reflect().
+References Pop\+Hist\+::nepoch, Pop\+Hist\+\_\+duration(), Pop\+Hist\+\_\+set\+Duration(), Pop\+Hist\+\_\+set\+Two\+Ninv(), Pop\+Hist\+\_\+two\+Ninv(), and reflect().
 
 
 
-Referenced by Pop\-Hist\-\_\-perturb().
+Referenced by Pop\+Hist\+\_\+perturb().
 
-\hypertarget{pophist_8h_aaa5796bc8091de8e006e670763b4c306}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-print@{Pop\-Hist\-\_\-print}}
-\index{Pop\-Hist\-\_\-print@{Pop\-Hist\-\_\-print}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-print}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\-Hist\-\_\-print (
+\hypertarget{pophist_8h_aaa5796bc8091de8e006e670763b4c306}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+print@{Pop\+Hist\+\_\+print}}
+\index{Pop\+Hist\+\_\+print@{Pop\+Hist\+\_\+print}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+print}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\+Hist\+\_\+print (
 \begin{DoxyParamCaption}
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph, }
-\item[{F\-I\-L\-E $\ast$}]{outfile}
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph, }
+\item[{F\+I\+L\+E $\ast$}]{outfile}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_aaa5796bc8091de8e006e670763b4c306}
 
 
-Print a \hyperlink{struct_pop_hist}{Pop\-Hist} object. 
+Print a \hyperlink{struct_pop_hist}{Pop\+Hist} object. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em ph} & \hyperlink{struct_pop_hist}{Pop\-Hist} to print. \\
+{\em ph} & \hyperlink{struct_pop_hist}{Pop\+Hist} to print. \\
 \hline
 {\em outfile} & Output file. \\
 \hline
 \end{DoxyParams}
 
 
-References Pop\-Hist\-\_\-print\-\_\-comment().
+References Pop\+Hist\+\_\+print\+\_\+comment().
 
 
 
-Referenced by cost\-Fun().
+Referenced by cost\+Fun().
 
-\hypertarget{pophist_8h_a9d38c9b90aaabb25fc756460b4d2ed02}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-print\-\_\-comment@{Pop\-Hist\-\_\-print\-\_\-comment}}
-\index{Pop\-Hist\-\_\-print\-\_\-comment@{Pop\-Hist\-\_\-print\-\_\-comment}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-print\-\_\-comment}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\-Hist\-\_\-print\-\_\-comment (
+\hypertarget{pophist_8h_a9d38c9b90aaabb25fc756460b4d2ed02}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+print\+\_\+comment@{Pop\+Hist\+\_\+print\+\_\+comment}}
+\index{Pop\+Hist\+\_\+print\+\_\+comment@{Pop\+Hist\+\_\+print\+\_\+comment}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+print\+\_\+comment}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\+Hist\+\_\+print\+\_\+comment (
 \begin{DoxyParamCaption}
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{const char $\ast$}]{comstr, }
-\item[{F\-I\-L\-E $\ast$}]{outfile}
+\item[{F\+I\+L\+E $\ast$}]{outfile}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a9d38c9b90aaabb25fc756460b4d2ed02}
 
 
-Print \hyperlink{struct_pop_hist}{Pop\-Hist}, preceding each line with a comment string. 
+Print \hyperlink{struct_pop_hist}{Pop\+Hist}, preceding each line with a comment string. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em ph} & \hyperlink{struct_pop_hist}{Pop\-Hist} to print. \\
+{\em ph} & \hyperlink{struct_pop_hist}{Pop\+Hist} to print. \\
 \hline
 {\em comstr} & Comment string to prepend to each line of output. \\
 \hline
@@ -596,83 +598,83 @@ Print \hyperlink{struct_pop_hist}{Pop\-Hist}, preceding each line with a comment
 \end{DoxyParams}
 
 
-References Pop\-Hist\-::nepoch, Pop\-Hist\-\_\-duration(), and Pop\-Hist\-\_\-two\-Ninv().
+References Pop\+Hist\+::nepoch, Pop\+Hist\+\_\+duration(), and Pop\+Hist\+\_\+two\+Ninv().
 
 
 
-Referenced by Chain\-\_\-print\-Full(), and Pop\-Hist\-\_\-print().
+Referenced by Chain\+\_\+print\+Full(), and Pop\+Hist\+\_\+print().
 
-\hypertarget{pophist_8h_ab411170a33d32d51012bfd8d7de18a72}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-set\-Duration@{Pop\-Hist\-\_\-set\-Duration}}
-\index{Pop\-Hist\-\_\-set\-Duration@{Pop\-Hist\-\_\-set\-Duration}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-set\-Duration}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\-Hist\-\_\-set\-Duration (
+\hypertarget{pophist_8h_ab411170a33d32d51012bfd8d7de18a72}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+set\+Duration@{Pop\+Hist\+\_\+set\+Duration}}
+\index{Pop\+Hist\+\_\+set\+Duration@{Pop\+Hist\+\_\+set\+Duration}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+set\+Duration}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\+Hist\+\_\+set\+Duration (
 \begin{DoxyParamCaption}
-\item[{{\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{{\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{int}]{i, }
 \item[{double}]{duration}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_ab411170a33d32d51012bfd8d7de18a72}
 
 
-Set duration of the i'th epoch of \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph. 
+Set duration of the i'th epoch of \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph. 
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em ph} & \hyperlink{struct_pop_hist}{Pop\-Hist} object to be modified. \\
+\mbox{\tt out}  & {\em ph} & \hyperlink{struct_pop_hist}{Pop\+Hist} object to be modified. \\
 \hline
 \mbox{\tt in}  & {\em i} & index of epoch to be modified. Must be less than ph-\/$>$nepoch-\/1. \\
 \hline
-\mbox{\tt in}  & {\em t} & new value of duration of i'th epoch. \\
+\mbox{\tt in}  & {\em duration} & new value of duration of i'th epoch. \\
 \hline
 \end{DoxyParams}
 
 
-References Pop\-Hist\-::nepoch, Pop\-Hist\-::p, and P\-A\-R\-\_\-\-P\-E\-R\-\_\-\-E\-P\-O\-C\-H.
+References Pop\+Hist\+::nepoch, Pop\+Hist\+::p, and P\+A\+R\+\_\+\+P\+E\+R\+\_\+\+E\+P\+O\+C\+H.
 
 
 
-Referenced by Pop\-Hist\-\_\-from\-Epoch\-Link(), Pop\-Hist\-\_\-perturb\-In\-Place(), and vector\-\_\-to\-\_\-\-Pop\-Hist().
+Referenced by Pop\+Hist\+\_\+from\+Epoch\+Link(), Pop\+Hist\+\_\+perturb\+In\+Place(), and vector\+\_\+to\+\_\+\+Pop\+Hist().
 
-\hypertarget{pophist_8h_abf958de381896ca75f8e1ab74a0c633d}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-set\-Simplex\-Scale@{Pop\-Hist\-\_\-set\-Simplex\-Scale}}
-\index{Pop\-Hist\-\_\-set\-Simplex\-Scale@{Pop\-Hist\-\_\-set\-Simplex\-Scale}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-set\-Simplex\-Scale}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\-Hist\-\_\-set\-Simplex\-Scale (
+\hypertarget{pophist_8h_abf958de381896ca75f8e1ab74a0c633d}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+set\+Simplex\+Scale@{Pop\+Hist\+\_\+set\+Simplex\+Scale}}
+\index{Pop\+Hist\+\_\+set\+Simplex\+Scale@{Pop\+Hist\+\_\+set\+Simplex\+Scale}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+set\+Simplex\+Scale}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\+Hist\+\_\+set\+Simplex\+Scale (
 \begin{DoxyParamCaption}
-\item[{gsl\-\_\-vector $\ast$}]{scale, }
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph}
+\item[{gsl\+\_\+vector $\ast$}]{scale, }
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_abf958de381896ca75f8e1ab74a0c633d}
 
 
 Set scale vector used by simplex algorithm. 
 
-Each entry receives a value that represents the expected magnitude of the corresponding parameter in \hyperlink{struct_pop_hist}{Pop\-Hist}.
+Each entry receives a value that represents the expected magnitude of the corresponding parameter in \hyperlink{struct_pop_hist}{Pop\+Hist}.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em \hyperlink{struct_pop_hist}{Pop\-Hist}} & object. \\
+\mbox{\tt in}  & {\em \hyperlink{struct_pop_hist}{Pop\+Hist}} & object. \\
 \hline
-\mbox{\tt out}  & {\em scale} & gsl\-\_\-vector into which paramters will be written. \\
+\mbox{\tt out}  & {\em scale} & gsl\+\_\+vector into which paramters will be written. \\
 \hline
 \end{DoxyParams}
 
 
-References Pop\-Hist\-::nepoch.
+References Pop\+Hist\+::nepoch.
 
-\hypertarget{pophist_8h_a16ac7d6ae66be63a857f9341f3f60944}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-set\-Two\-N@{Pop\-Hist\-\_\-set\-Two\-N}}
-\index{Pop\-Hist\-\_\-set\-Two\-N@{Pop\-Hist\-\_\-set\-Two\-N}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-set\-Two\-N}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\-Hist\-\_\-set\-Two\-N (
+\hypertarget{pophist_8h_a16ac7d6ae66be63a857f9341f3f60944}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+set\+Two\+N@{Pop\+Hist\+\_\+set\+Two\+N}}
+\index{Pop\+Hist\+\_\+set\+Two\+N@{Pop\+Hist\+\_\+set\+Two\+N}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+set\+Two\+N}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\+Hist\+\_\+set\+Two\+N (
 \begin{DoxyParamCaption}
-\item[{{\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{{\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{int}]{i, }
-\item[{double}]{two\-N}
+\item[{double}]{two\+N}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a16ac7d6ae66be63a857f9341f3f60944}
 
 
-Set population size during the i'th epoch of \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph. 
+Set population size during the i'th epoch of \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph. 
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em ph} & \hyperlink{struct_pop_hist}{Pop\-Hist} object to be modified. \\
+\mbox{\tt out}  & {\em ph} & \hyperlink{struct_pop_hist}{Pop\+Hist} object to be modified. \\
 \hline
 \mbox{\tt in}  & {\em i} & index of epoch to be modified. Must be less than ph-\/$>$nepoch-\/1. \\
 \hline
@@ -681,28 +683,28 @@ Set population size during the i'th epoch of \hyperlink{struct_pop_hist}{Pop\-Hi
 \end{DoxyParams}
 
 
-References Pop\-Hist\-::p, and P\-A\-R\-\_\-\-P\-E\-R\-\_\-\-E\-P\-O\-C\-H.
+References Pop\+Hist\+::p, and P\+A\+R\+\_\+\+P\+E\+R\+\_\+\+E\+P\+O\+C\+H.
 
 
 
-Referenced by Pop\-Hist\-\_\-from\-Epoch\-Link().
+Referenced by Pop\+Hist\+\_\+from\+Epoch\+Link().
 
-\hypertarget{pophist_8h_a7bcb9b8b73c75f3db2b749e7984149bb}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-set\-Two\-Ninv@{Pop\-Hist\-\_\-set\-Two\-Ninv}}
-\index{Pop\-Hist\-\_\-set\-Two\-Ninv@{Pop\-Hist\-\_\-set\-Two\-Ninv}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-set\-Two\-Ninv}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\-Hist\-\_\-set\-Two\-Ninv (
+\hypertarget{pophist_8h_a7bcb9b8b73c75f3db2b749e7984149bb}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+set\+Two\+Ninv@{Pop\+Hist\+\_\+set\+Two\+Ninv}}
+\index{Pop\+Hist\+\_\+set\+Two\+Ninv@{Pop\+Hist\+\_\+set\+Two\+Ninv}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+set\+Two\+Ninv}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\+Hist\+\_\+set\+Two\+Ninv (
 \begin{DoxyParamCaption}
-\item[{{\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{{\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{int}]{i, }
-\item[{double}]{two\-Ninv}
+\item[{double}]{two\+Ninv}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a7bcb9b8b73c75f3db2b749e7984149bb}
 
 
-Set 1/2\-N during the i'th epoch of \hyperlink{struct_pop_hist}{Pop\-Hist} structure ph. 
+Set 1/2\+N during the i'th epoch of \hyperlink{struct_pop_hist}{Pop\+Hist} structure ph. 
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em ph} & \hyperlink{struct_pop_hist}{Pop\-Hist} object to be modified. \\
+\mbox{\tt out}  & {\em ph} & \hyperlink{struct_pop_hist}{Pop\+Hist} object to be modified. \\
 \hline
 \mbox{\tt in}  & {\em i} & index of epoch to be modified. Must be less than ph-\/$>$nepoch-\/1. \\
 \hline
@@ -711,17 +713,17 @@ Set 1/2\-N during the i'th epoch of \hyperlink{struct_pop_hist}{Pop\-Hist} struc
 \end{DoxyParams}
 
 
-References Pop\-Hist\-::p, and P\-A\-R\-\_\-\-P\-E\-R\-\_\-\-E\-P\-O\-C\-H.
+References Pop\+Hist\+::p, and P\+A\+R\+\_\+\+P\+E\+R\+\_\+\+E\+P\+O\+C\+H.
 
 
 
-Referenced by Pop\-Hist\-\_\-perturb\-In\-Place(), and vector\-\_\-to\-\_\-\-Pop\-Hist().
+Referenced by Pop\+Hist\+\_\+perturb\+In\+Place(), and vector\+\_\+to\+\_\+\+Pop\+Hist().
 
-\hypertarget{pophist_8h_a6d1b299d267c1f9944a70055bc5ba2d6}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-size@{Pop\-Hist\-\_\-size}}
-\index{Pop\-Hist\-\_\-size@{Pop\-Hist\-\_\-size}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t Pop\-Hist\-\_\-size (
+\hypertarget{pophist_8h_a6d1b299d267c1f9944a70055bc5ba2d6}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+size@{Pop\+Hist\+\_\+size}}
+\index{Pop\+Hist\+\_\+size@{Pop\+Hist\+\_\+size}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t Pop\+Hist\+\_\+size (
 \begin{DoxyParamCaption}
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph}
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a6d1b299d267c1f9944a70055bc5ba2d6}
 
@@ -730,24 +732,24 @@ Return the size of the memory block on which {\ttfamily ph} is allocated.
 
 
 
-References Pop\-Hist\-::size.
+References Pop\+Hist\+::size.
 
-\hypertarget{pophist_8h_a21a09cf26079e73a55e06a35c6966a5c}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-to\-\_\-\-C\-\_\-array@{Pop\-Hist\-\_\-to\-\_\-\-C\-\_\-array}}
-\index{Pop\-Hist\-\_\-to\-\_\-\-C\-\_\-array@{Pop\-Hist\-\_\-to\-\_\-\-C\-\_\-array}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-to\-\_\-\-C\-\_\-array}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\-Hist\-\_\-to\-\_\-\-C\-\_\-array (
+\hypertarget{pophist_8h_a21a09cf26079e73a55e06a35c6966a5c}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+to\+\_\+\+C\+\_\+array@{Pop\+Hist\+\_\+to\+\_\+\+C\+\_\+array}}
+\index{Pop\+Hist\+\_\+to\+\_\+\+C\+\_\+array@{Pop\+Hist\+\_\+to\+\_\+\+C\+\_\+array}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+to\+\_\+\+C\+\_\+array}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\+Hist\+\_\+to\+\_\+\+C\+\_\+array (
 \begin{DoxyParamCaption}
 \item[{double $\ast$}]{v, }
 \item[{int}]{dim, }
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph}
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_a21a09cf26079e73a55e06a35c6966a5c}
 
 
-Put \hyperlink{struct_pop_hist}{Pop\-Hist} parameters into an ordinary C array. 
+Put \hyperlink{struct_pop_hist}{Pop\+Hist} parameters into an ordinary C array. 
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em \hyperlink{struct_pop_hist}{Pop\-Hist}} & object. \\
+\mbox{\tt in}  & {\em \hyperlink{struct_pop_hist}{Pop\+Hist}} & object. \\
 \hline
 \mbox{\tt out}  & {\em v} & An array into which paramters will be written. \\
 \hline
@@ -756,48 +758,48 @@ Put \hyperlink{struct_pop_hist}{Pop\-Hist} parameters into an ordinary C array.
 \end{DoxyParams}
 
 
-References Pop\-Hist\-::p, and Pop\-Hist\-\_\-n\-Params().
+References Pop\+Hist\+::p, and Pop\+Hist\+\_\+n\+Params().
 
-\hypertarget{pophist_8h_ae6c55cf5ca5d2dbb54b2b40f1f0a2823}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-to\-\_\-vector@{Pop\-Hist\-\_\-to\-\_\-vector}}
-\index{Pop\-Hist\-\_\-to\-\_\-vector@{Pop\-Hist\-\_\-to\-\_\-vector}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-to\-\_\-vector}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\-Hist\-\_\-to\-\_\-vector (
+\hypertarget{pophist_8h_ae6c55cf5ca5d2dbb54b2b40f1f0a2823}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+to\+\_\+vector@{Pop\+Hist\+\_\+to\+\_\+vector}}
+\index{Pop\+Hist\+\_\+to\+\_\+vector@{Pop\+Hist\+\_\+to\+\_\+vector}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+to\+\_\+vector}]{\setlength{\rightskip}{0pt plus 5cm}void Pop\+Hist\+\_\+to\+\_\+vector (
 \begin{DoxyParamCaption}
-\item[{gsl\-\_\-vector $\ast$}]{v, }
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph}
+\item[{gsl\+\_\+vector $\ast$}]{v, }
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_ae6c55cf5ca5d2dbb54b2b40f1f0a2823}
 
 
-Put \hyperlink{struct_pop_hist}{Pop\-Hist} parameters into a gsl\-\_\-vector. 
+Put \hyperlink{struct_pop_hist}{Pop\+Hist} parameters into a gsl\+\_\+vector. 
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em \hyperlink{struct_pop_hist}{Pop\-Hist}} & object. \\
+\mbox{\tt in}  & {\em \hyperlink{struct_pop_hist}{Pop\+Hist}} & object. \\
 \hline
-\mbox{\tt out}  & {\em v} & gsl\-\_\-vector into which paramters will be written. \\
+\mbox{\tt out}  & {\em v} & gsl\+\_\+vector into which paramters will be written. \\
 \hline
 \end{DoxyParams}
 
 
-References Pop\-Hist\-::p, and Pop\-Hist\-\_\-n\-Params().
+References Pop\+Hist\+::p, and Pop\+Hist\+\_\+n\+Params().
 
-\hypertarget{pophist_8h_ac4e38db175894b4ab1f6f7cf0c4c928b}{\index{pophist.\-h@{pophist.\-h}!Pop\-Hist\-\_\-two\-N@{Pop\-Hist\-\_\-two\-N}}
-\index{Pop\-Hist\-\_\-two\-N@{Pop\-Hist\-\_\-two\-N}!pophist.h@{pophist.\-h}}
-\paragraph[{Pop\-Hist\-\_\-two\-N}]{\setlength{\rightskip}{0pt plus 5cm}double Pop\-Hist\-\_\-two\-N (
+\hypertarget{pophist_8h_ac4e38db175894b4ab1f6f7cf0c4c928b}{\index{pophist.\+h@{pophist.\+h}!Pop\+Hist\+\_\+two\+N@{Pop\+Hist\+\_\+two\+N}}
+\index{Pop\+Hist\+\_\+two\+N@{Pop\+Hist\+\_\+two\+N}!pophist.\+h@{pophist.\+h}}
+\paragraph[{Pop\+Hist\+\_\+two\+N}]{\setlength{\rightskip}{0pt plus 5cm}double Pop\+Hist\+\_\+two\+N (
 \begin{DoxyParamCaption}
-\item[{const {\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{const {\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{int}]{i}
 \end{DoxyParamCaption}
 )}}\label{pophist_8h_ac4e38db175894b4ab1f6f7cf0c4c928b}
 
 
-Return the haploid population size, 2\-N, during epoch i. 
+Return the haploid population size, 2\+N, during epoch i. 
 
 
 
-References Pop\-Hist\-::p, and P\-A\-R\-\_\-\-P\-E\-R\-\_\-\-E\-P\-O\-C\-H.
+References Pop\+Hist\+::p, and P\+A\+R\+\_\+\+P\+E\+R\+\_\+\+E\+P\+O\+C\+H.
 
 
 
-Referenced by Hill\-\_\-evolve\-Discrete(), Hill\-\_\-sigdsq(), Hill\-\_\-sigdsq\-Eq(), O\-D\-E\-\_\-evolve(), Pop\-Hist\-\_\-distance(), Strobeck\-\_\-evolve\-Discrete(), Strobeck\-\_\-sigdsq(), and Strobeck\-\_\-sigdsq\-Eq().
+Referenced by Hill\+\_\+evolve\+Discrete(), Hill\+\_\+sigdsq(), Hill\+\_\+sigdsq\+Eq(), O\+D\+E\+\_\+evolve(), Pop\+Hist\+\_\+distance(), Strobeck\+\_\+evolve\+Discrete(), Strobeck\+\_\+sigdsq(), and Strobeck\+\_\+sigdsq\+Eq().
 

@@ -1,110 +1,112 @@
-\hypertarget{window_8c}{\subsection{window.\-c File Reference}
-\label{window_8c}\index{window.\-c@{window.\-c}}
+\hypertarget{window_8c}{\subsection{window.\+c File Reference}
+\label{window_8c}\index{window.\+c@{window.\+c}}
 }
 
 
 A window that slides across the chromosome.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$stdlib.\-h$>$}\\*
-{\ttfamily \#include $<$string.\-h$>$}\\*
-{\ttfamily \#include $<$assert.\-h$>$}\\*
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include $<$float.\-h$>$}\\*
-{\ttfamily \#include $<$pthread.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}window.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}readgtp.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}tabulation.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}boot.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}sums.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$float.\+h$>$}\\*
+{\ttfamily \#include $<$pthread.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}window.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}readgtp.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tabulation.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}boot.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}sums.\+h\char`\"{}}\\*
 \subsubsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{struct_s_n_pstore}{S\-N\-Pstore}
-\begin{DoxyCompactList}\small\item\em \hyperlink{struct_s_n_pstore}{S\-N\-Pstore} is a place to store objects of type \hyperlink{struct_s_n_p}{S\-N\-P} when they are not in use. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_n_pstore}{S\+N\+Pstore}
+\begin{DoxyCompactList}\small\item\em \hyperlink{struct_s_n_pstore}{S\+N\+Pstore} is a place to store objects of type \hyperlink{struct_s_n_p}{S\+N\+P} when they are not in use. \end{DoxyCompactList}\item 
 struct \hyperlink{struct_window}{Window}
 \begin{DoxyCompactList}\small\item\em \hyperlink{struct_window}{Window} represents a window that slides across the chromosome. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-double \hyperlink{window_8c_afb43f3d36e8f6d25a69243df7f80e4f5}{S\-N\-P\-\_\-get\-Dsq\-\_\-haploid} (double $\ast$pqpq, \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$x, \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$y)
-\begin{DoxyCompactList}\small\item\em Calculate D squared from pair of haploid S\-N\-Ps. \end{DoxyCompactList}\item 
-void \hyperlink{window_8c_a0648103df86776267a7665f1b0160501}{S\-N\-P\-\_\-clear} (\hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp)
+double \hyperlink{window_8c_afb43f3d36e8f6d25a69243df7f80e4f5}{S\+N\+P\+\_\+get\+Dsq\+\_\+haploid} (double $\ast$pqpq, \hyperlink{struct_s_n_p}{S\+N\+P} $\ast$x, \hyperlink{struct_s_n_p}{S\+N\+P} $\ast$y)
+\begin{DoxyCompactList}\small\item\em Calculate D squared from pair of haploid S\+N\+Ps. \end{DoxyCompactList}\item 
+void \hyperlink{window_8c_a0648103df86776267a7665f1b0160501}{S\+N\+P\+\_\+clear} (\hyperlink{struct_s_n_p}{S\+N\+P} $\ast$snp)
 \begin{DoxyCompactList}\small\item\em Set values to initial states. \end{DoxyCompactList}\item 
-\hypertarget{window_8c_ad17d3652880314fb113561fb7d3533a2}{void \hyperlink{window_8c_ad17d3652880314fb113561fb7d3533a2}{S\-N\-P\-\_\-free} (\hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp)}\label{window_8c_ad17d3652880314fb113561fb7d3533a2}
+\hypertarget{window_8c_ad17d3652880314fb113561fb7d3533a2}{void \hyperlink{window_8c_ad17d3652880314fb113561fb7d3533a2}{S\+N\+P\+\_\+free} (\hyperlink{struct_s_n_p}{S\+N\+P} $\ast$snp)}\label{window_8c_ad17d3652880314fb113561fb7d3533a2}
 
-\begin{DoxyCompactList}\small\item\em free linked list of S\-N\-Ps \end{DoxyCompactList}\item 
-\hyperlink{struct_s_n_p}{S\-N\-P} $\ast$ \hyperlink{window_8c_a25697b24719566d43cc8f83d17e92f17}{S\-N\-P\-\_\-new} (unsigned n\-Gtype, int bootreps)
-\begin{DoxyCompactList}\small\item\em Allocate a new \hyperlink{struct_s_n_p}{S\-N\-P}, including the arrays used to store genotype data and bootstrap multiplicity values. \end{DoxyCompactList}\item 
-int \hyperlink{window_8c_ae4d08ad1273b9566f0ab0b85370a8280}{S\-N\-P\-\_\-set} (\hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp, long ndx, double mappos, const unsigned char $\ast$gtype, const \hyperlink{struct_boot}{Boot} $\ast$boot, unsigned ploidy)
-\begin{DoxyCompactList}\small\item\em Initialize a \hyperlink{struct_s_n_p}{S\-N\-P} using the data given by the other parameters. \end{DoxyCompactList}\item 
-\hypertarget{window_8c_a7934a8d7f8444ce9b577b8560c23b011}{void \hyperlink{window_8c_a7934a8d7f8444ce9b577b8560c23b011}{S\-N\-P\-\_\-show} (\hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp, F\-I\-L\-E $\ast$fp)}\label{window_8c_a7934a8d7f8444ce9b577b8560c23b011}
+\begin{DoxyCompactList}\small\item\em free linked list of S\+N\+Ps \end{DoxyCompactList}\item 
+\hyperlink{struct_s_n_p}{S\+N\+P} $\ast$ \hyperlink{window_8c_a25697b24719566d43cc8f83d17e92f17}{S\+N\+P\+\_\+new} (unsigned n\+Gtype, int bootreps)
+\begin{DoxyCompactList}\small\item\em Allocate a new \hyperlink{struct_s_n_p}{S\+N\+P}, including the arrays used to store genotype data and bootstrap multiplicity values. \end{DoxyCompactList}\item 
+int \hyperlink{window_8c_ae4d08ad1273b9566f0ab0b85370a8280}{S\+N\+P\+\_\+set} (\hyperlink{struct_s_n_p}{S\+N\+P} $\ast$snp, long ndx, double mappos, const unsigned char $\ast$gtype, const \hyperlink{struct_boot}{Boot} $\ast$boot, unsigned ploidy)
+\begin{DoxyCompactList}\small\item\em Initialize a \hyperlink{struct_s_n_p}{S\+N\+P} using the data given by the other parameters. \end{DoxyCompactList}\item 
+\hypertarget{window_8c_a7934a8d7f8444ce9b577b8560c23b011}{void \hyperlink{window_8c_a7934a8d7f8444ce9b577b8560c23b011}{S\+N\+P\+\_\+show} (\hyperlink{struct_s_n_p}{S\+N\+P} $\ast$snp, F\+I\+L\+E $\ast$fp)}\label{window_8c_a7934a8d7f8444ce9b577b8560c23b011}
 
-\begin{DoxyCompactList}\small\item\em Print \hyperlink{struct_s_n_p}{S\-N\-P}. \end{DoxyCompactList}\item 
-\hypertarget{window_8c_a4faf4d059a418d0a967594e42867cddd}{int \hyperlink{window_8c_a4faf4d059a418d0a967594e42867cddd}{S\-N\-P\-\_\-count} (\hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp)}\label{window_8c_a4faf4d059a418d0a967594e42867cddd}
+\begin{DoxyCompactList}\small\item\em Print \hyperlink{struct_s_n_p}{S\+N\+P}. \end{DoxyCompactList}\item 
+\hypertarget{window_8c_a4faf4d059a418d0a967594e42867cddd}{int \hyperlink{window_8c_a4faf4d059a418d0a967594e42867cddd}{S\+N\+P\+\_\+count} (\hyperlink{struct_s_n_p}{S\+N\+P} $\ast$snp)}\label{window_8c_a4faf4d059a418d0a967594e42867cddd}
 
-\begin{DoxyCompactList}\small\item\em Count S\-N\-Ps in linked list. \end{DoxyCompactList}\item 
-\hypertarget{window_8c_a9393624b636b801701453337c0c2f226}{double {\bfseries S\-N\-P\-\_\-mappos} (const \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp)}\label{window_8c_a9393624b636b801701453337c0c2f226}
+\begin{DoxyCompactList}\small\item\em Count S\+N\+Ps in linked list. \end{DoxyCompactList}\item 
+\hypertarget{window_8c_a9393624b636b801701453337c0c2f226}{double {\bfseries S\+N\+P\+\_\+mappos} (const \hyperlink{struct_s_n_p}{S\+N\+P} $\ast$snp)}\label{window_8c_a9393624b636b801701453337c0c2f226}
 
 \item 
-\hyperlink{struct_s_n_p}{S\-N\-P} $\ast$ \hyperlink{window_8c_a41eac5d1b34adf88fbd24e489803d0b8}{S\-N\-P\-\_\-connect} (\hyperlink{struct_s_n_p}{S\-N\-P} $\ast$list1, \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$list2)
+\hyperlink{struct_s_n_p}{S\+N\+P} $\ast$ \hyperlink{window_8c_a41eac5d1b34adf88fbd24e489803d0b8}{S\+N\+P\+\_\+connect} (\hyperlink{struct_s_n_p}{S\+N\+P} $\ast$list1, \hyperlink{struct_s_n_p}{S\+N\+P} $\ast$list2)
 \begin{DoxyCompactList}\small\item\em Connect list2 to the tail of list1 and return a pointer to list1. \end{DoxyCompactList}\item 
-double \hyperlink{window_8c_a87ee2fddc8bce33e477b74326fc67eb1}{S\-N\-P\-\_\-get\-Dsq} (double $\ast$pqpq, \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$x, \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$y, unsigned ploidy)
+double \hyperlink{window_8c_a87ee2fddc8bce33e477b74326fc67eb1}{S\+N\+P\+\_\+get\+Dsq} (double $\ast$pqpq, \hyperlink{struct_s_n_p}{S\+N\+P} $\ast$x, \hyperlink{struct_s_n_p}{S\+N\+P} $\ast$y, unsigned ploidy)
 \begin{DoxyCompactList}\small\item\em Calculate D squared. \end{DoxyCompactList}\item 
-\hypertarget{window_8c_a9a602ef2aed27839316d8e35da898cd2}{long \hyperlink{window_8c_a9a602ef2aed27839316d8e35da898cd2}{S\-N\-P\-\_\-ndx} (const \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp)}\label{window_8c_a9a602ef2aed27839316d8e35da898cd2}
+\hypertarget{window_8c_a9a602ef2aed27839316d8e35da898cd2}{long \hyperlink{window_8c_a9a602ef2aed27839316d8e35da898cd2}{S\+N\+P\+\_\+ndx} (const \hyperlink{struct_s_n_p}{S\+N\+P} $\ast$snp)}\label{window_8c_a9a602ef2aed27839316d8e35da898cd2}
 
-\begin{DoxyCompactList}\small\item\em index of this \hyperlink{struct_s_n_p}{S\-N\-P} (begins with 0) \end{DoxyCompactList}\item 
-\hypertarget{window_8c_a2b16cb590b108099800412e3e7603af0}{int \hyperlink{window_8c_a2b16cb590b108099800412e3e7603af0}{S\-N\-P\-\_\-n\-Gtype} (const \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp)}\label{window_8c_a2b16cb590b108099800412e3e7603af0}
+\begin{DoxyCompactList}\small\item\em index of this \hyperlink{struct_s_n_p}{S\+N\+P} (begins with 0) \end{DoxyCompactList}\item 
+\hypertarget{window_8c_a2b16cb590b108099800412e3e7603af0}{int \hyperlink{window_8c_a2b16cb590b108099800412e3e7603af0}{S\+N\+P\+\_\+n\+Gtype} (const \hyperlink{struct_s_n_p}{S\+N\+P} $\ast$snp)}\label{window_8c_a2b16cb590b108099800412e3e7603af0}
 
-\begin{DoxyCompactList}\small\item\em Number of genotypes sampled for this \hyperlink{struct_s_n_p}{S\-N\-P}. \end{DoxyCompactList}\item 
-\hyperlink{struct_s_n_pstore}{S\-N\-Pstore} $\ast$ \hyperlink{window_8c_a1f734bd1816de662c2520c04e6e7aa2a}{S\-N\-Pstore\-\_\-new} (unsigned n\-Gtype, int bootreps)
-\begin{DoxyCompactList}\small\item\em Allocate a new object of type \hyperlink{struct_s_n_pstore}{S\-N\-Pstore}. \end{DoxyCompactList}\item 
-\hypertarget{window_8c_a2dae4e8d2c71ae5db408fef70597d7d5}{void \hyperlink{window_8c_a2dae4e8d2c71ae5db408fef70597d7d5}{S\-N\-Pstore\-\_\-free} (\hyperlink{struct_s_n_pstore}{S\-N\-Pstore} $\ast$store)}\label{window_8c_a2dae4e8d2c71ae5db408fef70597d7d5}
+\begin{DoxyCompactList}\small\item\em Number of genotypes sampled for this \hyperlink{struct_s_n_p}{S\+N\+P}. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_n_pstore}{S\+N\+Pstore} $\ast$ \hyperlink{window_8c_a1f734bd1816de662c2520c04e6e7aa2a}{S\+N\+Pstore\+\_\+new} (unsigned n\+Gtype, int bootreps)
+\begin{DoxyCompactList}\small\item\em Allocate a new object of type \hyperlink{struct_s_n_pstore}{S\+N\+Pstore}. \end{DoxyCompactList}\item 
+\hypertarget{window_8c_a2dae4e8d2c71ae5db408fef70597d7d5}{void \hyperlink{window_8c_a2dae4e8d2c71ae5db408fef70597d7d5}{S\+N\+Pstore\+\_\+free} (\hyperlink{struct_s_n_pstore}{S\+N\+Pstore} $\ast$store)}\label{window_8c_a2dae4e8d2c71ae5db408fef70597d7d5}
 
-\begin{DoxyCompactList}\small\item\em Free an object of type \hyperlink{struct_s_n_pstore}{S\-N\-Pstore}. \end{DoxyCompactList}\item 
-\hyperlink{struct_s_n_p}{S\-N\-P} $\ast$ \hyperlink{window_8c_ac49d5dd3b29707596040add6756d31d3}{S\-N\-Pstore\-\_\-checkout} (\hyperlink{struct_s_n_pstore}{S\-N\-Pstore} $\ast$store)
-\begin{DoxyCompactList}\small\item\em Obtain a \hyperlink{struct_s_n_p}{S\-N\-P} from the store, allocating if necessary. \end{DoxyCompactList}\item 
-void \hyperlink{window_8c_ae9ae9811405f5de7ed15f2a7c1e8b9cd}{S\-N\-Pstore\-\_\-checkin} (\hyperlink{struct_s_n_pstore}{S\-N\-Pstore} $\ast$store, \hyperlink{struct_s_n_p}{S\-N\-P} $\ast$snp)
-\begin{DoxyCompactList}\small\item\em Check a \hyperlink{struct_s_n_p}{S\-N\-P} back into the store. \end{DoxyCompactList}\item 
-\hyperlink{struct_window}{Window} $\ast$ \hyperlink{window_8c_a32650574dc7bdc08308978788f364db2}{Window\-\_\-new} (double width\-\_\-cm, F\-I\-L\-E $\ast$ifp, long int sampling\-\_\-interval, unsigned ploidy)
+\begin{DoxyCompactList}\small\item\em Free an object of type \hyperlink{struct_s_n_pstore}{S\+N\+Pstore}. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_n_p}{S\+N\+P} $\ast$ \hyperlink{window_8c_ac49d5dd3b29707596040add6756d31d3}{S\+N\+Pstore\+\_\+checkout} (\hyperlink{struct_s_n_pstore}{S\+N\+Pstore} $\ast$store)
+\begin{DoxyCompactList}\small\item\em Obtain a \hyperlink{struct_s_n_p}{S\+N\+P} from the store, allocating if necessary. \end{DoxyCompactList}\item 
+void \hyperlink{window_8c_ae9ae9811405f5de7ed15f2a7c1e8b9cd}{S\+N\+Pstore\+\_\+checkin} (\hyperlink{struct_s_n_pstore}{S\+N\+Pstore} $\ast$store, \hyperlink{struct_s_n_p}{S\+N\+P} $\ast$snp)
+\begin{DoxyCompactList}\small\item\em Check a \hyperlink{struct_s_n_p}{S\+N\+P} back into the store. \end{DoxyCompactList}\item 
+\hyperlink{struct_window}{Window} $\ast$ \hyperlink{window_8c_a32650574dc7bdc08308978788f364db2}{Window\+\_\+new} (double width\+\_\+cm, F\+I\+L\+E $\ast$ifp, long int sampling\+\_\+interval, unsigned ploidy)
 \begin{DoxyCompactList}\small\item\em Allocate a new \hyperlink{struct_window}{Window}. \end{DoxyCompactList}\item 
-\hypertarget{window_8c_a02c4ebe92c5d6690a47037bb3ee0f170}{void \hyperlink{window_8c_a02c4ebe92c5d6690a47037bb3ee0f170}{Window\-\_\-free} (\hyperlink{struct_window}{Window} $\ast$window)}\label{window_8c_a02c4ebe92c5d6690a47037bb3ee0f170}
+\hypertarget{window_8c_a02c4ebe92c5d6690a47037bb3ee0f170}{void \hyperlink{window_8c_a02c4ebe92c5d6690a47037bb3ee0f170}{Window\+\_\+free} (\hyperlink{struct_window}{Window} $\ast$window)}\label{window_8c_a02c4ebe92c5d6690a47037bb3ee0f170}
 
 \begin{DoxyCompactList}\small\item\em Free a \hyperlink{struct_window}{Window}. \end{DoxyCompactList}\item 
-\hypertarget{window_8c_a44ea0be885fc164f1b724fefa225a75e}{\hyperlink{struct_s_n_p}{S\-N\-P} $\ast$ \hyperlink{window_8c_a44ea0be885fc164f1b724fefa225a75e}{Window\-\_\-curr\-S\-N\-P} (\hyperlink{struct_window}{Window} $\ast$window)}\label{window_8c_a44ea0be885fc164f1b724fefa225a75e}
+\hypertarget{window_8c_a44ea0be885fc164f1b724fefa225a75e}{\hyperlink{struct_s_n_p}{S\+N\+P} $\ast$ \hyperlink{window_8c_a44ea0be885fc164f1b724fefa225a75e}{Window\+\_\+curr\+S\+N\+P} (\hyperlink{struct_window}{Window} $\ast$window)}\label{window_8c_a44ea0be885fc164f1b724fefa225a75e}
 
-\begin{DoxyCompactList}\small\item\em Return pointer to current focal \hyperlink{struct_s_n_p}{S\-N\-P}. \end{DoxyCompactList}\item 
-int \hyperlink{window_8c_abc05c7153486e330e6c043a19dccc814}{Window\-\_\-next\-S\-N\-P} (\hyperlink{struct_window}{Window} $\ast$window, \hyperlink{struct_boot}{Boot} $\ast$boot)
-\begin{DoxyCompactList}\small\item\em Get next \hyperlink{struct_s_n_p}{S\-N\-P} from input file and link it into the linked list pointed to by window-\/$>$curr. \end{DoxyCompactList}\item 
-int \hyperlink{window_8c_a10deeb4bf2f92ac26a87c6fac57325d4}{Window\-\_\-advance} (\hyperlink{struct_window}{Window} $\ast$window, \hyperlink{struct_tabulation}{Tabulation} $\ast$tab, \hyperlink{struct_boot}{Boot} $\ast$boot, long count)
-\begin{DoxyCompactList}\small\item\em Add a new \hyperlink{struct_s_n_p}{S\-N\-P} to the window. \end{DoxyCompactList}\item 
-\hypertarget{window_8c_a73541ede96e20d3a09c7165f975372e7}{unsigned \hyperlink{window_8c_a73541ede96e20d3a09c7165f975372e7}{Window\-\_\-n\-Gtype} (const \hyperlink{struct_window}{Window} $\ast$window)}\label{window_8c_a73541ede96e20d3a09c7165f975372e7}
+\begin{DoxyCompactList}\small\item\em Return pointer to current focal \hyperlink{struct_s_n_p}{S\+N\+P}. \end{DoxyCompactList}\item 
+int \hyperlink{window_8c_abc05c7153486e330e6c043a19dccc814}{Window\+\_\+next\+S\+N\+P} (\hyperlink{struct_window}{Window} $\ast$window, \hyperlink{struct_boot}{Boot} $\ast$boot)
+\begin{DoxyCompactList}\small\item\em Get next \hyperlink{struct_s_n_p}{S\+N\+P} from input file and link it into the linked list pointed to by window-\/$>$curr. \end{DoxyCompactList}\item 
+int \hyperlink{window_8c_a10deeb4bf2f92ac26a87c6fac57325d4}{Window\+\_\+advance} (\hyperlink{struct_window}{Window} $\ast$window, \hyperlink{struct_tabulation}{Tabulation} $\ast$tab, \hyperlink{struct_boot}{Boot} $\ast$boot, long count)
+\begin{DoxyCompactList}\small\item\em Add a new \hyperlink{struct_s_n_p}{S\+N\+P} to the window. \end{DoxyCompactList}\item 
+\hypertarget{window_8c_a73541ede96e20d3a09c7165f975372e7}{unsigned \hyperlink{window_8c_a73541ede96e20d3a09c7165f975372e7}{Window\+\_\+n\+Gtype} (const \hyperlink{struct_window}{Window} $\ast$window)}\label{window_8c_a73541ede96e20d3a09c7165f975372e7}
 
-\begin{DoxyCompactList}\small\item\em Return current value of window-\/$>$n\-Gtype. \end{DoxyCompactList}\item 
-long \hyperlink{window_8c_a67b5392fe87dc00fe45c4fa17d166cb4}{Window\-\_\-n\-S\-N\-Ps\-Read} (const \hyperlink{struct_window}{Window} $\ast$window)
-\begin{DoxyCompactList}\small\item\em Return the number of S\-N\-Ps that have been read. \end{DoxyCompactList}\item 
-\hypertarget{window_8c_a4369fd29ec7984e8e3f1ecb5614ec278}{void {\bfseries Window\-\_\-test} (int verbose)}\label{window_8c_a4369fd29ec7984e8e3f1ecb5614ec278}
+\begin{DoxyCompactList}\small\item\em Return current value of window-\/$>$n\+Gtype. \end{DoxyCompactList}\item 
+long \hyperlink{window_8c_a67b5392fe87dc00fe45c4fa17d166cb4}{Window\+\_\+n\+S\+N\+Ps\+Read} (const \hyperlink{struct_window}{Window} $\ast$window)
+\begin{DoxyCompactList}\small\item\em Return the number of S\+N\+Ps that have been read. \end{DoxyCompactList}\item 
+\hypertarget{window_8c_a4369fd29ec7984e8e3f1ecb5614ec278}{void {\bfseries Window\+\_\+test} (int verbose)}\label{window_8c_a4369fd29ec7984e8e3f1ecb5614ec278}
 
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
-A window that slides across the chromosome. \begin{DoxyAuthor}{Author}
-Alan R. Rogers L\-D is calculated from pairs of sites within a window, which slides across the chromosome. This file implements \hyperlink{struct_window}{Window}, which represents that sliding window.
+A window that slides across the chromosome. 
+
+\begin{DoxyAuthor}{Author}
+Alan R. Rogers L\+D is calculated from pairs of sites within a window, which slides across the chromosome. This file implements \hyperlink{struct_window}{Window}, which represents that sliding window.
 \end{DoxyAuthor}
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
 \end{DoxyCopyright}
 
 
 \subsubsection{Function Documentation}
-\hypertarget{window_8c_a0648103df86776267a7665f1b0160501}{\index{window.\-c@{window.\-c}!S\-N\-P\-\_\-clear@{S\-N\-P\-\_\-clear}}
-\index{S\-N\-P\-\_\-clear@{S\-N\-P\-\_\-clear}!window.c@{window.\-c}}
-\paragraph[{S\-N\-P\-\_\-clear}]{\setlength{\rightskip}{0pt plus 5cm}void S\-N\-P\-\_\-clear (
+\hypertarget{window_8c_a0648103df86776267a7665f1b0160501}{\index{window.\+c@{window.\+c}!S\+N\+P\+\_\+clear@{S\+N\+P\+\_\+clear}}
+\index{S\+N\+P\+\_\+clear@{S\+N\+P\+\_\+clear}!window.\+c@{window.\+c}}
+\paragraph[{S\+N\+P\+\_\+clear}]{\setlength{\rightskip}{0pt plus 5cm}void S\+N\+P\+\_\+clear (
 \begin{DoxyParamCaption}
-\item[{{\bf S\-N\-P} $\ast$}]{snp}
+\item[{{\bf S\+N\+P} $\ast$}]{snp}
 \end{DoxyParamCaption}
 )}}\label{window_8c_a0648103df86776267a7665f1b0160501}
 
@@ -113,41 +115,41 @@ Set values to initial states.
 
 This function does not initialize snp-\/$>$prev, because doing so risks a memory leak. 
 
-Referenced by S\-N\-P\-\_\-new(), and S\-N\-Pstore\-\_\-checkout().
+Referenced by S\+N\+P\+\_\+new(), and S\+N\+Pstore\+\_\+checkout().
 
-\hypertarget{window_8c_a41eac5d1b34adf88fbd24e489803d0b8}{\index{window.\-c@{window.\-c}!S\-N\-P\-\_\-connect@{S\-N\-P\-\_\-connect}}
-\index{S\-N\-P\-\_\-connect@{S\-N\-P\-\_\-connect}!window.c@{window.\-c}}
-\paragraph[{S\-N\-P\-\_\-connect}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\-N\-P}$\ast$ S\-N\-P\-\_\-connect (
+\hypertarget{window_8c_a41eac5d1b34adf88fbd24e489803d0b8}{\index{window.\+c@{window.\+c}!S\+N\+P\+\_\+connect@{S\+N\+P\+\_\+connect}}
+\index{S\+N\+P\+\_\+connect@{S\+N\+P\+\_\+connect}!window.\+c@{window.\+c}}
+\paragraph[{S\+N\+P\+\_\+connect}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+N\+P}$\ast$ S\+N\+P\+\_\+connect (
 \begin{DoxyParamCaption}
-\item[{{\bf S\-N\-P} $\ast$}]{list1, }
-\item[{{\bf S\-N\-P} $\ast$}]{list2}
+\item[{{\bf S\+N\+P} $\ast$}]{list1, }
+\item[{{\bf S\+N\+P} $\ast$}]{list2}
 \end{DoxyParamCaption}
 )}}\label{window_8c_a41eac5d1b34adf88fbd24e489803d0b8}
 
 
 Connect list2 to the tail of list1 and return a pointer to list1. 
 
-Usage\-: list1 = S\-N\-P\-\_\-connect(list1, list2)
+Usage\+: list1 = S\+N\+P\+\_\+connect(list1, list2)
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em list1,list2} & Linked lists of S\-N\-Ps, which will be concatenated.\\
+\mbox{\tt in}  & {\em list1,list2} & Linked lists of S\+N\+Ps, which will be concatenated.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-A pointer to the head of the combined list. If list1 is non\-N\-U\-L\-L, this returned pointer will equal \char`\"{}list1\char`\"{}. Otherwise, it will equal \char`\"{}list2\char`\"{}. Either way, the returned value is the head of a list that contains all the entries in list 1 followed by all the entries in list 2. 
+A pointer to the head of the combined list. If list1 is non\+N\+U\+L\+L, this returned pointer will equal \char`\"{}list1\char`\"{}. Otherwise, it will equal \char`\"{}list2\char`\"{}. Either way, the returned value is the head of a list that contains all the entries in list 1 followed by all the entries in list 2. 
 \end{DoxyReturn}
 
 
-Referenced by S\-N\-Pstore\-\_\-checkin().
+Referenced by S\+N\+Pstore\+\_\+checkin().
 
-\hypertarget{window_8c_a87ee2fddc8bce33e477b74326fc67eb1}{\index{window.\-c@{window.\-c}!S\-N\-P\-\_\-get\-Dsq@{S\-N\-P\-\_\-get\-Dsq}}
-\index{S\-N\-P\-\_\-get\-Dsq@{S\-N\-P\-\_\-get\-Dsq}!window.c@{window.\-c}}
-\paragraph[{S\-N\-P\-\_\-get\-Dsq}]{\setlength{\rightskip}{0pt plus 5cm}double S\-N\-P\-\_\-get\-Dsq (
+\hypertarget{window_8c_a87ee2fddc8bce33e477b74326fc67eb1}{\index{window.\+c@{window.\+c}!S\+N\+P\+\_\+get\+Dsq@{S\+N\+P\+\_\+get\+Dsq}}
+\index{S\+N\+P\+\_\+get\+Dsq@{S\+N\+P\+\_\+get\+Dsq}!window.\+c@{window.\+c}}
+\paragraph[{S\+N\+P\+\_\+get\+Dsq}]{\setlength{\rightskip}{0pt plus 5cm}double S\+N\+P\+\_\+get\+Dsq (
 \begin{DoxyParamCaption}
 \item[{double $\ast$}]{pqpq, }
-\item[{{\bf S\-N\-P} $\ast$}]{x, }
-\item[{{\bf S\-N\-P} $\ast$}]{y, }
+\item[{{\bf S\+N\+P} $\ast$}]{x, }
+\item[{{\bf S\+N\+P} $\ast$}]{y, }
 \item[{unsigned}]{ploidy}
 \end{DoxyParamCaption}
 )}}\label{window_8c_a87ee2fddc8bce33e477b74326fc67eb1}
@@ -155,64 +157,64 @@ Referenced by S\-N\-Pstore\-\_\-checkin().
 
 Calculate D squared. 
 
-Use two S\-N\-Ps to calculate D$\ast$\-D (where D is the standard L\-D coefficient) and the product of the pq values at the two S\-N\-Ps. Function also sets the value of $\ast$pqpq. This version uses the E\-M algorithm to get a maximum-\/likelihood estimate of D. This also provides a M\-L estimate of Dsq=D$\ast$\-D because of the invariant property of M\-L estimates. 
+Use two S\+N\+Ps to calculate D$\ast$\+D (where D is the standard L\+D coefficient) and the product of the pq values at the two S\+N\+Ps. Function also sets the value of $\ast$pqpq. This version uses the E\+M algorithm to get a maximum-\/likelihood estimate of D. This also provides a M\+L estimate of Dsq=D$\ast$\+D because of the invariant property of M\+L estimates. 
 
-References Dsq\-Data\-\_\-print(), Dsq\-Data\-::hi\-D, hi\-D(), Dsq\-Data\-::lo\-D, lo\-D(), M\-A\-K\-E\-\_\-\-P\-H\-A\-S\-E\-D, minimize1\-D(), Dsq\-Data\-::n\-Gam, Dsq\-Data\-::n\-Unphased, Dsq\-Data\-::px, Dsq\-Data\-::py, Dsq\-Data\-::tol, tr\-Bits(), and U\-N\-P\-H\-A\-S\-E\-D\-\_\-\-P\-A\-I\-R.
+References Dsq\+Data\+\_\+print(), Dsq\+Data\+::hi\+D, hi\+D(), Dsq\+Data\+::lo\+D, lo\+D(), M\+A\+K\+E\+\_\+\+P\+H\+A\+S\+E\+D, minimize1\+D(), Dsq\+Data\+::n\+Gam, Dsq\+Data\+::n\+Unphased, Dsq\+Data\+::px, Dsq\+Data\+::py, Dsq\+Data\+::tol, tr\+Bits(), and U\+N\+P\+H\+A\+S\+E\+D\+\_\+\+P\+A\+I\+R.
 
 
 
-Referenced by Window\-\_\-advance().
+Referenced by Window\+\_\+advance().
 
-\hypertarget{window_8c_afb43f3d36e8f6d25a69243df7f80e4f5}{\index{window.\-c@{window.\-c}!S\-N\-P\-\_\-get\-Dsq\-\_\-haploid@{S\-N\-P\-\_\-get\-Dsq\-\_\-haploid}}
-\index{S\-N\-P\-\_\-get\-Dsq\-\_\-haploid@{S\-N\-P\-\_\-get\-Dsq\-\_\-haploid}!window.c@{window.\-c}}
-\paragraph[{S\-N\-P\-\_\-get\-Dsq\-\_\-haploid}]{\setlength{\rightskip}{0pt plus 5cm}double S\-N\-P\-\_\-get\-Dsq\-\_\-haploid (
+\hypertarget{window_8c_afb43f3d36e8f6d25a69243df7f80e4f5}{\index{window.\+c@{window.\+c}!S\+N\+P\+\_\+get\+Dsq\+\_\+haploid@{S\+N\+P\+\_\+get\+Dsq\+\_\+haploid}}
+\index{S\+N\+P\+\_\+get\+Dsq\+\_\+haploid@{S\+N\+P\+\_\+get\+Dsq\+\_\+haploid}!window.\+c@{window.\+c}}
+\paragraph[{S\+N\+P\+\_\+get\+Dsq\+\_\+haploid}]{\setlength{\rightskip}{0pt plus 5cm}double S\+N\+P\+\_\+get\+Dsq\+\_\+haploid (
 \begin{DoxyParamCaption}
 \item[{double $\ast$}]{pqpq, }
-\item[{{\bf S\-N\-P} $\ast$}]{x, }
-\item[{{\bf S\-N\-P} $\ast$}]{y}
+\item[{{\bf S\+N\+P} $\ast$}]{x, }
+\item[{{\bf S\+N\+P} $\ast$}]{y}
 \end{DoxyParamCaption}
 )}}\label{window_8c_afb43f3d36e8f6d25a69243df7f80e4f5}
 
 
-Calculate D squared from pair of haploid S\-N\-Ps. 
+Calculate D squared from pair of haploid S\+N\+Ps. 
 
-Use two S\-N\-Ps to calculate D$\ast$\-D (where D is the standard L\-D coefficient). Also calculates the product of the pq values at the two S\-N\-Ps. Function returns the value of D$\ast$\-D and sets the value of $\ast$pqpq. This version is for haploid genotypes, with each genotype equal either to 0 or 1. \hypertarget{window_8c_a25697b24719566d43cc8f83d17e92f17}{\index{window.\-c@{window.\-c}!S\-N\-P\-\_\-new@{S\-N\-P\-\_\-new}}
-\index{S\-N\-P\-\_\-new@{S\-N\-P\-\_\-new}!window.c@{window.\-c}}
-\paragraph[{S\-N\-P\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\-N\-P}$\ast$ S\-N\-P\-\_\-new (
+Use two S\+N\+Ps to calculate D$\ast$\+D (where D is the standard L\+D coefficient). Also calculates the product of the pq values at the two S\+N\+Ps. Function returns the value of D$\ast$\+D and sets the value of $\ast$pqpq. This version is for haploid genotypes, with each genotype equal either to 0 or 1. \hypertarget{window_8c_a25697b24719566d43cc8f83d17e92f17}{\index{window.\+c@{window.\+c}!S\+N\+P\+\_\+new@{S\+N\+P\+\_\+new}}
+\index{S\+N\+P\+\_\+new@{S\+N\+P\+\_\+new}!window.\+c@{window.\+c}}
+\paragraph[{S\+N\+P\+\_\+new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+N\+P}$\ast$ S\+N\+P\+\_\+new (
 \begin{DoxyParamCaption}
-\item[{unsigned}]{n\-Gtype, }
+\item[{unsigned}]{n\+Gtype, }
 \item[{int}]{bootreps}
 \end{DoxyParamCaption}
 )}}\label{window_8c_a25697b24719566d43cc8f83d17e92f17}
 
 
-Allocate a new \hyperlink{struct_s_n_p}{S\-N\-P}, including the arrays used to store genotype data and bootstrap multiplicity values. 
+Allocate a new \hyperlink{struct_s_n_p}{S\+N\+P}, including the arrays used to store genotype data and bootstrap multiplicity values. 
 
-In order to improve efficiency, these allocations are all done with a single call to malloc. That way, data for each \hyperlink{struct_s_n_p}{S\-N\-P} is in contiguous memory, and we minimize cache misses.
+In order to improve efficiency, these allocations are all done with a single call to malloc. That way, data for each \hyperlink{struct_s_n_p}{S\+N\+P} is in contiguous memory, and we minimize cache misses.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em n\-Gtype} & Number of genotypes at each \hyperlink{struct_s_n_p}{S\-N\-P} \\
+\mbox{\tt in}  & {\em n\+Gtype} & Number of genotypes at each \hyperlink{struct_s_n_p}{S\+N\+P} \\
 \hline
 \mbox{\tt in}  & {\em bootreps} & Number of bootstrap replicates. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-pointer to newly-\/allocated \hyperlink{struct_s_n_p}{S\-N\-P}. 
+pointer to newly-\/allocated \hyperlink{struct_s_n_p}{S\+N\+P}. 
 \end{DoxyReturn}
 
 
-References S\-N\-P\-\_\-clear().
+References S\+N\+P\+\_\+clear().
 
 
 
-Referenced by S\-N\-Pstore\-\_\-checkout().
+Referenced by S\+N\+Pstore\+\_\+checkout().
 
-\hypertarget{window_8c_ae4d08ad1273b9566f0ab0b85370a8280}{\index{window.\-c@{window.\-c}!S\-N\-P\-\_\-set@{S\-N\-P\-\_\-set}}
-\index{S\-N\-P\-\_\-set@{S\-N\-P\-\_\-set}!window.c@{window.\-c}}
-\paragraph[{S\-N\-P\-\_\-set}]{\setlength{\rightskip}{0pt plus 5cm}int S\-N\-P\-\_\-set (
+\hypertarget{window_8c_ae4d08ad1273b9566f0ab0b85370a8280}{\index{window.\+c@{window.\+c}!S\+N\+P\+\_\+set@{S\+N\+P\+\_\+set}}
+\index{S\+N\+P\+\_\+set@{S\+N\+P\+\_\+set}!window.\+c@{window.\+c}}
+\paragraph[{S\+N\+P\+\_\+set}]{\setlength{\rightskip}{0pt plus 5cm}int S\+N\+P\+\_\+set (
 \begin{DoxyParamCaption}
-\item[{{\bf S\-N\-P} $\ast$}]{snp, }
+\item[{{\bf S\+N\+P} $\ast$}]{snp, }
 \item[{long}]{ndx, }
 \item[{double}]{mappos, }
 \item[{const unsigned char $\ast$}]{gtype, }
@@ -222,13 +224,13 @@ Referenced by S\-N\-Pstore\-\_\-checkout().
 )}}\label{window_8c_ae4d08ad1273b9566f0ab0b85370a8280}
 
 
-Initialize a \hyperlink{struct_s_n_p}{S\-N\-P} using the data given by the other parameters. 
+Initialize a \hyperlink{struct_s_n_p}{S\+N\+P} using the data given by the other parameters. 
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ndx} & S\-N\-Ps are indexed (numbered) starting with 0. ndx is the index of the current \hyperlink{struct_s_n_p}{S\-N\-P}.\\
+\mbox{\tt in}  & {\em ndx} & S\+N\+Ps are indexed (numbered) starting with 0. ndx is the index of the current \hyperlink{struct_s_n_p}{S\+N\+P}.\\
 \hline
-\mbox{\tt in}  & {\em mappos} & position of \hyperlink{struct_s_n_p}{S\-N\-P} in units of the recombinational map.\\
+\mbox{\tt in}  & {\em mappos} & position of \hyperlink{struct_s_n_p}{S\+N\+P} in units of the recombinational map.\\
 \hline
 \mbox{\tt in}  & {\em gtype} & points to a character string representing genotypes\\
 \hline
@@ -238,81 +240,81 @@ Initialize a \hyperlink{struct_s_n_p}{S\-N\-P} using the data given by the other
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-1 if the \hyperlink{struct_s_n_p}{S\-N\-P} is polymorphic, or 0 if monomorphic. 
+1 if the \hyperlink{struct_s_n_p}{S\+N\+P} is polymorphic, or 0 if monomorphic. 
 \end{DoxyReturn}
 
 
-Referenced by Window\-\_\-next\-S\-N\-P().
+Referenced by Window\+\_\+next\+S\+N\+P().
 
-\hypertarget{window_8c_ae9ae9811405f5de7ed15f2a7c1e8b9cd}{\index{window.\-c@{window.\-c}!S\-N\-Pstore\-\_\-checkin@{S\-N\-Pstore\-\_\-checkin}}
-\index{S\-N\-Pstore\-\_\-checkin@{S\-N\-Pstore\-\_\-checkin}!window.c@{window.\-c}}
-\paragraph[{S\-N\-Pstore\-\_\-checkin}]{\setlength{\rightskip}{0pt plus 5cm}void S\-N\-Pstore\-\_\-checkin (
+\hypertarget{window_8c_ae9ae9811405f5de7ed15f2a7c1e8b9cd}{\index{window.\+c@{window.\+c}!S\+N\+Pstore\+\_\+checkin@{S\+N\+Pstore\+\_\+checkin}}
+\index{S\+N\+Pstore\+\_\+checkin@{S\+N\+Pstore\+\_\+checkin}!window.\+c@{window.\+c}}
+\paragraph[{S\+N\+Pstore\+\_\+checkin}]{\setlength{\rightskip}{0pt plus 5cm}void S\+N\+Pstore\+\_\+checkin (
 \begin{DoxyParamCaption}
-\item[{{\bf S\-N\-Pstore} $\ast$}]{store, }
-\item[{{\bf S\-N\-P} $\ast$}]{snp}
+\item[{{\bf S\+N\+Pstore} $\ast$}]{store, }
+\item[{{\bf S\+N\+P} $\ast$}]{snp}
 \end{DoxyParamCaption}
 )}}\label{window_8c_ae9ae9811405f5de7ed15f2a7c1e8b9cd}
 
 
-Check a \hyperlink{struct_s_n_p}{S\-N\-P} back into the store. 
+Check a \hyperlink{struct_s_n_p}{S\+N\+P} back into the store. 
 
 
 
-References S\-N\-Pstore\-::head, and S\-N\-P\-\_\-connect().
+References S\+N\+Pstore\+::head, and S\+N\+P\+\_\+connect().
 
 
 
-Referenced by Window\-\_\-advance().
+Referenced by Window\+\_\+advance().
 
-\hypertarget{window_8c_ac49d5dd3b29707596040add6756d31d3}{\index{window.\-c@{window.\-c}!S\-N\-Pstore\-\_\-checkout@{S\-N\-Pstore\-\_\-checkout}}
-\index{S\-N\-Pstore\-\_\-checkout@{S\-N\-Pstore\-\_\-checkout}!window.c@{window.\-c}}
-\paragraph[{S\-N\-Pstore\-\_\-checkout}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\-N\-P}$\ast$ S\-N\-Pstore\-\_\-checkout (
+\hypertarget{window_8c_ac49d5dd3b29707596040add6756d31d3}{\index{window.\+c@{window.\+c}!S\+N\+Pstore\+\_\+checkout@{S\+N\+Pstore\+\_\+checkout}}
+\index{S\+N\+Pstore\+\_\+checkout@{S\+N\+Pstore\+\_\+checkout}!window.\+c@{window.\+c}}
+\paragraph[{S\+N\+Pstore\+\_\+checkout}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+N\+P}$\ast$ S\+N\+Pstore\+\_\+checkout (
 \begin{DoxyParamCaption}
-\item[{{\bf S\-N\-Pstore} $\ast$}]{store}
+\item[{{\bf S\+N\+Pstore} $\ast$}]{store}
 \end{DoxyParamCaption}
 )}}\label{window_8c_ac49d5dd3b29707596040add6756d31d3}
 
 
-Obtain a \hyperlink{struct_s_n_p}{S\-N\-P} from the store, allocating if necessary. 
+Obtain a \hyperlink{struct_s_n_p}{S\+N\+P} from the store, allocating if necessary. 
 
 
 
-References S\-N\-Pstore\-::bootreps, S\-N\-Pstore\-::head, S\-N\-Pstore\-::n\-Gtype, S\-N\-P\-\_\-clear(), and S\-N\-P\-\_\-new().
+References S\+N\+Pstore\+::bootreps, S\+N\+Pstore\+::head, S\+N\+Pstore\+::n\+Gtype, S\+N\+P\+\_\+clear(), and S\+N\+P\+\_\+new().
 
 
 
-Referenced by Window\-\_\-next\-S\-N\-P().
+Referenced by Window\+\_\+next\+S\+N\+P().
 
-\hypertarget{window_8c_a1f734bd1816de662c2520c04e6e7aa2a}{\index{window.\-c@{window.\-c}!S\-N\-Pstore\-\_\-new@{S\-N\-Pstore\-\_\-new}}
-\index{S\-N\-Pstore\-\_\-new@{S\-N\-Pstore\-\_\-new}!window.c@{window.\-c}}
-\paragraph[{S\-N\-Pstore\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\-N\-Pstore}$\ast$ S\-N\-Pstore\-\_\-new (
+\hypertarget{window_8c_a1f734bd1816de662c2520c04e6e7aa2a}{\index{window.\+c@{window.\+c}!S\+N\+Pstore\+\_\+new@{S\+N\+Pstore\+\_\+new}}
+\index{S\+N\+Pstore\+\_\+new@{S\+N\+Pstore\+\_\+new}!window.\+c@{window.\+c}}
+\paragraph[{S\+N\+Pstore\+\_\+new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+N\+Pstore}$\ast$ S\+N\+Pstore\+\_\+new (
 \begin{DoxyParamCaption}
-\item[{unsigned}]{n\-Gtype, }
+\item[{unsigned}]{n\+Gtype, }
 \item[{int}]{bootreps}
 \end{DoxyParamCaption}
 )}}\label{window_8c_a1f734bd1816de662c2520c04e6e7aa2a}
 
 
-Allocate a new object of type \hyperlink{struct_s_n_pstore}{S\-N\-Pstore}. 
+Allocate a new object of type \hyperlink{struct_s_n_pstore}{S\+N\+Pstore}. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em n\-Gtype} & number of genotypes \\
+{\em n\+Gtype} & number of genotypes \\
 \hline
 {\em bootreps} & number of bootstrap replicates \\
 \hline
 \end{DoxyParams}
 
 
-References S\-N\-Pstore\-::bootreps, S\-N\-Pstore\-::head, and S\-N\-Pstore\-::n\-Gtype.
+References S\+N\+Pstore\+::bootreps, S\+N\+Pstore\+::head, and S\+N\+Pstore\+::n\+Gtype.
 
 
 
-Referenced by Window\-\_\-next\-S\-N\-P().
+Referenced by Window\+\_\+next\+S\+N\+P().
 
-\hypertarget{window_8c_a10deeb4bf2f92ac26a87c6fac57325d4}{\index{window.\-c@{window.\-c}!Window\-\_\-advance@{Window\-\_\-advance}}
-\index{Window\-\_\-advance@{Window\-\_\-advance}!window.c@{window.\-c}}
-\paragraph[{Window\-\_\-advance}]{\setlength{\rightskip}{0pt plus 5cm}int Window\-\_\-advance (
+\hypertarget{window_8c_a10deeb4bf2f92ac26a87c6fac57325d4}{\index{window.\+c@{window.\+c}!Window\+\_\+advance@{Window\+\_\+advance}}
+\index{Window\+\_\+advance@{Window\+\_\+advance}!window.\+c@{window.\+c}}
+\paragraph[{Window\+\_\+advance}]{\setlength{\rightskip}{0pt plus 5cm}int Window\+\_\+advance (
 \begin{DoxyParamCaption}
 \item[{{\bf Window} $\ast$}]{window, }
 \item[{{\bf Tabulation} $\ast$}]{tab, }
@@ -322,23 +324,23 @@ Referenced by Window\-\_\-next\-S\-N\-P().
 )}}\label{window_8c_a10deeb4bf2f92ac26a87c6fac57325d4}
 
 
-Add a new \hyperlink{struct_s_n_p}{S\-N\-P} to the window. 
+Add a new \hyperlink{struct_s_n_p}{S\+N\+P} to the window. 
 
 
 
-References Window\-::curr, Dbl\-\_\-near(), Window\-::ploidy, Window\-::sampling\-\_\-interval, S\-N\-P\-\_\-get\-Dsq(), S\-N\-Pstore\-\_\-checkin(), Window\-::store, Window\-::width\-\_\-cm, and Window\-\_\-next\-S\-N\-P().
+References Window\+::curr, Dbl\+\_\+near(), Window\+::ploidy, Window\+::sampling\+\_\+interval, S\+N\+P\+\_\+get\+Dsq(), S\+N\+Pstore\+\_\+checkin(), Window\+::store, Window\+::width\+\_\+cm, and Window\+\_\+next\+S\+N\+P().
 
 
 
 Referenced by threadfun().
 
-\hypertarget{window_8c_a32650574dc7bdc08308978788f364db2}{\index{window.\-c@{window.\-c}!Window\-\_\-new@{Window\-\_\-new}}
-\index{Window\-\_\-new@{Window\-\_\-new}!window.c@{window.\-c}}
-\paragraph[{Window\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Window}$\ast$ Window\-\_\-new (
+\hypertarget{window_8c_a32650574dc7bdc08308978788f364db2}{\index{window.\+c@{window.\+c}!Window\+\_\+new@{Window\+\_\+new}}
+\index{Window\+\_\+new@{Window\+\_\+new}!window.\+c@{window.\+c}}
+\paragraph[{Window\+\_\+new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Window}$\ast$ Window\+\_\+new (
 \begin{DoxyParamCaption}
-\item[{double}]{width\-\_\-cm, }
-\item[{F\-I\-L\-E $\ast$}]{ifp, }
-\item[{long int}]{sampling\-\_\-interval, }
+\item[{double}]{width\+\_\+cm, }
+\item[{F\+I\+L\+E $\ast$}]{ifp, }
+\item[{long int}]{sampling\+\_\+interval, }
 \item[{unsigned}]{ploidy}
 \end{DoxyParamCaption}
 )}}\label{window_8c_a32650574dc7bdc08308978788f364db2}
@@ -348,24 +350,24 @@ Allocate a new \hyperlink{struct_window}{Window}.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em width\-\_\-cm} & width of \hyperlink{struct_window}{Window} in centimorgans\\
+\mbox{\tt in}  & {\em width\+\_\+cm} & width of \hyperlink{struct_window}{Window} in centimorgans\\
 \hline
-\mbox{\tt in}  & {\em sampling\-\_\-interval} & If sampling\-\_\-interval is 2, window will skip every other \hyperlink{struct_s_n_p}{S\-N\-P}. This makes things fast for debugging.\\
+\mbox{\tt in}  & {\em sampling\+\_\+interval} & If sampling\+\_\+interval is 2, window will skip every other \hyperlink{struct_s_n_p}{S\+N\+P}. This makes things fast for debugging.\\
 \hline
 \mbox{\tt in}  & {\em ploidy} & 1 for haploid, 2 for diploid \\
 \hline
 \end{DoxyParams}
 
 
-References Window\-::curr, Window\-::ifp, Window\-::n\-Gtype, Window\-::n\-S\-N\-Ps, Window\-::ploidy, Window\-::sampling\-\_\-interval, Window\-::store, and Window\-::width\-\_\-cm.
+References Window\+::curr, Window\+::ifp, Window\+::n\+Gtype, Window\+::n\+S\+N\+Ps, Window\+::ploidy, Window\+::sampling\+\_\+interval, Window\+::store, and Window\+::width\+\_\+cm.
 
 
 
 Referenced by threadfun().
 
-\hypertarget{window_8c_abc05c7153486e330e6c043a19dccc814}{\index{window.\-c@{window.\-c}!Window\-\_\-next\-S\-N\-P@{Window\-\_\-next\-S\-N\-P}}
-\index{Window\-\_\-next\-S\-N\-P@{Window\-\_\-next\-S\-N\-P}!window.c@{window.\-c}}
-\paragraph[{Window\-\_\-next\-S\-N\-P}]{\setlength{\rightskip}{0pt plus 5cm}int Window\-\_\-next\-S\-N\-P (
+\hypertarget{window_8c_abc05c7153486e330e6c043a19dccc814}{\index{window.\+c@{window.\+c}!Window\+\_\+next\+S\+N\+P@{Window\+\_\+next\+S\+N\+P}}
+\index{Window\+\_\+next\+S\+N\+P@{Window\+\_\+next\+S\+N\+P}!window.\+c@{window.\+c}}
+\paragraph[{Window\+\_\+next\+S\+N\+P}]{\setlength{\rightskip}{0pt plus 5cm}int Window\+\_\+next\+S\+N\+P (
 \begin{DoxyParamCaption}
 \item[{{\bf Window} $\ast$}]{window, }
 \item[{{\bf Boot} $\ast$}]{boot}
@@ -373,28 +375,28 @@ Referenced by threadfun().
 )}}\label{window_8c_abc05c7153486e330e6c043a19dccc814}
 
 
-Get next \hyperlink{struct_s_n_p}{S\-N\-P} from input file and link it into the linked list pointed to by window-\/$>$curr. 
+Get next \hyperlink{struct_s_n_p}{S\+N\+P} from input file and link it into the linked list pointed to by window-\/$>$curr. 
 
-Return 0 on success, E\-O\-F if end of file is reached, and 1 on any other error. 
+Return 0 on success, E\+O\+F if end of file is reached, and 1 on any other error. 
 
-References Window\-::curr, Dbl\-\_\-near(), Gtp\-\_\-read\-S\-N\-P(), Window\-::gtype, Window\-::ifp, Window\-::n\-Gtype, Window\-::n\-S\-N\-Ps, Window\-::ploidy, S\-N\-P\-\_\-set(), S\-N\-Pstore\-\_\-checkout(), S\-N\-Pstore\-\_\-new(), and Window\-::store.
+References Window\+::curr, Dbl\+\_\+near(), Gtp\+\_\+read\+S\+N\+P(), Window\+::gtype, Window\+::ifp, Window\+::n\+Gtype, Window\+::n\+S\+N\+Ps, Window\+::ploidy, S\+N\+P\+\_\+set(), S\+N\+Pstore\+\_\+checkout(), S\+N\+Pstore\+\_\+new(), and Window\+::store.
 
 
 
-Referenced by threadfun(), and Window\-\_\-advance().
+Referenced by threadfun(), and Window\+\_\+advance().
 
-\hypertarget{window_8c_a67b5392fe87dc00fe45c4fa17d166cb4}{\index{window.\-c@{window.\-c}!Window\-\_\-n\-S\-N\-Ps\-Read@{Window\-\_\-n\-S\-N\-Ps\-Read}}
-\index{Window\-\_\-n\-S\-N\-Ps\-Read@{Window\-\_\-n\-S\-N\-Ps\-Read}!window.c@{window.\-c}}
-\paragraph[{Window\-\_\-n\-S\-N\-Ps\-Read}]{\setlength{\rightskip}{0pt plus 5cm}long Window\-\_\-n\-S\-N\-Ps\-Read (
+\hypertarget{window_8c_a67b5392fe87dc00fe45c4fa17d166cb4}{\index{window.\+c@{window.\+c}!Window\+\_\+n\+S\+N\+Ps\+Read@{Window\+\_\+n\+S\+N\+Ps\+Read}}
+\index{Window\+\_\+n\+S\+N\+Ps\+Read@{Window\+\_\+n\+S\+N\+Ps\+Read}!window.\+c@{window.\+c}}
+\paragraph[{Window\+\_\+n\+S\+N\+Ps\+Read}]{\setlength{\rightskip}{0pt plus 5cm}long Window\+\_\+n\+S\+N\+Ps\+Read (
 \begin{DoxyParamCaption}
 \item[{const {\bf Window} $\ast$}]{window}
 \end{DoxyParamCaption}
 )}}\label{window_8c_a67b5392fe87dc00fe45c4fa17d166cb4}
 
 
-Return the number of S\-N\-Ps that have been read. 
+Return the number of S\+N\+Ps that have been read. 
 
 
 
-References Window\-::n\-S\-N\-Ps.
+References Window\+::n\+S\+N\+Ps.
 

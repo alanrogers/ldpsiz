@@ -1,76 +1,78 @@
-\hypertarget{mcmcld_8c}{\subsection{mcmcld.\-c File Reference}
-\label{mcmcld_8c}\index{mcmcld.\-c@{mcmcld.\-c}}
+\hypertarget{mcmcld_8c}{\subsection{mcmcld.\+c File Reference}
+\label{mcmcld_8c}\index{mcmcld.\+c@{mcmcld.\+c}}
 }
 
 
-{\ttfamily mcmcld} uses Markov-\/\-Coupled Markov-\/\-Chain Monte Carlo (M\-C\-M\-C\-M\-C) to estimate population history from data on $\sigma_d^2$.  
+{\ttfamily mcmcld} uses Markov-\/\+Coupled Markov-\/\+Chain Monte Carlo (M\+C\+M\+C\+M\+C) to estimate population history from data on $\sigma_d^2$.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include $<$assert.\-h$>$}\\*
-{\ttfamily \#include $<$time.\-h$>$}\\*
-{\ttfamily \#include $<$float.\-h$>$}\\*
-{\ttfamily \#include $<$pthread.\-h$>$}\\*
-{\ttfamily \#include $<$string.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}boot.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}pophist.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}tokenizer.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}ini.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}model.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}assign.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}chain.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$float.\+h$>$}\\*
+{\ttfamily \#include $<$pthread.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}boot.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}pophist.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tokenizer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}ini.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}model.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}assign.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}chain.\+h\char`\"{}}\\*
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{mcmcld_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}{void {\bfseries usage} (void)}\label{mcmcld_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}
 
 \item 
-int \hyperlink{mcmcld_8c_a6352349211b84d065a9575af7bd9524d}{read\-\_\-data} (F\-I\-L\-E $\ast$ifp, int nbins, int two\-Nsmp, double $\ast$cm, double $\ast$sigdsq)
+int \hyperlink{mcmcld_8c_a6352349211b84d065a9575af7bd9524d}{read\+\_\+data} (F\+I\+L\+E $\ast$ifp, int nbins, int two\+Nsmp, double $\ast$cm, double $\ast$sigdsq)
 \begin{DoxyCompactList}\small\item\em Read the data file produced by eld. \end{DoxyCompactList}\item 
-int \hyperlink{mcmcld_8c_ace5f1dedd7c98a3533870d4140beb7f5}{isopt} (const char $\ast$short\-Opt, const char $\ast$long\-Opt, const char $\ast$arg)
-\begin{DoxyCompactList}\small\item\em Return 1 if string arg matches either short\-Opt or long\-Opt. \end{DoxyCompactList}\item 
-double \hyperlink{mcmcld_8c_a97a069c6826ae0a7359dfc0c03e462a6}{ln\-Obj\-Fun} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, double u, \hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode, int nbins, double $\ast$sigdsq, double $\ast$c)
-\begin{DoxyCompactList}\small\item\em Log of objective function\-: negative of sum of squared differences between observed and expected sigma\-\_\-d$^\wedge$2 vectors. \end{DoxyCompactList}\item 
+int \hyperlink{mcmcld_8c_ace5f1dedd7c98a3533870d4140beb7f5}{isopt} (const char $\ast$short\+Opt, const char $\ast$long\+Opt, const char $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Return 1 if string arg matches either short\+Opt or long\+Opt. \end{DoxyCompactList}\item 
+double \hyperlink{mcmcld_8c_a97a069c6826ae0a7359dfc0c03e462a6}{ln\+Obj\+Fun} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, double u, \hyperlink{struct_o_d_e}{O\+D\+E} $\ast$ode, int nbins, double $\ast$sigdsq, double $\ast$c)
+\begin{DoxyCompactList}\small\item\em Log of objective function\+: negative of sum of squared differences between observed and expected sigma\+\_\+d$^\wedge$2 vectors. \end{DoxyCompactList}\item 
 \hypertarget{mcmcld_8c_a3c04138a5bfe5d72780bb7e82a18e627}{int {\bfseries main} (int argc, char $\ast$$\ast$argv)}\label{mcmcld_8c_a3c04138a5bfe5d72780bb7e82a18e627}
 
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
-{\ttfamily mcmcld} uses Markov-\/\-Coupled Markov-\/\-Chain Monte Carlo (M\-C\-M\-C\-M\-C) to estimate population history from data on $\sigma_d^2$. \label{mcmcld_8c_mcmcld}%
+{\ttfamily mcmcld} uses Markov-\/\+Coupled Markov-\/\+Chain Monte Carlo (M\+C\+M\+C\+M\+C) to estimate population history from data on $\sigma_d^2$. 
+
+\label{mcmcld_8c_mcmcld}%
 \hypertarget{mcmcld_8c_mcmcld}{}%
-\subsubsection*{mcmcld, M\-C\-M\-C\-M\-C estimates of population history from $\sigma_d^2$ }
+\subsubsection*{mcmcld, M\+C\+M\+C\+M\+C estimates of population history from $\sigma_d^2$ }
 
 This program needs work. Don't trust the current version.
 
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
 \end{DoxyCopyright}
 
 
 \subsubsection{Function Documentation}
-\hypertarget{mcmcld_8c_ace5f1dedd7c98a3533870d4140beb7f5}{\index{mcmcld.\-c@{mcmcld.\-c}!isopt@{isopt}}
-\index{isopt@{isopt}!mcmcld.c@{mcmcld.\-c}}
+\hypertarget{mcmcld_8c_ace5f1dedd7c98a3533870d4140beb7f5}{\index{mcmcld.\+c@{mcmcld.\+c}!isopt@{isopt}}
+\index{isopt@{isopt}!mcmcld.\+c@{mcmcld.\+c}}
 \paragraph[{isopt}]{\setlength{\rightskip}{0pt plus 5cm}int isopt (
 \begin{DoxyParamCaption}
-\item[{const char $\ast$}]{short\-Opt, }
-\item[{const char $\ast$}]{long\-Opt, }
+\item[{const char $\ast$}]{short\+Opt, }
+\item[{const char $\ast$}]{long\+Opt, }
 \item[{const char $\ast$}]{arg}
 \end{DoxyParamCaption}
 )}}\label{mcmcld_8c_ace5f1dedd7c98a3533870d4140beb7f5}
 
 
-Return 1 if string arg matches either short\-Opt or long\-Opt. 
+Return 1 if string arg matches either short\+Opt or long\+Opt. 
 
-Short\-Opt and long\-Opt are ignored if their values are N\-U\-L\-L. If arg doesn't match either short\-Opt or long\-Opt, then return 0. \hypertarget{mcmcld_8c_a97a069c6826ae0a7359dfc0c03e462a6}{\index{mcmcld.\-c@{mcmcld.\-c}!ln\-Obj\-Fun@{ln\-Obj\-Fun}}
-\index{ln\-Obj\-Fun@{ln\-Obj\-Fun}!mcmcld.c@{mcmcld.\-c}}
-\paragraph[{ln\-Obj\-Fun}]{\setlength{\rightskip}{0pt plus 5cm}double ln\-Obj\-Fun (
+Short\+Opt and long\+Opt are ignored if their values are N\+U\+L\+L. If arg doesn't match either short\+Opt or long\+Opt, then return 0. \hypertarget{mcmcld_8c_a97a069c6826ae0a7359dfc0c03e462a6}{\index{mcmcld.\+c@{mcmcld.\+c}!ln\+Obj\+Fun@{ln\+Obj\+Fun}}
+\index{ln\+Obj\+Fun@{ln\+Obj\+Fun}!mcmcld.\+c@{mcmcld.\+c}}
+\paragraph[{ln\+Obj\+Fun}]{\setlength{\rightskip}{0pt plus 5cm}double ln\+Obj\+Fun (
 \begin{DoxyParamCaption}
-\item[{{\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{{\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{double}]{u, }
-\item[{{\bf O\-D\-E} $\ast$}]{ode, }
+\item[{{\bf O\+D\+E} $\ast$}]{ode, }
 \item[{int}]{nbins, }
 \item[{double $\ast$}]{sigdsq, }
 \item[{double $\ast$}]{c}
@@ -78,7 +80,7 @@ Short\-Opt and long\-Opt are ignored if their values are N\-U\-L\-L. If arg does
 )}}\label{mcmcld_8c_a97a069c6826ae0a7359dfc0c03e462a6}
 
 
-Log of objective function\-: negative of sum of squared differences between observed and expected sigma\-\_\-d$^\wedge$2 vectors. 
+Log of objective function\+: negative of sum of squared differences between observed and expected sigma\+\_\+d$^\wedge$2 vectors. 
 
 
 \begin{DoxyParams}[1]{Parameters}
@@ -95,19 +97,19 @@ Log of objective function\-: negative of sum of squared differences between obse
 \end{DoxyParams}
 
 
-References O\-D\-E\-\_\-ld\-Vec().
+References O\+D\+E\+\_\+ld\+Vec().
 
 
 
-Referenced by Chain\-\_\-new().
+Referenced by Chain\+\_\+new().
 
-\hypertarget{mcmcld_8c_a6352349211b84d065a9575af7bd9524d}{\index{mcmcld.\-c@{mcmcld.\-c}!read\-\_\-data@{read\-\_\-data}}
-\index{read\-\_\-data@{read\-\_\-data}!mcmcld.c@{mcmcld.\-c}}
-\paragraph[{read\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}int read\-\_\-data (
+\hypertarget{mcmcld_8c_a6352349211b84d065a9575af7bd9524d}{\index{mcmcld.\+c@{mcmcld.\+c}!read\+\_\+data@{read\+\_\+data}}
+\index{read\+\_\+data@{read\+\_\+data}!mcmcld.\+c@{mcmcld.\+c}}
+\paragraph[{read\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}int read\+\_\+data (
 \begin{DoxyParamCaption}
-\item[{F\-I\-L\-E $\ast$}]{ifp, }
+\item[{F\+I\+L\+E $\ast$}]{ifp, }
 \item[{int}]{nbins, }
-\item[{int}]{two\-Nsmp, }
+\item[{int}]{two\+Nsmp, }
 \item[{double $\ast$}]{cm, }
 \item[{double $\ast$}]{sigdsq}
 \end{DoxyParamCaption}
@@ -122,11 +124,11 @@ Read the data file produced by eld.
 \hline
 \mbox{\tt in}  & {\em nbins} & The length of all arrays. \\
 \hline
-\mbox{\tt out}  & {\em two\-Nsmp} & Number of gene copies sampled per locus. \\
+\mbox{\tt out}  & {\em two\+Nsmp} & Number of gene copies sampled per locus. \\
 \hline
-\mbox{\tt out}  & {\em cm} & An array giving the average separation (in centimorgans) between pairs of S\-N\-Ps within the various bins. \\
+\mbox{\tt out}  & {\em cm} & An array giving the average separation (in centimorgans) between pairs of S\+N\+Ps within the various bins. \\
 \hline
-\mbox{\tt out}  & {\em sigdsq} & An array of estimates of sigma\-\_\-d$^\wedge$2.\\
+\mbox{\tt out}  & {\em sigdsq} & An array of estimates of sigma\+\_\+d$^\wedge$2.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}

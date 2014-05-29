@@ -21,13 +21,13 @@ Usage
 
     usage: preld [options]
        where options may include:
-       -u <x> or --mutation <x>
+       -u \<x\> or --mutation \<x\>
           set mutation rate/generation
-       -b <x> or --nbins <x>
+       -b \<x\> or --nbins \<x\>
           specify the number of recombination rates
-       -r <x> or --lo_r <x>
+       -r \<x\> or --lo_r \<x\>
           low end of range of recombination rates in centimorgans
-       -R <x> or --hi_r <x>
+       -R \<x\> or --hi_r \<x\>
           high end of range of recombination rates in centimorgans
        -e or --equilibria
           show equilibrium for each epoch
@@ -37,9 +37,9 @@ Usage
           set haploid sample size
        -E or --nextepoch
           move to next earlier epoch
-       --twoN <x>
+       --twoN \<x\>
           set haploid pop size to x in current epoch
-       -T <x> or --time <x>
+       -T \<x\> or --time \<x\>
           set length of current epoch to x generations
        -S or --printState
           print state vectors

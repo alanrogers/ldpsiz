@@ -128,7 +128,7 @@ double ODE_ld(ODE * ode, double c, double u, PopHist * ph) {
  * in predicting LD from population history. Legal values: "hill",
  * "strobeck", and "hayes".
  *
- * @param[in] twoNsamp haploid sample size, which is used to
+ * @param[in] twoNsmp haploid sample size, which is used to
  * incorporate sampling bias into predicted values. To turn this
  * feature off, use the value 0.
  *
@@ -200,11 +200,7 @@ void ODE_printState(const ODE * ode, FILE * fp) {
  * initial state given in y. Calculation uses ODE approximation. The
  * initial value of y should be set before calling ODE_evolve.
  *
- * @param[in,out] model An object of type Model, which specifies the method to
- *            be used in evolving across a population history. The
- *            function makes use of model->ydim, model->y, and
- *            model->dydt. On return, model->y contains the state
- *            variable the results from this process.
+ * @param[in,out] ode an object of type ODE.
  * @param[in,out] y Vector of state variables.
  * @param[in] odeStepSize Controls the size of step taken by the minimizer.
  * @param[in] ph Describes the population's history. If ph contains
@@ -308,14 +304,11 @@ int ODE_evolve(ODE * ode,
  * On entry, c is a list of recombination rates, ph the population
  * history, and odeStepSize is the initial step size.
  *
- * @param[in,out] model An object of type Model, which specifies
- * the method to be used in evolving across a population history. On
- * return, model->y is changed.
+ * @param[in,out] ode An object of type ODE.
  * @param[in] c,u Rates of recombination and mutation.
- * @param[in] nbins Size of arrayys sigdsq and c.
+ * @param[in] nbins Size of arrays sigdsq and c.
  * @param[in] ph Population history.
- * @param[in] odeStepSize Controls the step size of the ODE algorithm.
- * @param[out] ld[i] is a vector of "nbins" doubles. On return, the i'th
+ * @param[out] ld is a vector of "nbins" doubles. On return, the i'th
  * entry will contain the value of sigma_d^2 implied by recombination
  * rate c[i], and by the population history in argument "ph".
  */
@@ -390,8 +383,8 @@ ModelList  *ModelList_alloc(const char *s0, int twoNsmp) {
 /**
  * Add a method to an ModelList. Return 1 on success, 0 on failure.
  *
- * @param[out] el The ModelList.
- * @param[in] method A character string such as "hill", or
+ * @param[out] ml The ModelList.
+ * @param[in] modelName A character string such as "hill", or
  * "strobeck".
  * @param[in] twoNsmp The number of individuals sampled.
  */

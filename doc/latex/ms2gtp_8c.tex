@@ -1,42 +1,44 @@
-\hypertarget{ms2gtp_8c}{\subsection{ms2gtp.\-c File Reference}
-\label{ms2gtp_8c}\index{ms2gtp.\-c@{ms2gtp.\-c}}
+\hypertarget{ms2gtp_8c}{\subsection{ms2gtp.\+c File Reference}
+\label{ms2gtp_8c}\index{ms2gtp.\+c@{ms2gtp.\+c}}
 }
 
 
 This file contains code related ms2gtp, a program that translates output from Dick Hudson's {\ttfamily ms} program into .gtp format.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$string.\-h$>$}\\*
-{\ttfamily \#include $<$stdlib.\-h$>$}\\*
-{\ttfamily \#include $<$time.\-h$>$}\\*
-{\ttfamily \#include $<$ctype.\-h$>$}\\*
-{\ttfamily \#include $<$getopt.\-h$>$}\\*
-{\ttfamily \#include $<$assert.\-h$>$}\\*
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}ini.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}tokenizer.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$ctype.\+h$>$}\\*
+{\ttfamily \#include $<$getopt.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}ini.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tokenizer.\+h\char`\"{}}\\*
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{ms2gtp_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}{void \hyperlink{ms2gtp_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}{usage} (void)}\label{ms2gtp_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}
 
-\begin{DoxyCompactList}\small\item\em Parse output of M\-S, produce gtp format, the input for eld. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Parse output of M\+S, produce gtp format, the input for eld. \end{DoxyCompactList}\item 
 \hypertarget{ms2gtp_8c_a3c04138a5bfe5d72780bb7e82a18e627}{int {\bfseries main} (int argc, char $\ast$$\ast$argv)}\label{ms2gtp_8c_a3c04138a5bfe5d72780bb7e82a18e627}
 
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
-This file contains code related ms2gtp, a program that translates output from Dick Hudson's {\ttfamily ms} program into .gtp format. \label{ms2gtp_8c_ms2gtp}%
+This file contains code related ms2gtp, a program that translates output from Dick Hudson's {\ttfamily ms} program into .gtp format. 
+
+\label{ms2gtp_8c_ms2gtp}%
 \hypertarget{ms2gtp_8c_ms2gtp}{}%
 \subsubsection*{ms2gtp, a program that converts {\ttfamily ms} output into .gtp format }
 
-This program is written in C, because the conversion involves transposing a large matrix, and this is faster in C. If you run it like \char`\"{}ms2gtp my\-\_\-input\-\_\-file\-\_\-name\char`\"{}, it will allocate internal arrays using default values. If your {\ttfamily ms} output is large, these arrays will be too small. The program will print an error message and abort. To avoid this problem, run the (unix or linux) command \char`\"{}grep positions
-ms.\-out $\vert$ wc\char`\"{}. This will print 3 numbers. The number of tokens must be as large as 2nd; buffer size as large as the 3rd. You can set these values using the {\ttfamily -\/-\/max\-Tokens} and {\ttfamily -\/-\/in\-Buff\-Size} arguments.
+This program is written in C, because the conversion involves transposing a large matrix, and this is faster in C. If you run it like \char`\"{}ms2gtp my\+\_\+input\+\_\+file\+\_\+name\char`\"{}, it will allocate internal arrays using default values. If your {\ttfamily ms} output is large, these arrays will be too small. The program will print an error message and abort. To avoid this problem, run the (unix or linux) command \char`\"{}grep positions
+ms.\+out $\vert$ wc\char`\"{}. This will print 3 numbers. The number of tokens must be as large as 2nd; buffer size as large as the 3rd. You can set these values using the {\ttfamily -\/-\/max\+Tokens} and {\ttfamily -\/-\/in\+Buff\+Size} arguments.
 
-For example, I used {\ttfamily ms} to produce a file called {\ttfamily ms.\-out}. To find out how large to set the arrays, I executed \begin{DoxyVerb}grep positions ms.out | wc 
+For example, I used {\ttfamily ms} to produce a file called {\ttfamily ms.\+out}. To find out how large to set the arrays, I executed \begin{DoxyVerb}grep positions ms.out | wc 
 \end{DoxyVerb}
 
 
@@ -44,11 +46,11 @@ which produced the output \begin{DoxyVerb}1   89366 1161757
 \end{DoxyVerb}
 
 
-This indicates that I need to accomodate input lines with 89366 tokens and 1161757 characters. So I ran {\ttfamily ms2gtp} like this\-: \begin{DoxyVerb}ms2gtp --maxTokens 89370 --inBuffSize 1161800 ms.out > ms.gtp
+This indicates that I need to accomodate input lines with 89366 tokens and 1161757 characters. So I ran {\ttfamily ms2gtp} like this\+: \begin{DoxyVerb}ms2gtp --maxTokens 89370 --inBuffSize 1161800 ms.out > ms.gtp
 \end{DoxyVerb}
 
 
-This reads input from file {\ttfamily ms.\-out} and writes to file {\ttfamily ms.\-gtp}. The first few lines of {\ttfamily ms.\-gtp} look like this\-: \begin{DoxyVerb}# ms2gtp was run Sat Feb  2 11:15:05 2013
+This reads input from file {\ttfamily ms.\+out} and writes to file {\ttfamily ms.\+gtp}. The first few lines of {\ttfamily ms.\+gtp} look like this\+: \begin{DoxyVerb}# ms2gtp was run Sat Feb  2 11:15:05 2013
 # cmd line     = ms2gtp -t 89370 -b 1161800 ms.out
 # sim cmd      = ms 50 1 -t 20000 -r 20000 1000000
 # nnucleotides = 1000000
@@ -64,13 +66,13 @@ This reads input from file {\ttfamily ms.\-out} and writes to file {\ttfamily ms
 
 In this example, I've truncated the genotypes on the right in order to fit them on the page.
 
-Here is the usage message\-: \begin{DoxyVerb}usage: ms2gtp [options] [input_file_name]
+Here is the usage message\+: \begin{DoxyVerb}usage: ms2gtp [options] [input_file_name]
    where options may include:
-   -t <x> or --maxTokens <x>
+   -t \<x\> or --maxTokens \<x\>
       maximum tokens per input line
-   -b <x> or --inBuffSize <x>
+   -b \<x\> or --inBuffSize \<x\>
       size of input buffer
-   -R <x> or --recombination <x>
+   -R \<x\> or --recombination \<x\>
       rate for adjacent nucleotides
    -h     or --help
       print this message
@@ -87,5 +89,5 @@ Here is the usage message\-: \begin{DoxyVerb}usage: ms2gtp [options] [input_file
 
 
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
 \end{DoxyCopyright}

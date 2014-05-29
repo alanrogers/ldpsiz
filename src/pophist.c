@@ -307,7 +307,7 @@ double PopHist_twoNinv(const PopHist * ph, int i) {
  * @param[out] ph PopHist object to be modified.
  * @param[in] i index of epoch to be modified. Must
  *            be less than ph->nepoch-1.
- * @param[in] t new value of duration of i'th epoch.
+ * @param[in] duration new value of duration of i'th epoch.
  */
 void PopHist_setDuration(PopHist * ph, int i, double duration) {
     if(i + 1 == ph->nepoch)
@@ -650,24 +650,24 @@ void PopHist_copy(PopHist * dest, const PopHist * src) {
 }
 
 /**
- * Fill ph with random values based on model.
+ * Fill ph with random values based on ph0.
  *
- * The model is first copied into ph. Then ph is perturbed as
- * described in the documentation to PopHist_perturbInPlace.
+ * ph0 is first copied into ph. Then ph is perturbed as described in
+ * the documentation to PopHist_perturbInPlace.
  *
  * @param[out] ph PopHist into which new values will be written.
- * @param[in] model PopHist whose values are perturbed to obtain new
- * values. The values within model are unchanged.
+ * @param[in] ph0 PopHist whose values are perturbed to obtain new
+ * values. The values within ph0 are unchanged.
  * @param[in] dt controls the magnitude of perturbations in the
  * duration variable.
- * @param[in] dN controls the magnitude of perturbations in population
+ * @param[in] dNinv controls the magnitude of perturbations in population
  * size.
  * @param[in] rng random number generator.
  * @returns ph
  */
-PopHist    *PopHist_perturb(PopHist * ph, const PopHist * model, double dt,
+PopHist    *PopHist_perturb(PopHist * ph, const PopHist * ph0, double dt,
                             double dNinv, gsl_rng * rng) {
-    PopHist_copy(ph, model);
+    PopHist_copy(ph, ph0);
     return PopHist_perturbInPlace(ph, dt, dNinv, rng);
 }
 

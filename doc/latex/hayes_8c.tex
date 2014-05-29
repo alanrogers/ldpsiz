@@ -1,82 +1,84 @@
-\hypertarget{hayes_8c}{\subsection{hayes.\-c File Reference}
-\label{hayes_8c}\index{hayes.\-c@{hayes.\-c}}
+\hypertarget{hayes_8c}{\subsection{hayes.\+c File Reference}
+\label{hayes_8c}\index{hayes.\+c@{hayes.\+c}}
 }
 
 
-Code for Sved's (1971) formula, as used by Hayes et al. 2003. Genome Research 13\-:635-\/643.  
+Code for Sved's (1971) formula, as used by Hayes et al. 2003. Genome Research 13\+:635-\/643.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$assert.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}pophist.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}hayes.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}model.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}pophist.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}hayes.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}model.\+h\char`\"{}}\\*
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-static double \hyperlink{hayes_8c_a7a49475cdda4637f7e3c847c910261ee}{sved\-Rsq} (double c, double two\-N, int two\-Nsmp)
-\begin{DoxyCompactList}\small\item\em Sved's (1971; also 2009, p 184) formula for E\mbox{[}r$^\wedge$2\mbox{]}, modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624). \end{DoxyCompactList}\item 
-\hypertarget{hayes_8c_a5821ee8bba185d5eb955b737e51f369f}{double {\bfseries Hayes\-\_\-rsq\-\_\-dummy} (double $\ast$y, int two\-Nsmp)}\label{hayes_8c_a5821ee8bba185d5eb955b737e51f369f}
+static double \hyperlink{hayes_8c_a7a49475cdda4637f7e3c847c910261ee}{sved\+Rsq} (double c, double two\+N, int two\+Nsmp)
+\begin{DoxyCompactList}\small\item\em Sved's (1971; also 2009, p 184) formula for $E[r^2]$, modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624). \end{DoxyCompactList}\item 
+\hypertarget{hayes_8c_a5821ee8bba185d5eb955b737e51f369f}{double {\bfseries Hayes\+\_\+rsq\+\_\+dummy} (double $\ast$y, int two\+Nsmp)}\label{hayes_8c_a5821ee8bba185d5eb955b737e51f369f}
 
 \item 
-\hypertarget{hayes_8c_ac30ff4028fd91ebfc446dc1bc3e2f5f9}{int {\bfseries Hayes\-\_\-rsq\-Eq\-\_\-dummy} (double $\ast$x, double two\-N, double c, double u)}\label{hayes_8c_ac30ff4028fd91ebfc446dc1bc3e2f5f9}
+\hypertarget{hayes_8c_ac30ff4028fd91ebfc446dc1bc3e2f5f9}{int {\bfseries Hayes\+\_\+rsq\+Eq\+\_\+dummy} (double $\ast$x, double two\+N, double c, double u)}\label{hayes_8c_ac30ff4028fd91ebfc446dc1bc3e2f5f9}
 
 \item 
-\hypertarget{hayes_8c_a4752e527716f979ec092f41db72d1f64}{\hyperlink{struct_model}{Model} $\ast$ {\bfseries Model\-\_\-alloc\-Hayes} (int two\-Nsmp)}\label{hayes_8c_a4752e527716f979ec092f41db72d1f64}
+\hypertarget{hayes_8c_a4752e527716f979ec092f41db72d1f64}{\hyperlink{struct_model}{Model} $\ast$ {\bfseries Model\+\_\+alloc\+Hayes} (int two\+Nsmp)}\label{hayes_8c_a4752e527716f979ec092f41db72d1f64}
 
 \item 
-\hypertarget{hayes_8c_a13b5a42433596ed5e8236a66d862e4de}{double {\bfseries Hayes\-\_\-rsq\-No\-O\-D\-E} (double c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int two\-Nsmp, void $\ast$notused)}\label{hayes_8c_a13b5a42433596ed5e8236a66d862e4de}
+\hypertarget{hayes_8c_a13b5a42433596ed5e8236a66d862e4de}{double {\bfseries Hayes\+\_\+rsq\+No\+O\+D\+E} (double c, double u, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int two\+Nsmp, void $\ast$notused)}\label{hayes_8c_a13b5a42433596ed5e8236a66d862e4de}
 
 \item 
-\hypertarget{hayes_8c_a120601a77d8b54c60ed23bf42372c836}{double {\bfseries Hayes\-\_\-rsq} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$notused, double c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int two\-Nsmp)}\label{hayes_8c_a120601a77d8b54c60ed23bf42372c836}
+\hypertarget{hayes_8c_a120601a77d8b54c60ed23bf42372c836}{double {\bfseries Hayes\+\_\+rsq} (\hyperlink{struct_o_d_e}{O\+D\+E} $\ast$notused, double c, double u, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int two\+Nsmp)}\label{hayes_8c_a120601a77d8b54c60ed23bf42372c836}
 
 \item 
-\hypertarget{hayes_8c_a62f1df60ce281c9355fa2ec1b1e310e5}{double {\bfseries Hayes\-\_\-rsq\-Eq} (double c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, unsigned which\-Epoch, int two\-Nsmp, void $\ast$notused)}\label{hayes_8c_a62f1df60ce281c9355fa2ec1b1e310e5}
+\hypertarget{hayes_8c_a62f1df60ce281c9355fa2ec1b1e310e5}{double {\bfseries Hayes\+\_\+rsq\+Eq} (double c, double u, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, unsigned which\+Epoch, int two\+Nsmp, void $\ast$notused)}\label{hayes_8c_a62f1df60ce281c9355fa2ec1b1e310e5}
 
 \item 
-\hypertarget{hayes_8c_a705d07841ecd8b443c64daa3fa8bc86a}{size\-\_\-t {\bfseries Hayes\-\_\-state\-Dim} (void)}\label{hayes_8c_a705d07841ecd8b443c64daa3fa8bc86a}
+\hypertarget{hayes_8c_a705d07841ecd8b443c64daa3fa8bc86a}{size\+\_\+t {\bfseries Hayes\+\_\+state\+Dim} (void)}\label{hayes_8c_a705d07841ecd8b443c64daa3fa8bc86a}
 
 \item 
-\hypertarget{hayes_8c_a52a2abdada82d49ea8ed15f15b7a005d}{const char $\ast$ {\bfseries Hayes\-\_\-state\-Lbl} (unsigned notused)}\label{hayes_8c_a52a2abdada82d49ea8ed15f15b7a005d}
+\hypertarget{hayes_8c_a52a2abdada82d49ea8ed15f15b7a005d}{const char $\ast$ {\bfseries Hayes\+\_\+state\+Lbl} (unsigned notused)}\label{hayes_8c_a52a2abdada82d49ea8ed15f15b7a005d}
 
 \item 
-\hypertarget{hayes_8c_ada0bb371644f0d43abee1ee0e67bd4ed}{void $\ast$ {\bfseries Hayes\-Data\-\_\-new} (void)}\label{hayes_8c_ada0bb371644f0d43abee1ee0e67bd4ed}
+\hypertarget{hayes_8c_ada0bb371644f0d43abee1ee0e67bd4ed}{void $\ast$ {\bfseries Hayes\+Data\+\_\+new} (void)}\label{hayes_8c_ada0bb371644f0d43abee1ee0e67bd4ed}
 
 \item 
-\hypertarget{hayes_8c_ae09bde60c06cbe4946ff1613f79b2cbc}{double {\bfseries Hayes\-Data\-\_\-state\-Val} (void $\ast$notused, unsigned i)}\label{hayes_8c_ae09bde60c06cbe4946ff1613f79b2cbc}
+\hypertarget{hayes_8c_ae09bde60c06cbe4946ff1613f79b2cbc}{double {\bfseries Hayes\+Data\+\_\+state\+Val} (void $\ast$notused, unsigned i)}\label{hayes_8c_ae09bde60c06cbe4946ff1613f79b2cbc}
 
 \item 
-\hypertarget{hayes_8c_af052f045f79b20c7e448b7f930bd53fc}{void {\bfseries Hayes\-Data\-\_\-free} (void $\ast$notused)}\label{hayes_8c_af052f045f79b20c7e448b7f930bd53fc}
+\hypertarget{hayes_8c_af052f045f79b20c7e448b7f930bd53fc}{void {\bfseries Hayes\+Data\+\_\+free} (void $\ast$notused)}\label{hayes_8c_af052f045f79b20c7e448b7f930bd53fc}
 
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
-Code for Sved's (1971) formula, as used by Hayes et al. 2003. Genome Research 13\-:635-\/643. \begin{DoxyAuthor}{Author}
+Code for Sved's (1971) formula, as used by Hayes et al. 2003. Genome Research 13\+:635-\/643. 
+
+\begin{DoxyAuthor}{Author}
 Alan R. Rogers 
 \end{DoxyAuthor}
 
 
 \subsubsection{Function Documentation}
-\hypertarget{hayes_8c_a7a49475cdda4637f7e3c847c910261ee}{\index{hayes.\-c@{hayes.\-c}!sved\-Rsq@{sved\-Rsq}}
-\index{sved\-Rsq@{sved\-Rsq}!hayes.c@{hayes.\-c}}
-\paragraph[{sved\-Rsq}]{\setlength{\rightskip}{0pt plus 5cm}static double sved\-Rsq (
+\hypertarget{hayes_8c_a7a49475cdda4637f7e3c847c910261ee}{\index{hayes.\+c@{hayes.\+c}!sved\+Rsq@{sved\+Rsq}}
+\index{sved\+Rsq@{sved\+Rsq}!hayes.\+c@{hayes.\+c}}
+\paragraph[{sved\+Rsq}]{\setlength{\rightskip}{0pt plus 5cm}static double sved\+Rsq (
 \begin{DoxyParamCaption}
 \item[{double}]{c, }
-\item[{double}]{two\-N, }
-\item[{int}]{two\-Nsmp}
+\item[{double}]{two\+N, }
+\item[{int}]{two\+Nsmp}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{hayes_8c_a7a49475cdda4637f7e3c847c910261ee}
 
 
-Sved's (1971; also 2009, p 184) formula for E\mbox{[}r$^\wedge$2\mbox{]}, modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624). 
+Sved's (1971; also 2009, p 184) formula for $E[r^2]$, modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624). 
 
-Hudson uses \char`\"{}n\char`\"{} throughout his paper without clearly defining it. On p 631, he says that \char`\"{}with probability 1/n the same gamete
-will be drawn from the sample twice\char`\"{} (in random sampling with replacement). Thus, Hudson's \char`\"{}n\char`\"{} is the number of gametes in the sample, which equals two\-Nsmp in the notation below.
+Hudson uses $n$ throughout his paper without clearly defining it. On p 631, he says that \char`\"{}with probability \textbackslash{}form\#6 the
+same gamete will be drawn from the sample twice\char`\"{} (in random sampling with replacement). Thus, Hudson's $n$ is the number of gametes in the sample, which equals two\+Nsmp in the notation below.
 
-The H\-A\-Y\-E\-S\-\_\-\-M\-U\-T\-A\-T\-I\-O\-N\-\_\-\-A\-D\-J\-U\-S\-T\-M\-E\-N\-T is based on Tenesa et al (2007, Genome Research, 17(4)\-:520-\/526). On p 521, these authors say\-:
+The H\+A\+Y\+E\+S\+\_\+\+M\+U\+T\+A\+T\+I\+O\+N\+\_\+\+A\+D\+J\+U\+S\+T\+M\+E\+N\+T is based on Tenesa et al (2007, Genome Research, 17(4)\+:520-\/526). On p 521, these authors say\+:
 
-For autosomal loci, Hill (1975, Theor. Pop. Biol. 8(2)\-:117-\/126) showed that, in the presence of mutation, \$\-E(r$^\wedge$2) = (10+)/(22 + 13 + $^\wedge$2)\$, with \$ = 4\-N\-\_\-e c\$. Since \$(22 + 13 + $^\wedge$2)\$ factors into \$(11+)(2+)\$, a further approximation is \$\-E(r$^\wedge$2) = 1/(2 + ) = 1/(2 + 4\-N\-\_\-e c)\$.
+For autosomal loci, Hill (1975, Theor. Pop. Biol. 8(2)\+:117-\/126) showed that, in the presence of mutation, $E(r^2) = (10+\rho)/(22 + 13\rho + \rho^2)$, with $\rho = 4N_e c$. Since $(22 + 13\rho + \rho^2)$ factors into $(11+\rho)(2+\rho)$, a further approximation is $E(r^2) = 1/(2 + \rho) = 1/(2 + 4N_e c)$.
 
-Hill's formula (on his p 124), however, is for sigma\-\_\-d$^\wedge$2 rather than E\mbox{[}r$^\wedge$2\mbox{]}, so this adjustment is relevant only to the extent that sigma\-\_\-d$^\wedge$2 approximates the expectation of r$^\wedge$2. Tenesa's approximation also takes 10 as approximately equal to 11--a fairly crude standard of approximation. 
+Hill's formula (on his p 124), however, is for $\sigma_d^2$ rather than $E[r^2]$, so this adjustment is relevant only to the extent that $\sigma_d^2$ approximates the expectation of $r^2$. Tenesa's approximation also takes 10 as approximately equal to 11--a fairly crude standard of approximation. 

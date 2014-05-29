@@ -1,4 +1,4 @@
-.TH "strobeck.h" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "strobeck.h" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -20,6 +20,7 @@ Header for \fBstrobeck\&.c\fP\&.
 .ti -1c
 .RI "void * \fBStrobeckData_new\fP (void)"
 .br
+.RI "\fIAllocate a new object of type \fBStrobeckData\fP\&. \fP"
 .ti -1c
 .RI "void \fBStrobeckData_free\fP (void *p)"
 .br
@@ -89,11 +90,11 @@ y[0] = phiA y[1] = phiB y[2] = phiAB y[3] = gammaAB y[4] = deltaAB
 .PP
 \fBParameters:\fP
 .RS 4
-\fIy1\fP is the current vector of identity coefficients\&. 
+\fIyy1\fP is the current vector of identity coefficients\&. 
 .br
 \fIf\fP will contain the derivatives of y[], as approximated by the difference equations of Strobeck and Morgan\&. 
 .br
-\fIparams\fP points to a structure of type \fBparam_struct\fP\&. 
+\fIparams\fP points to a structure of type \fBdydt_params\fP\&. 
 .RE
 .PP
 

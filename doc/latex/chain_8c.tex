@@ -1,135 +1,137 @@
-\hypertarget{chain_8c}{\subsection{chain.\-c File Reference}
-\label{chain_8c}\index{chain.\-c@{chain.\-c}}
+\hypertarget{chain_8c}{\subsection{chain.\+c File Reference}
+\label{chain_8c}\index{chain.\+c@{chain.\+c}}
 }
 
 
-A linked list of Markov chains, used in Markov-\/coupled Markov chain Monte Carlo (M\-C\-M\-C\-M\-C).  
+A linked list of Markov chains, used in Markov-\/coupled Markov chain Monte Carlo (M\+C\+M\+C\+M\+C).  
 
 
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include $<$float.\-h$>$}\\*
-{\ttfamily \#include $<$limits.\-h$>$}\\*
-{\ttfamily \#include $<$time.\-h$>$}\\*
-{\ttfamily \#include $<$string.\-h$>$}\\*
-{\ttfamily \#include $<$pthread.\-h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\-\_\-rng.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}pophist.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}model.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}chain.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$float.\+h$>$}\\*
+{\ttfamily \#include $<$limits.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$pthread.\+h$>$}\\*
+{\ttfamily \#include $<$gsl/gsl\+\_\+rng.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}pophist.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}model.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}chain.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
 \subsubsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{struct_chain_state}{Chain\-State}
+struct \hyperlink{struct_chain_state}{Chain\+State}
 \begin{DoxyCompactList}\small\item\em The state of a single Markov chain. \end{DoxyCompactList}\item 
 struct \hyperlink{struct_chain}{Chain}
 \begin{DoxyCompactList}\small\item\em A linked list of Markov chains, which differ in the extent to which the objective function has been artificially flattened. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{struct_chain_state}{Chain\-State} $\ast$ \hyperlink{chain_8c_a7021b7687c50f7805eb168189c25eaa6}{Chain\-State\-\_\-new} (\hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph)
-\begin{DoxyCompactList}\small\item\em Allocate and initialize a new \hyperlink{struct_chain_state}{Chain\-State} structure. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_ab0e7a27f100d5d98fb3313bf785ceda2}{void \hyperlink{chain_8c_ab0e7a27f100d5d98fb3313bf785ceda2}{Chain\-State\-\_\-free} (\hyperlink{struct_chain_state}{Chain\-State} $\ast$cs)}\label{chain_8c_ab0e7a27f100d5d98fb3313bf785ceda2}
+\hyperlink{struct_chain_state}{Chain\+State} $\ast$ \hyperlink{chain_8c_a7021b7687c50f7805eb168189c25eaa6}{Chain\+State\+\_\+new} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)
+\begin{DoxyCompactList}\small\item\em Allocate and initialize a new \hyperlink{struct_chain_state}{Chain\+State} structure. \end{DoxyCompactList}\item 
+\hypertarget{chain_8c_ab0e7a27f100d5d98fb3313bf785ceda2}{void \hyperlink{chain_8c_ab0e7a27f100d5d98fb3313bf785ceda2}{Chain\+State\+\_\+free} (\hyperlink{struct_chain_state}{Chain\+State} $\ast$cs)}\label{chain_8c_ab0e7a27f100d5d98fb3313bf785ceda2}
 
-\begin{DoxyCompactList}\small\item\em De-\/allocate a \hyperlink{struct_chain_state}{Chain\-State} object. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a66d8524480966805612452b057f02659}{void \hyperlink{chain_8c_a66d8524480966805612452b057f02659}{Chain\-\_\-publish} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a66d8524480966805612452b057f02659}
+\begin{DoxyCompactList}\small\item\em De-\/allocate a \hyperlink{struct_chain_state}{Chain\+State} object. \end{DoxyCompactList}\item 
+\hypertarget{chain_8c_a66d8524480966805612452b057f02659}{void \hyperlink{chain_8c_a66d8524480966805612452b057f02659}{Chain\+\_\+publish} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a66d8524480966805612452b057f02659}
 
 \begin{DoxyCompactList}\small\item\em Make data available to other threads. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a99469f65ab04462136a710f5a8c4dd01}{\hyperlink{struct_chain}{Chain} $\ast$ \hyperlink{chain_8c_a99469f65ab04462136a710f5a8c4dd01}{Chain\-\_\-next} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a99469f65ab04462136a710f5a8c4dd01}
+\hypertarget{chain_8c_a99469f65ab04462136a710f5a8c4dd01}{\hyperlink{struct_chain}{Chain} $\ast$ \hyperlink{chain_8c_a99469f65ab04462136a710f5a8c4dd01}{Chain\+\_\+next} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a99469f65ab04462136a710f5a8c4dd01}
 
 \begin{DoxyCompactList}\small\item\em Return pointer to next \hyperlink{struct_chain}{Chain} in linked list. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a2fb9e27346a94390c5b273a85ee52304}{unsigned \hyperlink{chain_8c_a2fb9e27346a94390c5b273a85ee52304}{Chain\-\_\-naccepted} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a2fb9e27346a94390c5b273a85ee52304}
+\hypertarget{chain_8c_a2fb9e27346a94390c5b273a85ee52304}{unsigned \hyperlink{chain_8c_a2fb9e27346a94390c5b273a85ee52304}{Chain\+\_\+naccepted} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a2fb9e27346a94390c5b273a85ee52304}
 
 \begin{DoxyCompactList}\small\item\em Number of proposals accepted so far by this chain. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_afaa347c9327981a9a7d670dcb5fb619e}{unsigned \hyperlink{chain_8c_afaa347c9327981a9a7d670dcb5fb619e}{Chain\-\_\-nswapped} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_afaa347c9327981a9a7d670dcb5fb619e}
+\hypertarget{chain_8c_afaa347c9327981a9a7d670dcb5fb619e}{unsigned \hyperlink{chain_8c_afaa347c9327981a9a7d670dcb5fb619e}{Chain\+\_\+nswapped} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_afaa347c9327981a9a7d670dcb5fb619e}
 
 \begin{DoxyCompactList}\small\item\em Number of times this chain has swapped states with the next. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a6b056a21a3363e8cabe36c8d88bbaf0e}{unsigned \hyperlink{chain_8c_a6b056a21a3363e8cabe36c8d88bbaf0e}{Chain\-\_\-which} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a6b056a21a3363e8cabe36c8d88bbaf0e}
+\hypertarget{chain_8c_a6b056a21a3363e8cabe36c8d88bbaf0e}{unsigned \hyperlink{chain_8c_a6b056a21a3363e8cabe36c8d88bbaf0e}{Chain\+\_\+which} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a6b056a21a3363e8cabe36c8d88bbaf0e}
 
 \begin{DoxyCompactList}\small\item\em Return the index of this chain. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a71c3414014ac1f095f7f06c8df0a0284}{\hyperlink{struct_chain}{Chain} $\ast$ \hyperlink{chain_8c_a71c3414014ac1f095f7f06c8df0a0284}{Chain\-\_\-new} (unsigned which, unsigned n\-Chains, unsigned nreps, double u, double dt, double d\-Ninv, double temp, unsigned nbins, double $\ast$sigdsq, double $\ast$c, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, \hyperlink{struct_model}{Model} $\ast$model, double ode\-Abs\-Tol, double ode\-Rel\-Tol, unsigned swap\-Interval)}\label{chain_8c_a71c3414014ac1f095f7f06c8df0a0284}
+\hypertarget{chain_8c_a71c3414014ac1f095f7f06c8df0a0284}{\hyperlink{struct_chain}{Chain} $\ast$ \hyperlink{chain_8c_a71c3414014ac1f095f7f06c8df0a0284}{Chain\+\_\+new} (unsigned which, unsigned n\+Chains, unsigned nreps, double u, double dt, double d\+Ninv, double temp, unsigned nbins, double $\ast$sigdsq, double $\ast$c, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, \hyperlink{struct_model}{Model} $\ast$model, double ode\+Abs\+Tol, double ode\+Rel\+Tol, unsigned swap\+Interval)}\label{chain_8c_a71c3414014ac1f095f7f06c8df0a0284}
 
 \begin{DoxyCompactList}\small\item\em Allocate memory for a \hyperlink{struct_chain}{Chain}. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a808b5aea483ec911e46ca9e506aa8c7c}{void {\bfseries Chain\-\_\-sanity\-Check} (\hyperlink{struct_chain}{Chain} $\ast$chain, const char $\ast$file, int line)}\label{chain_8c_a808b5aea483ec911e46ca9e506aa8c7c}
+\hypertarget{chain_8c_a808b5aea483ec911e46ca9e506aa8c7c}{void {\bfseries Chain\+\_\+sanity\+Check} (\hyperlink{struct_chain}{Chain} $\ast$chain, const char $\ast$file, int line)}\label{chain_8c_a808b5aea483ec911e46ca9e506aa8c7c}
 
 \item 
-\hypertarget{chain_8c_a7619ff8b1cbe272d7b797204a6e5f1a6}{void \hyperlink{chain_8c_a7619ff8b1cbe272d7b797204a6e5f1a6}{Chain\-\_\-free} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a7619ff8b1cbe272d7b797204a6e5f1a6}
+\hypertarget{chain_8c_a7619ff8b1cbe272d7b797204a6e5f1a6}{void \hyperlink{chain_8c_a7619ff8b1cbe272d7b797204a6e5f1a6}{Chain\+\_\+free} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a7619ff8b1cbe272d7b797204a6e5f1a6}
 
 \begin{DoxyCompactList}\small\item\em Free memory allocated by linked list of chains. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_ac5fcfec50dc1bbfcb0225bd3de7d7d6e}{void \hyperlink{chain_8c_ac5fcfec50dc1bbfcb0225bd3de7d7d6e}{Chain\-\_\-pr\-State\-Addr} (const \hyperlink{struct_chain}{Chain} $\ast$chain, int ndx, const char $\ast$file, int line)}\label{chain_8c_ac5fcfec50dc1bbfcb0225bd3de7d7d6e}
+\hypertarget{chain_8c_ac5fcfec50dc1bbfcb0225bd3de7d7d6e}{void \hyperlink{chain_8c_ac5fcfec50dc1bbfcb0225bd3de7d7d6e}{Chain\+\_\+pr\+State\+Addr} (const \hyperlink{struct_chain}{Chain} $\ast$chain, int ndx, const char $\ast$file, int line)}\label{chain_8c_ac5fcfec50dc1bbfcb0225bd3de7d7d6e}
 
 \begin{DoxyCompactList}\small\item\em Print machine address of state of each chain in linked list. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a0f451521959f64d3ab3266708b1db1b0}{int \hyperlink{chain_8c_a0f451521959f64d3ab3266708b1db1b0}{Chain\-\_\-accepted} (const \hyperlink{struct_chain}{Chain} $\ast$c)}\label{chain_8c_a0f451521959f64d3ab3266708b1db1b0}
+\hypertarget{chain_8c_a0f451521959f64d3ab3266708b1db1b0}{int \hyperlink{chain_8c_a0f451521959f64d3ab3266708b1db1b0}{Chain\+\_\+accepted} (const \hyperlink{struct_chain}{Chain} $\ast$c)}\label{chain_8c_a0f451521959f64d3ab3266708b1db1b0}
 
 \begin{DoxyCompactList}\small\item\em Return 1 if chain's state changed; 0 otherwise. \end{DoxyCompactList}\item 
-void \hyperlink{chain_8c_a417b08da9f9383d276c5cf57782884ca}{Chain\-\_\-swap\-State} (\hyperlink{struct_chain}{Chain} $\ast$c)
+void \hyperlink{chain_8c_a417b08da9f9383d276c5cf57782884ca}{Chain\+\_\+swap\+State} (\hyperlink{struct_chain}{Chain} $\ast$c)
 \begin{DoxyCompactList}\small\item\em Swap states of chains c and c-\/$>$next. \end{DoxyCompactList}\item 
-void \hyperlink{chain_8c_ae07a512e729b8374266a8651923f5bbf}{Chain\-\_\-wait\-For\-Data} (\hyperlink{struct_chain}{Chain} $\ast$chain)
+void \hyperlink{chain_8c_ae07a512e729b8374266a8651923f5bbf}{Chain\+\_\+wait\+For\+Data} (\hyperlink{struct_chain}{Chain} $\ast$chain)
 \begin{DoxyCompactList}\small\item\em Wait until thread has completed another iteration and made the resulting data available. \end{DoxyCompactList}\item 
-void \hyperlink{chain_8c_a4bf5cf7ad8da1e998e6749ff4b70ca5d}{Chain\-\_\-wait\-Until\-Data\-Needed} (\hyperlink{struct_chain}{Chain} $\ast$chain)
+void \hyperlink{chain_8c_a4bf5cf7ad8da1e998e6749ff4b70ca5d}{Chain\+\_\+wait\+Until\+Data\+Needed} (\hyperlink{struct_chain}{Chain} $\ast$chain)
 \begin{DoxyCompactList}\small\item\em Wait until main thread has finished with data from last iteration. \end{DoxyCompactList}\item 
-void \hyperlink{chain_8c_a623b5501b10506ef6e25a9d6d0666091}{Chain\-\_\-set\-Data\-Available} (\hyperlink{struct_chain}{Chain} $\ast$chain)
+void \hyperlink{chain_8c_a623b5501b10506ef6e25a9d6d0666091}{Chain\+\_\+set\+Data\+Available} (\hyperlink{struct_chain}{Chain} $\ast$chain)
 \begin{DoxyCompactList}\small\item\em Indicate that data are available. \end{DoxyCompactList}\item 
-void \hyperlink{chain_8c_a07a69b3463eb8976f42e6db2502e7f9e}{Chain\-\_\-set\-Data\-Needed} (\hyperlink{struct_chain}{Chain} $\ast$chain)
+void \hyperlink{chain_8c_a07a69b3463eb8976f42e6db2502e7f9e}{Chain\+\_\+set\+Data\+Needed} (\hyperlink{struct_chain}{Chain} $\ast$chain)
 \begin{DoxyCompactList}\small\item\em Indicate that data are needed. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a4747e442546bb88e4eda505def6f5fe6}{void \hyperlink{chain_8c_a4747e442546bb88e4eda505def6f5fe6}{Chain\-\_\-signal} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a4747e442546bb88e4eda505def6f5fe6}
+\hypertarget{chain_8c_a4747e442546bb88e4eda505def6f5fe6}{void \hyperlink{chain_8c_a4747e442546bb88e4eda505def6f5fe6}{Chain\+\_\+signal} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a4747e442546bb88e4eda505def6f5fe6}
 
 \begin{DoxyCompactList}\small\item\em Send signal via condition variable. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_af91cf0df8f77d789d2906d705295432b}{void \hyperlink{chain_8c_af91cf0df8f77d789d2906d705295432b}{Chain\-\_\-lock} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_af91cf0df8f77d789d2906d705295432b}
+\hypertarget{chain_8c_af91cf0df8f77d789d2906d705295432b}{void \hyperlink{chain_8c_af91cf0df8f77d789d2906d705295432b}{Chain\+\_\+lock} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_af91cf0df8f77d789d2906d705295432b}
 
 \begin{DoxyCompactList}\small\item\em Lock chain. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a1bf61f6382bfc21b6abea4874843a459}{void \hyperlink{chain_8c_a1bf61f6382bfc21b6abea4874843a459}{Chain\-\_\-unlock} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a1bf61f6382bfc21b6abea4874843a459}
+\hypertarget{chain_8c_a1bf61f6382bfc21b6abea4874843a459}{void \hyperlink{chain_8c_a1bf61f6382bfc21b6abea4874843a459}{Chain\+\_\+unlock} (\hyperlink{struct_chain}{Chain} $\ast$chain)}\label{chain_8c_a1bf61f6382bfc21b6abea4874843a459}
 
 \begin{DoxyCompactList}\small\item\em Unlock chain. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a13e15de7a62872aff46f6a3e0581bbf5}{void \hyperlink{chain_8c_a13e15de7a62872aff46f6a3e0581bbf5}{Chain\-\_\-lock\-Stdout} (void)}\label{chain_8c_a13e15de7a62872aff46f6a3e0581bbf5}
+\hypertarget{chain_8c_a13e15de7a62872aff46f6a3e0581bbf5}{void \hyperlink{chain_8c_a13e15de7a62872aff46f6a3e0581bbf5}{Chain\+\_\+lock\+Stdout} (void)}\label{chain_8c_a13e15de7a62872aff46f6a3e0581bbf5}
 
 \begin{DoxyCompactList}\small\item\em Lock stdout. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_aef0d673fe427db4ed95c21b2adb94dfa}{void \hyperlink{chain_8c_aef0d673fe427db4ed95c21b2adb94dfa}{Chain\-\_\-unlock\-Stdout} (void)}\label{chain_8c_aef0d673fe427db4ed95c21b2adb94dfa}
+\hypertarget{chain_8c_aef0d673fe427db4ed95c21b2adb94dfa}{void \hyperlink{chain_8c_aef0d673fe427db4ed95c21b2adb94dfa}{Chain\+\_\+unlock\+Stdout} (void)}\label{chain_8c_aef0d673fe427db4ed95c21b2adb94dfa}
 
 \begin{DoxyCompactList}\small\item\em Unock stdout. \end{DoxyCompactList}\item 
-double \hyperlink{chain_8c_ae4b023353d62b415ce23f1f4cc626375}{Chain\-\_\-ln\-Obj} (\hyperlink{struct_chain}{Chain} $\ast$chain)
+double \hyperlink{chain_8c_ae4b023353d62b415ce23f1f4cc626375}{Chain\+\_\+ln\+Obj} (\hyperlink{struct_chain}{Chain} $\ast$chain)
 \begin{DoxyCompactList}\small\item\em Log of objective function. \end{DoxyCompactList}\item 
-double \hyperlink{chain_8c_a2906747a6904acc6e573a2d3bb36ea09}{Chain\-\_\-flatness} (\hyperlink{struct_chain}{Chain} $\ast$chain)
+double \hyperlink{chain_8c_a2906747a6904acc6e573a2d3bb36ea09}{Chain\+\_\+flatness} (\hyperlink{struct_chain}{Chain} $\ast$chain)
 \begin{DoxyCompactList}\small\item\em Return flatness parameter of chain. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_a75ef45a11fa89ef32c89139f5e53ed89}{void \hyperlink{chain_8c_a75ef45a11fa89ef32c89139f5e53ed89}{Chain\-\_\-print\-Full} (\hyperlink{struct_chain}{Chain} $\ast$chain, F\-I\-L\-E $\ast$fp)}\label{chain_8c_a75ef45a11fa89ef32c89139f5e53ed89}
+\hypertarget{chain_8c_a75ef45a11fa89ef32c89139f5e53ed89}{void \hyperlink{chain_8c_a75ef45a11fa89ef32c89139f5e53ed89}{Chain\+\_\+print\+Full} (\hyperlink{struct_chain}{Chain} $\ast$chain, F\+I\+L\+E $\ast$fp)}\label{chain_8c_a75ef45a11fa89ef32c89139f5e53ed89}
 
 \begin{DoxyCompactList}\small\item\em Print entire chain. \end{DoxyCompactList}\item 
-void \hyperlink{chain_8c_a2f9437986928d01c19535b1da005386a}{Chain\-\_\-best\-Fit} (\hyperlink{struct_chain}{Chain} $\ast$chain, double $\ast$best\-Ln\-Obj, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$best\-Ph)
+void \hyperlink{chain_8c_a2f9437986928d01c19535b1da005386a}{Chain\+\_\+best\+Fit} (\hyperlink{struct_chain}{Chain} $\ast$chain, double $\ast$best\+Ln\+Obj, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$best\+Ph)
 \begin{DoxyCompactList}\small\item\em Return values corresponding to the best fit. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_ae5bd7604375bcd03d7543e4eb370fa83}{void $\ast$ {\bfseries run\-Chain} (void $\ast$arg)}\label{chain_8c_ae5bd7604375bcd03d7543e4eb370fa83}
+\hypertarget{chain_8c_ae5bd7604375bcd03d7543e4eb370fa83}{void $\ast$ {\bfseries run\+Chain} (void $\ast$arg)}\label{chain_8c_ae5bd7604375bcd03d7543e4eb370fa83}
 
 \item 
-\hypertarget{chain_8c_a74334eda84b2f0cdf40b2cb20a92ed1c}{void \hyperlink{chain_8c_a74334eda84b2f0cdf40b2cb20a92ed1c}{Chain\-\_\-print\-Hdr} (\hyperlink{struct_chain}{Chain} $\ast$chain, F\-I\-L\-E $\ast$fp)}\label{chain_8c_a74334eda84b2f0cdf40b2cb20a92ed1c}
+\hypertarget{chain_8c_a74334eda84b2f0cdf40b2cb20a92ed1c}{void \hyperlink{chain_8c_a74334eda84b2f0cdf40b2cb20a92ed1c}{Chain\+\_\+print\+Hdr} (\hyperlink{struct_chain}{Chain} $\ast$chain, F\+I\+L\+E $\ast$fp)}\label{chain_8c_a74334eda84b2f0cdf40b2cb20a92ed1c}
 
 \begin{DoxyCompactList}\small\item\em Printer header for markov chain output lines. \end{DoxyCompactList}\item 
-\hypertarget{chain_8c_ac0e5d8df949583ed610c9728dbf21a8c}{void \hyperlink{chain_8c_ac0e5d8df949583ed610c9728dbf21a8c}{Chain\-\_\-print\-State} (\hyperlink{struct_chain}{Chain} $\ast$chain, F\-I\-L\-E $\ast$fp)}\label{chain_8c_ac0e5d8df949583ed610c9728dbf21a8c}
+\hypertarget{chain_8c_ac0e5d8df949583ed610c9728dbf21a8c}{void \hyperlink{chain_8c_ac0e5d8df949583ed610c9728dbf21a8c}{Chain\+\_\+print\+State} (\hyperlink{struct_chain}{Chain} $\ast$chain, F\+I\+L\+E $\ast$fp)}\label{chain_8c_ac0e5d8df949583ed610c9728dbf21a8c}
 
 \begin{DoxyCompactList}\small\item\em Printer state of markov chain. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{chain_8c_a1d998d1f2b9606cde2bac02192060556}{pthread\-\_\-mutex\-\_\-t {\bfseries stdout\-\_\-mutex} = P\-T\-H\-R\-E\-A\-D\-\_\-\-M\-U\-T\-E\-X\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-E\-R}\label{chain_8c_a1d998d1f2b9606cde2bac02192060556}
+\hypertarget{chain_8c_a1d998d1f2b9606cde2bac02192060556}{pthread\+\_\+mutex\+\_\+t {\bfseries stdout\+\_\+mutex} = P\+T\+H\+R\+E\+A\+D\+\_\+\+M\+U\+T\+E\+X\+\_\+\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+R}\label{chain_8c_a1d998d1f2b9606cde2bac02192060556}
 
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
-A linked list of Markov chains, used in Markov-\/coupled Markov chain Monte Carlo (M\-C\-M\-C\-M\-C). \begin{DoxyAuthor}{Author}
+A linked list of Markov chains, used in Markov-\/coupled Markov chain Monte Carlo (M\+C\+M\+C\+M\+C). 
+
+\begin{DoxyAuthor}{Author}
 Alan R. Rogers 
 \end{DoxyAuthor}
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
 \end{DoxyCopyright}
 
 
 \subsubsection{Function Documentation}
-\hypertarget{chain_8c_a2f9437986928d01c19535b1da005386a}{\index{chain.\-c@{chain.\-c}!Chain\-\_\-best\-Fit@{Chain\-\_\-best\-Fit}}
-\index{Chain\-\_\-best\-Fit@{Chain\-\_\-best\-Fit}!chain.c@{chain.\-c}}
-\paragraph[{Chain\-\_\-best\-Fit}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\-\_\-best\-Fit (
+\hypertarget{chain_8c_a2f9437986928d01c19535b1da005386a}{\index{chain.\+c@{chain.\+c}!Chain\+\_\+best\+Fit@{Chain\+\_\+best\+Fit}}
+\index{Chain\+\_\+best\+Fit@{Chain\+\_\+best\+Fit}!chain.\+c@{chain.\+c}}
+\paragraph[{Chain\+\_\+best\+Fit}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\+\_\+best\+Fit (
 \begin{DoxyParamCaption}
 \item[{{\bf Chain} $\ast$}]{chain, }
-\item[{double $\ast$}]{best\-Ln\-Obj, }
-\item[{{\bf Pop\-Hist} $\ast$}]{best\-Ph}
+\item[{double $\ast$}]{best\+Ln\+Obj, }
+\item[{{\bf Pop\+Hist} $\ast$}]{best\+Ph}
 \end{DoxyParamCaption}
 )}}\label{chain_8c_a2f9437986928d01c19535b1da005386a}
 
@@ -138,18 +140,18 @@ Return values corresponding to the best fit.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em best\-Ln\-Obj} & Pointer to double, into which the function will write the value of the log objective function.\\
+\mbox{\tt out}  & {\em best\+Ln\+Obj} & Pointer to double, into which the function will write the value of the log objective function.\\
 \hline
-\mbox{\tt out}  & {\em ph} & Pointer to a \hyperlink{struct_pop_hist}{Pop\-Hist}, into which the optimal population history will be written. \\
+\mbox{\tt out}  & {\em best\+Ph} & Pointer to a \hyperlink{struct_pop_hist}{Pop\+Hist}, into which the optimal population history will be written. \\
 \hline
 \end{DoxyParams}
 
 
-References Pop\-Hist\-\_\-copy().
+References Pop\+Hist\+\_\+copy().
 
-\hypertarget{chain_8c_a2906747a6904acc6e573a2d3bb36ea09}{\index{chain.\-c@{chain.\-c}!Chain\-\_\-flatness@{Chain\-\_\-flatness}}
-\index{Chain\-\_\-flatness@{Chain\-\_\-flatness}!chain.c@{chain.\-c}}
-\paragraph[{Chain\-\_\-flatness}]{\setlength{\rightskip}{0pt plus 5cm}double Chain\-\_\-flatness (
+\hypertarget{chain_8c_a2906747a6904acc6e573a2d3bb36ea09}{\index{chain.\+c@{chain.\+c}!Chain\+\_\+flatness@{Chain\+\_\+flatness}}
+\index{Chain\+\_\+flatness@{Chain\+\_\+flatness}!chain.\+c@{chain.\+c}}
+\paragraph[{Chain\+\_\+flatness}]{\setlength{\rightskip}{0pt plus 5cm}double Chain\+\_\+flatness (
 \begin{DoxyParamCaption}
 \item[{{\bf Chain} $\ast$}]{chain}
 \end{DoxyParamCaption}
@@ -160,11 +162,11 @@ Return flatness parameter of chain.
 
 
 
-References Chain\-::flatness.
+References Chain\+::flatness.
 
-\hypertarget{chain_8c_ae4b023353d62b415ce23f1f4cc626375}{\index{chain.\-c@{chain.\-c}!Chain\-\_\-ln\-Obj@{Chain\-\_\-ln\-Obj}}
-\index{Chain\-\_\-ln\-Obj@{Chain\-\_\-ln\-Obj}!chain.c@{chain.\-c}}
-\paragraph[{Chain\-\_\-ln\-Obj}]{\setlength{\rightskip}{0pt plus 5cm}double Chain\-\_\-ln\-Obj (
+\hypertarget{chain_8c_ae4b023353d62b415ce23f1f4cc626375}{\index{chain.\+c@{chain.\+c}!Chain\+\_\+ln\+Obj@{Chain\+\_\+ln\+Obj}}
+\index{Chain\+\_\+ln\+Obj@{Chain\+\_\+ln\+Obj}!chain.\+c@{chain.\+c}}
+\paragraph[{Chain\+\_\+ln\+Obj}]{\setlength{\rightskip}{0pt plus 5cm}double Chain\+\_\+ln\+Obj (
 \begin{DoxyParamCaption}
 \item[{{\bf Chain} $\ast$}]{chain}
 \end{DoxyParamCaption}
@@ -175,11 +177,11 @@ Log of objective function.
 
 Does not calculate function. Just returns current stored value. 
 
-Referenced by Chain\-\_\-print\-State().
+Referenced by Chain\+\_\+print\+State().
 
-\hypertarget{chain_8c_a623b5501b10506ef6e25a9d6d0666091}{\index{chain.\-c@{chain.\-c}!Chain\-\_\-set\-Data\-Available@{Chain\-\_\-set\-Data\-Available}}
-\index{Chain\-\_\-set\-Data\-Available@{Chain\-\_\-set\-Data\-Available}!chain.c@{chain.\-c}}
-\paragraph[{Chain\-\_\-set\-Data\-Available}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\-\_\-set\-Data\-Available (
+\hypertarget{chain_8c_a623b5501b10506ef6e25a9d6d0666091}{\index{chain.\+c@{chain.\+c}!Chain\+\_\+set\+Data\+Available@{Chain\+\_\+set\+Data\+Available}}
+\index{Chain\+\_\+set\+Data\+Available@{Chain\+\_\+set\+Data\+Available}!chain.\+c@{chain.\+c}}
+\paragraph[{Chain\+\_\+set\+Data\+Available}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\+\_\+set\+Data\+Available (
 \begin{DoxyParamCaption}
 \item[{{\bf Chain} $\ast$}]{chain}
 \end{DoxyParamCaption}
@@ -190,11 +192,11 @@ Indicate that data are available.
 
 \hyperlink{struct_chain}{Chain} should be locked before calling this function. 
 
-Referenced by Chain\-\_\-publish().
+Referenced by Chain\+\_\+publish().
 
-\hypertarget{chain_8c_a07a69b3463eb8976f42e6db2502e7f9e}{\index{chain.\-c@{chain.\-c}!Chain\-\_\-set\-Data\-Needed@{Chain\-\_\-set\-Data\-Needed}}
-\index{Chain\-\_\-set\-Data\-Needed@{Chain\-\_\-set\-Data\-Needed}!chain.c@{chain.\-c}}
-\paragraph[{Chain\-\_\-set\-Data\-Needed}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\-\_\-set\-Data\-Needed (
+\hypertarget{chain_8c_a07a69b3463eb8976f42e6db2502e7f9e}{\index{chain.\+c@{chain.\+c}!Chain\+\_\+set\+Data\+Needed@{Chain\+\_\+set\+Data\+Needed}}
+\index{Chain\+\_\+set\+Data\+Needed@{Chain\+\_\+set\+Data\+Needed}!chain.\+c@{chain.\+c}}
+\paragraph[{Chain\+\_\+set\+Data\+Needed}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\+\_\+set\+Data\+Needed (
 \begin{DoxyParamCaption}
 \item[{{\bf Chain} $\ast$}]{chain}
 \end{DoxyParamCaption}
@@ -203,9 +205,9 @@ Referenced by Chain\-\_\-publish().
 
 Indicate that data are needed. 
 
-\hyperlink{struct_chain}{Chain} should be locked before calling this function. \hypertarget{chain_8c_a417b08da9f9383d276c5cf57782884ca}{\index{chain.\-c@{chain.\-c}!Chain\-\_\-swap\-State@{Chain\-\_\-swap\-State}}
-\index{Chain\-\_\-swap\-State@{Chain\-\_\-swap\-State}!chain.c@{chain.\-c}}
-\paragraph[{Chain\-\_\-swap\-State}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\-\_\-swap\-State (
+\hyperlink{struct_chain}{Chain} should be locked before calling this function. \hypertarget{chain_8c_a417b08da9f9383d276c5cf57782884ca}{\index{chain.\+c@{chain.\+c}!Chain\+\_\+swap\+State@{Chain\+\_\+swap\+State}}
+\index{Chain\+\_\+swap\+State@{Chain\+\_\+swap\+State}!chain.\+c@{chain.\+c}}
+\paragraph[{Chain\+\_\+swap\+State}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\+\_\+swap\+State (
 \begin{DoxyParamCaption}
 \item[{{\bf Chain} $\ast$}]{c}
 \end{DoxyParamCaption}
@@ -216,11 +218,11 @@ Swap states of chains c and c-\/$>$next.
 
 Lock both chains before calling this function. 
 
-References Chain\-::next.
+References Chain\+::next.
 
-\hypertarget{chain_8c_ae07a512e729b8374266a8651923f5bbf}{\index{chain.\-c@{chain.\-c}!Chain\-\_\-wait\-For\-Data@{Chain\-\_\-wait\-For\-Data}}
-\index{Chain\-\_\-wait\-For\-Data@{Chain\-\_\-wait\-For\-Data}!chain.c@{chain.\-c}}
-\paragraph[{Chain\-\_\-wait\-For\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\-\_\-wait\-For\-Data (
+\hypertarget{chain_8c_ae07a512e729b8374266a8651923f5bbf}{\index{chain.\+c@{chain.\+c}!Chain\+\_\+wait\+For\+Data@{Chain\+\_\+wait\+For\+Data}}
+\index{Chain\+\_\+wait\+For\+Data@{Chain\+\_\+wait\+For\+Data}!chain.\+c@{chain.\+c}}
+\paragraph[{Chain\+\_\+wait\+For\+Data}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\+\_\+wait\+For\+Data (
 \begin{DoxyParamCaption}
 \item[{{\bf Chain} $\ast$}]{chain}
 \end{DoxyParamCaption}
@@ -229,9 +231,9 @@ References Chain\-::next.
 
 Wait until thread has completed another iteration and made the resulting data available. 
 
-On return, chain will be locked. \hypertarget{chain_8c_a4bf5cf7ad8da1e998e6749ff4b70ca5d}{\index{chain.\-c@{chain.\-c}!Chain\-\_\-wait\-Until\-Data\-Needed@{Chain\-\_\-wait\-Until\-Data\-Needed}}
-\index{Chain\-\_\-wait\-Until\-Data\-Needed@{Chain\-\_\-wait\-Until\-Data\-Needed}!chain.c@{chain.\-c}}
-\paragraph[{Chain\-\_\-wait\-Until\-Data\-Needed}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\-\_\-wait\-Until\-Data\-Needed (
+On return, chain will be locked. \hypertarget{chain_8c_a4bf5cf7ad8da1e998e6749ff4b70ca5d}{\index{chain.\+c@{chain.\+c}!Chain\+\_\+wait\+Until\+Data\+Needed@{Chain\+\_\+wait\+Until\+Data\+Needed}}
+\index{Chain\+\_\+wait\+Until\+Data\+Needed@{Chain\+\_\+wait\+Until\+Data\+Needed}!chain.\+c@{chain.\+c}}
+\paragraph[{Chain\+\_\+wait\+Until\+Data\+Needed}]{\setlength{\rightskip}{0pt plus 5cm}void Chain\+\_\+wait\+Until\+Data\+Needed (
 \begin{DoxyParamCaption}
 \item[{{\bf Chain} $\ast$}]{chain}
 \end{DoxyParamCaption}
@@ -240,22 +242,22 @@ On return, chain will be locked. \hypertarget{chain_8c_a4bf5cf7ad8da1e998e6749ff
 
 Wait until main thread has finished with data from last iteration. 
 
-On return, the chain will be locked. \hypertarget{chain_8c_a7021b7687c50f7805eb168189c25eaa6}{\index{chain.\-c@{chain.\-c}!Chain\-State\-\_\-new@{Chain\-State\-\_\-new}}
-\index{Chain\-State\-\_\-new@{Chain\-State\-\_\-new}!chain.c@{chain.\-c}}
-\paragraph[{Chain\-State\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Chain\-State} $\ast$ Chain\-State\-\_\-new (
+On return, the chain will be locked. \hypertarget{chain_8c_a7021b7687c50f7805eb168189c25eaa6}{\index{chain.\+c@{chain.\+c}!Chain\+State\+\_\+new@{Chain\+State\+\_\+new}}
+\index{Chain\+State\+\_\+new@{Chain\+State\+\_\+new}!chain.\+c@{chain.\+c}}
+\paragraph[{Chain\+State\+\_\+new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Chain\+State} $\ast$ Chain\+State\+\_\+new (
 \begin{DoxyParamCaption}
-\item[{{\bf Pop\-Hist} $\ast$}]{ph}
+\item[{{\bf Pop\+Hist} $\ast$}]{ph}
 \end{DoxyParamCaption}
 )}}\label{chain_8c_a7021b7687c50f7805eb168189c25eaa6}
 
 
-Allocate and initialize a new \hyperlink{struct_chain_state}{Chain\-State} structure. 
+Allocate and initialize a new \hyperlink{struct_chain_state}{Chain\+State} structure. 
 
 Occupies a single block of memory, using the \char`\"{}struct hack\char`\"{} of C programming. 
 
-References Chain\-State\-::ph, Pop\-Hist\-\_\-calc\-Size(), Pop\-Hist\-\_\-copy(), Pop\-Hist\-\_\-init(), and Pop\-Hist\-\_\-nepoch().
+References Chain\+State\+::ph, Pop\+Hist\+\_\+calc\+Size(), Pop\+Hist\+\_\+copy(), Pop\+Hist\+\_\+init(), and Pop\+Hist\+\_\+nepoch().
 
 
 
-Referenced by Chain\-\_\-new().
+Referenced by Chain\+\_\+new().
 

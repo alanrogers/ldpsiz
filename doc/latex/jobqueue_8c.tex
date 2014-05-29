@@ -1,28 +1,28 @@
-\hypertarget{jobqueue_8c}{\subsection{jobqueue.\-c File Reference}
-\label{jobqueue_8c}\index{jobqueue.\-c@{jobqueue.\-c}}
+\hypertarget{jobqueue_8c}{\subsection{jobqueue.\+c File Reference}
+\label{jobqueue_8c}\index{jobqueue.\+c@{jobqueue.\+c}}
 }
 
 
 Multithreaded job queue.  
 
 
-{\ttfamily \#include $<$stdlib.\-h$>$}\\*
-{\ttfamily \#include $<$string.\-h$>$}\\*
-{\ttfamily \#include $<$assert.\-h$>$}\\*
-{\ttfamily \#include $<$pthread.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}jobqueue.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include $<$pthread.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}jobqueue.\+h\char`\"{}}\\*
 \subsubsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
 struct \hyperlink{struct_job}{Job}
 \begin{DoxyCompactList}\small\item\em A single job in the queue. \end{DoxyCompactList}\item 
-struct \hyperlink{struct_job_queue}{Job\-Queue}
+struct \hyperlink{struct_job_queue}{Job\+Queue}
 \begin{DoxyCompactList}\small\item\em All data used by job queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{jobqueue_8c_a18891ed90ad4c8ca93859cb64935f396}{\#define {\bfseries D\-P\-R\-I\-N\-T\-F}(arg)}\label{jobqueue_8c_a18891ed90ad4c8ca93859cb64935f396}
+\hypertarget{jobqueue_8c_a18891ed90ad4c8ca93859cb64935f396}{\#define {\bfseries D\+P\+R\+I\+N\+T\+F}(arg)}\label{jobqueue_8c_a18891ed90ad4c8ca93859cb64935f396}
 
 \end{DoxyCompactItemize}
 \subsubsection*{Functions}
@@ -30,35 +30,37 @@ struct \hyperlink{struct_job_queue}{Job\-Queue}
 \item 
 void $\ast$ \hyperlink{jobqueue_8c_aef3dc2d5fd11855b5c1c250ff18c2918}{threadfun} (void $\ast$vjq)
 \begin{DoxyCompactList}\small\item\em Waits until there is a job in the queue, pops it off and executes it, then waits for another. \end{DoxyCompactList}\item 
-\hypertarget{jobqueue_8c_a1bbfc7a149e1ef97e6c43675a819a487}{void {\bfseries Job\-\_\-free} (\hyperlink{struct_job}{Job} $\ast$job)}\label{jobqueue_8c_a1bbfc7a149e1ef97e6c43675a819a487}
+\hypertarget{jobqueue_8c_a1bbfc7a149e1ef97e6c43675a819a487}{void {\bfseries Job\+\_\+free} (\hyperlink{struct_job}{Job} $\ast$job)}\label{jobqueue_8c_a1bbfc7a149e1ef97e6c43675a819a487}
 
 \item 
-\hypertarget{jobqueue_8c_a14520cbed7fa8d303959b53f7ff6b876}{\hyperlink{struct_job_queue}{Job\-Queue} $\ast$ {\bfseries Job\-Queue\-\_\-new} (int nthreads)}\label{jobqueue_8c_a14520cbed7fa8d303959b53f7ff6b876}
+\hypertarget{jobqueue_8c_a14520cbed7fa8d303959b53f7ff6b876}{\hyperlink{struct_job_queue}{Job\+Queue} $\ast$ {\bfseries Job\+Queue\+\_\+new} (int nthreads)}\label{jobqueue_8c_a14520cbed7fa8d303959b53f7ff6b876}
 
 \item 
-\hypertarget{jobqueue_8c_ac313ae5575261d4ad4e756df6481f731}{void {\bfseries Job\-Queue\-\_\-add\-Job} (\hyperlink{struct_job_queue}{Job\-Queue} $\ast$jq, int($\ast$jobfun)(void $\ast$), void $\ast$param)}\label{jobqueue_8c_ac313ae5575261d4ad4e756df6481f731}
+\hypertarget{jobqueue_8c_ac313ae5575261d4ad4e756df6481f731}{void {\bfseries Job\+Queue\+\_\+add\+Job} (\hyperlink{struct_job_queue}{Job\+Queue} $\ast$jq, int($\ast$jobfun)(void $\ast$), void $\ast$param)}\label{jobqueue_8c_ac313ae5575261d4ad4e756df6481f731}
 
 \item 
-\hypertarget{jobqueue_8c_a4d8078d2d1828a13abf90fc053ea40e0}{void \hyperlink{jobqueue_8c_a4d8078d2d1828a13abf90fc053ea40e0}{Job\-Queue\-\_\-wait\-On\-Jobs} (\hyperlink{struct_job_queue}{Job\-Queue} $\ast$jq)}\label{jobqueue_8c_a4d8078d2d1828a13abf90fc053ea40e0}
+\hypertarget{jobqueue_8c_a4d8078d2d1828a13abf90fc053ea40e0}{void \hyperlink{jobqueue_8c_a4d8078d2d1828a13abf90fc053ea40e0}{Job\+Queue\+\_\+wait\+On\+Jobs} (\hyperlink{struct_job_queue}{Job\+Queue} $\ast$jq)}\label{jobqueue_8c_a4d8078d2d1828a13abf90fc053ea40e0}
 
 \begin{DoxyCompactList}\small\item\em Wait until jobs are completed. \end{DoxyCompactList}\item 
-\hypertarget{jobqueue_8c_af087113038efdd335ea087d35437ccd9}{void {\bfseries Job\-Queue\-\_\-free} (\hyperlink{struct_job_queue}{Job\-Queue} $\ast$jq)}\label{jobqueue_8c_af087113038efdd335ea087d35437ccd9}
+\hypertarget{jobqueue_8c_af087113038efdd335ea087d35437ccd9}{void {\bfseries Job\+Queue\+\_\+free} (\hyperlink{struct_job_queue}{Job\+Queue} $\ast$jq)}\label{jobqueue_8c_af087113038efdd335ea087d35437ccd9}
 
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
-Multithreaded job queue. \begin{DoxyAuthor}{Author}
+Multithreaded job queue. 
+
+\begin{DoxyAuthor}{Author}
 Alan R. Rogers This file implements a multithreaded job queue. Jobs are pushed onto a queue by the main program. Each thread (or worker) removes a job from the queue, executes it, and then goes back for another. When all jobs are finished, control returns to the main function.
 \end{DoxyAuthor}
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
 \end{DoxyCopyright}
 
 
 \subsubsection{Function Documentation}
-\hypertarget{jobqueue_8c_aef3dc2d5fd11855b5c1c250ff18c2918}{\index{jobqueue.\-c@{jobqueue.\-c}!threadfun@{threadfun}}
-\index{threadfun@{threadfun}!jobqueue.c@{jobqueue.\-c}}
+\hypertarget{jobqueue_8c_aef3dc2d5fd11855b5c1c250ff18c2918}{\index{jobqueue.\+c@{jobqueue.\+c}!threadfun@{threadfun}}
+\index{threadfun@{threadfun}!jobqueue.\+c@{jobqueue.\+c}}
 \paragraph[{threadfun}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ threadfun (
 \begin{DoxyParamCaption}
 \item[{void $\ast$}]{vjq}
@@ -68,7 +70,7 @@ Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt roge
 
 Waits until there is a job in the queue, pops it off and executes it, then waits for another. 
 
-Runs until jobs are completed and main thread sets accepting\-Jobs=0. 
+Runs until jobs are completed and main thread sets accepting\+Jobs=0. 
 
-References Job\-Queue\-::accepting\-Jobs, Job\-::jobfun, Job\-Queue\-::lock, Job\-::next, Job\-Queue\-::nthreads, Job\-::param, Job\-Queue\-::threads\-Stopped, Job\-Queue\-::todo, Job\-Queue\-::wake\-Main, and Job\-Queue\-::wake\-Worker.
+References Job\+Queue\+::accepting\+Jobs, Job\+::jobfun, Job\+Queue\+::lock, Job\+::next, Job\+Queue\+::nthreads, Job\+::param, Job\+Queue\+::threads\+Stopped, Job\+Queue\+::todo, Job\+Queue\+::wake\+Main, and Job\+Queue\+::wake\+Worker.
 

@@ -1,35 +1,35 @@
-\hypertarget{preld_8c}{\subsection{preld.\-c File Reference}
-\label{preld_8c}\index{preld.\-c@{preld.\-c}}
+\hypertarget{preld_8c}{\subsection{preld.\+c File Reference}
+\label{preld_8c}\index{preld.\+c@{preld.\+c}}
 }
 
 
 This file contains code related preld, a program that predicts $\sigma_d^2$ from assumptions about population history.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$stdlib.\-h$>$}\\*
-{\ttfamily \#include $<$string.\-h$>$}\\*
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include $<$time.\-h$>$}\\*
-{\ttfamily \#include $<$assert.\-h$>$}\\*
-{\ttfamily \#include $<$getopt.\-h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\-\_\-errno.\-h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\-\_\-matrix.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}pophist.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}tokenizer.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}hill.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}hayes.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}strobeck.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}model.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}ini.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include $<$getopt.\+h$>$}\\*
+{\ttfamily \#include $<$gsl/gsl\+\_\+errno.\+h$>$}\\*
+{\ttfamily \#include $<$gsl/gsl\+\_\+matrix.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}pophist.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tokenizer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}hill.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}hayes.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}strobeck.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}model.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}ini.\+h\char`\"{}}\\*
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{preld_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}{void {\bfseries usage} (void)}\label{preld_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}
 
 \item 
-\hypertarget{preld_8c_a0f5c513e57ad8982a75cc3f52cfd757f}{void \hyperlink{preld_8c_a0f5c513e57ad8982a75cc3f52cfd757f}{check\-\_\-tn} (double t, double n)}\label{preld_8c_a0f5c513e57ad8982a75cc3f52cfd757f}
+\hypertarget{preld_8c_a0f5c513e57ad8982a75cc3f52cfd757f}{void \hyperlink{preld_8c_a0f5c513e57ad8982a75cc3f52cfd757f}{check\+\_\+tn} (double t, double n)}\label{preld_8c_a0f5c513e57ad8982a75cc3f52cfd757f}
 
 \begin{DoxyCompactList}\small\item\em Make sure values of t and N are valid. \end{DoxyCompactList}\item 
 \hypertarget{preld_8c_a3c04138a5bfe5d72780bb7e82a18e627}{int {\bfseries main} (int argc, char $\ast$$\ast$argv)}\label{preld_8c_a3c04138a5bfe5d72780bb7e82a18e627}
@@ -38,23 +38,25 @@ This file contains code related preld, a program that predicts $\sigma_d^2$ from
 
 
 \subsubsection{Detailed Description}
-This file contains code related preld, a program that predicts $\sigma_d^2$ from assumptions about population history. \label{preld_8c_preld}%
+This file contains code related preld, a program that predicts $\sigma_d^2$ from assumptions about population history. 
+
+\label{preld_8c_preld}%
 \hypertarget{preld_8c_preld}{}%
 \subsubsection*{{\ttfamily preld}, a program that predicts $\sigma_d^2$ from population history }
 
-Parameter values, including those describing population history, may be read either from the initialization file {\ttfamily ldpsiz.\-ini} or specified on the command line. Command-\/line arguments override values in the initialization file. Several methods are implemented for predicting L\-D, and one or more of these may be specified either in the initialization file or via the {\ttfamily -\/-\/methods} argument. For the current list of available methods, see \hyperlink{model_8h_a1c02862e00fd2fd232c5ba777beadc84}{Model\-\_\-alloc}.
+Parameter values, including those describing population history, may be read either from the initialization file {\ttfamily ldpsiz.\+ini} or specified on the command line. Command-\/line arguments override values in the initialization file. Several methods are implemented for predicting L\+D, and one or more of these may be specified either in the initialization file or via the {\ttfamily -\/-\/methods} argument. For the current list of available methods, see \hyperlink{model_8h_a1c02862e00fd2fd232c5ba777beadc84}{Model\+\_\+alloc}.
 
 \paragraph*{Usage }
 
 \begin{DoxyVerb}usage: preld [options]
    where options may include:
-   -u <x> or --mutation <x>
+   -u \<x\> or --mutation \<x\>
       set mutation rate/generation
-   -b <x> or --nbins <x>
+   -b \<x\> or --nbins \<x\>
       specify the number of recombination rates
-   -r <x> or --lo_r <x>
+   -r \<x\> or --lo_r \<x\>
       low end of range of recombination rates in centimorgans
-   -R <x> or --hi_r <x>
+   -R \<x\> or --hi_r \<x\>
       high end of range of recombination rates in centimorgans
    -e or --equilibria
       show equilibrium for each epoch
@@ -64,9 +66,9 @@ Parameter values, including those describing population history, may be read eit
       set haploid sample size
    -E or --nextepoch
       move to next earlier epoch
-   --twoN <x>
+   --twoN \<x\>
       set haploid pop size to x in current epoch
-   -T <x> or --time <x>
+   -T \<x\> or --time \<x\>
       set length of current epoch to x generations
    -S or --printState
       print state vectors
@@ -80,5 +82,5 @@ Parameter values, including those describing population history, may be read eit
 
 
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
 \end{DoxyCopyright}

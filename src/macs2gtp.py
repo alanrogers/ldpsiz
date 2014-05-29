@@ -9,9 +9,9 @@
 #===================================================================
 #
 #
-#    Usage: macs2gtp.py [options] <input file> 
+#    Usage: macs2gtp.py [options] \<input file\> 
 #    where options may include:
-#      -R <x> : set recombination rate for adjacent sites
+#      -R \<x\> : set recombination rate for adjacent sites
 #
 # For example,
 #

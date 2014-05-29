@@ -54,11 +54,11 @@
  * 
  *     usage: ms2gtp [options] [input_file_name]
  *        where options may include:
- *        -t <x> or --maxTokens <x>
+ *        -t \<x\> or --maxTokens \<x\>
  *           maximum tokens per input line
- *        -b <x> or --inBuffSize <x>
+ *        -b \<x\> or --inBuffSize \<x\>
  *           size of input buffer
- *        -R <x> or --recombination <x>
+ *        -R \<x\> or --recombination \<x\>
  *           rate for adjacent nucleotides
  *        -h     or --help
  *           print this message

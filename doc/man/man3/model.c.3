@@ -1,4 +1,4 @@
-.TH "model.c" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "model.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -151,7 +151,7 @@ Allocate a new \fBModel\fP of type specified by the character string 'method'\&.
 .RS 4
 \fImethod\fP character string representing a method to be used in predicting LD from population history\&. Legal values: 'hill', 'strobeck', and 'hayes'\&.
 .br
-\fItwoNsamp\fP haploid sample size, which is used to incorporate sampling bias into predicted values\&. To turn this feature off, use the value 0\&.
+\fItwoNsmp\fP haploid sample size, which is used to incorporate sampling bias into predicted values\&. To turn this feature off, use the value 0\&.
 .RE
 .PP
 \fBReturns:\fP
@@ -171,9 +171,9 @@ Add a method to an \fBModelList\fP\&. Return 1 on success, 0 on failure\&.
 .PP
 \fBParameters:\fP
 .RS 4
-\fIel\fP The \fBModelList\fP\&. 
+\fIml\fP The \fBModelList\fP\&. 
 .br
-\fImethod\fP A character string such as 'hill', or 'strobeck'\&. 
+\fImodelName\fP A character string such as 'hill', or 'strobeck'\&. 
 .br
 \fItwoNsmp\fP The number of individuals sampled\&. 
 .RE
@@ -203,7 +203,7 @@ Evolve through all Epochs of population history, beginning with initial state gi
 .PP
 \fBParameters:\fP
 .RS 4
-\fImodel\fP An object of type \fBModel\fP, which specifies the method to be used in evolving across a population history\&. The function makes use of model->ydim, model->y, and model->dydt\&. On return, model->y contains the state variable the results from this process\&. 
+\fIode\fP an object of type \fBODE\fP\&. 
 .br
 \fIy\fP Vector of state variables\&. 
 .br
@@ -235,17 +235,15 @@ On entry, c is a list of recombination rates, ph the population history, and ode
 .PP
 \fBParameters:\fP
 .RS 4
-\fImodel\fP An object of type \fBModel\fP, which specifies the method to be used in evolving across a population history\&. On return, model->y is changed\&. 
+\fIode\fP An object of type \fBODE\fP\&. 
 .br
 \fIc,u\fP Rates of recombination and mutation\&. 
 .br
-\fInbins\fP Size of arrayys sigdsq and c\&. 
+\fInbins\fP Size of arrays sigdsq and c\&. 
 .br
 \fIph\fP Population history\&. 
 .br
-\fIodeStepSize\fP Controls the step size of the \fBODE\fP algorithm\&. 
-.br
-\fIld[i]\fP is a vector of 'nbins' doubles\&. On return, the i'th entry will contain the value of sigma_d^2 implied by recombination rate c[i], and by the population history in argument 'ph'\&. 
+\fIld\fP is a vector of 'nbins' doubles\&. On return, the i'th entry will contain the value of sigma_d^2 implied by recombination rate c[i], and by the population history in argument 'ph'\&. 
 .RE
 .PP
 

@@ -1,5 +1,9 @@
 var searchData=
 [
+  ['tabulation_5fisfinite',['Tabulation_isfinite',['../tabulation_8c.html#a02819d8491310d65280b7df66d71ee44',1,'Tabulation_isfinite(const Tabulation *tab):&#160;tabulation.c'],['../tabulation_8h.html#a02819d8491310d65280b7df66d71ee44',1,'Tabulation_isfinite(const Tabulation *tab):&#160;tabulation.c']]],
+  ['tabulation_5fnew',['Tabulation_new',['../tabulation_8c.html#ad41564c78533d6f472ec0bc78b5007c3',1,'Tabulation_new(double windowcm, int nbins):&#160;tabulation.c'],['../tabulation_8h.html#ad41564c78533d6f472ec0bc78b5007c3',1,'Tabulation_new(double windowcm, int nbins):&#160;tabulation.c']]],
+  ['tabulation_5fnobs',['Tabulation_nObs',['../tabulation_8c.html#a86b84a767cdafed5d8a538cbd74bdde5',1,'Tabulation_nObs(const Tabulation *tab, int i):&#160;tabulation.c'],['../tabulation_8h.html#a86b84a767cdafed5d8a538cbd74bdde5',1,'Tabulation_nObs(const Tabulation *tab, int i):&#160;tabulation.c']]],
+  ['tabulation_5foverflow',['Tabulation_overflow',['../tabulation_8c.html#ae40028affe31e853583827d64a92b677',1,'Tabulation_overflow(Tabulation *tab):&#160;tabulation.c'],['../tabulation_8h.html#ae40028affe31e853583827d64a92b677',1,'Tabulation_overflow(Tabulation *tab):&#160;tabulation.c']]],
   ['taskarg_5fbest',['TaskArg_best',['../sald_8c.html#a8d9f16780283c0282645438e5ec9d9ba',1,'sald.c']]],
   ['taskarg_5fnew',['TaskArg_new',['../sald_8c.html#a74d36ee8105258d687814f0d895083f1',1,'sald.c']]],
   ['threadarg_5fprint',['ThreadArg_print',['../eld_8c.html#a66191769f33182335e7077162760c2fa',1,'eld.c']]],

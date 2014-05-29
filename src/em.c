@@ -492,7 +492,7 @@ static inline double next_w(double w, DsqData * dd) {
 
 /**
  * Ad hoc iterations to find D. 
- * @param[in] w0 Starting value for EM algorithm.
+ * @param[in] D0 Starting value for EM algorithm.
  * @param[in] d  Points to a structure containing data.
  */
 double find_D(double D0, DsqData * dd) {

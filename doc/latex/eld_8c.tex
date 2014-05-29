@@ -1,34 +1,34 @@
-\hypertarget{eld_8c}{\subsection{eld.\-c File Reference}
-\label{eld_8c}\index{eld.\-c@{eld.\-c}}
+\hypertarget{eld_8c}{\subsection{eld.\+c File Reference}
+\label{eld_8c}\index{eld.\+c@{eld.\+c}}
 }
 
 
-Estimate L\-D from genetic data.  
+Estimate L\+D from genetic data.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$string.\-h$>$}\\*
-{\ttfamily \#include $<$stdlib.\-h$>$}\\*
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include $<$time.\-h$>$}\\*
-{\ttfamily \#include $<$assert.\-h$>$}\\*
-{\ttfamily \#include $<$getopt.\-h$>$}\\*
-{\ttfamily \#include $<$limits.\-h$>$}\\*
-{\ttfamily \#include $<$pthread.\-h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\-\_\-rng.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}readgtp.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}fileindex.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}tabulation.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}window.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}boot.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}assign.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}ini.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include $<$getopt.\+h$>$}\\*
+{\ttfamily \#include $<$limits.\+h$>$}\\*
+{\ttfamily \#include $<$pthread.\+h$>$}\\*
+{\ttfamily \#include $<$gsl/gsl\+\_\+rng.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}typedefs.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}readgtp.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fileindex.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tabulation.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}window.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}boot.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}assign.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}ini.\+h\char`\"{}}\\*
 \subsubsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{struct_thread_arg}{Thread\-Arg}
+struct \hyperlink{struct_thread_arg}{Thread\+Arg}
 \begin{DoxyCompactList}\small\item\em Data required by a single thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
@@ -36,9 +36,9 @@ struct \hyperlink{struct_thread_arg}{Thread\-Arg}
 \hypertarget{eld_8c_ad96d407a911fbb914fa8e4cfbf2faf0f}{static void \hyperlink{eld_8c_ad96d407a911fbb914fa8e4cfbf2faf0f}{usage} (void)}\label{eld_8c_ad96d407a911fbb914fa8e4cfbf2faf0f}
 
 \begin{DoxyCompactList}\small\item\em Print usage message and abort. \end{DoxyCompactList}\item 
-\hypertarget{eld_8c_a66191769f33182335e7077162760c2fa}{void \hyperlink{eld_8c_a66191769f33182335e7077162760c2fa}{Thread\-Arg\-\_\-print} (\hyperlink{struct_thread_arg}{Thread\-Arg} $\ast$targ, F\-I\-L\-E $\ast$ofp)}\label{eld_8c_a66191769f33182335e7077162760c2fa}
+\hypertarget{eld_8c_a66191769f33182335e7077162760c2fa}{void \hyperlink{eld_8c_a66191769f33182335e7077162760c2fa}{Thread\+Arg\+\_\+print} (\hyperlink{struct_thread_arg}{Thread\+Arg} $\ast$targ, F\+I\+L\+E $\ast$ofp)}\label{eld_8c_a66191769f33182335e7077162760c2fa}
 
-\begin{DoxyCompactList}\small\item\em Print \hyperlink{struct_thread_arg}{Thread\-Arg} object. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Print \hyperlink{struct_thread_arg}{Thread\+Arg} object. \end{DoxyCompactList}\item 
 void $\ast$ \hyperlink{eld_8c_a914284d220ff633606a4a5913080266d}{threadfun} (void $\ast$varg)
 \begin{DoxyCompactList}\small\item\em {\ttfamily eld} runs a copy of this function within each thread. \end{DoxyCompactList}\item 
 \hypertarget{eld_8c_a3c04138a5bfe5d72780bb7e82a18e627}{int {\bfseries main} (int argc, char $\ast$$\ast$argv)}\label{eld_8c_a3c04138a5bfe5d72780bb7e82a18e627}
@@ -47,47 +47,49 @@ void $\ast$ \hyperlink{eld_8c_a914284d220ff633606a4a5913080266d}{threadfun} (voi
 
 
 \subsubsection{Detailed Description}
-Estimate L\-D from genetic data. \label{eld_8c_eld}%
+Estimate L\+D from genetic data. 
+
+\label{eld_8c_eld}%
 \hypertarget{eld_8c_eld}{}%
-\subsubsection*{{\ttfamily eld}, a program that estimates L\-D from genetic data }
+\subsubsection*{{\ttfamily eld}, a program that estimates L\+D from genetic data }
 
-Parameter values, including those describing population history, may be read either from the initialization file {\ttfamily ldpsiz.\-ini} or specified on the command line. Command-\/line arguments override values in the initialization file.
+Parameter values, including those describing population history, may be read either from the initialization file {\ttfamily ldpsiz.\+ini} or specified on the command line. Command-\/line arguments override values in the initialization file.
 
-{\ttfamily eld} reads data in \char`\"{}gtp\char`\"{} format and estimates two measures of L\-D\-: $\hat\sigma_d^2$ and $r^2$. The program compares all pairs of sites within a window that slides across the data set. These pairs are tabulated into bins based on the distance (in c\-M) that separates them. For each bin, the program estimates and prints the two measures of L\-D. The maximal separation between pairs of S\-N\-Ps is determined by the {\ttfamily -\/-\/window} (or {\ttfamily -\/w}) option.
+{\ttfamily eld} reads data in \char`\"{}gtp\char`\"{} format and estimates two measures of L\+D\+: $\hat\sigma_d^2$ and $r^2$. The program compares all pairs of sites within a window that slides across the data set. These pairs are tabulated into bins based on the distance (in c\+M) that separates them. For each bin, the program estimates and prints the two measures of L\+D. The maximal separation between pairs of S\+N\+Ps is determined by the {\ttfamily -\/-\/window} (or {\ttfamily -\/w}) option.
 
-Optionally, the program calculates a moving-\/blocks bootstrap for $\hat\sigma_d^2$. To turn on this option, use the {\ttfamily -\/-\/bootreps} option discussed below. The program will then print lower and upper confidence limits along with each estimate of $\hat\sigma_d^2$. By default, the bootstrap includes 95\% of the sampling distribution distribution. This fraction can be modified using the initialization file. Optionally, the bootstrap may be stored in a separate file for use by other programs. To accomplish this, use the command-\/line option {\ttfamily -\/-\/bootfile} or set {\ttfamily bootfile} in {\ttfamily ldpsiz.\-ini}.
+Optionally, the program calculates a moving-\/blocks bootstrap for $\hat\sigma_d^2$. To turn on this option, use the {\ttfamily -\/-\/bootreps} option discussed below. The program will then print lower and upper confidence limits along with each estimate of $\hat\sigma_d^2$. By default, the bootstrap includes 95\% of the sampling distribution distribution. This fraction can be modified using the initialization file. Optionally, the bootstrap may be stored in a separate file for use by other programs. To accomplish this, use the command-\/line option {\ttfamily -\/-\/bootfile} or set {\ttfamily bootfile} in {\ttfamily ldpsiz.\+ini}.
 
-By default, the program uses as many threads as there are cores on the machine. To change this, use the command-\/line option {\ttfamily -\/-\/threads} or set {\ttfamily nthreads} in the file {\ttfamily ldpsiz.\-ini}. \begin{DoxyVerb}usage: eld [options] input_file_name
+By default, the program uses as many threads as there are cores on the machine. To change this, use the command-\/line option {\ttfamily -\/-\/threads} or set {\ttfamily nthreads} in the file {\ttfamily ldpsiz.\+ini}. \begin{DoxyVerb}usage: eld [options] input_file_name
    where options may include:
-   -b <x> or --blocksize <x>
+   -b \<x\> or --blocksize \<x\>
       SNPs per bootstrap block
-   -f <x> or --bootfile <x>
+   -f \<x\> or --bootfile \<x\>
       name of bootstrap output file
    -h or --help
       print this message
-   -i <x> or --interval <x>
+   -i \<x\> or --interval \<x\>
       for debugging: increase speed by examining every x'th focal SNP
-   -n <x> or --nbins <x>
+   -n \<x\> or --nbins \<x\>
       tablulate values into x bins
-   -r <x> or --bootreps <x>
+   -r \<x\> or --bootreps \<x\>
       number of bootstrap replicates (def: 0)
-   -t <x> or --threads <x>
+   -t \<x\> or --threads \<x\>
       number of threads (default is auto)
    -v     or --verbose
       more output
-   -w <x> or --window <x>
+   -w \<x\> or --window \<x\>
       window size in cM
 \end{DoxyVerb}
 
 
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
 \end{DoxyCopyright}
 
 
 \subsubsection{Function Documentation}
-\hypertarget{eld_8c_a914284d220ff633606a4a5913080266d}{\index{eld.\-c@{eld.\-c}!threadfun@{threadfun}}
-\index{threadfun@{threadfun}!eld.c@{eld.\-c}}
+\hypertarget{eld_8c_a914284d220ff633606a4a5913080266d}{\index{eld.\+c@{eld.\+c}!threadfun@{threadfun}}
+\index{threadfun@{threadfun}!eld.\+c@{eld.\+c}}
 \paragraph[{threadfun}]{\setlength{\rightskip}{0pt plus 5cm}void $\ast$ threadfun (
 \begin{DoxyParamCaption}
 \item[{void $\ast$}]{vjq}
@@ -99,14 +101,14 @@ Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt roge
 
 Waits until there is a job in the queue, pops it off and executes it, then waits for another.
 
-The function opens the input file, which gives the thread its own input buffer so that it can move around in the file without locking it. Then it examines pairs of S\-N\-Ps within a window that slides across the S\-N\-Ps it is responsible for, placing the results into an object of type \hyperlink{struct_tabulation}{Tabulation}.
+The function opens the input file, which gives the thread its own input buffer so that it can move around in the file without locking it. Then it examines pairs of S\+N\+Ps within a window that slides across the S\+N\+Ps it is responsible for, placing the results into an object of type \hyperlink{struct_tabulation}{Tabulation}.
 
 
 \begin{DoxyParams}{Parameters}
-{\em varg} & A void pointer to an object of type \hyperlink{struct_thread_arg}{Thread\-Arg}.\\
+{\em varg} & A void pointer to an object of type \hyperlink{struct_thread_arg}{Thread\+Arg}.\\
 \hline
 \end{DoxyParams}
-Runs until jobs are completed and main thread sets accepting\-Jobs=0. 
+Runs until jobs are completed and main thread sets accepting\+Jobs=0. 
 
-References Thread\-Arg\-::boot, Thread\-Arg\-::ifname, Thread\-Arg\-::n\-Gtype, Thread\-Arg\-::overflow, Thread\-Arg\-::ploidy, Thread\-Arg\-::sampling\-\_\-interval, Thread\-Arg\-::tab, Thread\-Arg\-::tb, Thread\-Bounds\-\_\-ndx\-\_\-1st\-Focal(), Thread\-Bounds\-\_\-ndx\-\_\-initial(), Thread\-Bounds\-\_\-ndx\-\_\-last\-Focal(), Thread\-Bounds\-\_\-seekpos\-\_\-initial(), Window\-\_\-advance(), Thread\-Arg\-::window\-\_\-cm, Window\-\_\-free(), Window\-\_\-new(), Window\-\_\-next\-S\-N\-P(), and Window\-\_\-n\-Gtype().
+References Thread\+Arg\+::boot, Thread\+Arg\+::ifname, Thread\+Arg\+::n\+Gtype, Thread\+Arg\+::overflow, Thread\+Arg\+::ploidy, Thread\+Arg\+::sampling\+\_\+interval, Thread\+Arg\+::tab, Tabulation\+\_\+overflow(), Thread\+Arg\+::tb, Thread\+Bounds\+\_\+ndx\+\_\+1st\+Focal(), Thread\+Bounds\+\_\+ndx\+\_\+initial(), Thread\+Bounds\+\_\+ndx\+\_\+last\+Focal(), Thread\+Bounds\+\_\+seekpos\+\_\+initial(), Window\+\_\+advance(), Thread\+Arg\+::window\+\_\+cm, Window\+\_\+free(), Window\+\_\+new(), Window\+\_\+next\+S\+N\+P(), and Window\+\_\+n\+Gtype().
 

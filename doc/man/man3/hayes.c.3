@@ -1,4 +1,4 @@
-.TH "hayes.c" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "hayes.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -28,7 +28,7 @@ Code for Sved's (1971) formula, as used by Hayes et al\&. 2003\&. Genome Researc
 .ti -1c
 .RI "static double \fBsvedRsq\fP (double c, double twoN, int twoNsmp)"
 .br
-.RI "\fISved's (1971; also 2009, p 184) formula for E[r^2], modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624)\&. \fP"
+.RI "\fISved's (1971; also 2009, p 184) formula for $E[r^2]$, modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624)\&. \fP"
 .ti -1c
 .RI "double \fBHayes_rsq_dummy\fP (double *y, int twoNsmp)"
 .br
@@ -80,14 +80,14 @@ Alan R\&. Rogers
 .SS "static double svedRsq (doublec, doubletwoN, inttwoNsmp)\fC [inline]\fP, \fC [static]\fP"
 
 .PP
-Sved's (1971; also 2009, p 184) formula for E[r^2], modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624)\&. Hudson uses 'n' throughout his paper without clearly defining it\&. On p 631, he says that 'with probability 1/n the same gamete
-will be drawn from the sample twice' (in random sampling with replacement)\&. Thus, Hudson's 'n' is the number of gametes in the sample, which equals twoNsmp in the notation below\&.
+Sved's (1971; also 2009, p 184) formula for $E[r^2]$, modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624)\&. Hudson uses $n$ throughout his paper without clearly defining it\&. On p 631, he says that 'with probability \\form#6 the
+same gamete will be drawn from the sample twice' (in random sampling with replacement)\&. Thus, Hudson's $n$ is the number of gametes in the sample, which equals twoNsmp in the notation below\&.
 .PP
 The HAYES_MUTATION_ADJUSTMENT is based on Tenesa et al (2007, Genome Research, 17(4):520-526)\&. On p 521, these authors say:
 .PP
-For autosomal loci, Hill (1975, Theor\&. Pop\&. Biol\&. 8(2):117-126) showed that, in the presence of mutation, $E(r^2) = (10+)/(22 + 13 + ^2)$, with $ = 4N_e c$\&. Since $(22 + 13 + ^2)$ factors into $(11+)(2+)$, a further approximation is $E(r^2) = 1/(2 + ) = 1/(2 + 4N_e c)$\&.
+For autosomal loci, Hill (1975, Theor\&. Pop\&. Biol\&. 8(2):117-126) showed that, in the presence of mutation, $E(r^2) = (10+\rho)/(22 + 13\rho + \rho^2)$, with $\rho = 4N_e c$\&. Since $(22 + 13\rho + \rho^2)$ factors into $(11+\rho)(2+\rho)$, a further approximation is $E(r^2) = 1/(2 + \rho) = 1/(2 + 4N_e c)$\&.
 .PP
-Hill's formula (on his p 124), however, is for sigma_d^2 rather than E[r^2], so this adjustment is relevant only to the extent that sigma_d^2 approximates the expectation of r^2\&. Tenesa's approximation also takes 10 as approximately equal to 11--a fairly crude standard of approximation\&. 
+Hill's formula (on his p 124), however, is for $\sigma_d^2$ rather than $E[r^2]$, so this adjustment is relevant only to the extent that $\sigma_d^2$ approximates the expectation of $r^2$\&. Tenesa's approximation also takes 10 as approximately equal to 11--a fairly crude standard of approximation\&. 
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for ldpsiz from the source code\&.

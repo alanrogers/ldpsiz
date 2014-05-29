@@ -64,12 +64,6 @@ static const char *stateLbl[DIM] = { "phiA",
 };
 
 typedef struct {
-    double      twoN;           /* haploid pop size */
-    double      c;              /* recombination rate per generation */
-    double      u;              /* mutation rate per generation */
-} param_struct;
-
-typedef struct {
     unsigned    ydim;
     double      y[DIM];
 } StrobeckData;
@@ -83,6 +77,7 @@ static int  iterate(double y[], int t, double twoN, double c, double u);
 static void geteq_c_mid(double x[DIM], double twoN, double c,
                         double u, double fourNu);
 
+/** Allocate a new object of type StrobeckData */
 void       *StrobeckData_new(void) {
     StrobeckData *hd = malloc(sizeof(StrobeckData));
     checkmem(hd, __FILE__, __LINE__);
@@ -179,10 +174,10 @@ const char *Strobeck_stateLbl(unsigned i) {
  * y[3] = gammaAB
  * y[4] = deltaAB
  *
- * @param[in] y1 is the current vector of identity coefficients.
+ * @param[in] yy1 is the current vector of identity coefficients.
  * @param[out] f will contain the derivatives of y[], as approximated by
  * the difference equations of Strobeck and Morgan.
- * @param[in] params points to a structure of type param_struct.
+ * @param[in] params points to a structure of type dydt_params.
  */
 int
 Strobeck_dydt(double t_notused, const double yy1[], double f[], void *params) 

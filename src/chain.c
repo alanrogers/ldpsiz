@@ -389,7 +389,7 @@ void Chain_printFull(Chain * chain, FILE * fp) {
  * @param[out] bestLnObj Pointer to double, into which the function
  * will write the value of the log objective function.
  *
- * @param[out] ph Pointer to a PopHist, into which the optimal
+ * @param[out] bestPh Pointer to a PopHist, into which the optimal
  * population history will be written.
  */
 void Chain_bestFit(Chain * chain, double *bestLnObj, PopHist * bestPh) {

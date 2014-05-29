@@ -1,65 +1,67 @@
-\hypertarget{strobeck_8h}{\subsection{strobeck.\-h File Reference}
-\label{strobeck_8h}\index{strobeck.\-h@{strobeck.\-h}}
+\hypertarget{strobeck_8h}{\subsection{strobeck.\+h File Reference}
+\label{strobeck_8h}\index{strobeck.\+h@{strobeck.\+h}}
 }
 
 
-Header for \hyperlink{strobeck_8c}{strobeck.\-c}.  
+Header for \hyperlink{strobeck_8c}{strobeck.\+c}.  
 
 
-{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}pophist.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}typedefs.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}pophist.\+h\char`\"{}}\\*
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{strobeck_8h_ae0fa2b2f6b433f96da3cdaf7d1889ad4}{void $\ast$ {\bfseries Strobeck\-Data\-\_\-new} (void)}\label{strobeck_8h_ae0fa2b2f6b433f96da3cdaf7d1889ad4}
+\hypertarget{strobeck_8h_ae0fa2b2f6b433f96da3cdaf7d1889ad4}{void $\ast$ \hyperlink{strobeck_8h_ae0fa2b2f6b433f96da3cdaf7d1889ad4}{Strobeck\+Data\+\_\+new} (void)}\label{strobeck_8h_ae0fa2b2f6b433f96da3cdaf7d1889ad4}
+
+\begin{DoxyCompactList}\small\item\em Allocate a new object of type \hyperlink{struct_strobeck_data}{Strobeck\+Data}. \end{DoxyCompactList}\item 
+\hypertarget{strobeck_8h_adbf936d63ba4a3f626f30a62db62ae7b}{void {\bfseries Strobeck\+Data\+\_\+free} (void $\ast$p)}\label{strobeck_8h_adbf936d63ba4a3f626f30a62db62ae7b}
 
 \item 
-\hypertarget{strobeck_8h_adbf936d63ba4a3f626f30a62db62ae7b}{void {\bfseries Strobeck\-Data\-\_\-free} (void $\ast$p)}\label{strobeck_8h_adbf936d63ba4a3f626f30a62db62ae7b}
-
-\item 
-\hypertarget{strobeck_8h_a3c5be8fa6be11c1ee3e655f5466adb92}{double \hyperlink{strobeck_8h_a3c5be8fa6be11c1ee3e655f5466adb92}{Strobeck\-Data\-\_\-state\-Val} (void $\ast$vdata, unsigned i)}\label{strobeck_8h_a3c5be8fa6be11c1ee3e655f5466adb92}
+\hypertarget{strobeck_8h_a3c5be8fa6be11c1ee3e655f5466adb92}{double \hyperlink{strobeck_8h_a3c5be8fa6be11c1ee3e655f5466adb92}{Strobeck\+Data\+\_\+state\+Val} (void $\ast$vdata, unsigned i)}\label{strobeck_8h_a3c5be8fa6be11c1ee3e655f5466adb92}
 
 \begin{DoxyCompactList}\small\item\em i'th state value \end{DoxyCompactList}\item 
-int \hyperlink{strobeck_8h_a0ab1f27aa5cfbf2831ceb3fdb86addd4}{Strobeck\-\_\-geteq} (double x\mbox{[}$\,$\mbox{]}, double two\-N, double c, double u)
+int \hyperlink{strobeck_8h_a0ab1f27aa5cfbf2831ceb3fdb86addd4}{Strobeck\+\_\+geteq} (double x\mbox{[}$\,$\mbox{]}, double two\+N, double c, double u)
 \begin{DoxyCompactList}\small\item\em Fill x vector with equilibrium values given on pp 833-\/834 of Strobeck and Morgan. \end{DoxyCompactList}\item 
-int \hyperlink{strobeck_8h_a6f4cdcf11cebc801c2d66717f40dfc5c}{Strobeck\-\_\-dydt} (double t, const double y\mbox{[}$\,$\mbox{]}, double f\mbox{[}$\,$\mbox{]}, void $\ast$params)
+int \hyperlink{strobeck_8h_a6f4cdcf11cebc801c2d66717f40dfc5c}{Strobeck\+\_\+dydt} (double t, const double y\mbox{[}$\,$\mbox{]}, double f\mbox{[}$\,$\mbox{]}, void $\ast$params)
 \begin{DoxyCompactList}\small\item\em This function calculates the difference, from one generation to the next, for each of the 5 identity coefficients. \end{DoxyCompactList}\item 
-double \hyperlink{strobeck_8h_a44c7a9a96b41656485ed7803ae034b44}{Strobeck\-\_\-get\-\_\-sigdsq} (double y\mbox{[}$\,$\mbox{]}, int n)
-\begin{DoxyCompactList}\small\item\em Calculate sigma\-\_\-d$^\wedge$2 from state vector. \end{DoxyCompactList}\item 
-int \hyperlink{strobeck_8h_aa1402a1b50aa5542a84030996d62d5aa}{Strobeck\-\_\-evolve\-Discrete} (double y\mbox{[}$\,$\mbox{]}, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, double c, double u)
+double \hyperlink{strobeck_8h_a44c7a9a96b41656485ed7803ae034b44}{Strobeck\+\_\+get\+\_\+sigdsq} (double y\mbox{[}$\,$\mbox{]}, int n)
+\begin{DoxyCompactList}\small\item\em Calculate sigma\+\_\+d$^\wedge$2 from state vector. \end{DoxyCompactList}\item 
+int \hyperlink{strobeck_8h_aa1402a1b50aa5542a84030996d62d5aa}{Strobeck\+\_\+evolve\+Discrete} (double y\mbox{[}$\,$\mbox{]}, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, double c, double u)
 \begin{DoxyCompactList}\small\item\em Evolve through all epochs of population history, using step size h and beginning with initial equilibrium. \end{DoxyCompactList}\item 
-\hypertarget{strobeck_8h_a346f3df822942789dfd5d46f211736c7}{double \hyperlink{strobeck_8h_a346f3df822942789dfd5d46f211736c7}{Strobeck\-\_\-sigdsq} (\hyperlink{struct_o_d_e}{O\-D\-E} $\ast$ode, double c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, int two\-Nsmp)}\label{strobeck_8h_a346f3df822942789dfd5d46f211736c7}
+\hypertarget{strobeck_8h_a346f3df822942789dfd5d46f211736c7}{double \hyperlink{strobeck_8h_a346f3df822942789dfd5d46f211736c7}{Strobeck\+\_\+sigdsq} (\hyperlink{struct_o_d_e}{O\+D\+E} $\ast$ode, double c, double u, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int two\+Nsmp)}\label{strobeck_8h_a346f3df822942789dfd5d46f211736c7}
 
 \begin{DoxyCompactList}\small\item\em Set state vector to initial equilibrium, then evolve it through the population history, and then use this state vector to calculate sigmdsq. \end{DoxyCompactList}\item 
-\hypertarget{strobeck_8h_a34a9ecc144c98ac86b96d9546e801b81}{double \hyperlink{strobeck_8h_a34a9ecc144c98ac86b96d9546e801b81}{Strobeck\-\_\-sigdsq\-Eq} (double c, double u, \hyperlink{struct_pop_hist}{Pop\-Hist} $\ast$ph, unsigned which\-Epoch, int two\-Nsmp, void $\ast$data)}\label{strobeck_8h_a34a9ecc144c98ac86b96d9546e801b81}
+\hypertarget{strobeck_8h_a34a9ecc144c98ac86b96d9546e801b81}{double \hyperlink{strobeck_8h_a34a9ecc144c98ac86b96d9546e801b81}{Strobeck\+\_\+sigdsq\+Eq} (double c, double u, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, unsigned which\+Epoch, int two\+Nsmp, void $\ast$data)}\label{strobeck_8h_a34a9ecc144c98ac86b96d9546e801b81}
 
-\begin{DoxyCompactList}\small\item\em Set state vector to equilibrium for epoch \char`\"{}which\-Epoch\char`\"{} and then use it to calculate sigmdsq. \end{DoxyCompactList}\item 
-\hypertarget{strobeck_8h_ac0ab3725937e78143746ca440c67df0d}{size\-\_\-t {\bfseries Strobeck\-\_\-state\-Dim} (void)}\label{strobeck_8h_ac0ab3725937e78143746ca440c67df0d}
-
-\item 
-\hypertarget{strobeck_8h_ae83483b4adb14e1113d6a3cbfeb64f3f}{const char $\ast$ {\bfseries Strobeck\-\_\-state\-Lbl} (unsigned i)}\label{strobeck_8h_ae83483b4adb14e1113d6a3cbfeb64f3f}
+\begin{DoxyCompactList}\small\item\em Set state vector to equilibrium for epoch \char`\"{}which\+Epoch\char`\"{} and then use it to calculate sigmdsq. \end{DoxyCompactList}\item 
+\hypertarget{strobeck_8h_ac0ab3725937e78143746ca440c67df0d}{size\+\_\+t {\bfseries Strobeck\+\_\+state\+Dim} (void)}\label{strobeck_8h_ac0ab3725937e78143746ca440c67df0d}
 
 \item 
-\hypertarget{strobeck_8h_aafa23cce9adc6ceb3aec15a8ba565235}{\hyperlink{struct_model}{Model} $\ast$ {\bfseries Model\-\_\-alloc\-Strobeck} (int two\-Nsmp)}\label{strobeck_8h_aafa23cce9adc6ceb3aec15a8ba565235}
+\hypertarget{strobeck_8h_ae83483b4adb14e1113d6a3cbfeb64f3f}{const char $\ast$ {\bfseries Strobeck\+\_\+state\+Lbl} (unsigned i)}\label{strobeck_8h_ae83483b4adb14e1113d6a3cbfeb64f3f}
+
+\item 
+\hypertarget{strobeck_8h_aafa23cce9adc6ceb3aec15a8ba565235}{\hyperlink{struct_model}{Model} $\ast$ {\bfseries Model\+\_\+alloc\+Strobeck} (int two\+Nsmp)}\label{strobeck_8h_aafa23cce9adc6ceb3aec15a8ba565235}
 
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
-Header for \hyperlink{strobeck_8c}{strobeck.\-c}. \begin{DoxyAuthor}{Author}
+Header for \hyperlink{strobeck_8c}{strobeck.\+c}. 
+
+\begin{DoxyAuthor}{Author}
 Alan R. Rogers 
 \end{DoxyAuthor}
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
 \end{DoxyCopyright}
 
 
 \subsubsection{Function Documentation}
-\hypertarget{strobeck_8h_a6f4cdcf11cebc801c2d66717f40dfc5c}{\index{strobeck.\-h@{strobeck.\-h}!Strobeck\-\_\-dydt@{Strobeck\-\_\-dydt}}
-\index{Strobeck\-\_\-dydt@{Strobeck\-\_\-dydt}!strobeck.h@{strobeck.\-h}}
-\paragraph[{Strobeck\-\_\-dydt}]{\setlength{\rightskip}{0pt plus 5cm}int Strobeck\-\_\-dydt (
+\hypertarget{strobeck_8h_a6f4cdcf11cebc801c2d66717f40dfc5c}{\index{strobeck.\+h@{strobeck.\+h}!Strobeck\+\_\+dydt@{Strobeck\+\_\+dydt}}
+\index{Strobeck\+\_\+dydt@{Strobeck\+\_\+dydt}!strobeck.\+h@{strobeck.\+h}}
+\paragraph[{Strobeck\+\_\+dydt}]{\setlength{\rightskip}{0pt plus 5cm}int Strobeck\+\_\+dydt (
 \begin{DoxyParamCaption}
-\item[{double}]{t\-\_\-notused, }
+\item[{double}]{t\+\_\+notused, }
 \item[{const double}]{yy1\mbox{[}$\,$\mbox{]}, }
 \item[{double}]{f\mbox{[}$\,$\mbox{]}, }
 \item[{void $\ast$}]{params}
@@ -71,15 +73,15 @@ This function calculates the difference, from one generation to the next, for ea
 
 It is based on equation 3 of Strobeck and Morgan.
 
-y\mbox{[}0\mbox{]} = phi\-A y\mbox{[}1\mbox{]} = phi\-B y\mbox{[}2\mbox{]} = phi\-A\-B y\mbox{[}3\mbox{]} = gamma\-A\-B y\mbox{[}4\mbox{]} = delta\-A\-B
+y\mbox{[}0\mbox{]} = phi\+A y\mbox{[}1\mbox{]} = phi\+B y\mbox{[}2\mbox{]} = phi\+A\+B y\mbox{[}3\mbox{]} = gamma\+A\+B y\mbox{[}4\mbox{]} = delta\+A\+B
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em y1} & is the current vector of identity coefficients. \\
+\mbox{\tt in}  & {\em yy1} & is the current vector of identity coefficients. \\
 \hline
 \mbox{\tt out}  & {\em f} & will contain the derivatives of y\mbox{[}\mbox{]}, as approximated by the difference equations of Strobeck and Morgan. \\
 \hline
-\mbox{\tt in}  & {\em params} & points to a structure of type \hyperlink{structparam__struct}{param\-\_\-struct}. \\
+\mbox{\tt in}  & {\em params} & points to a structure of type \hyperlink{structdydt__params}{dydt\+\_\+params}. \\
 \hline
 \end{DoxyParams}
 
@@ -88,14 +90,14 @@ References onestep().
 
 
 
-Referenced by Strobeck\-\_\-sigdsq().
+Referenced by Strobeck\+\_\+sigdsq().
 
-\hypertarget{strobeck_8h_aa1402a1b50aa5542a84030996d62d5aa}{\index{strobeck.\-h@{strobeck.\-h}!Strobeck\-\_\-evolve\-Discrete@{Strobeck\-\_\-evolve\-Discrete}}
-\index{Strobeck\-\_\-evolve\-Discrete@{Strobeck\-\_\-evolve\-Discrete}!strobeck.h@{strobeck.\-h}}
-\paragraph[{Strobeck\-\_\-evolve\-Discrete}]{\setlength{\rightskip}{0pt plus 5cm}int Strobeck\-\_\-evolve\-Discrete (
+\hypertarget{strobeck_8h_aa1402a1b50aa5542a84030996d62d5aa}{\index{strobeck.\+h@{strobeck.\+h}!Strobeck\+\_\+evolve\+Discrete@{Strobeck\+\_\+evolve\+Discrete}}
+\index{Strobeck\+\_\+evolve\+Discrete@{Strobeck\+\_\+evolve\+Discrete}!strobeck.\+h@{strobeck.\+h}}
+\paragraph[{Strobeck\+\_\+evolve\+Discrete}]{\setlength{\rightskip}{0pt plus 5cm}int Strobeck\+\_\+evolve\+Discrete (
 \begin{DoxyParamCaption}
 \item[{double}]{y\mbox{[}$\,$\mbox{]}, }
-\item[{{\bf Pop\-Hist} $\ast$}]{ph, }
+\item[{{\bf Pop\+Hist} $\ast$}]{ph, }
 \item[{double}]{c, }
 \item[{double}]{u}
 \end{DoxyParamCaption}
@@ -122,25 +124,25 @@ Always returns 0.
 \end{DoxyReturn}
 
 
-References iterate(), Pop\-Hist\-\_\-duration(), Pop\-Hist\-\_\-nepoch(), Pop\-Hist\-\_\-two\-N(), and Strobeck\-\_\-geteq().
+References iterate(), Pop\+Hist\+\_\+duration(), Pop\+Hist\+\_\+nepoch(), Pop\+Hist\+\_\+two\+N(), and Strobeck\+\_\+geteq().
 
-\hypertarget{strobeck_8h_a44c7a9a96b41656485ed7803ae034b44}{\index{strobeck.\-h@{strobeck.\-h}!Strobeck\-\_\-get\-\_\-sigdsq@{Strobeck\-\_\-get\-\_\-sigdsq}}
-\index{Strobeck\-\_\-get\-\_\-sigdsq@{Strobeck\-\_\-get\-\_\-sigdsq}!strobeck.h@{strobeck.\-h}}
-\paragraph[{Strobeck\-\_\-get\-\_\-sigdsq}]{\setlength{\rightskip}{0pt plus 5cm}double Strobeck\-\_\-get\-\_\-sigdsq (
+\hypertarget{strobeck_8h_a44c7a9a96b41656485ed7803ae034b44}{\index{strobeck.\+h@{strobeck.\+h}!Strobeck\+\_\+get\+\_\+sigdsq@{Strobeck\+\_\+get\+\_\+sigdsq}}
+\index{Strobeck\+\_\+get\+\_\+sigdsq@{Strobeck\+\_\+get\+\_\+sigdsq}!strobeck.\+h@{strobeck.\+h}}
+\paragraph[{Strobeck\+\_\+get\+\_\+sigdsq}]{\setlength{\rightskip}{0pt plus 5cm}double Strobeck\+\_\+get\+\_\+sigdsq (
 \begin{DoxyParamCaption}
 \item[{double}]{y\mbox{[}$\,$\mbox{]}, }
-\item[{int}]{two\-Nsmp}
+\item[{int}]{two\+Nsmp}
 \end{DoxyParamCaption}
 )}}\label{strobeck_8h_a44c7a9a96b41656485ed7803ae034b44}
 
 
-Calculate sigma\-\_\-d$^\wedge$2 from state vector. 
+Calculate sigma\+\_\+d$^\wedge$2 from state vector. 
 
 The formulas involved are in the comment at the top of this file.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em y} & State vector, whose entries represent Phi\-A, Phi\-B, Phi\-A\-B, Gamma\-A\-B, and Delta\-A\-B. \\
+\mbox{\tt in}  & {\em y} & State vector, whose entries represent Phi\+A, Phi\+B, Phi\+A\+B, Gamma\+A\+B, and Delta\+A\+B. \\
 \hline
 \mbox{\tt in}  & {\em n} & Number of gene copies in sample. If n==0, then no bias correction is done. \\
 \hline
@@ -151,14 +153,14 @@ References onestep().
 
 
 
-Referenced by Strobeck\-\_\-sigdsq(), and Strobeck\-\_\-sigdsq\-Eq().
+Referenced by Strobeck\+\_\+sigdsq(), and Strobeck\+\_\+sigdsq\+Eq().
 
-\hypertarget{strobeck_8h_a0ab1f27aa5cfbf2831ceb3fdb86addd4}{\index{strobeck.\-h@{strobeck.\-h}!Strobeck\-\_\-geteq@{Strobeck\-\_\-geteq}}
-\index{Strobeck\-\_\-geteq@{Strobeck\-\_\-geteq}!strobeck.h@{strobeck.\-h}}
-\paragraph[{Strobeck\-\_\-geteq}]{\setlength{\rightskip}{0pt plus 5cm}int Strobeck\-\_\-geteq (
+\hypertarget{strobeck_8h_a0ab1f27aa5cfbf2831ceb3fdb86addd4}{\index{strobeck.\+h@{strobeck.\+h}!Strobeck\+\_\+geteq@{Strobeck\+\_\+geteq}}
+\index{Strobeck\+\_\+geteq@{Strobeck\+\_\+geteq}!strobeck.\+h@{strobeck.\+h}}
+\paragraph[{Strobeck\+\_\+geteq}]{\setlength{\rightskip}{0pt plus 5cm}int Strobeck\+\_\+geteq (
 \begin{DoxyParamCaption}
 \item[{double}]{x\mbox{[}$\,$\mbox{]}, }
-\item[{double}]{two\-N, }
+\item[{double}]{two\+N, }
 \item[{double}]{c, }
 \item[{double}]{u}
 \end{DoxyParamCaption}
@@ -169,5 +171,5 @@ Fill x vector with equilibrium values given on pp 833-\/834 of Strobeck and Morg
 
 Strobeck and Morgan separate 3 cases, for c $<$$<$ u, c $>$$>$ u, and c $\sim$= u. I did some experiments to figure out how to bound these ranges, and decided never to use the formula for large c. 
 
-Referenced by Strobeck\-\_\-evolve\-Discrete(), Strobeck\-\_\-sigdsq(), and Strobeck\-\_\-sigdsq\-Eq().
+Referenced by Strobeck\+\_\+evolve\+Discrete(), Strobeck\+\_\+sigdsq(), and Strobeck\+\_\+sigdsq\+Eq().
 

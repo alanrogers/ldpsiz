@@ -1,5 +1,5 @@
 /**
- * @file fithayes.h
+ * @file hayes.h
  * @author Alan R. Rogers
  * @brief Header for hayes.c
  * @copyright Copyright (c) 2014, Alan R. Rogers 

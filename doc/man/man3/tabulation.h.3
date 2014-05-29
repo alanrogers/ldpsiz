@@ -1,10 +1,10 @@
-.TH "tabulation.h" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "tabulation.h" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 tabulation.h \- 
 .PP
-Header for tabulation\&.c\&.  
+Header for \fBtabulation\&.c\fP\&.  
 
 .SH SYNOPSIS
 .br
@@ -27,6 +27,7 @@ Header for tabulation\&.c\&.
 .ti -1c
 .RI "\fBTabulation\fP * \fBTabulation_new\fP (double windowcm, int nbins)"
 .br
+.RI "\fIAllocate a new object of type \fBTabulation\fP\&. \fP"
 .ti -1c
 .RI "\fBTabulation\fP * \fBTabulation_dup\fP (\fBTabulation\fP *old)"
 .br
@@ -57,6 +58,7 @@ Header for tabulation\&.c\&.
 .ti -1c
 .RI "long unsigned \fBTabulation_nObs\fP (const \fBTabulation\fP *tab, int i)"
 .br
+.RI "\fIReturn the number of observations in the i'th bin\&. \fP"
 .ti -1c
 .RI "int \fBTabulation_equals\fP (const \fBTabulation\fP *x, const \fBTabulation\fP *y)"
 .br
@@ -69,12 +71,14 @@ Header for tabulation\&.c\&.
 .ti -1c
 .RI "int \fBTabulation_isfinite\fP (const \fBTabulation\fP *tab)"
 .br
+.RI "\fIReturn 1 if tab is free of non-finite values, 0 otherwise\&. \fP"
 .ti -1c
 .RI "void \fBTabulation_sanityCheck\fP (\fBTabulation\fP *tab, const char *file, int line)"
 .br
 .ti -1c
 .RI "int \fBTabulation_overflow\fP (\fBTabulation\fP *tab)"
 .br
+.RI "\fICheck for overflow\&. \fP"
 .ti -1c
 .RI "void \fBTabulation_test\fP (int verbose)"
 .br
@@ -87,7 +91,7 @@ Header for tabulation\&.c\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Header for tabulation\&.c\&. 
+Header for \fBtabulation\&.c\fP\&. 
 
 
 .PP
@@ -102,6 +106,28 @@ Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is rele
 .RE
 .PP
 
+.SH "Function Documentation"
+.PP 
+.SS "\fBTabulation\fP* Tabulation_new (doublewindowcm, intnbins)"
+
+.PP
+Allocate a new object of type \fBTabulation\fP\&. This is accomplished via a single call to malloc, so that the entire object will reside in contiguous memory\&. This minimizes page faults and should make time-critical functions such as Tabulation_record run faster\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIwindowcm\fP The size in centimorgans of the window used to scan the genome\&.
+.br
+\fInbins\fP The number of bins in which to tabulate values\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A newly allocated object of type \fBTabulation\fP, which should be freed with Tabulation_free\&. 
+.RE
+.PP
+
+.PP
+Referenced by Boot_new()\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for ldpsiz from the source code\&.

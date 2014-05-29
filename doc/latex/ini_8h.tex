@@ -1,59 +1,61 @@
-\hypertarget{ini_8h}{\subsection{ini.\-h File Reference}
-\label{ini_8h}\index{ini.\-h@{ini.\-h}}
+\hypertarget{ini_8h}{\subsection{ini.\+h File Reference}
+\label{ini_8h}\index{ini.\+h@{ini.\+h}}
 }
 
 
-Header for \hyperlink{ini_8c}{ini.\-c}.  
+Header for \hyperlink{ini_8c}{ini.\+c}.  
 
 
-{\ttfamily \#include \char`\"{}typedefs.\-h\char`\"{}}\\*
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}typedefs.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
 \subsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{ini_8h_a07048072a11b7c8c17be0c820147b617}{\#define {\bfseries M\-A\-N\-D\-A\-T\-O\-R\-Y}~1}\label{ini_8h_a07048072a11b7c8c17be0c820147b617}
+\hypertarget{ini_8h_a07048072a11b7c8c17be0c820147b617}{\#define {\bfseries M\+A\+N\+D\+A\+T\+O\+R\+Y}~1}\label{ini_8h_a07048072a11b7c8c17be0c820147b617}
 
 \end{DoxyCompactItemize}
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{struct_ini}{Ini} $\ast$ \hyperlink{ini_8h_a68e606705d3fd423e6729dd28cd8a8a3}{Ini\-\_\-new} (const char $\ast$ifname)
+\hyperlink{struct_ini}{Ini} $\ast$ \hyperlink{ini_8h_a68e606705d3fd423e6729dd28cd8a8a3}{Ini\+\_\+new} (const char $\ast$ifname)
 \begin{DoxyCompactList}\small\item\em Open and read an initialization file, putting the information therein into a newly-\/allocated object of type \hyperlink{struct_ini}{Ini}. \end{DoxyCompactList}\item 
-void \hyperlink{ini_8h_aa56f722e2bc62d734e0d2b3ed9f8d61e}{Ini\-\_\-print} (\hyperlink{struct_ini}{Ini} $\ast$ini, F\-I\-L\-E $\ast$ofp)
+void \hyperlink{ini_8h_aa56f722e2bc62d734e0d2b3ed9f8d61e}{Ini\+\_\+print} (\hyperlink{struct_ini}{Ini} $\ast$ini, F\+I\+L\+E $\ast$ofp)
 \begin{DoxyCompactList}\small\item\em Print object of type \hyperlink{struct_ini}{Ini} to file ofp. \end{DoxyCompactList}\item 
-\hypertarget{ini_8h_a2734f309bf5f70d576e58a9c0257e0c3}{void \hyperlink{ini_8h_a2734f309bf5f70d576e58a9c0257e0c3}{Ini\-\_\-free} (\hyperlink{struct_ini}{Ini} $\ast$ini)}\label{ini_8h_a2734f309bf5f70d576e58a9c0257e0c3}
+\hypertarget{ini_8h_a2734f309bf5f70d576e58a9c0257e0c3}{void \hyperlink{ini_8h_a2734f309bf5f70d576e58a9c0257e0c3}{Ini\+\_\+free} (\hyperlink{struct_ini}{Ini} $\ast$ini)}\label{ini_8h_a2734f309bf5f70d576e58a9c0257e0c3}
 
 \begin{DoxyCompactList}\small\item\em Free object of type \hyperlink{struct_ini}{Ini}. \end{DoxyCompactList}\item 
-\hypertarget{ini_8h_a429595993263fdc2027a37991f5ddffd}{double \hyperlink{ini_8h_a429595993263fdc2027a37991f5ddffd}{Ini\-\_\-two\-N0} (const \hyperlink{struct_ini}{Ini} $\ast$ini)}\label{ini_8h_a429595993263fdc2027a37991f5ddffd}
+\hypertarget{ini_8h_a429595993263fdc2027a37991f5ddffd}{double \hyperlink{ini_8h_a429595993263fdc2027a37991f5ddffd}{Ini\+\_\+two\+N0} (const \hyperlink{struct_ini}{Ini} $\ast$ini)}\label{ini_8h_a429595993263fdc2027a37991f5ddffd}
 
-\begin{DoxyCompactList}\small\item\em Return the value of two\-N in the 0th epoch. \end{DoxyCompactList}\item 
-int \hyperlink{ini_8h_a216f758adfe5a6b2dc8c187ca2353803}{Ini\-\_\-set\-Dbl} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, double $\ast$ptr, int mandatory)
+\begin{DoxyCompactList}\small\item\em Return the value of two\+N in the 0th epoch. \end{DoxyCompactList}\item 
+int \hyperlink{ini_8h_a216f758adfe5a6b2dc8c187ca2353803}{Ini\+\_\+set\+Dbl} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, double $\ast$ptr, int mandatory)
 \begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr to value corresponding to given key. \end{DoxyCompactList}\item 
-int \hyperlink{ini_8h_ac21b30c5f65cab4ec649de86b5bb2f42}{Ini\-\_\-set\-Long} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, long $\ast$ptr, int mandatory)
+int \hyperlink{ini_8h_ac21b30c5f65cab4ec649de86b5bb2f42}{Ini\+\_\+set\+Long} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, long $\ast$ptr, int mandatory)
 \begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
-int \hyperlink{ini_8h_ae2b34c75eedbb76ae836d36320e7ec34}{Ini\-\_\-set\-Int} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, int $\ast$ptr, int mandatory)
+int \hyperlink{ini_8h_ae2b34c75eedbb76ae836d36320e7ec34}{Ini\+\_\+set\+Int} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, int $\ast$ptr, int mandatory)
 \begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
-unsigned \hyperlink{ini_8h_aec52a7bf415b0c27c00d637293d9a6d5}{Ini\-\_\-set\-Unsigned\-Int} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, unsigned $\ast$ptr, int mandatory)
+unsigned \hyperlink{ini_8h_aec52a7bf415b0c27c00d637293d9a6d5}{Ini\+\_\+set\+Unsigned\+Int} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, unsigned $\ast$ptr, int mandatory)
 \begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
-int \hyperlink{ini_8h_abd37ee8c3f9f112fcc3e3dbd2399d286}{Ini\-\_\-set\-String} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, char $\ast$ptr, int size, int mandatory)
+int \hyperlink{ini_8h_abd37ee8c3f9f112fcc3e3dbd2399d286}{Ini\+\_\+set\+String} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, char $\ast$ptr, int size, int mandatory)
 \begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
-int \hyperlink{ini_8h_a204ffbd112e418de218d8be67412606b}{Ini\-\_\-set\-Epoch\-Link} (const \hyperlink{struct_ini}{Ini} $\ast$ini, \hyperlink{struct_epoch_link}{Epoch\-Link} $\ast$$\ast$ptr, int mandatory)
+int \hyperlink{ini_8h_a204ffbd112e418de218d8be67412606b}{Ini\+\_\+set\+Epoch\+Link} (const \hyperlink{struct_ini}{Ini} $\ast$ini, \hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$$\ast$ptr, int mandatory)
 \begin{DoxyCompactList}\small\item\em Initialize linked list of Epochs from value (if any) specified in initialization file. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
-Header for \hyperlink{ini_8c}{ini.\-c}. \begin{DoxyAuthor}{Author}
+Header for \hyperlink{ini_8c}{ini.\+c}. 
+
+\begin{DoxyAuthor}{Author}
 Alan R. Rogers 
 \end{DoxyAuthor}
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
 \end{DoxyCopyright}
 
 
 \subsubsection{Function Documentation}
-\hypertarget{ini_8h_a68e606705d3fd423e6729dd28cd8a8a3}{\index{ini.\-h@{ini.\-h}!Ini\-\_\-new@{Ini\-\_\-new}}
-\index{Ini\-\_\-new@{Ini\-\_\-new}!ini.h@{ini.\-h}}
-\paragraph[{Ini\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Ini}$\ast$ Ini\-\_\-new (
+\hypertarget{ini_8h_a68e606705d3fd423e6729dd28cd8a8a3}{\index{ini.\+h@{ini.\+h}!Ini\+\_\+new@{Ini\+\_\+new}}
+\index{Ini\+\_\+new@{Ini\+\_\+new}!ini.\+h@{ini.\+h}}
+\paragraph[{Ini\+\_\+new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Ini}$\ast$ Ini\+\_\+new (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{ifname}
 \end{DoxyParamCaption}
@@ -72,14 +74,14 @@ Newly-\/allocate \hyperlink{struct_ini}{Ini} object containing info from input f
 \end{DoxyReturn}
 
 
-References Ini\-::a, Assignment\-\_\-new(), Epoch\-Link\-\_\-new(), Ini\-::epoch\-List, strempty(), and strip\-Comment().
+References Ini\+::a, Assignment\+\_\+new(), Epoch\+Link\+\_\+new(), Ini\+::epoch\+List, strempty(), and strip\+Comment().
 
-\hypertarget{ini_8h_aa56f722e2bc62d734e0d2b3ed9f8d61e}{\index{ini.\-h@{ini.\-h}!Ini\-\_\-print@{Ini\-\_\-print}}
-\index{Ini\-\_\-print@{Ini\-\_\-print}!ini.h@{ini.\-h}}
-\paragraph[{Ini\-\_\-print}]{\setlength{\rightskip}{0pt plus 5cm}void Ini\-\_\-print (
+\hypertarget{ini_8h_aa56f722e2bc62d734e0d2b3ed9f8d61e}{\index{ini.\+h@{ini.\+h}!Ini\+\_\+print@{Ini\+\_\+print}}
+\index{Ini\+\_\+print@{Ini\+\_\+print}!ini.\+h@{ini.\+h}}
+\paragraph[{Ini\+\_\+print}]{\setlength{\rightskip}{0pt plus 5cm}void Ini\+\_\+print (
 \begin{DoxyParamCaption}
 \item[{{\bf Ini} $\ast$}]{ini, }
-\item[{F\-I\-L\-E $\ast$}]{ofp}
+\item[{F\+I\+L\+E $\ast$}]{ofp}
 \end{DoxyParamCaption}
 )}}\label{ini_8h_aa56f722e2bc62d734e0d2b3ed9f8d61e}
 
@@ -88,11 +90,11 @@ Print object of type \hyperlink{struct_ini}{Ini} to file ofp.
 
 
 
-References Ini\-::a, Epoch\-Link\-\_\-print(), and Ini\-::epoch\-List.
+References Ini\+::a, Epoch\+Link\+\_\+print(), and Ini\+::epoch\+List.
 
-\hypertarget{ini_8h_a216f758adfe5a6b2dc8c187ca2353803}{\index{ini.\-h@{ini.\-h}!Ini\-\_\-set\-Dbl@{Ini\-\_\-set\-Dbl}}
-\index{Ini\-\_\-set\-Dbl@{Ini\-\_\-set\-Dbl}!ini.h@{ini.\-h}}
-\paragraph[{Ini\-\_\-set\-Dbl}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\-\_\-set\-Dbl (
+\hypertarget{ini_8h_a216f758adfe5a6b2dc8c187ca2353803}{\index{ini.\+h@{ini.\+h}!Ini\+\_\+set\+Dbl@{Ini\+\_\+set\+Dbl}}
+\index{Ini\+\_\+set\+Dbl@{Ini\+\_\+set\+Dbl}!ini.\+h@{ini.\+h}}
+\paragraph[{Ini\+\_\+set\+Dbl}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\+\_\+set\+Dbl (
 \begin{DoxyParamCaption}
 \item[{const {\bf Ini} $\ast$}]{ini, }
 \item[{const char $\ast$}]{key, }
@@ -118,14 +120,14 @@ Initialize $\ast$ptr to value corresponding to given key.
 \end{DoxyReturn}
 
 
-References Ini\-::a, and Assignment\-\_\-set\-Dbl().
+References Ini\+::a, and Assignment\+\_\+set\+Dbl().
 
-\hypertarget{ini_8h_a204ffbd112e418de218d8be67412606b}{\index{ini.\-h@{ini.\-h}!Ini\-\_\-set\-Epoch\-Link@{Ini\-\_\-set\-Epoch\-Link}}
-\index{Ini\-\_\-set\-Epoch\-Link@{Ini\-\_\-set\-Epoch\-Link}!ini.h@{ini.\-h}}
-\paragraph[{Ini\-\_\-set\-Epoch\-Link}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\-\_\-set\-Epoch\-Link (
+\hypertarget{ini_8h_a204ffbd112e418de218d8be67412606b}{\index{ini.\+h@{ini.\+h}!Ini\+\_\+set\+Epoch\+Link@{Ini\+\_\+set\+Epoch\+Link}}
+\index{Ini\+\_\+set\+Epoch\+Link@{Ini\+\_\+set\+Epoch\+Link}!ini.\+h@{ini.\+h}}
+\paragraph[{Ini\+\_\+set\+Epoch\+Link}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\+\_\+set\+Epoch\+Link (
 \begin{DoxyParamCaption}
 \item[{const {\bf Ini} $\ast$}]{ini, }
-\item[{{\bf Epoch\-Link} $\ast$$\ast$}]{ptr, }
+\item[{{\bf Epoch\+Link} $\ast$$\ast$}]{ptr, }
 \item[{int}]{mandatory}
 \end{DoxyParamCaption}
 )}}\label{ini_8h_a204ffbd112e418de218d8be67412606b}
@@ -139,7 +141,7 @@ Initialize linked list of Epochs from value (if any) specified in initialization
 \hline
 \mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{Ini} structure.\\
 \hline
-\mbox{\tt out}  & {\em ptr} & Points to variable to be initialized. If variable was set in initialization file, then this value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered. If ptr is initialized, it will point to a newly-\/allocated linked list of \hyperlink{struct_epoch_link}{Epoch\-Link} structures, which must be freed by the calling routine.\\
+\mbox{\tt out}  & {\em ptr} & Points to variable to be initialized. If variable was set in initialization file, then this value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered. If ptr is initialized, it will point to a newly-\/allocated linked list of \hyperlink{struct_epoch_link}{Epoch\+Link} structures, which must be freed by the calling routine.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -147,11 +149,11 @@ Initialize linked list of Epochs from value (if any) specified in initialization
 \end{DoxyReturn}
 
 
-References Epoch\-Link\-\_\-dup(), and Ini\-::epoch\-List.
+References Epoch\+Link\+\_\+dup(), and Ini\+::epoch\+List.
 
-\hypertarget{ini_8h_ae2b34c75eedbb76ae836d36320e7ec34}{\index{ini.\-h@{ini.\-h}!Ini\-\_\-set\-Int@{Ini\-\_\-set\-Int}}
-\index{Ini\-\_\-set\-Int@{Ini\-\_\-set\-Int}!ini.h@{ini.\-h}}
-\paragraph[{Ini\-\_\-set\-Int}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\-\_\-set\-Int (
+\hypertarget{ini_8h_ae2b34c75eedbb76ae836d36320e7ec34}{\index{ini.\+h@{ini.\+h}!Ini\+\_\+set\+Int@{Ini\+\_\+set\+Int}}
+\index{Ini\+\_\+set\+Int@{Ini\+\_\+set\+Int}!ini.\+h@{ini.\+h}}
+\paragraph[{Ini\+\_\+set\+Int}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\+\_\+set\+Int (
 \begin{DoxyParamCaption}
 \item[{const {\bf Ini} $\ast$}]{ini, }
 \item[{const char $\ast$}]{key, }
@@ -177,11 +179,11 @@ Initialize $\ast$ptr do value corresponding to given key.
 \end{DoxyReturn}
 
 
-References Ini\-::a, and Assignment\-\_\-set\-Int().
+References Ini\+::a, and Assignment\+\_\+set\+Int().
 
-\hypertarget{ini_8h_ac21b30c5f65cab4ec649de86b5bb2f42}{\index{ini.\-h@{ini.\-h}!Ini\-\_\-set\-Long@{Ini\-\_\-set\-Long}}
-\index{Ini\-\_\-set\-Long@{Ini\-\_\-set\-Long}!ini.h@{ini.\-h}}
-\paragraph[{Ini\-\_\-set\-Long}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\-\_\-set\-Long (
+\hypertarget{ini_8h_ac21b30c5f65cab4ec649de86b5bb2f42}{\index{ini.\+h@{ini.\+h}!Ini\+\_\+set\+Long@{Ini\+\_\+set\+Long}}
+\index{Ini\+\_\+set\+Long@{Ini\+\_\+set\+Long}!ini.\+h@{ini.\+h}}
+\paragraph[{Ini\+\_\+set\+Long}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\+\_\+set\+Long (
 \begin{DoxyParamCaption}
 \item[{const {\bf Ini} $\ast$}]{ini, }
 \item[{const char $\ast$}]{key, }
@@ -207,11 +209,11 @@ Initialize $\ast$ptr do value corresponding to given key.
 \end{DoxyReturn}
 
 
-References Ini\-::a, and Assignment\-\_\-set\-Long().
+References Ini\+::a, and Assignment\+\_\+set\+Long().
 
-\hypertarget{ini_8h_abd37ee8c3f9f112fcc3e3dbd2399d286}{\index{ini.\-h@{ini.\-h}!Ini\-\_\-set\-String@{Ini\-\_\-set\-String}}
-\index{Ini\-\_\-set\-String@{Ini\-\_\-set\-String}!ini.h@{ini.\-h}}
-\paragraph[{Ini\-\_\-set\-String}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\-\_\-set\-String (
+\hypertarget{ini_8h_abd37ee8c3f9f112fcc3e3dbd2399d286}{\index{ini.\+h@{ini.\+h}!Ini\+\_\+set\+String@{Ini\+\_\+set\+String}}
+\index{Ini\+\_\+set\+String@{Ini\+\_\+set\+String}!ini.\+h@{ini.\+h}}
+\paragraph[{Ini\+\_\+set\+String}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\+\_\+set\+String (
 \begin{DoxyParamCaption}
 \item[{const {\bf Ini} $\ast$}]{ini, }
 \item[{const char $\ast$}]{key, }
@@ -238,11 +240,11 @@ Initialize $\ast$ptr do value corresponding to given key.
 \end{DoxyReturn}
 
 
-References Ini\-::a, and Assignment\-\_\-set\-String().
+References Ini\+::a, and Assignment\+\_\+set\+String().
 
-\hypertarget{ini_8h_aec52a7bf415b0c27c00d637293d9a6d5}{\index{ini.\-h@{ini.\-h}!Ini\-\_\-set\-Unsigned\-Int@{Ini\-\_\-set\-Unsigned\-Int}}
-\index{Ini\-\_\-set\-Unsigned\-Int@{Ini\-\_\-set\-Unsigned\-Int}!ini.h@{ini.\-h}}
-\paragraph[{Ini\-\_\-set\-Unsigned\-Int}]{\setlength{\rightskip}{0pt plus 5cm}unsigned Ini\-\_\-set\-Unsigned\-Int (
+\hypertarget{ini_8h_aec52a7bf415b0c27c00d637293d9a6d5}{\index{ini.\+h@{ini.\+h}!Ini\+\_\+set\+Unsigned\+Int@{Ini\+\_\+set\+Unsigned\+Int}}
+\index{Ini\+\_\+set\+Unsigned\+Int@{Ini\+\_\+set\+Unsigned\+Int}!ini.\+h@{ini.\+h}}
+\paragraph[{Ini\+\_\+set\+Unsigned\+Int}]{\setlength{\rightskip}{0pt plus 5cm}unsigned Ini\+\_\+set\+Unsigned\+Int (
 \begin{DoxyParamCaption}
 \item[{const {\bf Ini} $\ast$}]{ini, }
 \item[{const char $\ast$}]{key, }
@@ -268,5 +270,5 @@ Initialize $\ast$ptr do value corresponding to given key.
 \end{DoxyReturn}
 
 
-References Ini\-::a, and Assignment\-\_\-set\-Unsigned\-Int().
+References Ini\+::a, and Assignment\+\_\+set\+Unsigned\+Int().
 

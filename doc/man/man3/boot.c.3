@@ -1,4 +1,4 @@
-.TH "boot.c" 3 "Wed May 28 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "boot.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -174,7 +174,7 @@ References Boot::tab\&.
 .PP
 Remove replicates in which some bins have zero observations\&. These would generate NaN values in the calculation of sigdsq, which are not handled by the minimizer\&. Return revised number of bootstrap replicates\&. 
 .PP
-References Boot::nBins, Boot::nReps, Boot::start, and Boot::tab\&.
+References Boot::nBins, Boot::nReps, Boot::start, Boot::tab, Tabulation_nObs(), and Tabulation_overflow()\&.
 .SS "void confidenceBounds (double *lowBnd, double *highBnd, doubleconfidence, double *v, longlen)"
 
 .PP
