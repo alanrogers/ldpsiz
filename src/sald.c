@@ -1,7 +1,6 @@
 /**
 @file sald.c
 @page sald
-@anchor sald
 @brief use simplex-simulated annealing to estimate population history
 
 `sald`: use simplex-simulated annealing to estimate population history

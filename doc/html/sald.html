@@ -77,8 +77,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="contents">
 <div class="textblock"><p>use simplex-simulated annealing to estimate population history</p>
-<p><a class="anchor" id="sald"></a></p><h1><code>sald</code>: use simplex-simulated annealing to estimate population history </h1>
-<p>To estimate the parameters describing population history, we need to find values that provide the best fit to LD data. This involves maximization on a complex surface with lots of local peaks. (To verify this for yourself, see <a class="el" href="mcmcld.html#mcmcld">mcmcld</a>.) To avoid getting stuck on local peaks, <code>sald</code> uses the simplex version of simulated annealing.</p>
+<h1><code>sald</code>: use simplex-simulated annealing to estimate population history </h1>
+<p>To estimate the parameters describing population history, we need to find values that provide the best fit to LD data. This involves maximization on a complex surface with lots of local peaks. (To verify this for yourself, see <a class="el" href="mcmcld.html">mcmcld</a>.) To avoid getting stuck on local peaks, <code>sald</code> uses the simplex version of simulated annealing.</p>
 <h2>Usage </h2>
 <p>The input data file should be as produced by <a class="el" href="eld.html">eld</a>.</p>
 <p>Although simulated annealing works pretty well, I often find that different runs end up on different peaks. Therefore, <code>sald</code> is able to launch multiple simulated annealing jobs, each from a random starting point. These can run in parallel, on separate threads. The number of parallel optimizers is set using the <code>--nOpt</code> argument described below.</p>
@@ -124,7 +124,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 29 2014 12:53:09 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 29 2014 13:01:36 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
