@@ -1,0 +1,65 @@
+.TH "hayes.h" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+hayes.h \- 
+.PP
+Header for \fBhayes\&.c\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'pophist\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBHayes_rsqNoODE\fP (double c, double u, \fBPopHist\fP *ph, int twoNsmp, void *notused)"
+.br
+.ti -1c
+.RI "double \fBHayes_rsq\fP (\fBODE\fP *unused0, double c, double u, \fBPopHist\fP *ph, int twoNsmp)"
+.br
+.ti -1c
+.RI "double \fBHayes_rsqEq\fP (double c, double u, \fBPopHist\fP *ph, unsigned whichEpoch, int twoNsmp, void *notused)"
+.br
+.ti -1c
+.RI "size_t \fBHayes_stateDim\fP (void)"
+.br
+.ti -1c
+.RI "const char * \fBHayes_stateLbl\fP (unsigned notused)"
+.br
+.ti -1c
+.RI "void * \fBHayesData_new\fP (void)"
+.br
+.ti -1c
+.RI "double \fBHayesData_stateVal\fP (void *notused, unsigned i)"
+.br
+.ti -1c
+.RI "void \fBHayesData_free\fP (void *notused)"
+.br
+.ti -1c
+.RI "\fBModel\fP * \fBModel_allocHayes\fP (int twoNsmp)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for \fBhayes\&.c\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.
