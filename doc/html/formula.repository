@@ -1,0 +1,12 @@
+\form#0:$\hat\sigma_d^2$
+\form#1:$r^2$
+\form#2:$\sigma_d^2$
+\form#3:$sigma_d^2$
+\form#4:$E[r^2]$
+\form#5:$n$
+\form#6:$1/n$
+\form#7:$E(r^2) = (10+\rho)/(22 + 13\rho + \rho^2)$
+\form#8:$\rho = 4N_e c$
+\form#9:$(22 + 13\rho + \rho^2)$
+\form#10:$(11+\rho)(2+\rho)$
+\form#11:$E(r^2) = 1/(2 + \rho) = 1/(2 + 4N_e c)$
