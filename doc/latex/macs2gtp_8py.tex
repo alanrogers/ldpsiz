@@ -1,2 +1,82 @@
+\hypertarget{macs2gtp_8py}{\subsection{macs2gtp.\+py File Reference}
+\label{macs2gtp_8py}\index{macs2gtp.\+py@{macs2gtp.\+py}}
+}
+
+
+Parse output of macs, produce gtp format, the input for eld.  
+
+
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespacemacs2gtp_a7af80004d012f796a4f873ff0229dcd3}{def {\bfseries macs2gtp.\+usage}}\label{namespacemacs2gtp_a7af80004d012f796a4f873ff0229dcd3}
+
+\begin{DoxyCompactList}\small\item\em Print usage message and exit. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespacemacs2gtp_a77d5cc644a145326cfe97dd32e6de3f2}{{\bfseries macs2gtp.\+recombination} = None}\label{namespacemacs2gtp_a77d5cc644a145326cfe97dd32e6de3f2}
+
+\item 
+\hypertarget{namespacemacs2gtp_a035f70a1e8a8526fb0719fac85d5c58b}{list {\bfseries macs2gtp.\+two\+N0} = ph\mbox{[}0\mbox{]}}\label{namespacemacs2gtp_a035f70a1e8a8526fb0719fac85d5c58b}
+
+\item 
+\hypertarget{namespacemacs2gtp_ae07419ae6da6fc1f18a230e4d41708f2}{int {\bfseries macs2gtp.\+i} = 1}\label{namespacemacs2gtp_ae07419ae6da6fc1f18a230e4d41708f2}
+
+\item 
+\hypertarget{namespacemacs2gtp_af8ae11ba1e9935961ab0e317fb9237f5}{list {\bfseries macs2gtp.\+datafile} = sys.\+argv\mbox{[}i\mbox{]}}\label{namespacemacs2gtp_af8ae11ba1e9935961ab0e317fb9237f5}
+
+\item 
+\hypertarget{namespacemacs2gtp_a60c1269d9f7a065a7e6b39182d30f9bf}{tuple {\bfseries macs2gtp.\+infile} = open(datafile)}\label{namespacemacs2gtp_a60c1269d9f7a065a7e6b39182d30f9bf}
+
+\item 
+\hypertarget{namespacemacs2gtp_a72ac565a035f85039165b9623518ff56}{tuple {\bfseries macs2gtp.\+line} = infile.\+readline()}\label{namespacemacs2gtp_a72ac565a035f85039165b9623518ff56}
+
+\item 
+\hypertarget{namespacemacs2gtp_a5de240c317a589a43d3f6d397b5b0a81}{tuple {\bfseries macs2gtp.\+four\+Nc} = float(line\mbox{[}i\mbox{]})}\label{namespacemacs2gtp_a5de240c317a589a43d3f6d397b5b0a81}
+
+\item 
+\hypertarget{namespacemacs2gtp_abe0f5e9e02e7bfc52deb7acf8366c15f}{tuple {\bfseries macs2gtp.\+err} = abs(four\+Nc -\/ recombination$\ast$2$\ast$two\+N0)}\label{namespacemacs2gtp_abe0f5e9e02e7bfc52deb7acf8366c15f}
+
+\item 
+\hypertarget{namespacemacs2gtp_aa5bbbbd63c0fa5c1f7b1e8b3b2c0ce4d}{tuple {\bfseries macs2gtp.\+nnucleotides} = int(round(float(line\mbox{[}3\mbox{]})))}\label{namespacemacs2gtp_aa5bbbbd63c0fa5c1f7b1e8b3b2c0ce4d}
+
+\item 
+\hypertarget{namespacemacs2gtp_ac22f75cf6f6ebf0a7573d61094ebe633}{int {\bfseries macs2gtp.\+lineno} = 0}\label{namespacemacs2gtp_ac22f75cf6f6ebf0a7573d61094ebe633}
+
+\item 
+\hypertarget{namespacemacs2gtp_a8bd5ec394f456869cbfa8050967ef346}{tuple {\bfseries macs2gtp.\+nfields} = len(line)}\label{namespacemacs2gtp_a8bd5ec394f456869cbfa8050967ef346}
+
+\item 
+\hypertarget{namespacemacs2gtp_af7a1c675a9cd6efe3c4337fafd963196}{tuple {\bfseries macs2gtp.\+nucpos} = int(round(nnucleotides$\ast$float(line\mbox{[}2\mbox{]})))}\label{namespacemacs2gtp_af7a1c675a9cd6efe3c4337fafd963196}
+
+\item 
+\hypertarget{namespacemacs2gtp_a7628f1fea3ee4bf0443a77db767b33cb}{float {\bfseries macs2gtp.\+centimorgan} = nucpos$\ast$recombination$\ast$100.\+0}\label{namespacemacs2gtp_a7628f1fea3ee4bf0443a77db767b33cb}
+
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Parse output of macs, produce gtp format, the input for eld. 
+
 \label{macs2gtp_8py_macs2gtp}%
 \hypertarget{macs2gtp_8py_macs2gtp}{}%
+\subsubsection*{\hyperlink{macs2gtp_8py}{macs2gtp.\+py}, a program that converts {\ttfamily macs} output into .gtp format }
+
+\begin{DoxyVerb}Usage: macs2gtp.py [options] \<input file\> 
+where options may include:
+  -R \<x\> : set recombination rate for adjacent sites
+\end{DoxyVerb}
+
+
+For example, \begin{DoxyVerb}macs2gtp.py -R 1e-8 macs.out > macs.gtp
+\end{DoxyVerb}
+
+
+Would read file {\ttfamily macs.\+out}, generate map distances assuming a recombination rate of 1e-\/8 per nucleotide, and write the output into macs.\+gtp.
+
+If the recombination rate is not specified, {\ttfamily \hyperlink{macs2gtp_8py}{macs2gtp.\+py}} tries to get it from the initialization file {\ttfamily ldpsiz.\+ini}.
+
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
+\end{DoxyCopyright}

@@ -209,12 +209,12 @@ matrix. The original version, written in Python, was slow.
 Gary Chen's program, `macs`, uses an approximation to the coalescent algorithm,
 which makes it possible to simulate genome-scale data very fast. You can get it
 from Gary's [homepage](http://www-hsc.usc.edu/~garykche). To translate `macs`
-output into .gtp format, use the program \ref macs2gtp "macs2gtp.py".
+output into .gtp format, use the program \ref macs2gtp.py "macs2gtp".
 
 ### Converting data from the 1000-Genomes Project
 
 To convert data files from the 1000-Genomes Project, use the program 
-\ref vcf2gtp "vcf2gtp.py".
+\ref vcf2gtp.py "vcf2gtp".
 
 ## Predicting \f$\sigma_d^2\f$ from population history
 

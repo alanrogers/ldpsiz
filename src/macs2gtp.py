@@ -1,8 +1,7 @@
 #!/usr/bin/python
 ###
-#@page macs2gtp.py
-#@anchor macs2gtp
 #@file macs2gtp.py
+#@anchor macs2gtp
 #@brief Parse output of macs, produce gtp format, the input for eld.
 #
 #macs2gtp.py, a program that converts `macs` output into .gtp format 

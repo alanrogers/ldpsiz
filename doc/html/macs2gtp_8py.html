@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.7"/>
-<title>ldpsiz: $title</title>
+<title>ldpsiz: macs2gtp.py File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -39,9 +39,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -60,6 +60,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
+    </ul>
+  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -75,12 +81,81 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 </div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle">
+<div class="title">macs2gtp.py File Reference</div>  </div>
+</div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="macs2gtp"></a></p>
+
+<p>Parse output of macs, produce gtp format, the input for eld.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a7af80004d012f796a4f873ff0229dcd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7af80004d012f796a4f873ff0229dcd3"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.usage</b></td></tr>
+<tr class="memdesc:a7af80004d012f796a4f873ff0229dcd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print usage message and exit. <br /></td></tr>
+<tr class="separator:a7af80004d012f796a4f873ff0229dcd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a77d5cc644a145326cfe97dd32e6de3f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a77d5cc644a145326cfe97dd32e6de3f2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.recombination</b> = None</td></tr>
+<tr class="separator:a77d5cc644a145326cfe97dd32e6de3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a035f70a1e8a8526fb0719fac85d5c58b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a035f70a1e8a8526fb0719fac85d5c58b"></a>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.twoN0</b> = ph[0]</td></tr>
+<tr class="separator:a035f70a1e8a8526fb0719fac85d5c58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae07419ae6da6fc1f18a230e4d41708f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae07419ae6da6fc1f18a230e4d41708f2"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.i</b> = 1</td></tr>
+<tr class="separator:ae07419ae6da6fc1f18a230e4d41708f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8ae11ba1e9935961ab0e317fb9237f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8ae11ba1e9935961ab0e317fb9237f5"></a>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.datafile</b> = sys.argv[i]</td></tr>
+<tr class="separator:af8ae11ba1e9935961ab0e317fb9237f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60c1269d9f7a065a7e6b39182d30f9bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60c1269d9f7a065a7e6b39182d30f9bf"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.infile</b> = open(datafile)</td></tr>
+<tr class="separator:a60c1269d9f7a065a7e6b39182d30f9bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ac565a035f85039165b9623518ff56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72ac565a035f85039165b9623518ff56"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.line</b> = infile.readline()</td></tr>
+<tr class="separator:a72ac565a035f85039165b9623518ff56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5de240c317a589a43d3f6d397b5b0a81"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5de240c317a589a43d3f6d397b5b0a81"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.fourNc</b> = float(line[i])</td></tr>
+<tr class="separator:a5de240c317a589a43d3f6d397b5b0a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe0f5e9e02e7bfc52deb7acf8366c15f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe0f5e9e02e7bfc52deb7acf8366c15f"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.err</b> = abs(fourNc - recombination*2*twoN0)</td></tr>
+<tr class="separator:abe0f5e9e02e7bfc52deb7acf8366c15f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5bbbbd63c0fa5c1f7b1e8b3b2c0ce4d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5bbbbd63c0fa5c1f7b1e8b3b2c0ce4d"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.nnucleotides</b> = int(round(float(line[3])))</td></tr>
+<tr class="separator:aa5bbbbd63c0fa5c1f7b1e8b3b2c0ce4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac22f75cf6f6ebf0a7573d61094ebe633"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac22f75cf6f6ebf0a7573d61094ebe633"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.lineno</b> = 0</td></tr>
+<tr class="separator:ac22f75cf6f6ebf0a7573d61094ebe633"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bd5ec394f456869cbfa8050967ef346"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8bd5ec394f456869cbfa8050967ef346"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.nfields</b> = len(line)</td></tr>
+<tr class="separator:a8bd5ec394f456869cbfa8050967ef346"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7a1c675a9cd6efe3c4337fafd963196"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7a1c675a9cd6efe3c4337fafd963196"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.nucpos</b> = int(round(nnucleotides*float(line[2])))</td></tr>
+<tr class="separator:af7a1c675a9cd6efe3c4337fafd963196"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7628f1fea3ee4bf0443a77db767b33cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7628f1fea3ee4bf0443a77db767b33cb"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.centimorgan</b> = nucpos*recombination*100.0</td></tr>
+<tr class="separator:a7628f1fea3ee4bf0443a77db767b33cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Parse output of macs, produce gtp format, the input for eld. </p>
+<p><a class="anchor" id="macs2gtp"></a></p><h1><a class="el" href="macs2gtp_8py.html" title="Parse output of macs, produce gtp format, the input for eld. ">macs2gtp.py</a>, a program that converts <code>macs</code> output into .gtp format </h1>
+<pre class="fragment">Usage: macs2gtp.py [options] \&lt;input file\&gt; 
+where options may include:
+  -R \&lt;x\&gt; : set recombination rate for adjacent sites
+</pre><p>For example, </p><pre class="fragment">macs2gtp.py -R 1e-8 macs.out &gt; macs.gtp
+</pre><p>Would read file <code>macs.out</code>, generate map distances assuming a recombination rate of 1e-8 per nucleotide, and write the output into macs.gtp.</p>
+<p>If the recombination rate is not specified, <code><a class="el" href="macs2gtp_8py.html" title="Parse output of macs, produce gtp format, the input for eld. ">macs2gtp.py</a></code> tries to get it from the initialization file <code>ldpsiz.ini</code>.</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2014, Alan R. Rogers <a href="#" onclick="location.href='mai'+'lto:'+'rog'+'er'+'s@a'+'nt'+'hro'+'.u'+'tah'+'.e'+'du'; return false;">roger<span style="display: none;">.nosp@m.</span>s@an<span style="display: none;">.nosp@m.</span>thro.<span style="display: none;">.nosp@m.</span>utah<span style="display: none;">.nosp@m.</span>.edu</a>. This file is released under the Internet Systems Consortium License, which can be found in file "LICENSE". </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 29 2014 12:00:42 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 29 2014 12:10:42 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

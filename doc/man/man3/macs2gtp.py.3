@@ -3,3 +3,97 @@
 .nh
 .SH NAME
 macs2gtp.py \- 
+.PP
+Parse output of macs, produce gtp format, the input for eld\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fBmacs2gtp\&.usage\fP"
+.br
+.RI "\fIPrint usage message and exit\&. \fP"
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBmacs2gtp\&.recombination\fP = None"
+.br
+.ti -1c
+.RI "list \fBmacs2gtp\&.twoN0\fP = ph[0]"
+.br
+.ti -1c
+.RI "int \fBmacs2gtp\&.i\fP = 1"
+.br
+.ti -1c
+.RI "list \fBmacs2gtp\&.datafile\fP = sys\&.argv[i]"
+.br
+.ti -1c
+.RI "tuple \fBmacs2gtp\&.infile\fP = open(datafile)"
+.br
+.ti -1c
+.RI "tuple \fBmacs2gtp\&.line\fP = infile\&.readline()"
+.br
+.ti -1c
+.RI "tuple \fBmacs2gtp\&.fourNc\fP = float(line[i])"
+.br
+.ti -1c
+.RI "tuple \fBmacs2gtp\&.err\fP = abs(fourNc - recombination*2*twoN0)"
+.br
+.ti -1c
+.RI "tuple \fBmacs2gtp\&.nnucleotides\fP = int(round(float(line[3])))"
+.br
+.ti -1c
+.RI "int \fBmacs2gtp\&.lineno\fP = 0"
+.br
+.ti -1c
+.RI "tuple \fBmacs2gtp\&.nfields\fP = len(line)"
+.br
+.ti -1c
+.RI "tuple \fBmacs2gtp\&.nucpos\fP = int(round(nnucleotides*float(line[2])))"
+.br
+.ti -1c
+.RI "float \fBmacs2gtp\&.centimorgan\fP = nucpos*recombination*100\&.0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Parse output of macs, produce gtp format, the input for eld\&. 
+
+
+.SH "\fBmacs2gtp\&.py\fP, a program that converts \fCmacs\fP output into \&.gtp format "
+.PP
+.PP
+.PP
+.nf
+Usage: macs2gtp.py [options] \<input file\> 
+where options may include:
+  -R \<x\> : set recombination rate for adjacent sites
+.fi
+.PP
+.PP
+For example, 
+.PP
+.nf
+macs2gtp.py -R 1e-8 macs.out > macs.gtp
+
+.fi
+.PP
+.PP
+Would read file \fCmacs\&.out\fP, generate map distances assuming a recombination rate of 1e-8 per nucleotide, and write the output into macs\&.gtp\&.
+.PP
+If the recombination rate is not specified, \fC\fBmacs2gtp\&.py\fP\fP tries to get it from the initialization file \fCldpsiz\&.ini\fP\&.
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.
