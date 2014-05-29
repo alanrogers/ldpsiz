@@ -1,0 +1,55 @@
+.TH "preld" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+preld \- 
+This file contains code related preld, a program that predicts $\sigma_d^2$ from assumptions about population history\&.
+.PP
+.SH "\fCpreld\fP, a program that predicts $\sigma_d^2$ from population history "
+.PP
+.PP
+Parameter values, including those describing population history, may be read either from the initialization file \fCldpsiz\&.ini\fP or specified on the command line\&. Command-line arguments override values in the initialization file\&. Several methods are implemented for predicting LD, and one or more of these may be specified either in the initialization file or via the \fC--methods\fP argument\&. For the current list of available methods, see \fBModel_alloc\fP\&.
+.PP
+.SS "Usage "
+.PP
+.PP
+.nf
+usage: preld [options]
+   where options may include:
+   -u \<x\> or --mutation \<x\>
+      set mutation rate/generation
+   -b \<x\> or --nbins \<x\>
+      specify the number of recombination rates
+   -r \<x\> or --lo_r \<x\>
+      low end of range of recombination rates in centimorgans
+   -R \<x\> or --hi_r \<x\>
+      high end of range of recombination rates in centimorgans
+   -e or --equilibria
+      show equilibrium for each epoch
+   --log
+      print log10 of sigdsq values
+   -n or --twoNsmp
+      set haploid sample size
+   -E or --nextepoch
+      move to next earlier epoch
+   --twoN \<x\>
+      set haploid pop size to x in current epoch
+   -T \<x\> or --time \<x\>
+      set length of current epoch to x generations
+   -S or --printState
+      print state vectors
+   -m <method list> or --methods <method list>
+      specify methods
+   --exact
+      don't use ODE to approximate difference equations
+   -h or --help
+      print this message
+.fi
+.PP
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+

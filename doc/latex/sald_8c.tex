@@ -1,11 +1,6 @@
 \hypertarget{sald_8c}{\subsection{sald.\+c File Reference}
 \label{sald_8c}\index{sald.\+c@{sald.\+c}}
 }
-
-
-use simplex-\/simulated annealing to estimate population history  
-
-
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include $<$math.\+h$>$}\\*
 {\ttfamily \#include $<$assert.\+h$>$}\\*
@@ -81,69 +76,6 @@ static double \hyperlink{sald_8c_a3feac96e0bc0242affd3d39e663d6469}{cost\+Fun} (
 \hypertarget{sald_8c_afa7545f118a9db1a066a2f0c4fd79357}{pthread\+\_\+mutex\+\_\+t {\bfseries stdout\+Lock} = P\+T\+H\+R\+E\+A\+D\+\_\+\+M\+U\+T\+E\+X\+\_\+\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+R}\label{sald_8c_afa7545f118a9db1a066a2f0c4fd79357}
 
 \end{DoxyCompactItemize}
-
-
-\subsubsection{Detailed Description}
-use simplex-\/simulated annealing to estimate population history 
-
-\label{sald_8c_sald}%
-\hypertarget{sald_8c_sald}{}%
-\subsubsection*{{\ttfamily sald}\+: use simplex-\/simulated annealing to estimate population history }
-
-To estimate the parameters describing population history, we need to find values that provide the best fit to L\+D data. This involves maximization on a complex surface with lots of local peaks. (To verify this for yourself, see \hyperlink{mcmcld_8c_mcmcld}{mcmcld}.) To avoid getting stuck on local peaks, {\ttfamily sald} uses the simplex version of simulated annealing.
-
-\paragraph*{Usage }
-
-The input data file should be as produced by \hyperlink{eld_8c_eld}{eld}.
-
-Although simulated annealing works pretty well, I often find that different runs end up on different peaks. Therefore, {\ttfamily sald} is able to launch multiple simulated annealing jobs, each from a random starting point. These can run in parallel, on separate threads. The number of parallel optimizers is set using the {\ttfamily -\/-\/n\+Opt} argument described below.
-
-The program also deals with bootstrap data, as provided by \hyperlink{eld_8c_eld}{eld}. The various boostrap data sets also run in parallel if your machine has multiple cores. By default {\ttfamily sald} does not process bootstrap replicates\+: use {\ttfamily -\/-\/bootfile} if you want it to.
-
-By default {\ttfamily sald} uses as many threads as your machine has cores. This is not a good idea if you are sharing a machine with other users. Set the number of threads to some smaller number using {\ttfamily -\/-\/threads}. On linux or osx, you can use {\ttfamily top} to figure out how many threads are actually running. If you launch 20 threads but only 10 run at any given time, your job will run slower. Stop it and launch again with {\ttfamily -\/-\/threads 10}.
-
-Simulated annealing works by beginning with a flattened version of your objective function. In this flattened version, all the peaks are smaller, so it is easy for the simplex to move from peak to peak. The extent of flattening is controlled by a parameter called \char`\"{}temperature\char`\"{}. High temperature corresponds to lots of flattening. The annealing algorithm runs for awhile at a high temperature, then lowers the temperature and runs awhile more. The succession of temperatures and the number of iterations at each temperature is called the \char`\"{}annealing schedule\char`\"{}. You can change the performance of the algorithm by adjusting this schedule. See the {\ttfamily -\/-\/init\+Tmptr}, {\ttfamily -\/-\/n\+Per\+Tmptr} and {\ttfamily -\/-\/tmptr\+Decay} arguments. \begin{DoxyVerb}usage: sald [options] input_file_name
-   where options may include:
-   -m <method> or --methods <method>
-      specify method "Hill", or "Strobeck", or "Hill,Strobeck"
-   -n <x> or --twoNsmp <x>
-      haploid sample size
-   -t <x> or --threads <x>
-      number of threads (default is auto)
-   -u <x> or --mutation <x>
-      mutation rate/generation
-   -v <x> or --verbose
-      more output
-   -f <x> or --bootfile <x>
-      read bootstrap file x
-   -c <x> or --confidence <x>
-      specify confidence level for CIs of parameters
-   --twoN <x>
-      haploid pop size to x in current epoch
-   -T <x> or --time <x>
-      length of current epoch (generations)
-   -E or --nextepoch
-      move to next earlier epoch
-   --noRandomStart
-      Don't initialize PopHist at random
-   --nOpt <x>
-      optimizers per data set
-   --initTmptr <x>
-      initial temperature
-   --nTmptrs <x>
-      number of temperatures
-   --tmptrDecay <x>
-      ratio of successive temperatures
-   -i <x> or --nItr <x>
-      total number of iterations
-   -h or --help
-      print this message
-\end{DoxyVerb}
-
-
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
-\end{DoxyCopyright}
 
 
 \subsubsection{Function Documentation}

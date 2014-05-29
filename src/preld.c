@@ -1,5 +1,6 @@
 /**
 @file preld.c
+@page preld
 @anchor preld
 @brief This file contains code related preld, a program that
 predicts \f$\sigma_d^2\f$ from assumptions about population 

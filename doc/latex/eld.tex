@@ -1,0 +1,36 @@
+Estimate L\+D from genetic data.
+
+\subsection*{{\ttfamily eld}, a program that estimates L\+D from genetic data }
+
+Parameter values, including those describing population history, may be read either from the initialization file {\ttfamily ldpsiz.\+ini} or specified on the command line. Command-\/line arguments override values in the initialization file.
+
+{\ttfamily eld} reads data in \char`\"{}gtp\char`\"{} format and estimates two measures of L\+D\+: $\hat\sigma_d^2$ and $r^2$. The program compares all pairs of sites within a window that slides across the data set. These pairs are tabulated into bins based on the distance (in c\+M) that separates them. For each bin, the program estimates and prints the two measures of L\+D. The maximal separation between pairs of S\+N\+Ps is determined by the {\ttfamily -\/-\/window} (or {\ttfamily -\/w}) option.
+
+Optionally, the program calculates a moving-\/blocks bootstrap for $\hat\sigma_d^2$. To turn on this option, use the {\ttfamily -\/-\/bootreps} option discussed below. The program will then print lower and upper confidence limits along with each estimate of $\hat\sigma_d^2$. By default, the bootstrap includes 95\% of the sampling distribution distribution. This fraction can be modified using the initialization file. Optionally, the bootstrap may be stored in a separate file for use by other programs. To accomplish this, use the command-\/line option {\ttfamily -\/-\/bootfile} or set {\ttfamily bootfile} in {\ttfamily ldpsiz.\+ini}.
+
+By default, the program uses as many threads as there are cores on the machine. To change this, use the command-\/line option {\ttfamily -\/-\/threads} or set {\ttfamily nthreads} in the file {\ttfamily ldpsiz.\+ini}. \begin{DoxyVerb}usage: eld [options] input_file_name
+   where options may include:
+   -b \<x\> or --blocksize \<x\>
+      SNPs per bootstrap block
+   -f \<x\> or --bootfile \<x\>
+      name of bootstrap output file
+   -h or --help
+      print this message
+   -i \<x\> or --interval \<x\>
+      for debugging: increase speed by examining every x'th focal SNP
+   -n \<x\> or --nbins \<x\>
+      tablulate values into x bins
+   -r \<x\> or --bootreps \<x\>
+      number of bootstrap replicates (def: 0)
+   -t \<x\> or --threads \<x\>
+      number of threads (default is auto)
+   -v     or --verbose
+      more output
+   -w \<x\> or --window \<x\>
+      window size in cM
+\end{DoxyVerb}
+
+
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
+\end{DoxyCopyright}

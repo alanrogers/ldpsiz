@@ -1,5 +1,6 @@
 /**
 @file mcmcld.c
+@page mcmcld
 @anchor mcmcld
 @brief `mcmcld` uses Markov-Coupled Markov-Chain Monte Carlo (MCMCMC)
 to estimate the cost function \f$\sigma_d^2\f$.

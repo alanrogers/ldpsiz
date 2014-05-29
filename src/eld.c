@@ -1,6 +1,6 @@
 /**
 @file eld.c
-@anchor eld
+@page eld
 @brief Estimate LD from genetic data.
 
 `eld`, a program that estimates LD from genetic data

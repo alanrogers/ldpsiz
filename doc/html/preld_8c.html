@@ -88,9 +88,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">preld.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This file contains code related preld, a program that predicts <img class="formulaInl" alt="$\sigma_d^2$" src="form_2.png"/> from assumptions about population history.  
-<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
@@ -122,46 +119,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prel
 int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This file contains code related preld, a program that predicts <img class="formulaInl" alt="$\sigma_d^2$" src="form_2.png"/> from assumptions about population history. </p>
-<p><a class="anchor" id="preld"></a></p><h1><code>preld</code>, a program that predicts <img class="formulaInl" alt="$\sigma_d^2$" src="form_2.png"/> from population history </h1>
-<p>Parameter values, including those describing population history, may be read either from the initialization file <code>ldpsiz.ini</code> or specified on the command line. Command-line arguments override values in the initialization file. Several methods are implemented for predicting LD, and one or more of these may be specified either in the initialization file or via the <code>--methods</code> argument. For the current list of available methods, see <a class="el" href="model_8h.html#a1c02862e00fd2fd232c5ba777beadc84">Model_alloc</a>.</p>
-<h2>Usage </h2>
-<pre class="fragment">usage: preld [options]
-   where options may include:
-   -u \&lt;x\&gt; or --mutation \&lt;x\&gt;
-      set mutation rate/generation
-   -b \&lt;x\&gt; or --nbins \&lt;x\&gt;
-      specify the number of recombination rates
-   -r \&lt;x\&gt; or --lo_r \&lt;x\&gt;
-      low end of range of recombination rates in centimorgans
-   -R \&lt;x\&gt; or --hi_r \&lt;x\&gt;
-      high end of range of recombination rates in centimorgans
-   -e or --equilibria
-      show equilibrium for each epoch
-   --log
-      print log10 of sigdsq values
-   -n or --twoNsmp
-      set haploid sample size
-   -E or --nextepoch
-      move to next earlier epoch
-   --twoN \&lt;x\&gt;
-      set haploid pop size to x in current epoch
-   -T \&lt;x\&gt; or --time \&lt;x\&gt;
-      set length of current epoch to x generations
-   -S or --printState
-      print state vectors
-   -m &lt;method list&gt; or --methods &lt;method list&gt;
-      specify methods
-   --exact
-      don't use ODE to approximate difference equations
-   -h or --help
-      print this message
-</pre><dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2014, Alan R. Rogers <a href="#" onclick="location.href='mai'+'lto:'+'rog'+'er'+'s@a'+'nt'+'hro'+'.u'+'tah'+'.e'+'du'; return false;">roger<span style="display: none;">.nosp@m.</span>s@an<span style="display: none;">.nosp@m.</span>thro.<span style="display: none;">.nosp@m.</span>utah<span style="display: none;">.nosp@m.</span>.edu</a>. This file is released under the Internet Systems Consortium License, which can be found in file "LICENSE". </dd></dl>
-</div></div><!-- contents -->
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 29 2014 12:13:37 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 29 2014 12:53:09 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
