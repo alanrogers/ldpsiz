@@ -2,7 +2,7 @@
 
 ###
 #@file vcf2gtp.py
-#@anchor vcf2gtp
+#@page vcf2gtp
 #@brief Convert .vcf files into .gtp format.
 #
 #vcf2gtp.py, a program that converts .vcf files into .gtp format

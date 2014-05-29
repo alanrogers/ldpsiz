@@ -1,6 +1,6 @@
 /**
  * @file ms2gtp.c
- * @anchor ms2gtp
+ * @page ms2gtp
  * @brief This file contains code related ms2gtp, a program that
  * translates output from Dick Hudson's `ms` program into .gtp 
  * format.    

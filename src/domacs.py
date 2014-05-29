@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
 ###
-# @page domacs.py
-# @anchor domacs
+# @file domacs.py
+# @page domacs
 # @author Alan R. Rogers
 # @brief Run Gary Chen's program, "MACS"
 #

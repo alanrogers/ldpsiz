@@ -1,16 +1,57 @@
-Run Gary Chen's program, \char`\"{}\+M\+A\+C\+S\char`\"{}
+\hypertarget{domacs_8py}{\subsection{domacs.\+py File Reference}
+\label{domacs_8py}\index{domacs.\+py@{domacs.\+py}}
+}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespacedomacs_aabdf7c2fb6d938336c4bc737bbe56ed1}{def {\bfseries domacs.\+usage}}\label{namespacedomacs_aabdf7c2fb6d938336c4bc737bbe56ed1}
 
-\label{domacs_8py_domacs}%
-\hypertarget{domacs_8py_domacs}{}%
- \begin{DoxyAuthor}{Author}
-Alan R. Rogers \subsection*{domacs.\+py\+: Use M\+A\+C\+S to simulate a history of constant population size. }
-\end{DoxyAuthor}
+\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespacedomacs_a28909ab19b4322e7bd205858fc1dcdf4}{{\bfseries domacs.\+runprogram} = False}\label{namespacedomacs_a28909ab19b4322e7bd205858fc1dcdf4}
 
+\item 
+\hypertarget{namespacedomacs_a87c3aba1e5de9888e60a1ce3c7eaf7ff}{{\bfseries domacs.\+obasename} = None}\label{namespacedomacs_a87c3aba1e5de9888e60a1ce3c7eaf7ff}
 
-Usage\+: domacs.\+py \mbox{[}-\/r or --run\mbox{]} output\+\_\+file\+\_\+basename
+\item 
+\hypertarget{namespacedomacs_a17aed8bbdd51a4225a97e2ff95f34d18}{int {\bfseries domacs.\+retain} = 100}\label{namespacedomacs_a17aed8bbdd51a4225a97e2ff95f34d18}
 
-Chen doesn't say how time is scaled. I'm guessing that units are 4\+N generations, because that is how recombination rate and mutation are scaled.
+\item 
+\hypertarget{namespacedomacs_acef755b562bf6b7020004890e6ce0668}{string {\bfseries domacs.\+outputfile} = obasename+\char`\"{}.macs\char`\"{}}\label{namespacedomacs_acef755b562bf6b7020004890e6ce0668}
 
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
-\end{DoxyCopyright}
+\item 
+\hypertarget{namespacedomacs_a1e241ad5dfc252fbb8a110d09cdfa674}{string {\bfseries domacs.\+errfile} = obasename+\char`\"{}.macserr\char`\"{}}\label{namespacedomacs_a1e241ad5dfc252fbb8a110d09cdfa674}
+
+\item 
+\hypertarget{namespacedomacs_ae39a165b4f856f1642fdf8c56989acd6}{string {\bfseries domacs.\+ini\+File} = \char`\"{}ldpsiz.\+ini\char`\"{}}\label{namespacedomacs_ae39a165b4f856f1642fdf8c56989acd6}
+
+\item 
+\hypertarget{namespacedomacs_a9edb8346debed8e59fc945968c51cca0}{list {\bfseries domacs.\+two\+N0} = ph\mbox{[}0\mbox{]}}\label{namespacedomacs_a9edb8346debed8e59fc945968c51cca0}
+
+\item 
+\hypertarget{namespacedomacs_a21960f44e744b5101661bb1aff584b35}{list {\bfseries domacs.\+two\+N1} = ph\mbox{[}1\mbox{]}}\label{namespacedomacs_a21960f44e744b5101661bb1aff584b35}
+
+\item 
+\hypertarget{namespacedomacs_adb4988c3a9fa0ce3aa317f91c34f1f4b}{list {\bfseries domacs.\+t0} = ph\mbox{[}0\mbox{]}}\label{namespacedomacs_adb4988c3a9fa0ce3aa317f91c34f1f4b}
+
+\item 
+\hypertarget{namespacedomacs_a132a9fe1e89bc156b9da21256557de4e}{tuple {\bfseries domacs.\+two\+Nsmp} = int(a\mbox{[}\char`\"{}two\+Nsmp\char`\"{}\mbox{]})}\label{namespacedomacs_a132a9fe1e89bc156b9da21256557de4e}
+
+\item 
+\hypertarget{namespacedomacs_a04fd6f7e64710a98263202333101a68d}{tuple {\bfseries domacs.\+basepairs} = float(a\mbox{[}\char`\"{}basepairs\char`\"{}\mbox{]})}\label{namespacedomacs_a04fd6f7e64710a98263202333101a68d}
+
+\item 
+\hypertarget{namespacedomacs_a01c0e4e71c0d7c521fcf3487dcef0812}{tuple {\bfseries domacs.\+mutation} = float(a\mbox{[}\char`\"{}mutation\char`\"{}\mbox{]})}\label{namespacedomacs_a01c0e4e71c0d7c521fcf3487dcef0812}
+
+\item 
+\hypertarget{namespacedomacs_ad62f33164af35efb09f31576c5d11028}{tuple {\bfseries domacs.\+recombination} = float(a\mbox{[}\char`\"{}recombination\char`\"{}\mbox{]})}\label{namespacedomacs_ad62f33164af35efb09f31576c5d11028}
+
+\item 
+\hypertarget{namespacedomacs_aa5245b0794ea8458ffd5aff076a5fd9c}{string {\bfseries domacs.\+cmd} = \char`\"{}macs \%s \%s\char`\"{}}\label{namespacedomacs_aa5245b0794ea8458ffd5aff076a5fd9c}
+
+\item 
+\hypertarget{namespacedomacs_afccfdec88a1fe9020cbca8c13d1007c7}{float {\bfseries domacs.\+time} = 0.\+0}\label{namespacedomacs_afccfdec88a1fe9020cbca8c13d1007c7}
+
+\end{DoxyCompactItemize}

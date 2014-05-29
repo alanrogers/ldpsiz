@@ -2,25 +2,66 @@
 .ad l
 .nh
 .SH NAME
-domacs.py \- Run Gary Chen's program, 'MACS'
+domacs.py \- 
+.SH SYNOPSIS
+.br
 .PP
- 
-.PP
-\fBAuthor:\fP
-.RS 4
-Alan R\&. Rogers 
-.SH "domacs\&.py: Use MACS to simulate a history of constant population size\&. "
-.PP
-.RE
-.PP
-.PP
-Usage: domacs\&.py [-r or --run] output_file_basename
-.PP
-Chen doesn't say how time is scaled\&. I'm guessing that units are 4N generations, because that is how recombination rate and mutation are scaled\&.
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
+.SS "Functions"
 
+.in +1c
+.ti -1c
+.RI "def \fBdomacs\&.usage\fP"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBdomacs\&.runprogram\fP = False"
+.br
+.ti -1c
+.RI "\fBdomacs\&.obasename\fP = None"
+.br
+.ti -1c
+.RI "int \fBdomacs\&.retain\fP = 100"
+.br
+.ti -1c
+.RI "string \fBdomacs\&.outputfile\fP = obasename+'\&.macs'"
+.br
+.ti -1c
+.RI "string \fBdomacs\&.errfile\fP = obasename+'\&.macserr'"
+.br
+.ti -1c
+.RI "string \fBdomacs\&.iniFile\fP = 'ldpsiz\&.ini'"
+.br
+.ti -1c
+.RI "list \fBdomacs\&.twoN0\fP = ph[0]"
+.br
+.ti -1c
+.RI "list \fBdomacs\&.twoN1\fP = ph[1]"
+.br
+.ti -1c
+.RI "list \fBdomacs\&.t0\fP = ph[0]"
+.br
+.ti -1c
+.RI "tuple \fBdomacs\&.twoNsmp\fP = int(a['twoNsmp'])"
+.br
+.ti -1c
+.RI "tuple \fBdomacs\&.basepairs\fP = float(a['basepairs'])"
+.br
+.ti -1c
+.RI "tuple \fBdomacs\&.mutation\fP = float(a['mutation'])"
+.br
+.ti -1c
+.RI "tuple \fBdomacs\&.recombination\fP = float(a['recombination'])"
+.br
+.ti -1c
+.RI "string \fBdomacs\&.cmd\fP = 'macs %s %s'"
+.br
+.ti -1c
+.RI "float \fBdomacs\&.time\fP = 0\&.0"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ldpsiz from the source code\&.

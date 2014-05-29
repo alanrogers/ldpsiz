@@ -90,9 +90,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">vcf2gtp.py File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Convert .vcf files into .gtp format.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -147,39 +144,10 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>vcf2gtp.msg</b> = &
 &#160;</td><td class="memItemRight" valign="bottom"><b>vcf2gtp.nucpos0</b> = nucpos</td></tr>
 <tr class="separator:aca0c13cab980a6d5e0d9c57ded41eb99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Convert .vcf files into .gtp format. </p>
-<p><a class="anchor" id="vcf2gtp"></a></p><h1><a class="el" href="vcf2gtp_8py.html" title="Convert .vcf files into .gtp format. ">vcf2gtp.py</a>, a program that converts .vcf files into .gtp format </h1>
-<pre class="fragment">usage: vcf2gtp [options filename.vcf geneticMapFile]
-where options may include:
-
-  -r &lt;x&gt; or --recombPerBP &lt;x&gt;     Set recombination rate per nucleotide.
-
-If two filenames are provided, the first must be a vcf file and the
-second a file of recombination rates. In this case, the -r option is
-not allowed.
-
-If one filename is provided, it must be a vcf file, and the -r option
-is mandatory.
-
-If no filename is provided, the program reads vcf data from standard
-input and the -r option is mandatory.
-
-The program writes to standard output.
-</pre><p>If no file is provided for recombination rates, the rate must be specified using the <code>-r</code> or <code>--recombPerBP</code> option, and the program generates map distances assuming that the recombination rate between two sites is proportional to the number of nucleotides that separate them.</p>
-<p>The genetic map file must have a format like this: </p><pre class="fragment">position COMBINED_rate(cM/Mb) Genetic_Map(cM)
-14431347 9.6640973708 0
-14432618 9.7078062447 0.0122830678
-14433624 9.7138922111 0.0220491208
-14433659 9.7163435060 0.0223891071
-14433758 9.7078087850 0.0233510251
-</pre><p>The first line is a list of column labels. After that, each row corresponds to a <a class="el" href="struct_s_n_p.html" title="Estimate the linkage disequilibrium (LD) between single nucleotide polymorphisms (SNPs) as a function...">SNP</a>. The first column gives the position, in nucleotides from the end of the chromosome. The second column gives the recombination rate, in cM per Mb, between that <a class="el" href="struct_s_n_p.html" title="Estimate the linkage disequilibrium (LD) between single nucleotide polymorphisms (SNPs) as a function...">SNP</a> and the next one, and the third column gives the map distance in cM. This is the format used by the 1000-Genomes Project</p>
-<dl class="section author"><dt>Author</dt><dd>Ryan Bohlender and Alan Rogers </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2014, Ryan Bohlender and Alan R. Rogers <a href="#" onclick="location.href='mai'+'lto:'+'rog'+'er'+'s@a'+'nt'+'hro'+'.u'+'tah'+'.e'+'du'; return false;">roger<span style="display: none;">.nosp@m.</span>s@an<span style="display: none;">.nosp@m.</span>thro.<span style="display: none;">.nosp@m.</span>utah<span style="display: none;">.nosp@m.</span>.edu</a>. This file is released under the Internet Systems Consortium License, which can be found in file "LICENSE". </dd></dl>
-</div></div><!-- contents -->
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 29 2014 13:01:35 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 29 2014 13:10:32 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

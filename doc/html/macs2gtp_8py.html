@@ -89,9 +89,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">macs2gtp.py File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Parse output of macs, produce gtp format, the input for eld.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -142,20 +139,10 @@ tuple&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.nucpos</b> 
 float&#160;</td><td class="memItemRight" valign="bottom"><b>macs2gtp.centimorgan</b> = nucpos*recombination*100.0</td></tr>
 <tr class="separator:a7628f1fea3ee4bf0443a77db767b33cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Parse output of macs, produce gtp format, the input for eld. </p>
-<p><a class="anchor" id="macs2gtp"></a></p><h1><a class="el" href="macs2gtp_8py.html" title="Parse output of macs, produce gtp format, the input for eld. ">macs2gtp.py</a>, a program that converts <code>macs</code> output into .gtp format </h1>
-<pre class="fragment">Usage: macs2gtp.py [options] \&lt;input file\&gt; 
-where options may include:
-  -R \&lt;x\&gt; : set recombination rate for adjacent sites
-</pre><p>For example, </p><pre class="fragment">macs2gtp.py -R 1e-8 macs.out &gt; macs.gtp
-</pre><p>Would read file <code>macs.out</code>, generate map distances assuming a recombination rate of 1e-8 per nucleotide, and write the output into macs.gtp.</p>
-<p>If the recombination rate is not specified, <code><a class="el" href="macs2gtp_8py.html" title="Parse output of macs, produce gtp format, the input for eld. ">macs2gtp.py</a></code> tries to get it from the initialization file <code>ldpsiz.ini</code>.</p>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2014, Alan R. Rogers <a href="#" onclick="location.href='mai'+'lto:'+'rog'+'er'+'s@a'+'nt'+'hro'+'.u'+'tah'+'.e'+'du'; return false;">roger<span style="display: none;">.nosp@m.</span>s@an<span style="display: none;">.nosp@m.</span>thro.<span style="display: none;">.nosp@m.</span>utah<span style="display: none;">.nosp@m.</span>.edu</a>. This file is released under the Internet Systems Consortium License, which can be found in file "LICENSE". </dd></dl>
-</div></div><!-- contents -->
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 29 2014 13:01:35 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 29 2014 13:10:32 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

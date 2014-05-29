@@ -1,6 +1,5 @@
 /**
  * @file locref.c
- * @anchor locref
  * @brief LocRef is a class that facilitates using a single memory
  * block to allocate a structure and all the arrays within it.
  * 

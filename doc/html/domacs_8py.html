@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.7"/>
-<title>ldpsiz: $title</title>
+<title>ldpsiz: domacs.py File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -39,9 +39,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -60,6 +60,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
+    </ul>
+  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -75,17 +81,73 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 </div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle">
+<div class="title">domacs.py File Reference</div>  </div>
+</div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Run Gary Chen's program, "MACS"</p>
-<p><a class="anchor" id="domacs"></a> </p><dl class="section author"><dt>Author</dt><dd>Alan R. Rogers <h1>domacs.py: Use MACS to simulate a history of constant population size. </h1>
-</dd></dl>
-<p>Usage: domacs.py [-r or &ndash;run] output_file_basename</p>
-<p>Chen doesn't say how time is scaled. I'm guessing that units are 4N generations, because that is how recombination rate and mutation are scaled.</p>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2014, Alan R. Rogers <a href="#" onclick="location.href='mai'+'lto:'+'rog'+'er'+'s@a'+'nt'+'hro'+'.u'+'tah'+'.e'+'du'; return false;">roger<span style="display: none;">.nosp@m.</span>s@an<span style="display: none;">.nosp@m.</span>thro.<span style="display: none;">.nosp@m.</span>utah<span style="display: none;">.nosp@m.</span>.edu</a>. This file is released under the Internet Systems Consortium License, which can be found in file "LICENSE". </dd></dl>
-</div></div><!-- contents -->
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aabdf7c2fb6d938336c4bc737bbe56ed1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aabdf7c2fb6d938336c4bc737bbe56ed1"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.usage</b></td></tr>
+<tr class="separator:aabdf7c2fb6d938336c4bc737bbe56ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a28909ab19b4322e7bd205858fc1dcdf4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28909ab19b4322e7bd205858fc1dcdf4"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.runprogram</b> = False</td></tr>
+<tr class="separator:a28909ab19b4322e7bd205858fc1dcdf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87c3aba1e5de9888e60a1ce3c7eaf7ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87c3aba1e5de9888e60a1ce3c7eaf7ff"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.obasename</b> = None</td></tr>
+<tr class="separator:a87c3aba1e5de9888e60a1ce3c7eaf7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17aed8bbdd51a4225a97e2ff95f34d18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17aed8bbdd51a4225a97e2ff95f34d18"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.retain</b> = 100</td></tr>
+<tr class="separator:a17aed8bbdd51a4225a97e2ff95f34d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acef755b562bf6b7020004890e6ce0668"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acef755b562bf6b7020004890e6ce0668"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.outputfile</b> = obasename+&quot;.macs&quot;</td></tr>
+<tr class="separator:acef755b562bf6b7020004890e6ce0668"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e241ad5dfc252fbb8a110d09cdfa674"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e241ad5dfc252fbb8a110d09cdfa674"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.errfile</b> = obasename+&quot;.macserr&quot;</td></tr>
+<tr class="separator:a1e241ad5dfc252fbb8a110d09cdfa674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae39a165b4f856f1642fdf8c56989acd6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae39a165b4f856f1642fdf8c56989acd6"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.iniFile</b> = &quot;ldpsiz.ini&quot;</td></tr>
+<tr class="separator:ae39a165b4f856f1642fdf8c56989acd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9edb8346debed8e59fc945968c51cca0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9edb8346debed8e59fc945968c51cca0"></a>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.twoN0</b> = ph[0]</td></tr>
+<tr class="separator:a9edb8346debed8e59fc945968c51cca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21960f44e744b5101661bb1aff584b35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21960f44e744b5101661bb1aff584b35"></a>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.twoN1</b> = ph[1]</td></tr>
+<tr class="separator:a21960f44e744b5101661bb1aff584b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb4988c3a9fa0ce3aa317f91c34f1f4b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb4988c3a9fa0ce3aa317f91c34f1f4b"></a>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.t0</b> = ph[0]</td></tr>
+<tr class="separator:adb4988c3a9fa0ce3aa317f91c34f1f4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a132a9fe1e89bc156b9da21256557de4e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a132a9fe1e89bc156b9da21256557de4e"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.twoNsmp</b> = int(a[&quot;twoNsmp&quot;])</td></tr>
+<tr class="separator:a132a9fe1e89bc156b9da21256557de4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04fd6f7e64710a98263202333101a68d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04fd6f7e64710a98263202333101a68d"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.basepairs</b> = float(a[&quot;basepairs&quot;])</td></tr>
+<tr class="separator:a04fd6f7e64710a98263202333101a68d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01c0e4e71c0d7c521fcf3487dcef0812"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01c0e4e71c0d7c521fcf3487dcef0812"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.mutation</b> = float(a[&quot;mutation&quot;])</td></tr>
+<tr class="separator:a01c0e4e71c0d7c521fcf3487dcef0812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad62f33164af35efb09f31576c5d11028"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad62f33164af35efb09f31576c5d11028"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.recombination</b> = float(a[&quot;recombination&quot;])</td></tr>
+<tr class="separator:ad62f33164af35efb09f31576c5d11028"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5245b0794ea8458ffd5aff076a5fd9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5245b0794ea8458ffd5aff076a5fd9c"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.cmd</b> = &quot;macs %s %s&quot;</td></tr>
+<tr class="separator:aa5245b0794ea8458ffd5aff076a5fd9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afccfdec88a1fe9020cbca8c13d1007c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afccfdec88a1fe9020cbca8c13d1007c7"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>domacs.time</b> = 0.0</td></tr>
+<tr class="separator:afccfdec88a1fe9020cbca8c13d1007c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 29 2014 13:01:36 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 29 2014 13:10:32 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

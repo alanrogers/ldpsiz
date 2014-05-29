@@ -1,6 +1,6 @@
 ###
-# @page ini.py
 # @file ini.py 
+# @page ini
 # @author Alan R. Rogers
 # @brief Functions for objects of class Ini, which reads parameters
 # from an initialization file 
