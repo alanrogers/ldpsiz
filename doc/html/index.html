@@ -159,7 +159,7 @@ PopHist
 <h2>Converting genetic data into .gtp format</h2>
 <p>The package provides several programs for converting into .gtp format. <code>ms2gtp</code> and <code><a class="el" href="macs2gtp_8py.html" title="Parse output of macs, produce gtp format, the input for eld. ">macs2gtp.py</a></code> convert simulated data produced by <code>ms</code> and <code>macs</code>, and <code><a class="el" href="vcf2gtp_8py.html" title="Convert .vcf files into .gtp format. ">vcf2gtp.py</a></code> converts the vcf-format data provided by the 1000 Genomes Project. These programs are written in Python, except for <code>ms2gtp</code>, which is in C.</p>
 <h3>Converting data produced by <code>ms</code></h3>
-<p><code>ms</code> is Dick Hudson's program for doing coalescent simulations with recombination. It can be downloaded from Dick's <a href="http://home.uchicago.edu/rhudson1/source.html">homepage</a>. The <code>ldpsiz</code> package provides a program, <a class="el" href="ms2gtp_8c.html#ms2gtp">ms2gtp</a>, which converts the output of <code>ms</code> into .gtp format.</p>
+<p><code>ms</code> is Dick Hudson's program for doing coalescent simulations with recombination. It can be downloaded from Dick's <a href="http://home.uchicago.edu/rhudson1/source.html">homepage</a>. The <code>ldpsiz</code> package provides a program, <a class="el" href="ms2gtp.html">ms2gtp</a>, which converts the output of <code>ms</code> into .gtp format.</p>
 <p>This program is written in C, because it involves transposing a large matrix. The original version, written in Python, was slow.</p>
 <h3>Converting data produced by <code>macs</code></h3>
 <p>Gary Chen's program, <code>macs</code>, uses an approximation to the coalescent algorithm, which makes it possible to simulate genome-scale data very fast. You can get it from Gary's <a href="http://www-hsc.usc.edu/~garykche">homepage</a>. To translate <code>macs</code> output into .gtp format, use the program <a class="el" href="macs2gtp_8py.html#macs2gtp">macs2gtp.py</a>.</p>
@@ -176,7 +176,7 @@ PopHist
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 29 2014 10:53:02 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 29 2014 11:39:02 for ldpsiz by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
