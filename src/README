@@ -1,4 +1,4 @@
-/**
+/** 
 \mainpage 
 
 # Introduction 
@@ -6,16 +6,17 @@
 Ldpsiz is a computer package that estimates the history of population
 size from data on linkage disequilibrium (LD). 
 
-LD is estimated in terms of \f$\sigma_d^2\f$ (Ohta and Kimura, 1971,
-Genetics 68: 571-580). This parameter is usually interpreted as an
-approximation to the expected value of \f$r^2\f$, the squared
-correlation between loci. \f$\sigma_d^2\f$ is a weighted average of
-\f$r^2\f$ values, where the weight given each pair of loci is the
-product of the two heterozygosities. Because of these weights, 
-\f$\sigma_d^2\f$ is not affected much by loci near fixation. For this
-reason, it is ideal for use with low-coverage sequence data. Most of the
-sequencing errors in such data show up as singleton loci, which
-have little effect on \f$\sigma_d^2\f$.
+LD is estimated in terms of the "standard linkage deviation",
+\f$\sigma_d^2\f$ (Ohta and Kimura, 1971, Genetics 68: 571-580). This
+parameter is usually interpreted as an approximation to the expected
+value of \f$r^2\f$, the squared correlation between
+loci. \f$\sigma_d^2\f$ is a weighted average of \f$r^2\f$ values,
+where the weight given each pair of loci is the product of the two
+heterozygosities. Because of these weights, \f$\sigma_d^2\f$ is not
+affected much by loci near fixation. For this reason, it is ideal for
+use with low-coverage sequence data. Most of the sequencing errors in
+such data show up as singleton loci, which have little effect on
+\f$\sigma_d^2\f$.
 
 To estimate population history parameters, `ldpsiz` minimizes the
 difference between values of \f$\sigma_d^2\f$ estimated from data and
@@ -227,4 +228,12 @@ See the documentation for \ref eld "eld".
 
 See the documentation for \ref sald "sald".
 
+## Examining the cost function.
+
+`sald` works by minimizing a cost function--the sum of squared deviations between the observed and expected
+
 */
+
+/* Local Variables: */
+/* mode: markdown */
+/* End: */
