@@ -1,0 +1,88 @@
+.TH "ms2gtp" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ms2gtp \- This file contains code related ms2gtp, a program that translates output from Dick Hudson's \fCms\fP program into \&.gtp format\&.
+.PP
+.SH "ms2gtp, a program that converts \fCms\fP output into \&.gtp format "
+.PP
+.PP
+This program is written in C, because the conversion involves transposing a large matrix, and this is faster in C\&. If you run it like 'ms2gtp my_input_file_name', it will allocate internal arrays using default values\&. If your \fCms\fP output is large, these arrays will be too small\&. The program will print an error message and abort\&. To avoid this problem, run the (unix or linux) command 'grep positions
+ms\&.out | wc'\&. This will print 3 numbers\&. The number of tokens must be as large as 2nd; buffer size as large as the 3rd\&. You can set these values using the \fC--maxTokens\fP and \fC--inBuffSize\fP arguments\&.
+.PP
+For example, I used \fCms\fP to produce a file called \fCms\&.out\fP\&. To find out how large to set the arrays, I executed 
+.PP
+.nf
+grep positions ms.out | wc 
+
+.fi
+.PP
+.PP
+which produced the output 
+.PP
+.nf
+1   89366 1161757
+
+.fi
+.PP
+.PP
+This indicates that I need to accomodate input lines with 89366 tokens and 1161757 characters\&. So I ran \fCms2gtp\fP like this: 
+.PP
+.nf
+ms2gtp --maxTokens 89370 --inBuffSize 1161800 ms.out > ms.gtp
+
+.fi
+.PP
+.PP
+This reads input from file \fCms\&.out\fP and writes to file \fCms\&.gtp\fP\&. The first few lines of \fCms\&.gtp\fP look like this: 
+.PP
+.nf
+# ms2gtp was run Sat Feb  2 11:15:05 2013
+# cmd line     = ms2gtp -t 89370 -b 1161800 ms.out
+# sim cmd      = ms 50 1 -t 20000 -r 20000 1000000
+# nnucleotides = 1000000
+# segsites     = 89365
+# nsequences   = 50
+# recomb rate per site = 1e-06
+# ploidy       = 1
+#   snp_id     nucpos         mappos alleles genotypes
+         0          1 0.000000006802      01 0011000000...
+         1          6 0.000000061255      01 0000000000...
+
+.fi
+.PP
+.PP
+In this example, I've truncated the genotypes on the right in order to fit them on the page\&.
+.PP
+Here is the usage message: 
+.PP
+.nf
+usage: ms2gtp [options] [input_file_name]
+   where options may include:
+   -t \<x\> or --maxTokens \<x\>
+      maximum tokens per input line
+   -b \<x\> or --inBuffSize \<x\>
+      size of input buffer
+   -R \<x\> or --recombination \<x\>
+      rate for adjacent nucleotides
+   -h     or --help
+      print this message
+  To figure out appropriate values for -t and -b, execute the
+  following at the command line:
+
+     grep positions ms.out | wc
+
+  where "ms.out" is the ms output file. This command prints 3 numbers.
+  Number of tokens must be as large as 2nd; buffer size as large as the
+  3rd. If no input file is given, ms2gtp reads stdin. ms2gtp
+  always writes to standard output.
+
+.fi
+.PP
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
