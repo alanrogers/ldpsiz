@@ -230,7 +230,7 @@ See the documentation for \ref sald "sald".
 
 ## Examining the cost function.
 
-`sald` works by minimizing a cost function--the sum of squared deviations between the observed and expected
+See the documentation for \ref mcmcld "mcmcld".
 
 */
 

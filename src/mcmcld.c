@@ -2,7 +2,7 @@
 @file mcmcld.c
 @anchor mcmcld
 @brief `mcmcld` uses Markov-Coupled Markov-Chain Monte Carlo (MCMCMC)
-to estimate population history from data on \f$\sigma_d^2\f$.
+to estimate the cost function \f$\sigma_d^2\f$.
 
 mcmcld, MCMCMC estimates of population history from \f$\sigma_d^2\f$
 ====================================================================
