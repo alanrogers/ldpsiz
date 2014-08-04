@@ -9,9 +9,10 @@
 #ifndef LDPSIZ_MISC
 #define LDPSIZ_MISC
 
+#include "pophist.h"
 #include <gsl/gsl_permutation.h>
 #include <gsl/gsl_linalg.h>
-#include "pophist.h"
+#include <float.h>
 #define TRUE (1)
 #define FALSE (0)
 #define UNPHASED_HETEROZYGOTE 4
