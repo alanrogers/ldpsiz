@@ -54,11 +54,7 @@ pthread_mutex_t outputLock = PTHREAD_MUTEX_INITIALIZER;
 #define DPRINTF(arg)
 #endif
 
-static const char *stateLbl[DIM] = { "Ha*Hb",
-    "4S[abD]",
-    "2S[D^2]",
-    "H"
-};
+static const char *stateLbl[DIM] = { "Ha*Hb", "4S[abD]", "2S[D^2]", "H" };
 
 struct HillData {
     unsigned    ydim;
