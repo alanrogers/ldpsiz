@@ -13,8 +13,6 @@
 #include <gsl/gsl_permutation.h>
 #include <gsl/gsl_linalg.h>
 #include <float.h>
-#define TRUE (1)
-#define FALSE (0)
 #define UNPHASED_HETEROZYGOTE 4
 
 #define ERR(code, msg) do{\
