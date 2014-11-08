@@ -47,13 +47,10 @@ struct PopHist {
 };
 
 /**
- * Population history represented as a linked list of Epochs.
- *
- * Sometimes it is useful to represent population history as a linked
- * list of Epochs.
+ * Population history represented as a linked list of epochs.
  */
 struct EpochLink {
-    struct EpochLink *next;     /* pointer to next (earlier) link */
+    struct EpochLink *next;     /* pointer to next (earlier) epoch */
     double      t, twoN;
 };
 
