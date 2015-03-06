@@ -243,7 +243,7 @@ unsigned sum_int(unsigned *x, unsigned n) {
 
     myassert(n >= 0);
 
-    rval = 0.0;
+    rval = 0;
     m = n % 5;
     for(i = 0; i < m; ++i)
         rval += x[i];
@@ -260,7 +260,7 @@ unsigned sum_char(const unsigned char *x, unsigned n) {
 
     myassert(n >= 0);
 
-    rval = 0.0;
+    rval = 0;
     m = n % 5;
     for(i = 0; i < m; ++i)
         rval += x[i];
@@ -290,7 +290,7 @@ unsigned long sum_long_slow(unsigned long *x, unsigned n) {
 
     myassert(n >= 0);
 
-    rval = 0.0;
+    rval = 0L;
     for(i = 0; i < n; ++i)
         rval += x[i];
 
