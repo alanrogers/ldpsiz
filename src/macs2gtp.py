@@ -136,6 +136,7 @@ print "# %-35s = %d" % ("nnucleotides", nnucleotides)
 print "# %-35s = %d" % ("ploidy", 1)
 
 lineno = 0
+oldNucpos = 0
 for line in infile:
     line = line.strip().split()
     if(line=="" or line[0] != "SITE:"):
@@ -147,6 +148,9 @@ for line in infile:
     nfields = len(line)
     nucpos = int(round(nnucleotides*float(line[2])))
     centimorgan = nucpos*recombination*100.0
+    if nucpos == oldNucpos:
+       # skip SNPs at same nucleotide
+       continue
     print "%10ld %10ld %14.12lf %7s %s" % (lineno,
                                         nucpos,
                                         centimorgan,
