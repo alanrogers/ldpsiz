@@ -6,14 +6,14 @@
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".
  */
+#include "misc.h"
+#include "tabulation.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #include <math.h>
 #include <float.h>
-#include "misc.h"
-#include "tabulation.h"
 
 static void Tabulation_initArrays(Tabulation * tab);
 static void tstGetBin(double sep_cm, double windowcm, int trubin, int nbins,

@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-/// Expected spectrum
+/// Site frequency spectrum
 struct ESpectrum {
 	unsigned nSamples;
 	double *spec;
