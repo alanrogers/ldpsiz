@@ -63,7 +63,6 @@ while(True):
     else:
         datafile = sys.argv[i]
     i += 1
-    
 
 if recombination == None:
     print "Error: no recombination rate"
@@ -92,7 +91,6 @@ if(len(line) < 3 or line[0] != "COMMAND:" or line[1] != "macs"):
         print >> sys.stderr, "%s" % word,
     print
     sys.exit(1)
-
 
 # Find recombination rate per 4N nucleotides
 try:

@@ -81,8 +81,7 @@ Assignment *Gtp_readHdr(FILE * ifp) {
  * value of alleles.
  * @param[out] sitedat Unsigned character buffer whose i'th entry will
  * hold the genotype data for the i'th individual. This value is an integer
- * that encodes genotypic values as described in the documentation of
- * function encodeGtype, defined in file misc.h.
+ * that encodes genotypic values.
  * @param[in] sitedatSize Size of the sitedat array.
  * @param[in] isDiploid The data are assumed to be diploid if
  * isDiploid is nonzero. Otherwise, haploidy is assumed.

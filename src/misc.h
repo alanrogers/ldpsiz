@@ -69,10 +69,8 @@ int  compareDoubles(const void *void_x, const void *void_y);
  * else.
  */
 static inline unsigned encode01(char c) {
-    if(c == '0')
-        return 0;
-    if(c == '1')
-        return 1;
+    if(c == '0' || c == '1')
+        return c;
     return 255;
 }
 
