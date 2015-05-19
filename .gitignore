@@ -1,4 +1,11 @@
 *.o
 *~
+*.tmp
+*.boot
+core
+depend
 obsld
 predld
+xespectrum
+xmatcoal
+xpolya

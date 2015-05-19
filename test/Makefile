@@ -150,6 +150,18 @@ TSTPREAD := tstpread.o jobqueue.o misc.o
 tstpread: $(TSTPREAD)
 	$(CC) $(CFLAGS) -o $@ $(TSTPREAD) $(lib)
 
+XMATCOAL := xmatcoal.o pophist.o matcoal.o misc.o
+xmatcoal : $(XMATCOAL)
+	$(CC) $(CFLAGS) -o $@ $(XMATCOAL) $(lib)
+
+XPOLYA := xpolya.o polya.o misc.o
+xpolya : $(XPOLYA)
+	$(CC) $(CFLAGS) -o $@ $(XPOLYA) $(lib)
+
+XESPECTRUM := xespectrum.o espectrum.o misc.o matcoal.o pophist.o polya.o
+xespectrum : $(XESPECTRUM)
+	$(CC) $(CFLAGS) -o $@ $(XESPECTRUM) $(lib)
+
 install: $(alltargets)
 	cp -p $(alltargets) $(destination)
 
