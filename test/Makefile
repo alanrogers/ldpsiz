@@ -8,7 +8,8 @@ incl := -I/usr/local/include -I/opt/local/include -I../src
 
 tests := xassign xboot xchain xem xfileindex xhayes xhill \
    xini xjobqueue xmisc xmodel xpophist xreadgtp \
-   xstrobeck xsums xtabulation xtokenizer xwindow
+   xstrobeck xsums xtabulation xtokenizer xwindow \
+   xmatcoal xpolya xespectrum
 
 CC := gcc
 
