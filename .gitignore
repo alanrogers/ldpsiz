@@ -2,6 +2,7 @@
 *~
 *.tmp
 *.boot
+*.gtp
 core
 depend
 obsld
@@ -9,3 +10,5 @@ predld
 xespectrum
 xmatcoal
 xpolya
+xtabulation
+xwindow
