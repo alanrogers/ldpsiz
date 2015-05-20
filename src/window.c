@@ -501,9 +501,13 @@ int Window_nextSNP(Window * window, Boot * boot) {
 
     polymorphic = SNP_set(snp, window->nSNPs, mappos,
                           window->gtype, boot, window->ploidy);
-    if(!polymorphic)
-        eprintf("%s:%d: Gtp_readSNP returned a monomorphic SNP",
+    if(!polymorphic) {
+		fflush(stdout);
+        fprintf(stderr, "%s:%d: Gtp_readSNP returned a monomorphic SNP",
                 __FILE__, __LINE__);
+		SNP_show(snp, stderr);
+		exit(1);
+	}
 
     /* link new SNP into list */
     snp->prev = window->curr;
