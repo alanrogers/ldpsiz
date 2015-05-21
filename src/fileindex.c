@@ -187,7 +187,6 @@ void FileIndex_realloc(FileIndex * fndx, long ptrsNeeded) {
 
     /* realloc without the famous memory leak */
     SNPLoc    **tmp = realloc(fndx->snploc, goal * sizeof(fndx->snploc[0]));
-
     if(tmp == NULL)
         die("bad realloc", __FILE__, __LINE__);
     else
@@ -427,7 +426,8 @@ FileIndex  *FileIndex_readFile(FILE * ifp) {
     Assignment_setInt(a, "ploidy", &ploidy, !MANDATORY);
     Assignment_setInt(a, "Ploidy", &ploidy, !MANDATORY);
     if(ploidy != 1 && ploidy != 2)
-        eprintf("ERR@%s:%d: Bad ploidy in gtp file: %d\n", ploidy);
+        eprintf("ERR@%s:%d: Bad ploidy in gtp file: %d\n",
+                __FILE__,__LINE__,ploidy);
     Assignment_free(a);
 
     while(rval != EOF) {
@@ -607,6 +607,9 @@ ThreadBounds *ThreadBounds_new(int nthreads,
 
         assert(seekpos[0] >= 0);
         assert(mappos[0] >= 0);
+        assert(ndx[0]==ndx[1] || windowcm>0.0);
+        assert(mappos[0]==mappos[1] || windowcm>0.0);
+        assert(seekpos[0]==seekpos[1] || windowcm>0.0);
 
         memcpy(tb[i].ndx, ndx, sizeof(ndx));
         memcpy(tb[i].seekpos, seekpos, sizeof(seekpos));

@@ -1,13 +1,13 @@
 /**
- * @file window.h
+ * @file specscan.h
  * @author Alan R. Rogers
- * @brief Header for window.c
- * @copyright Copyright (c) 2014, Alan R. Rogers
+ * @brief Header for specscan.c
+ * @copyright Copyright (c) 2015, Alan R. Rogers
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".
  */
-#ifndef LDPSIZ_WINDOW_H
-#define LDPSIZ_WINDOW_H
+#ifndef LDPSIZ_SPECSCAN_H
+#define LDPSIZ_SPECSCAN_H
 
 #include <stdio.h>
 #include "typedefs.h"
@@ -16,12 +16,11 @@
 #include "misc.h"
 
 /**
- * Estimate the linkage disequilibrium (LD) between single nucleotide
- * polymorphisms (SNPs) as a function of the map distance between
- * those SNPs. Definition is provided openly here (rather than hidden
- * in window.c) so that functions can be inlined. 
+ * Estimate the site frequency spectrum. Definition is provided openly
+ * here (rather than hidden in specscan.c) so that functions can be
+ * inlined.  
  *
- * @copyright Copyright (c) 2014, Alan R. Rogers
+ * @copyright Copyright (c) 2015, Alan R. Rogers
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".
  */
@@ -40,7 +39,7 @@ void        SNP_clear(SNP * snp);
 SNP        *SNP_connect(SNP * list1, SNP * list2);
 int         SNP_count(SNP * snp);
 void        SNP_free(SNP * snp);
-double      SNP_getDsq(double *pqpq, SNP * x, SNP * y, unsigned ploidy);
+double      SNP_getSpec(unsigned dim, double *spec, SNP * x, unsigned ploidy);
 double      SNP_mappos(const SNP * snp);
 static      inline int SNP_multiplicity(const SNP * snp, int rep);
 long        SNP_ndx(const SNP * snp);
@@ -56,18 +55,18 @@ SNP        *SNPstore_checkout(SNPstore * store);
 void        SNPstore_free(SNPstore * sp);
 SNPstore   *SNPstore_new(unsigned nGtype, int bootreps);
 
-int         Window_advance(Window * window, Tabulation * tab, Boot * boot,
+int         Specscan_advance(Specscan * specscan, Tabulation * tab, Boot * boot,
                            long lineno);
-SNP        *Window_currSNP(Window * window);
-void        Window_free(Window * window);
-int         Window_nextSNP(Window * window, Boot * boot);
-Window     *Window_new(double width_cm, FILE * ifp,
+SNP        *Specscan_currSNP(Specscan * specscan);
+void        Specscan_free(Specscan * specscan);
+int         Specscan_nextSNP(Specscan * specscan, Boot * boot);
+Specscan     *Specscan_new(double width_cm, FILE * ifp,
                        long sampling_interval, unsigned ploidy);
-unsigned    Window_nGtype(const Window * window);
-long        Window_nSNPsRead(const Window * window);
+unsigned    Specscan_nGtype(const Specscan * specscan);
+long        Specscan_nSNPsRead(const Specscan * specscan);
 
 #ifndef NDEBUG
-void        Window_test(int verbose);
+void        Specscan_test(int verbose);
 #endif
 
 /* inline functions */

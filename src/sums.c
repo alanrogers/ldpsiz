@@ -131,11 +131,10 @@ unsigned dotprodDiploid(unsigned char *x, unsigned char *y, unsigned n) {
 }
 
 unsigned sumDiploid(const unsigned char *x, unsigned n) {
-    register unsigned rval, i, k;
+    register unsigned rval, i;
+    unsigned k;
 
-    /*
-     * This function assumes that UNPHASED_HETEROZYGOTE==4.
-     */
+    /* This function assumes that UNPHASED_HETEROZYGOTE==4. */
     assert(UNPHASED_HETEROZYGOTE == 4);
 
     /* Number of copies of "1" allele in each genotype */

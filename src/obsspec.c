@@ -1,39 +1,34 @@
 /**
-@file eld.c
-@page eld
-@brief Estimate LD from genetic data.
+@file obsspec.c
+@page obsspec
+@brief Estimate spectrum.
 
-`eld`, a program that estimates LD from genetic data
-==================================================================
+`obsspec`, a program that estimates the site frequency spectrum from genetic data
+=================================================================================
 
 Parameter values, including those describing population history, may
 be read either from the initialization file `ldpsiz.ini` or specified
 on the command line. Command-line arguments override values in the
 initialization file. 
 
-`eld` reads data in "gtp" format and estimates two measures of LD:
-\f$\hat\sigma_d^2\f$ and \f$r^2\f$. The program compares all pairs of
-sites within a window that slides across the data set. These pairs are
-tabulated into bins based on the distance (in cM) that separates
-them. For each bin, the program estimates and prints the two measures
-of LD.  The maximal separation between pairs of SNPs is determined by
-the `--window` (or `-w`) option.
+`obsspec` reads data in "gtp" format and estimates the site frequency
+spectrum.  
 
-Optionally, the program calculates a moving-blocks bootstrap for
-\f$\hat\sigma_d^2\f$. To turn on this option, use the `--bootreps`
-option discussed below. The program will then print lower and upper
-confidence limits along with each estimate of \f$\hat\sigma_d^2\f$.
-By default, the bootstrap includes 95% of the sampling distribution
-distribution. This fraction can be modified using the initialization
-file. Optionally, the bootstrap may be stored in a separate file for
-use by other programs. To accomplish this, use the command-line option 
-`--bootfile` or set `bootfile` in `ldpsiz.ini`.
+Optionally, the program calculates a moving-blocks bootstrap. To turn
+on this option, use the `--bootreps` option discussed below. The
+program will then print lower and upper confidence limits along with
+each estimated spectrum.  By default, the bootstrap includes 95% of
+the sampling distribution distribution. This fraction can be modified
+using the initialization file. Optionally, the bootstrap may be stored
+in a separate file for use by other programs. To accomplish this, use
+the command-line option `--bootfile` or set `bootfile` in
+`ldpsiz.ini`.
 
 By default, the program uses as many threads as there are cores on the
 machine. To change this, use the command-line option `--threads` or
 set `nthreads` in the file `ldpsiz.ini`.
 
-    usage: eld [options] input_file_name
+    usage: obsspec [options] input_file_name
        where options may include:
        -b \<x\> or --blocksize \<x\>
           SNPs per bootstrap block
@@ -42,17 +37,13 @@ set `nthreads` in the file `ldpsiz.ini`.
        -h or --help
           print this message
        -i \<x\> or --interval \<x\>
-          for debugging: increase speed by examining every x'th focal SNP
-       -n \<x\> or --nbins \<x\>
-          tablulate values into x bins
+          for debugging: increase speed by examining every x'th SNP
        -r \<x\> or --bootreps \<x\>
           number of bootstrap replicates (def: 0)
        -t \<x\> or --threads \<x\>
           number of threads (default is auto)
        -v     or --verbose
           more output
-       -w \<x\> or --window \<x\>
-          window size in cM
 
 @copyright Copyright (c) 2014, Alan R. Rogers 
 <rogers@anthro.utah.edu>. This file is released under the Internet
@@ -94,12 +85,6 @@ typedef struct ThreadArg {
      */
     long        sampling_interval;
 
-    /**
-     * Maximum distance in centimorgans between pairs of SNPs used in
-     * LD calculations.
-     */
-    double      window_cm;
-
     const char *ifname;        /**< input file name */
 
     /**
@@ -109,15 +94,10 @@ typedef struct ThreadArg {
      */
     ThreadBounds *tb;
 
-    /**
-     * Holds tabulated values of numerator and denominator of sigdsq
-     * and also of rsq.
-     */
+    /** Holds tabulated values. */
     Tabulation *tab;
 
-    /**
-     * Data used in bootstrap. Not locally owned.
-     */
+    /** Data used in bootstrap. Not locally owned. */
     Boot       *boot;
 
     /**
@@ -140,13 +120,12 @@ void ThreadArg_print(ThreadArg * targ, FILE * ofp) {
     fprintf(ofp, "  ploidy=%d\n", targ->ploidy);
     fprintf(ofp, "  sampling_interval=%ld\n", targ->sampling_interval);
     fprintf(ofp, "  nbins=%d\n", targ->nbins);
-    fprintf(ofp, "  window_cm=%lg\n", targ->window_cm);
     ThreadBounds_print(targ->tb, 1, ofp);
     Tabulation_print(targ->tab, ofp);
 }
 
 /**
- * `eld` runs a copy of this function within each thread. The
+ * `obsspec` runs a copy of this function within each thread. The
  * function opens the input file, which gives the thread its own input
  * buffer so that it can move around in the file without locking it.
  * Then it examines pairs of SNPs within a window that slides across
@@ -165,6 +144,8 @@ void       *threadfun(void *varg) {
         fprintf(stderr, "threadfun: can't open file \"%s\"\n", targ->ifname);
         pthread_exit(NULL);
     }
+
+    XXXXXXXXXXXXXXXX stopped here. Need to write something to replace window.c
 
     /* set up sliding window */
     Window     *window = Window_new(targ->window_cm,
@@ -209,21 +190,17 @@ void       *threadfun(void *varg) {
 
 /** Print usage message and abort */
 static void usage(void) {
-    fprintf(stderr, "usage: eld [options] input_file_name\n");
+    fprintf(stderr, "usage: obsspec [options] input_file_name\n");
     fprintf(stderr, "   where options may include:\n");
     tellopt("-b <x> or --blocksize <x>", "SNPs per bootstrap block");
     tellopt("-f <x> or --bootfile <x>", "name of bootstrap output file");
     tellopt("-h or --help", "print this message");
     tellopt("-i <x> or --interval <x>",
             "for debugging: increase speed by examining every x'th focal SNP");
-    tellopt("-n <x> or --nbins <x>", "tablulate values into x bins");
-    tellopt("-R <x> or --recombination <x>",
-            "set recombination rate/generation for adjacent sites");
     tellopt("-r <x> or --bootreps <x>",
             "number of bootstrap replicates (def: 0)");
     tellopt("-t <x> or --threads <x>", "number of threads (default is auto)");
     tellopt("-v     or --verbose", "more output");
-    tellopt("-w <x> or --window <x>", "window size in cM");
     exit(EXIT_FAILURE);
 }
 
@@ -237,29 +214,23 @@ int main(int argc, char **argv) {
         {"bootfile", required_argument, 0, 'f'},
         {"help", no_argument, 0, 'h'},
         {"interval", required_argument, 0, 'i'},
-        {"nbins", required_argument, 0, 'n'},
         {"bootreps", required_argument, 0, 'r'},
         {"threads", required_argument, 0, 't'},
         {"verbose", no_argument, 0, 'v'},
-        {"window", required_argument, 0, 'w'},
         {NULL, 0, NULL, 0}
     };
 
-    double      windowsize_cm = 0.3;
     double      confidence = 0.95;
     int         nthreads = 0;   /* number of threads to launch */
     long        sampling_interval = 1;
     long        bootreps = 0;
     long        blocksize = 300;
-    int         nbins = 25;
     int         verbose = 0;
-    int         ploidy = 1;     /* default is haploid. */
 
     FILE       *ifp = NULL;
     time_t      currtime = time(NULL);
     gsl_rng    *rng;
     char       *ifname = NULL;
-    double     *sigdsq, *separation, *rsq;
     int         i, tndx;
     int         chromosome = -99;
     long unsigned *nobs;
@@ -270,9 +241,9 @@ int main(int argc, char **argv) {
     char        bootfilename[FILENAMESIZE] = { '\0' };
     char        simcmd[1000] = { '\0' };
 
-    printf("##########################################\n");
-    printf("# eld: estimate linkage disequilibrium #\n");
-    printf("##########################################\n");
+    printf("#############################################\n");
+    printf("# obsspec: estimate site frequency spectrum #\n");
+    printf("#############################################\n");
 
     putchar('\n');
 #ifdef __TIMESTAMP__
@@ -293,17 +264,15 @@ int main(int argc, char **argv) {
     if(ini) {
         Ini_setLong(ini, "blocksize", &blocksize, !MANDATORY);
         Ini_setLong(ini, "samplingInterval", &sampling_interval, !MANDATORY);
-        Ini_setInt(ini, "nbins", &nbins, !MANDATORY);
         Ini_setDbl(ini, "confidence", &confidence, !MANDATORY);
         Ini_setInt(ini, "nthreads", &nthreads, !MANDATORY);
-        Ini_setDbl(ini, "windowCm", &windowsize_cm, !MANDATORY);
         Ini_free(ini);
         ini = NULL;
     }
 
     /* command line arguments */
     for(;;) {
-        i = getopt_long(argc, argv, "b:f:hi:n:R:r:t:vw:W:", myopts, &optndx);
+        i = getopt_long(argc, argv, "b:f:hi:r:t:v", myopts, &optndx);
         if(i == -1)
             break;
         switch (i) {
@@ -323,9 +292,6 @@ int main(int argc, char **argv) {
         case 'i':
             sampling_interval = strtol(optarg, NULL, 10);
             break;
-        case 'n':
-            nbins = strtod(optarg, NULL);
-            break;
         case 'r':
             bootreps = strtol(optarg, NULL, 10);
             break;
@@ -334,9 +300,6 @@ int main(int argc, char **argv) {
             break;
         case 'v':
             verbose = 1;
-            break;
-        case 'w':
-            windowsize_cm = strtod(optarg, NULL);
             break;
         default:
             usage();
