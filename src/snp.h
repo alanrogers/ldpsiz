@@ -1,13 +1,13 @@
 /**
- * @file specscan.h
+ * @file snp.h
  * @author Alan R. Rogers
- * @brief Header for specscan.c
- * @copyright Copyright (c) 2015, Alan R. Rogers
+ * @brief Header for snp.c
+ * @copyright Copyright (c) 2014, Alan R. Rogers
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".
  */
-#ifndef LDPSIZ_SPECSCAN_H
-#define LDPSIZ_SPECSCAN_H
+#ifndef LDPSIZ_SNP_H
+#define LDPSIZ_SNP_H
 
 #include <stdio.h>
 #include "typedefs.h"
@@ -16,9 +16,7 @@
 #include "misc.h"
 
 /**
- * Estimate the site frequency spectrum. Definition is provided openly
- * here (rather than hidden in specscan.c) so that functions can be
- * inlined.  
+ * The SNP class represents a single nucleotide polymorphism.
  *
  * @copyright Copyright (c) 2015, Alan R. Rogers
  * <rogers@anthro.utah.edu>. This file is released under the Internet
@@ -39,9 +37,10 @@ void        SNP_clear(SNP * snp);
 SNP        *SNP_connect(SNP * list1, SNP * list2);
 int         SNP_count(SNP * snp);
 void        SNP_free(SNP * snp);
-unsigned    SNP_countDerived(SNP * x, unsigned ploidy);
-unsigned    SNP_countMinor(SNP * x, unsigned ploidy);
-odouble      SNP_mappos(const SNP * snp);
+unsigned    SNP_countDerived(SNP * snp, unsigned ploidy);
+unsigned    SNP_countMinor(SNP * snp, unsigned ploidy);
+double      SNP_getDsq(double *pqpq, SNP * x, SNP * y, unsigned ploidy);
+double      SNP_mappos(const SNP * snp);
 static      inline int SNP_multiplicity(const SNP * snp, int rep);
 long        SNP_ndx(const SNP * snp);
 SNP        *SNP_new(unsigned nGtype, int bootreps);
@@ -56,20 +55,6 @@ SNP        *SNPstore_checkout(SNPstore * store);
 void        SNPstore_free(SNPstore * sp);
 SNPstore   *SNPstore_new(unsigned nGtype, int bootreps);
 
-int         Specscan_advance(Specscan * specscan, Tabulation * tab, Boot * boot,
-                           long lineno);
-SNP        *Specscan_currSNP(Specscan * specscan);
-void        Specscan_free(Specscan * specscan);
-int         Specscan_nextSNP(Specscan * specscan, Boot * boot);
-Specscan     *Specscan_new(double width_cm, FILE * ifp,
-                       long sampling_interval, unsigned ploidy);
-unsigned    Specscan_nGtype(const Specscan * specscan);
-long        Specscan_nSNPsRead(const Specscan * specscan);
-
-#ifndef NDEBUG
-void        Specscan_test(int verbose);
-#endif
-
 /* inline functions */
 static      inline int SNP_multiplicity(const SNP * snp, int rep) {
     myassert(snp);
@@ -77,4 +62,7 @@ static      inline int SNP_multiplicity(const SNP * snp, int rep) {
     return snp->multiplicity[rep];
 }
 
+#  ifndef NDEBUG
+void        SNP_test(int verbose);
+#  endif
 #endif

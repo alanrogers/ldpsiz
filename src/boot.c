@@ -82,6 +82,9 @@ static void Boot_allocArrays(Boot * boot) {
 Boot       *Boot_new(long nSNPs, long nReps, long blockLength,
                      double windowcm, int nBins, gsl_rng * rng) {
 
+    if(nReps==0)
+        return NULL;
+
     if(blockLength > nSNPs) {
         fprintf(stderr,
                 "ERR@%s:%d: in Boot_new, nSNPs must be >blockLength.\n"

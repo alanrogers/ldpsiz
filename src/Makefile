@@ -47,7 +47,7 @@ PRELD := preld.o pophist.o hayes.o hill.o strobeck.o misc.o \
 preld : $(PRELD)
 	$(CC) $(CFLAGS) -o $@ $(PRELD) $(lib)
 
-ELD := eld.o readgtp.o misc.o tabulation.o window.o assign.o \
+ELD := eld.o readgtp.o misc.o tabulation.o window.o snp.o assign.o \
          fileindex.o boot.o sums.o tokenizer.o ini.o pophist.o \
          em.o
 eld : $(ELD)

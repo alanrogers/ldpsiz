@@ -1,31 +1,23 @@
 /**
- * @file window.c
+ * @file snp.c
  * @author Alan R. Rogers
- * @brief A window that slides across the chromosome.
+ * @brief A single nucleotide polymorphism (SNP).
  * 
- * LD is calculated from pairs of sites within a window, which
- * slides across the chromosome. This file implements Window, which
- * represents that sliding window.
- *
- * @copyright Copyright (c) 2014, Alan R. Rogers
+ * @copyright Copyright (c) 2015, Alan R. Rogers
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".
  */
 
+#include "snp.h"
+#include "misc.h"
+#include "sums.h"
+#include "em.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #include <math.h>
 #include <float.h>
-#include <pthread.h>
-#include "window.h"
-#include "readgtp.h"
-#include "misc.h"
-#include "tabulation.h"
-#include "boot.h"
-#include "sums.h"
-
 
 /**
  * SNPstore is a place to store objects of type SNP when they are not
@@ -39,21 +31,7 @@ struct SNPstore {
     SNP        *head;  /**< pointer to first SNP */
 };
 
-/**
- * Window represents a window that slides across the chromosome.
- */
-struct Window {
-    FILE       *ifp;            /**< input file pointer */
-    double      width_cm;       /**< the width of the window in cM */
-    SNP        *curr;           /**< points to current focal SNP */
-    long        nSNPs;          /**< number of SNPs that have been read */
-    unsigned    ploidy;         /**< 1 for haploid, 2 for diploid */
-    unsigned char gtype[500];   /**< binary-encoded genotypes in sample */
-    unsigned    nGtype;         /**< number of genotypes in data */
-    SNPstore   *store;          /**< holds SNPs when not in use */
-    long int    sampling_interval;
-                                /**< for debugging */
-};
+double      SNP_getDsq_haploid(double *pqpq, SNP * x, SNP * y);
 
 /**
  * Set values to initial states. This function does not initialize
@@ -256,6 +234,20 @@ SNP        *SNP_connect(SNP * list1, SNP * list2) {
     return list1;
 }
 
+/// Count copies of allele with value 1
+unsigned SNP_countDerived(SNP * snp, unsigned ploidy) {
+    if(ploidy == 2)
+        return sumDiploid(snp->gtype, snp->nGtype);
+    return sum_char(snp->gtype, snp->nGtype);
+}
+
+/// Count copies of minor allele.
+unsigned SNP_countMinor(SNP * snp, unsigned ploidy) {
+    unsigned count = SNP_countDerived(snp, ploidy);
+    unsigned complement = snp->nGtype - count;
+    return (count<complement ? count : complement);
+}
+
 /**
  * Calculate D squared from pair of haploid SNPs.
  *
@@ -275,6 +267,87 @@ double SNP_getDsq_haploid(double *pqpq, SNP * x, SNP * y) {
     D /= (x->nGtype - 1);
 
     *pqpq = x->pq * y->pq;
+
+    return D * D;
+}
+
+/**
+ * Calculate D squared.
+ *
+ * Use two SNPs to calculate D*D (where D is the standard LD
+ * coefficient) and the product of the pq values at the two
+ * SNPs. Function also sets the value of *pqpq.  This version uses the
+ * EM algorithm to get a maximum-likelihood estimate of D. This also
+ * provides a ML estimate of Dsq=D*D because of the invariant property
+ * of ML estimates.
+ */
+double SNP_getDsq(double *pqpq, SNP * x, SNP * y, unsigned ploidy) {
+
+    myassert(x->nGtype == y->nGtype);
+    int         status;
+    register unsigned j = 0;
+
+    *pqpq = x->pq * y->pq;
+    myassert(*pqpq > 0.0);
+
+    DsqData     dd = {
+        .tol = sqrt(DBL_EPSILON),
+        .alpha = *pqpq,
+        .beta = x->p + y->p - 2.0 * x->p * y->p,
+        .px = x->p,
+        .py = y->p,
+        .nGtype = x->nGtype,
+        .nUnphased = 0,
+        .nGam = {0}
+    };
+
+    /*
+     * Tabulate gametes into nGam array. Haploid version has unrolled
+     * loops for speed. Diploid version also counts the number of
+     * unphased double heterozygotes.
+     */
+    if(ploidy == 2) {
+        for(j = 0; j < x->nGtype; ++j) {
+            if(UNPHASED_PAIR(x->gtype[j], y->gtype[j]))
+                ++dd.nUnphased;
+            else {
+                /* Count phased gametes of each type */
+                unsigned char g1 = MAKE_PHASED(x->gtype[j]);
+                unsigned char g2 = MAKE_PHASED(y->gtype[j]);
+
+                trBits(&g1, &g2);
+                ++dd.nGam[g1];
+                ++dd.nGam[g2];
+            }
+        }
+    } else {
+        /* haploid */
+        /* unrolled loop */
+        register unsigned k = x->nGtype % 5;
+
+        for(j = 0; j < k; ++j)
+            ++dd.nGam[gamete(x->gtype[j], y->gtype[j])];
+
+        for(j = k; j < x->nGtype; j += 5) {
+            ++dd.nGam[gamete(x->gtype[j], y->gtype[j])];
+            ++dd.nGam[gamete(x->gtype[j + 1], y->gtype[j + 1])];
+            ++dd.nGam[gamete(x->gtype[j + 2], y->gtype[j + 2])];
+            ++dd.nGam[gamete(x->gtype[j + 3], y->gtype[j + 3])];
+            ++dd.nGam[gamete(x->gtype[j + 4], y->gtype[j + 4])];
+        }
+    }
+
+    dd.loD = loD(dd.px, dd.py, dd.nGam);
+    dd.hiD = hiD(dd.px, dd.py, dd.nGam);
+
+    double      D;
+
+    status = minimize1D(&D, &dd);
+    if(status) {
+        DsqData_print(&dd, __FILE__, __LINE__, stdout);
+        eprintf("ERR@%s:%d: minimize1D returned %d\n",
+                __FILE__, __LINE__, status);
+    }
 
     return D * D;
 }
@@ -333,192 +406,16 @@ void SNPstore_checkin(SNPstore * store, SNP * snp) {
     return;
 }
 
-/**
- * @brief Allocate a new Window.
- *
- * @param [in] width_cm width of Window in centimorgans
- *
- * @param [in] sampling_interval If sampling_interval is 2, window
- * will skip every other SNP. This makes things fast for debugging.
- *
- * @param [in] ploidy 1 for haploid, 2 for diploid
- */
-Window     *Window_new(double width_cm,
-                       FILE * ifp,
-                       long int sampling_interval, unsigned ploidy) {
-    Window     *window = (Window *) malloc(sizeof(Window));
-
-    checkmem(window, __FILE__, __LINE__);
-
-    window->ifp = ifp;
-    window->width_cm = width_cm;
-    window->curr = NULL;
-    window->nSNPs = 0;
-    window->nGtype = 0;
-    window->ploidy = ploidy;
-    window->store = NULL;
-    window->sampling_interval = sampling_interval;
-    return (window);
-}
-
-/** Free a Window */
-void Window_free(Window * window) {
-    if(window->curr)
-        SNP_free(window->curr);
-    if(window->store)
-        SNPstore_free(window->store);
-    free(window);
-    return;
-}
-
-/** Return pointer to current focal SNP */
-SNP        *Window_currSNP(Window * window) {
-    assert(window);
-    return window->curr;
-}
-
-/**
- * Get next SNP from input file and link it into the linked list
- * pointed to by window->curr. Return 0 on success, EOF if end of file
- * is reached, and 1 on any other error.
- */
-int Window_nextSNP(Window * window, Boot * boot) {
-    double      mappos;
-    int         nGtype, polymorphic = 0;
-    SNP        *snp = NULL;
-
-    /* get next SNP from file, skipping duplicate mappos values */
-    do {
-        nGtype = Gtp_readSNP(window->ifp, NULL, 0,  /* don't get snpId */
-                             &mappos, NULL, 0,  /* don't get list of alleles */
-                             window->gtype, sizeof(window->gtype),
-                             window->ploidy == 2);
-    } while(nGtype != EOF && window->curr
-            && Dbl_near(mappos, window->curr->mappos));
-    if(nGtype == EOF)
-        return EOF;
-
-    if(window->nGtype == 0) {
-        /* Initialization code only runs once per thread. */
-        window->nGtype = nGtype;
-        window->store = SNPstore_new(window->nGtype,
-                                     (boot ? Boot_nReps(boot) : 0));
-    }
 #ifndef NDEBUG
-    if(window->nGtype != nGtype) {
-        fprintf(stderr, "ERR@%s:%d: window->nGtype(=%d) != nGtype(=%u))\n",
-                __FILE__, __LINE__, window->nGtype, nGtype);
-        dostacktrace(__FILE__, __LINE__, stderr);
-        exit(1);
-    }
-#endif
-
-    if(snp == NULL)
-        snp = SNPstore_checkout(window->store);
-
-    polymorphic = SNP_set(snp, window->nSNPs, mappos,
-                          window->gtype, boot, window->ploidy);
-    if(!polymorphic) {
-		fflush(stdout);
-        fprintf(stderr, "%s:%d: Gtp_readSNP returned a monomorphic SNP",
-                __FILE__, __LINE__);
-		SNP_show(snp, stderr);
-		exit(1);
-	}
-
-    /* link new SNP into list */
-    snp->prev = window->curr;
-    window->curr = snp;
-    ++window->nSNPs;
-
-    return 0;
-}
-
-/** Add a new SNP to the window. */
-int Window_advance(Window * window, Tabulation * tab, Boot * boot, long count) {
-    double      sep_cm;
-    int         rval;
-    SNP        *snp;
-
-    rval = Window_nextSNP(window, boot);
-    if(rval == EOF)
-        return EOF;
-
-    /*
-     * If sampling_interval > 1, the following code will seldom
-     * execute. This increases speed by roughly a factor of
-     * sampling_interval.
-     */
-    if(count % window->sampling_interval == 0) {
-        /* Each pass through loop compares current SNP with a previous
-         * SNP, provided that previous SNP is within the window. If it is
-         * outside the window, the list is truncated at that point, and
-         * SNPs outside the window are returned to the store.
-         */
-        for(snp = window->curr; snp->prev != NULL; snp = snp->prev) {
-
-            /* ignore pairs with zero separation */
-            if(Dbl_near(window->curr->mappos, snp->prev->mappos))
-                continue;
-
-            sep_cm = window->curr->mappos - snp->prev->mappos;
-            myassert(sep_cm > 0.0);
-
-            /* If we've reached the window, then truncate the list */
-            if(sep_cm >= window->width_cm) {
-                SNPstore_checkin(window->store, snp->prev);
-                snp->prev = NULL;
-                break;
-            }
-
-            double      Dsq, pqpq;
-
-            /* Dsq and pqpq are values to be tabulated */
-            Dsq = SNP_getDsq(&pqpq, window->curr, snp->prev, window->ploidy);
-
-            /* record these values with weight 1 */
-            Tabulation_record(tab, Dsq, pqpq, sep_cm, 1);
-
-            if(boot)
-                Boot_addLD(boot, Dsq, pqpq, sep_cm, window->curr, snp->prev);
-        }
-    }
-    return 0;
-}
-
-/** Return current value of window->nGtype */
-unsigned Window_nGtype(const Window * window) {
-    return window->nGtype;
-}
-
-/** Return the number of SNPs that have been read. */
-long Window_nSNPsRead(const Window * window) {
-    myassert(window);
-    return window->nSNPs;
-}
-
-#ifndef NDEBUG
-void Window_test(int verbose) {
-    const char *tstInput = "# source              = test input\n\
-# Haploid sample size   = 10\n\
-# Ploidy                = %d\n\
-#   snp_id     nucpos    mappos alleles genotypes\n\
-         0        262    0.0262       01 0001\n\
-         1        362    0.0362       01 1100\n\
-         2        536    0.0536       01 1000\n\
-         3        799    0.0799       01 0010\n\
-         4        861    0.0861       01 0010\n\
-         5       1337    0.1337       01 0110\n\
-         6       1564    0.1564       01 1110\n\
-         7       1905    0.1905       01 0010\n\
-         8       1968    0.1968       01 1001\n\
-         9       2419    0.2419       01 0010\n";
+#include <time.h>
+void SNP_test(int verbose) {
 
     unsigned    nGtype = 6;
     int         rval;
     unsigned char gtype1[] = { 0, 0, 0, 1, 1, 1 };
     unsigned char gtype2[] = { 0, 0, 1, 1, 1, 1 };
     int         bootreps = 0;
+    Boot       *boot = NULL;
 
     SNP        *snp1 = SNP_new(nGtype, bootreps);
 
@@ -537,8 +434,6 @@ void Window_test(int verbose) {
 
     if(verbose)
         unitTstResult("SNP_new", "OK");
-
-    Boot       *boot = NULL;
 
     long        ndx = 0;
     double      mappos = 0.005;
@@ -703,69 +598,6 @@ void Window_test(int verbose) {
 
     unitTstResult("SNPstore", "OK");
 
-    const char *fname = "window-tmp.gtp";
-    FILE       *fp = fopen(fname, "w");
-
-    fputs(tstInput, fp);
-    fclose(fp);
-    fp = fopen(fname, "r");
-
-    windowcm = 0.1;
-    long        sampling_interval = 1;
-
-    ploidy = 1;
-    Window     *window = Window_new(windowcm, fp, sampling_interval, ploidy);
-
-    assert(0 == Window_nGtype(window));
-    assert(0 == Window_nSNPsRead(window));
-    assert(windowcm == window->width_cm);
-    assert(ploidy == window->ploidy);
-    assert(NULL == Window_currSNP(window));
-
-    /* advance past header material */
-    Assignment *asnmt = Gtp_readHdr(fp);
-
-    Assignment_free(asnmt);
-    asnmt = NULL;
-
-    long        lineno = 0;
-
-    Window_nextSNP(window, boot);
-
-    assert(4 == Window_nGtype(window));
-    assert(1 == Window_nSNPsRead(window));
-    assert(NULL != window->store);
-    assert(NULL != Window_currSNP(window));
-
-    Tabulation *tab = Tabulation_new(windowcm, nbins);
-
-    ++lineno;
-    Window_advance(window, tab, boot, lineno);
-
-    assert(4 == Window_nGtype(window));
-    assert(2 == Window_nSNPsRead(window));
-    assert(NULL != window->store);
-    assert(NULL != Window_currSNP(window));
-
-    snp1 = Window_currSNP(window);
-
-    assert(Dbl_near(0.0362, snp1->mappos));
-    assert(1 == snp1->ndx);
-    assert(4 == snp1->nGtype);
-    assert(1 == snp1->gtype[0]);
-    assert(1 == snp1->gtype[1]);
-    assert(0 == snp1->gtype[2]);
-    assert(0 == snp1->gtype[3]);
-    assert(Dbl_near(0.0262, snp1->prev->mappos));
-
-    Window_free(window);
-    Tabulation_free(tab);
-    tab = NULL;
-    window = NULL;
-
-    unitTstResult("Window", "OK");
-
     gsl_rng_free(rng);
-    fclose(fp);
 }
 #endif
