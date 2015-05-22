@@ -8,7 +8,7 @@ incl := -I/usr/local/include -I/opt/local/include -I../src
 
 tests := xassign xboot xchain xem xfileindex xhayes xhill \
    xini xjobqueue xmisc xmodel xpophist xreadgtp \
-   xstrobeck xsums xtabulation xtokenizer xwindow \
+   xspectab xstrobeck xsums xtabulation xtokenizer xwindow \
    xmatcoal xpolya xespectrum
 
 CC := gcc
@@ -54,6 +54,7 @@ test : $(tests)
 	-./xmodel
 	-./xpophist
 	-./xreadgtp
+	-./xspectab
 	-./xstrobeck
 	-./xsums
 	-./xtabulation
@@ -114,6 +115,10 @@ xmodel : $(XMODEL)
 XPOPHIST := xpophist.o pophist.o misc.o 
 xpophist : $(XPOPHIST)
 	$(CC) $(CFLAGS) -o $@ $(XPOPHIST) $(lib)
+
+XSPECTAB := xspectab.o spectab.o misc.o 
+xspectab : $(XSPECTAB)
+	$(CC) $(CFLAGS) -o $@ $(XSPECTAB) $(lib)
 
 XREADGTP := xreadgtp.o readgtp.o misc.o tokenizer.o assign.o
 xreadgtp : $(XREADGTP)

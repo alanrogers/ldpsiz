@@ -359,16 +359,8 @@ int main(int argc, char **argv) {
                                              FileIndex_nSNPs(fndx) - 1);
     double      maxRange = max_cm - min_cm;
 
-    /* If necessary, reduce window to size of chromosome */
-    if(windowsize_cm > maxRange) {
-        windowsize_cm = maxRange;
-
-        printf("# Warning: Reducing windowsize to sequence length\n");
-        printf("#   windowsize_cm: %lg\n", windowsize_cm);
-    }
-
     ThreadBounds *tb = ThreadBounds_new(nthreads,
-                                        windowsize_cm,
+                                        0.0,
                                         fndx);
 
     FileIndex_free(fndx);

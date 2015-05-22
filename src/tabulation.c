@@ -6,7 +6,6 @@
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".
  */
-#include "misc.h"
 #include "tabulation.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -458,7 +457,7 @@ void Tabulation_dump(const Tabulation * tab, FILE * ofp) {
        || 0 > fprintf(ofp, fmt, tab->windowcm)
        || 0 > fprintf(ofp, fmt, tab->bins_per_cm)
         )
-        eprintf("fprintf", __FILE__, __LINE__);
+        eprintf("%s:%s:%d: fprintf", __FILE__, __func__, __LINE__);
     putc('\n', ofp);
 
     for(bin = 0; bin < tab->nbins; ++bin) {
@@ -468,7 +467,7 @@ void Tabulation_dump(const Tabulation * tab, FILE * ofp) {
            || 0 > fprintf(ofp, fmt, tab->denominator[bin])
            || 0 > fprintf(ofp, fmt, tab->rsq[bin])
             )
-            eprintf("fprintf", __FILE__, __LINE__);
+            eprintf("%s:%s:%d: fprintf", __FILE__, __func__, __LINE__);
         putc('\n', ofp);
     }
 }
