@@ -45,7 +45,7 @@ set `nthreads` in the file `ldpsiz.ini`.
        -v     or --verbose
           more output
 
-@copyright Copyright (c) 2014, Alan R. Rogers 
+@copyright Copyright (c) 2015, Alan R. Rogers 
 <rogers@anthro.utah.edu>. This file is released under the Internet
 Systems Consortium License, which can be found in file "LICENSE".
 */
