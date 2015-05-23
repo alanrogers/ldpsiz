@@ -376,11 +376,6 @@ int main(int argc, char **argv) {
     if(doEquilibria)
         lblWidth += PopHist_nepoch(ph) * (1 + lblWidth);
 
-    char        fmt0[10], fmt1[10], fmt2[10];
-
-    snprintf(fmt0, sizeof(fmt0), "#%%%ds", fwidth - 1);
-    snprintf(fmt1, sizeof(fmt1), " %%%ds", fwidth);
-
     /* Header */
     fprintf(ofp, "#%s", strcenter("", fwidth - 1, buff, sizeof(buff)));
     for(i = 0; i < nModels; ++i) {
@@ -397,17 +392,17 @@ int main(int argc, char **argv) {
     }
     putc('\n', ofp);
 
-    fprintf(ofp, fmt0, "cM");
+    fprintf(ofp, "#%*s", fwidth-1, "cM");
     for(i = 0; i < nModels; ++i) {
         if(doLog)
-            fprintf(ofp, fmt1, "log10_LD");
+            fprintf(ofp, " %*s", fwidth, "log10_LD");
         else
-            fprintf(ofp, fmt1, "LD");
+            fprintf(ofp, " %*s", fwidth, "LD");
 
         const Model *model = ModelList_model(ml, i);
 
         for(j = 0; printState && j < Model_stateDim(model); ++j) {
-            fprintf(ofp, fmt1, Model_stateLbl(model, j));
+            fprintf(ofp, " %*s", fwidth, Model_stateLbl(model, j));
         }
 
         for(j = 0; doEquilibria && j < PopHist_nepoch(ph); ++j) {
@@ -415,10 +410,12 @@ int main(int argc, char **argv) {
                 snprintf(buff, sizeof(buff), "log10_eq%01d", j);
             else
                 snprintf(buff, sizeof(buff), "eq%01d", j);
-            fprintf(ofp, fmt1, buff);
+            fprintf(ofp, " %*s", fwidth, buff);
         }
     }
     putc('\n', ofp);
+
+    char        fmt0[10], fmt1[10], fmt2[10];
 
     snprintf(fmt0, sizeof(fmt0), "%%%d.%df", fwidth, fwidth - 2);
     if(doLog) {
@@ -433,7 +430,7 @@ int main(int argc, char **argv) {
     for(i = 0; i < nbins; ++i) {
         c = lo_c + i * step_c;  /* recombination rate */
 
-        /* multiply 100 to convert from raw recombination to cM */
+        /* convert from raw recombination to cM */
         fprintf(ofp, fmt0, 100.0 * c);
 
         for(j = 0; j < nModels; ++j) {
