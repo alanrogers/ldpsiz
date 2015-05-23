@@ -68,7 +68,7 @@ xassign : $(XASSIGN)
 
 # test boot.c
 XBOOT := xboot.o boot.o misc.o tabulation.o window.o snp.o readgtp.o \
-	fileindex.o sums.o tokenizer.o assign.o em.o
+	fileindex.o sums.o tokenizer.o assign.o em.o spectab.o
 xboot : $(XBOOT)
 	$(CC) $(CFLAGS) -o $@ $(XBOOT) $(lib)
 
@@ -134,7 +134,7 @@ xsums : $(XSUMS)
 	$(CC) $(CFLAGS) -o $@ $(XSUMS) $(lib)
 
 XTABULATION := xtabulation.o tabulation.o misc.o window.o snp.o sums.o boot.o \
-    readgtp.o fileindex.o tokenizer.o assign.o em.o
+    readgtp.o fileindex.o tokenizer.o assign.o em.o spectab.o
 xtabulation : $(XTABULATION)
 	$(CC) $(CFLAGS) -o $@ $(XTABULATION) $(lib)
 
@@ -142,8 +142,8 @@ XTOKENIZER := xtokenizer.o tokenizer.o misc.o
 xtokenizer : $(XTOKENIZER)
 	$(CC) $(CFLAGS) -o $@ $(XTOKENIZER) $(lib)
 
-XWINDOW := xwindow.o window.o snp.o boot.o sums.o misc.o tabulation.o readgtp.o \
-   tokenizer.o assign.o em.o
+XWINDOW := xwindow.o window.o snp.o boot.o sums.o misc.o tabulation.o \
+   readgtp.o tokenizer.o assign.o em.o spectab.o
 xwindow : $(XWINDOW)
 	$(CC) $(CFLAGS) -o $@ $(XWINDOW) $(lib)
 

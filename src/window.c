@@ -12,20 +12,21 @@
  * Systems Consortium License, which can be found in file "LICENSE".
  */
 
+#include "window.h"
+#include "readgtp.h"
+#include "misc.h"
+#include "tabulation.h"
+#include "spectab.h"
+#include "boot.h"
+#include "sums.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #include <math.h>
 #include <float.h>
 #include <pthread.h>
-#include "window.h"
-#include "readgtp.h"
-#include "misc.h"
-#include "tabulation.h"
-#include "boot.h"
-#include "sums.h"
-
 
 /**
  * Window represents a window that slides across the chromosome.
@@ -109,7 +110,7 @@ int Window_nextSNP(Window * window, Boot * boot) {
         return EOF;
 
     if(window->nGtype == 0) {
-        /* Initialization code only runs once per thread. */
+        // Initialization code only runs once per thread.
         window->nGtype = nGtype;
         window->store = SNPstore_new(window->nGtype,
                                      (boot ? Boot_nReps(boot) : 0));
@@ -144,8 +145,9 @@ int Window_nextSNP(Window * window, Boot * boot) {
     return 0;
 }
 
-/** Add a new SNP to the window. */
-int Window_advance(Window * window, Tabulation * tab, Boot * boot, long count) {
+/// Add a new SNP to the window.
+int Window_advance(Window * window, Tabulation * tab, Spectab *spectab,
+                   Boot * boot, long lineno) {
     double      sep_cm;
     int         rval;
     SNP        *snp;
@@ -154,27 +156,30 @@ int Window_advance(Window * window, Tabulation * tab, Boot * boot, long count) {
     if(rval == EOF)
         return EOF;
 
-    /*
-     * If sampling_interval > 1, the following code will seldom
-     * execute. This increases speed by roughly a factor of
-     * sampling_interval.
-     */
-    if(count % window->sampling_interval == 0) {
-        /* Each pass through loop compares current SNP with a previous
-         * SNP, provided that previous SNP is within the window. If it is
-         * outside the window, the list is truncated at that point, and
-         * SNPs outside the window are returned to the store.
-         */
+    // If sampling_interval > 1, the following code will seldom
+    // execute. This increases speed by roughly a factor of
+    // sampling_interval.
+    if(lineno % window->sampling_interval == 0) {
+        // Add current SNP to site frequency spectrum.
+        // weight=1 because this isn't a bootstrap replicate.
+        unsigned    alleleCount = SNP_countMinor(window->curr,
+                                                 window->ploidy);
+        Spectab_record(spectab, alleleCount, 1);
+
+        // Each pass through loop compares current SNP with a previous
+        // SNP, provided that previous SNP is within the window. If it is
+        // outside the window, the list is truncated at that point, and
+        // SNPs outside the window are returned to the store.
         for(snp = window->curr; snp->prev != NULL; snp = snp->prev) {
 
-            /* ignore pairs with zero separation */
+            // ignore pairs with zero separation
             if(Dbl_near(window->curr->mappos, snp->prev->mappos))
                 continue;
 
             sep_cm = window->curr->mappos - snp->prev->mappos;
             myassert(sep_cm > 0.0);
 
-            /* If we've reached the window, then truncate the list */
+            // If we've reached the window, then truncate the list
             if(sep_cm >= window->width_cm) {
                 SNPstore_checkin(window->store, snp->prev);
                 snp->prev = NULL;
@@ -183,10 +188,10 @@ int Window_advance(Window * window, Tabulation * tab, Boot * boot, long count) {
 
             double      Dsq, pqpq;
 
-            /* Dsq and pqpq are values to be tabulated */
+            // Dsq and pqpq are values to be tabulated
             Dsq = SNP_getDsq(&pqpq, window->curr, snp->prev, window->ploidy);
 
-            /* record these values with weight 1 */
+            // record these values with weight 1
             Tabulation_record(tab, Dsq, pqpq, sep_cm, 1);
 
             if(boot)
@@ -196,12 +201,18 @@ int Window_advance(Window * window, Tabulation * tab, Boot * boot, long count) {
     return 0;
 }
 
-/** Return current value of window->nGtype */
+/// Return window->nGtype
 unsigned Window_nGtype(const Window * window) {
     return window->nGtype;
 }
 
-/** Return the number of SNPs that have been read. */
+/// Return window->ploidy
+unsigned    Window_ploidy(const Window * window) {
+    return window->ploidy;
+}
+
+
+/// Return the number of SNPs that have been read.
 long Window_nSNPsRead(const Window * window) {
     myassert(window);
     return window->nSNPs;
@@ -238,9 +249,11 @@ void Window_test(int verbose) {
     int         nbins = 10;
     long        sampling_interval = 1;
     unsigned    ploidy;
+    int         folded = true;
     gsl_rng    *rng = gsl_rng_alloc(gsl_rng_taus);
     gsl_rng_set(rng, (unsigned) time(NULL));
-    Boot       *boot = Boot_new(nSNPs, 0 /* bootreps=0 */, blockLength, windowcm, nbins, rng);
+    Boot       *boot = Boot_new(nSNPs, 0 /* bootreps=0 */, blockLength,
+                                windowcm, nbins, rng);
     assert(boot == NULL);
 
     int         bootreps = 10;
@@ -251,6 +264,7 @@ void Window_test(int verbose) {
     Window     *window = Window_new(windowcm, fp, sampling_interval, ploidy);
 
     assert(0 == Window_nGtype(window));
+    assert(ploidy = Window_ploidy(window));
     assert(0 == Window_nSNPsRead(window));
     assert(windowcm == window->width_cm);
     assert(ploidy == window->ploidy);
@@ -272,9 +286,13 @@ void Window_test(int verbose) {
     assert(NULL != Window_currSNP(window));
 
     Tabulation *tab = Tabulation_new(windowcm, nbins);
+    unsigned nHapSamp = Window_nGtype(window) * Window_ploidy(window);
+    Spectab *spectab = Spectab_new(nHapSamp, folded);
 
     ++lineno;
-    Window_advance(window, tab, boot, lineno);
+    Window_advance(window, tab, spectab, boot, lineno);
+
+    Spectab_print(spectab, stdout);
 
     assert(4 == Window_nGtype(window));
     assert(2 == Window_nSNPsRead(window));
@@ -294,8 +312,10 @@ void Window_test(int verbose) {
 
     Window_free(window);
     Tabulation_free(tab);
+    Spectab_free(spectab);
     tab = NULL;
     window = NULL;
+    spectab = NULL;
 
     unitTstResult("Window", "OK");
 

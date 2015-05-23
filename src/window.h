@@ -27,14 +27,15 @@
  * Systems Consortium License, which can be found in file "LICENSE".
  */
 
-int         Window_advance(Window * window, Tabulation * tab, Boot * boot,
-                           long lineno);
+int Window_advance(Window * window, Tabulation * tab, Spectab *spectab,
+                   Boot * boot, long lineno);
 SNP        *Window_currSNP(Window * window);
 void        Window_free(Window * window);
 int         Window_nextSNP(Window * window, Boot * boot);
 Window     *Window_new(double width_cm, FILE * ifp,
                        long sampling_interval, unsigned ploidy);
 unsigned    Window_nGtype(const Window * window);
+unsigned    Window_ploidy(const Window * window);
 long        Window_nSNPsRead(const Window * window);
 
 #  ifndef NDEBUG
