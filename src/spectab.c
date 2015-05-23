@@ -15,6 +15,23 @@
 #include <float.h>
 #include <limits.h>
 
+struct Spectab {
+    unsigned    nSamp;          // haploid sample size
+    int         folded;         // 1: folded spectrum; 0: unfolded
+    long unsigned nobs;         // number of observations tabulated
+
+    // Unfolded spectrum: s[i] is number of SNPs at which i+1 copies
+    // of the derived allele are present in the sample. i ranges from
+    // 0 to nSamp-2, so dim is nSamp-1.
+    //
+    // Folded spectrum: s[i] is number of SNPs at which i+1 copies
+    // of the minor allele are present in the sample. i ranges from
+    // 0 to floor(nSamp/2) - 1, so dim is floor(nSamp/2).
+
+    unsigned    dim;            // dimension of array s
+    long unsigned *s;
+};
+
 /**
  * Allocate a new object of type Spectab.
  *
@@ -212,15 +229,29 @@ Spectab *Spectab_restore(FILE * ifp) {
     return tab;
 }
 
-/// Add an allele count to tabulation.
-void        Spectab_newSNP(Spectab *tab, unsigned alleleCount) {
-    assert(alleleCount > 0);
-    assert(alleleCount <= tab->dim);
-    
-    ++tab->s[alleleCount - 1];
-    ++tab->nobs;
+/*
+ * Record a single SNP.  Wgt is the number of copies of this
+ * SNP. May be 0 or >1 in bootstrap samples.
+ */
+void Spectab_record(Spectab * tab, unsigned alleleCount,
+                                  unsigned wgt) {
+    if(alleleCount == 0 || alleleCount > tab->dim)
+        eprintf("%s:%s:%d: Bad alleleCount:%u."
+                " Must be in [%u, %u].\n",
+                __FILE__, __func__, __LINE__, alleleCount, 0u, tab->dim);
+
+    tab->s[alleleCount - 1] += wgt;
+    tab->nobs += wgt;
 }
 
+
+
+/// Return the number of observations.
+long unsigned Spectab_nObs(const Spectab * tab) {
+    assert(tab);
+
+    return tab->nobs;
+}
 
 #ifndef NDEBUG
 void Spectab_test(int verbose) {
@@ -246,7 +277,7 @@ void Spectab_test(int verbose) {
     assert(Spectab_equals(tab, tab2));
     unitTstResult("Spectab_dup", "OK");
 
-    Spectab_newSNP(tab2, nSamp/3);
+    Spectab_record(tab2, nSamp/3, 1u);
     assert(!Spectab_equals(tab, tab2));
     Spectab_free(tab2);
     tab2 = Spectab_new(nSamp, !folded);
@@ -258,9 +289,9 @@ void Spectab_test(int verbose) {
 
     Spectab_free(tab2);
     tab2 = Spectab_new(nSamp, folded);
-    Spectab_newSNP(tab2, 1); // nobs=1
-    Spectab_newSNP(tab2, 1); // nobs=2
-    Spectab_newSNP(tab2, 2); // nobs=3
+    Spectab_record(tab2, 1, 1u); // nobs=1
+    Spectab_record(tab2, 1, 1u); // nobs=2
+    Spectab_record(tab2, 2, 2u); // nobs=4
 
     unsigned dim = (folded ? nSamp/2 : nSamp-1);
     int folded2;
@@ -268,9 +299,10 @@ void Spectab_test(int verbose) {
     long unsigned spec[dim];
     nobs = Spectab_report(tab2, dim, &folded2, spec);
     assert(folded == folded2);
-    assert(nobs = 3);
+    assert(nobs = 4);
+    assert(nobs = Spectab_nObs(tab2));
     assert(spec[0] == 2);
-    assert(spec[1] == 1);
+    assert(spec[1] == 2);
     assert(spec[2] == 0);
     unitTstResult("Spectab_report", "OK");
     unitTstResult("Spectab_newSNP", "OK");
