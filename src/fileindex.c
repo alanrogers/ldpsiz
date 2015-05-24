@@ -37,6 +37,7 @@ struct FileIndex {
      */
     long        chunksAllocated, ptrsAllocated, nSNPs;
     SNPLoc    **snploc;         /* snploc[i][j] is j'th snp w/i i'th chunk */
+    unsigned    ploidy, nGtype;
 };
 
 /* number of objects allocated by each malloc call within FileIndex */
@@ -139,6 +140,7 @@ FileIndex  *FileIndex_new(void) {
         fndx->snploc[i] = NULL;
 
     FileIndex_sanityCheck(fndx, __FILE__, __LINE__);
+    fndx->nGtype = fndx->ploidy = 0;
     return fndx;
 }
 
@@ -366,6 +368,7 @@ void FileIndex_printSummary(FileIndex * fndx, FILE * ofp) {
         fprintf(ofp, "  SNPLoc[%5ld]: seekpos=%ld mappos=%lg\n",
                 last, sl->seekpos, sl->mappos);
     }
+    fprintf(ofp, "  ploidy=%u nGtype=%u\n", fndx->ploidy, fndx->nGtype);
 }
 
 void FileIndex_printChunks(FileIndex * fndx, FILE * ofp) {
@@ -394,6 +397,14 @@ void FileIndex_print(FileIndex * fndx, FILE * ofp) {
     }
 }
 
+unsigned FileIndex_ploidy(const FileIndex *fndx) {
+    return fndx->ploidy;
+}
+
+unsigned FileIndex_nGtype(const FileIndex *fndx) {
+    return fndx->nGtype;
+}
+
 /**
  * Read through a file, storing the location of each SNP in a
  * structure of type FileIndex, which is then returned.
@@ -405,7 +416,7 @@ void FileIndex_print(FileIndex * fndx, FILE * ofp) {
  */
 FileIndex  *FileIndex_readFile(FILE * ifp) {
     FileIndex  *fndx;
-    long        rval = 0;
+    int         rval = 0;
     double      mappos0 = -1.0;
     unsigned char sitedat[1000];
     int         ploidy = 1;
@@ -417,18 +428,18 @@ FileIndex  *FileIndex_readFile(FILE * ifp) {
 
     /*
      * Call Gtp_readHdr in order to position ifp at the start of the
-     * data value. Get ploidy value from header. If non is present,
-     * assume ploidy=1.  
+     * data value. Get ploidy value from header.
      */
     rewind(ifp);
     Assignment *a = Gtp_readHdr(ifp);
 
-    Assignment_setInt(a, "ploidy", &ploidy, !MANDATORY);
-    Assignment_setInt(a, "Ploidy", &ploidy, !MANDATORY);
+    Assignment_setInt(a, "ploidy", &ploidy, MANDATORY);
     if(ploidy != 1 && ploidy != 2)
         eprintf("ERR@%s:%d: Bad ploidy in gtp file: %d\n",
                 __FILE__,__LINE__,ploidy);
     Assignment_free(a);
+
+    fndx->ploidy = ploidy;
 
     while(rval != EOF) {
         long        seekpos;
@@ -440,9 +451,14 @@ FileIndex  *FileIndex_readFile(FILE * ifp) {
          * The "NULL, 0" argument pairs cause Gtp_readSNP not to
          * return the snpId or the list of alleles.
          */
-        rval = Gtp_readSNP(ifp, NULL, 0,    /* don't get snpId */
-                           &mappos, NULL, 0,    /* don't get alleles */
+        rval = Gtp_readSNP(ifp, NULL, 0,    // don't get snpId
+                           &mappos, NULL, 0,    // don't get alleles
                            sitedat, sizeof(sitedat), ploidy == 2);
+
+        // Record the number of genotypes per SNP
+        if(fndx->nGtype == 0 && rval > 0)
+            fndx->nGtype = rval;
+
         if(mappos < mappos0) {
             fprintf(stderr,
                     "ERR@%s:%d: map positions are unsorted in file",

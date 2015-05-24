@@ -33,7 +33,7 @@ struct Assignment {
 Assignment *Assignment_new(Assignment * head, const char *key,
                            const char *value) {
     if(head) {
-        int         cmp = strcmp(head->key, key);
+        int         cmp = mystrcasecmp(head->key, key);
 
         if(cmp == 0) {
             free(head->value);
@@ -75,7 +75,7 @@ const char *Assignment_value(const Assignment * head, const char *key) {
     if(head == NULL)
         return NULL;
 
-    int         cmp = strcmp(head->key, key);
+    int         cmp = mystrcasecmp(head->key, key);
 
     if(cmp == 0)
         return head->value;

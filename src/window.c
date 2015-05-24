@@ -292,8 +292,6 @@ void Window_test(int verbose) {
     ++lineno;
     Window_advance(window, tab, spectab, boot, lineno);
 
-    Spectab_print(spectab, stdout);
-
     assert(4 == Window_nGtype(window));
     assert(2 == Window_nSNPsRead(window));
     assert(NULL != window->store);

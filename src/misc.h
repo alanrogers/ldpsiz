@@ -188,6 +188,8 @@ static inline int Dbl_near(double x, double y) {
     return fabs(x - y) <= fmax(fabs(x), fabs(y)) * DBL_EPSILON;
 }
 
+int mystrcasecmp(const char *s1, const char *s2);
+
 #ifndef NDEBUG
 #define myassert(x) do { if (!(x)) { dostacktrace(__FILE__,__LINE__,stderr); assert(x); } } while(0)
 #else

@@ -173,5 +173,9 @@ int main(int argc, char **argv) {
 
     unitTstResult("replaceSuffix", "OK");
 
+    assert(0 == mystrcasecmp("AbCd", "aBcD"));
+    assert(0 != mystrcasecmp("AbCde", "aBcD"));
+    unitTstResult("mystrcasecmp", "OK");
+
     return 0;
 }

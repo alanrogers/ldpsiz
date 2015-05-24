@@ -166,9 +166,10 @@ int main(int argc, char **argv) {
         /* check 0th SNP */
         ndx1 = 0;
         sl = FileIndex_atNdx(fndx, ndx1);
-        mappos1 = SNPLoc_mappos(sl);   /* as recorded in fndx */
+        mappos1 = SNPLoc_mappos(sl);   // as recorded in fndx
         fseek(ifp, SNPLoc_seekpos(sl), SEEK_SET);
-        rval = Gtp_readSNP(ifp, snpId, sizeof(snpId), &mappos2, NULL, 0,    /* ignore list of alleles */
+        rval = Gtp_readSNP(ifp, snpId, sizeof(snpId), &mappos2, NULL,
+                           0,    // ignore list of alleles
                            sitedat, sizeof(sitedat), ploidy == 2);
         assert(rval > 0);
         assert(ndx1 == strtol(snpId, NULL, 10));
@@ -177,9 +178,10 @@ int main(int argc, char **argv) {
         /* check last SNP */
         ndx1 = FileIndex_nSNPs(fndx) - 1;
         sl = FileIndex_atNdx(fndx, ndx1);
-        mappos1 = SNPLoc_mappos(sl);   /* as recorded in fndx */
+        mappos1 = SNPLoc_mappos(sl);   //* as recorded in fndx
         fseek(ifp, SNPLoc_seekpos(sl), SEEK_SET);
-        rval = Gtp_readSNP(ifp, snpId, sizeof(snpId), &mappos2, NULL, 0,    /* ignore list of alleles */
+        rval = Gtp_readSNP(ifp, snpId, sizeof(snpId), &mappos2, NULL,
+                           0,    // ignore list of alleles
                            sitedat, sizeof(sitedat), ploidy == 2);
         assert(rval > 0);
         assert(ndx1 == strtol(snpId, NULL, 10));
@@ -190,12 +192,16 @@ int main(int argc, char **argv) {
         sl = FileIndex_atNdx(fndx, ndx1);
         mappos1 = SNPLoc_mappos(sl);   /* as recorded in fndx */
         fseek(ifp, SNPLoc_seekpos(sl), SEEK_SET);
-        rval = Gtp_readSNP(ifp, snpId, sizeof(snpId), &mappos2, NULL, 0,    /* ignore list of alleles */
+        rval = Gtp_readSNP(ifp, snpId, sizeof(snpId), &mappos2, NULL,
+                           0,    /* ignore list of alleles */
                            sitedat, sizeof(sitedat), ploidy == 2);
         assert(rval > 0);
         assert(ndx1 == strtol(snpId, NULL, 10));
         assert(mappos1 == mappos2);
     }
+
+    assert(ploidy == FileIndex_ploidy(fndx));
+    assert(4 == FileIndex_nGtype(fndx));
 
     if(verbose)
         FileIndex_print(fndx, stdout);
@@ -218,7 +224,8 @@ int main(int argc, char **argv) {
             seekpos[j] = tb[i].seekpos[j];
             ndx[j] = tb[i].ndx[j];
             fseek(ifp, seekpos[j], SEEK_SET);
-            rval = Gtp_readSNP(ifp, snpId, sizeof(snpId), mappos + j, NULL, 0,  /* ignore list of alleles */
+            rval = Gtp_readSNP(ifp, snpId, sizeof(snpId), mappos + j, NULL,
+                               0,  // ignore list of alleles
                                sitedat, sizeof(sitedat), ploidy == 2);
             assert(mappos[j] == tb[i].mappos[j]);
             if(j > 0) {

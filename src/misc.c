@@ -62,6 +62,24 @@ char       *strlowercase(char *s) {
     return s;
 }
 
+/// Older C compilers lack strcasecmp, which compares strings ignoring
+/// case. For portability, I provide this here under a different name.
+#define ccmp(a,b) ((a) == (b) ? 0 : ((a) > (b) ? 1 : -1))
+int mystrcasecmp(const char *s1, const char *s2) {
+    char c1, c2;
+    for ( ; ; ) {
+       if (*s1 == '\0' || *s2 == '\0')
+            return ccmp(*s1,*s2);
+        c1= (isascii(*s1) && isupper(*s1)) ? tolower(*s1) : *s1;
+        c2= (isascii(*s2) && isupper(*s2)) ? tolower(*s2) : *s2;
+        if (c1 != c2)
+            return ccmp(c1,c2);
+        s1++;
+        s2++;
+    }
+}
+#undef ccmp
+
 void checkmem( /*@null@ */ void *obj, const char *file, int line) {
     if(obj == NULL)
         die("allocation error", file, line);

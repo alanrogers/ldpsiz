@@ -54,6 +54,8 @@ void        FileIndex_sanityCheck(FileIndex * fi, const char *file,
 unsigned    FileIndex_nPtrs(void);
 unsigned    FileIndex_chunkSize(void);
 long        FileIndex_nPtrsAllocated(const FileIndex *fndx);
+unsigned    FileIndex_ploidy(const FileIndex *fndx);
+unsigned    FileIndex_nGtype(const FileIndex *fndx);
 
 long        SNPLoc_seekpos(const SNPLoc *sl);
 double      SNPLoc_mappos(const SNPLoc *sl);

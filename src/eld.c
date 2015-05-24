@@ -59,7 +59,17 @@ set `nthreads` in the file `ldpsiz.ini`.
 Systems Consortium License, which can be found in file "LICENSE".
 */
 
+#include "misc.h"
+#include "readgtp.h"
+#include "fileindex.h"
+#include "tabulation.h"
+#include "window.h"
+#include "boot.h"
+#include "assign.h"
+#include "spectab.h"
+#include "ini.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
@@ -69,15 +79,6 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include <limits.h>
 #include <pthread.h>
 #include <gsl/gsl_rng.h>
-#include "typedefs.h"
-#include "misc.h"
-#include "readgtp.h"
-#include "fileindex.h"
-#include "tabulation.h"
-#include "window.h"
-#include "boot.h"
-#include "assign.h"
-#include "ini.h"
 
 /** Data required by a single thread */
 typedef struct ThreadArg {
@@ -115,6 +116,9 @@ typedef struct ThreadArg {
      */
     Tabulation *tab;
 
+    /// Holds data for site frequency spectrum.
+    Spectab *spectab;
+
     /**
      * Data used in bootstrap. Not locally owned.
      */
@@ -143,6 +147,7 @@ void ThreadArg_print(ThreadArg * targ, FILE * ofp) {
     fprintf(ofp, "  window_cm=%lg\n", targ->window_cm);
     ThreadBounds_print(targ->tb, 1, ofp);
     Tabulation_print(targ->tab, ofp);
+    Spectab_print(targ->spectab, ofp);
 }
 
 /**
@@ -183,7 +188,9 @@ void       *threadfun(void *varg) {
     for(i = ThreadBounds_ndx_1stFocal(targ->tb);
         i <= ThreadBounds_ndx_lastFocal(targ->tb); ++i) {
 
-        int         status = Window_advance(window, targ->tab, targ->boot, i);
+        int         status = Window_advance(window, targ->tab,
+                                            targ->spectab,
+                                            targ->boot, i);
 
         if(Tabulation_overflow(targ->tab)) {
             targ->overflow = 1;
@@ -249,11 +256,12 @@ int main(int argc, char **argv) {
     double      confidence = 0.95;
     int         nthreads = 0;   /* number of threads to launch */
     long        sampling_interval = 1;
-    long        bootreps = 0;
+   long        bootreps = 0;
     long        blocksize = 300;
     int         nbins = 25;
     int         verbose = 0;
     int         ploidy = 1;     /* default is haploid. */
+    unsigned    nGtype, nHapSamp;
 
     FILE       *ifp = NULL;
     time_t      currtime = time(NULL);
@@ -265,6 +273,7 @@ int main(int argc, char **argv) {
     long unsigned *nobs;
     long        nSNPs = 0;
     Tabulation **tab;
+    Spectab    **spectab;
     Boot      **boot = NULL;
     BootConf   *bc = NULL;
     char        bootfilename[FILENAMESIZE] = { '\0' };
@@ -369,7 +378,6 @@ int main(int argc, char **argv) {
     Assignment_setInt(asmt, "chromosome", &chromosome, !MANDATORY);
     Assignment_setString(asmt, "sim cmd", simcmd, sizeof(simcmd), !MANDATORY);
     Assignment_setInt(asmt, "ploidy", &ploidy, !MANDATORY);
-    Assignment_setInt(asmt, "Ploidy", &ploidy, !MANDATORY);
     Assignment_free(asmt);
     asmt = NULL;
 
@@ -380,12 +388,15 @@ int main(int argc, char **argv) {
     fprintf(stderr, "Indexing file \"%s\"...\n", ifname);
     FileIndex  *fndx = FileIndex_readFile(ifp);
 
-    /* Number of SNPs */
+    // Number of SNPs and number genotypes per SNP
     nSNPs = FileIndex_nSNPs(fndx);
-    if(nSNPs == 0) {
+    nGtype = FileIndex_nGtype(fndx);
+    if(nSNPs == 0 || nGtype == 0) {
         FileIndex_printSummary(fndx, stderr);
         eprintf("ERR@%s:%d: Input file has no data\n", __FILE__, __LINE__);
     }
+    assert(ploidy == FileIndex_ploidy(fndx));
+    nHapSamp = nGtype * ploidy; // haploid sample size
 
     /* Number of threads */
     if(nthreads == 0)
@@ -433,8 +444,14 @@ int main(int argc, char **argv) {
 
     tab = (Tabulation **) malloc(nthreads * sizeof(tab[0]));
     checkmem(tab, __FILE__, __LINE__);
-    for(i = 0; i < nthreads; ++i)
+
+    spectab = (Spectab **) malloc(nthreads * sizeof(spectab[0]));
+    checkmem(spectab, __FILE__, __LINE__);
+
+    for(i = 0; i < nthreads; ++i) {
         tab[i] = Tabulation_new(windowsize_cm, nbins);
+        spectab[i] = Spectab_new(nHapSamp, true); // true=>folded
+    }
 
     /*
      * Initially, all boot pointers are set to NULL. If they remain
@@ -476,6 +493,7 @@ int main(int argc, char **argv) {
         targ[tndx].nbins = nbins;
         targ[tndx].window_cm = windowsize_cm;
         targ[tndx].tab = tab[tndx];
+        targ[tndx].spectab = spectab[tndx];
         targ[tndx].boot = boot[tndx];
         targ[tndx].tb = &tb[tndx];
         targ[tndx].overflow = 0;
@@ -527,7 +545,7 @@ int main(int argc, char **argv) {
 
     fprintf(stderr, "Back from threads\n");
 
-    unsigned    nGtype = targ[nthreads - 1].nGtype;
+    assert(nGtype == targ[nthreads - 1].nGtype);
 
     printf("# %-35s = %u\n", "Number of genotypes", nGtype);
     printf("# %-35s = %d\n", "Ploidy", ploidy);
