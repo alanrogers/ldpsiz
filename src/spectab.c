@@ -144,17 +144,18 @@ void Spectab_free(Spectab * tab) {
     return;
 }
 
-/// Get data from Spectab object. Function returns nobs.
+/// Get data from Spectab object. If folded==NULL on input, the value
+/// of tab->folded is not returned. Function returns nobs. 
 long unsigned Spectab_report(const Spectab * tab, unsigned dim,
                              int *folded, long unsigned *spec) {
     assert(tab);
-    assert(folded);
     assert(spec);
     if(dim != tab->dim)
         eprintf("%s:%s:%d: dim=%u doesn't match tab->dim=%u",
                 __FILE__, __func__, __LINE__, dim, tab->dim);
 
-    *folded = tab->folded;
+    if(folded != NULL)
+        *folded = tab->folded;
 
     for(unsigned i = 0; i < tab->dim; ++i)
         spec[i] = tab->s[i];

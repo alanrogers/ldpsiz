@@ -256,11 +256,12 @@ int main(int argc, char **argv) {
     double      confidence = 0.95;
     int         nthreads = 0;   /* number of threads to launch */
     long        sampling_interval = 1;
-   long        bootreps = 0;
+    long        bootreps = 0;
     long        blocksize = 300;
     int         nbins = 25;
     int         verbose = 0;
     int         ploidy = 1;     /* default is haploid. */
+    const int   folded = true;
     unsigned    nGtype, nHapSamp;
 
     FILE       *ifp = NULL;
@@ -268,20 +269,21 @@ int main(int argc, char **argv) {
     gsl_rng    *rng;
     char       *ifname = NULL;
     double     *sigdsq, *separation, *rsq;
+    long unsigned *spectrum;
     int         i, tndx;
     int         chromosome = -99;
     long unsigned *nobs;
     long        nSNPs = 0;
     Tabulation **tab;
-    Spectab    **spectab;
+    Spectab   **spectab;
     Boot      **boot = NULL;
     BootConf   *bc = NULL;
     char        bootfilename[FILENAMESIZE] = { '\0' };
     char        simcmd[1000] = { '\0' };
 
-    printf("##########################################\n");
-    printf("# eld: estimate linkage disequilibrium #\n");
-    printf("##########################################\n");
+    printf("#################################\n");
+    printf("# eld: estimate LD and spectrum #\n");
+    printf("#################################\n");
 
     putchar('\n');
 #ifdef __TIMESTAMP__
@@ -442,6 +444,10 @@ int main(int argc, char **argv) {
     nobs = (long unsigned *) malloc(nbins * sizeof(nobs[0]));
     checkmem(nobs, __FILE__, __LINE__);
 
+    unsigned spdim = specdim(nHapSamp, folded); 
+    spectrum = (long unsigned *) malloc(spdim * sizeof(spectrum[0]));
+    checkmem(spectrum, __FILE__, __LINE__);
+
     tab = (Tabulation **) malloc(nthreads * sizeof(tab[0]));
     checkmem(tab, __FILE__, __LINE__);
 
@@ -450,7 +456,7 @@ int main(int argc, char **argv) {
 
     for(i = 0; i < nthreads; ++i) {
         tab[i] = Tabulation_new(windowsize_cm, nbins);
-        spectab[i] = Spectab_new(nHapSamp, true); // true=>folded
+        spectab[i] = Spectab_new(nHapSamp, folded);
     }
 
     /*
@@ -552,11 +558,14 @@ int main(int argc, char **argv) {
     printf("# %-35s = %d\n", "Haploid sample size", nGtype * ploidy);
 
     /* aggregate tabulations from threads */
-    for(tndx = 1; tndx < nthreads; ++tndx)
+    for(tndx = 1; tndx < nthreads; ++tndx) {
         Tabulation_plus_equals(tab[0], tab[tndx]);
+        Spectab_plus_equals(spectab[0], spectab[tndx]);
+    }
 
     if(Tabulation_report(tab[0], separation, nobs, sigdsq, rsq)) {
-        fprintf(stderr, "Data are invalid because Tabulation overflowed.\n");
+        fprintf(stderr, "sigdsq data are invalid because"
+                " Tabulation overflowed.\n");
         fprintf(stderr, "   Each bin can hold %lu comparisons.\n", ULONG_MAX);
         fprintf(stderr, "   Use fewer SNPs or increase --nbins.\n");
     }else{
@@ -587,9 +596,7 @@ int main(int argc, char **argv) {
         printf(" %11s", "rsq");
         putchar('\n');
         for(i = 0; i < nbins; ++i) {
-            /*
-             * "separation" is is distance in cm.
-             */
+            // "separation" is is distance in cm.
             printf("%11.8lf %11.8lf %10lu", separation[i], sigdsq[i], nobs[i]);
             if(bootreps > 0)
                 printf(" %10.8lf %10.8lf",
@@ -597,6 +604,16 @@ int main(int argc, char **argv) {
             printf(" %11.8lf", rsq[i]);
             putchar('\n');
         }
+
+        long unsigned nSpec = Spectab_report(spectab[0], spdim, NULL, spectrum);
+        assert(nSpec == nSNPs);
+        
+        putchar('\n');
+        printf("# %s site frequency spectrum. nSpec=%lu\n",
+               (folded ? "Folded" : "Unfolded"), nSpec);
+        printf("#%10s %11s\n", "count", "spectrum");
+        for(i=0; i < spdim; ++i) 
+            printf("%11d %11ld\n", i+1, spectrum[i]);
     }
 
     if(bootreps > 0) {
@@ -610,6 +627,7 @@ int main(int argc, char **argv) {
     free(rsq);
     free(separation);
     free(nobs);
+    free(spectrum);
     for(i = 0; i < nthreads; ++i) {
         Tabulation_free(tab[i]);
     }
