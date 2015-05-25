@@ -6,53 +6,43 @@
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".
  */
+#include "boot.h"
+#include "tabulation.h"
+#include "spectab.h"
+#include "misc.h"
+#include "window.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <assert.h>
 #include <gsl/gsl_rng.h>
-#include "tabulation.h"
-#include "misc.h"
-#include "window.h"
-#include "boot.h"
 
 /**
  * Contains the all data involved in a moving blocks bootstrap.
  */
 struct Boot {
-    long        nSNPs; /**< number of polymorphic sites in data */
-    long        nReps; /**< number of bootstrap replicates */
-    long        blockLength;
-                       /**< number of SNPs per block */
-    long        nBlocks;
-                       /**< number of blocks in each replicate */
-    int         nBins; /**< tabulate recombination rates into this
-                          number of bins */
-    long      **start; /**< start[i][j] = start of j'th block in i'th rep */
-    Tabulation **tab;  /**< tab[i] points to tabulation for i'th replicate */
+    long        nSNPs;       // number of polymorphic sites in data
+    long        nReps;       // number of bootstrap replicates 
+    long        blockLength; // number of SNPs per block
+    long        nBlocks;     // number of blocks in each replicate
+    int         nBins;       // tabulate recombination rates into this
+                             // number of bins 
+    long      **start;       // start[i][j] = start of j'th block in i'th rep
+    Tabulation **tab;        // LD tabulation for each replicate
+    Spectab    **spectab;    // spectrum tabulation for each replicate
 };
 
 /** Contains the data for a bootstrap confidence interval. */
 struct BootConf {
-
-    long        nReps; /**< # of repetitions */
-
-    long        blockLength;
-                       /**< # of nucleotide positions per block */
-
-    int         nBins; /**< tabulate recombination rates into this
-                          number of bins */
-
-    double      confidence;
-                       /**< fraction of sampling dist inside
-                          confidence region */
-
-    double     *low, *high;
-                        /**< confidence bounds */
-
-    double     *sep_cm; /**< sep_cm[i] is the mean centimorgans
-                           separating pairs of sites within bin i. */
+    long        nReps;       // repetitions
+    long        blockLength; // nucleotide positions per block
+    int         nBins;       // # of recombination rate bins
+    double      confidence;  // size of confidence region
+    double     *low, *high;  // LD confidence bounds
+    unsigned long *loSpec, *hiSpec; // spectrum confidence bounds
+    double     *sep_cm;      // sep_cm[i]=mean centimorgans separating
+                             // pairs of sites within bin i. 
 };
 
 /**
@@ -69,6 +59,10 @@ static void Boot_allocArrays(Boot * boot) {
     boot->tab = calloc((unsigned long) boot->nReps, sizeof(boot->tab[0]));
     checkmem(boot->tab, __FILE__, __LINE__);
 
+    boot->spectab = calloc((unsigned long) boot->nReps,
+                           sizeof(boot->spectab[0]));
+    checkmem(boot->spectab, __FILE__, __LINE__);
+
     for(i = 0; i < boot->nReps; ++i) {
         boot->start[i] = calloc((unsigned long) boot->nBlocks,
                                 sizeof(boot->start[0][0]));
@@ -76,10 +70,9 @@ static void Boot_allocArrays(Boot * boot) {
     }
 }
 
-/**
- * Constructor for class Boot.
- */
-Boot       *Boot_new(long nSNPs, long nReps, long blockLength,
+/// Constructor for class Boot.
+Boot       *Boot_new(long nSNPs, long nReps, unsigned nHapSamp,
+                     int folded, long blockLength,
                      double windowcm, int nBins, gsl_rng * rng) {
 
     if(nReps==0)
@@ -100,7 +93,6 @@ Boot       *Boot_new(long nSNPs, long nReps, long blockLength,
     unsigned long endpos = nSNPs - blockLength + 1;
 
     Boot       *boot = malloc(sizeof(Boot));
-
     checkmem(boot, __FILE__, __LINE__);
 
     boot->nSNPs = nSNPs;
@@ -115,6 +107,9 @@ Boot       *Boot_new(long nSNPs, long nReps, long blockLength,
     for(i = 0; i < boot->nReps; ++i) {
         boot->tab[i] = Tabulation_new(windowcm, nBins);
         checkmem(boot->tab[i], __FILE__, __LINE__);
+
+        boot->spectab[i] = Spectab_new(nHapSamp, folded);
+        checkmem(boot->spectab[i], __FILE__, __LINE__);
 
         for(j = 0; j < boot->nBlocks; ++j)
             boot->start[i][j] = gsl_rng_uniform_int(rng, endpos);
@@ -165,12 +160,28 @@ void Boot_addLD(Boot * boot, double Dsq, double pqpq, double sep_cm,
     register int rep;
 
     for(rep = 0; rep < boot->nReps; ++rep) {
-        register int wgt = SNP_multiplicity(snp1, rep)
+        register unsigned wgt = SNP_multiplicity(snp1, rep)
             * SNP_multiplicity(snp2, rep);
 
         if(wgt == 0)
             continue;
         Tabulation_record(boot->tab[rep], Dsq, pqpq, sep_cm, wgt);
+    }
+}
+
+/**
+ * Add one allele count to a Boot structure. On entry, boot points to the
+ * Boot structure, x is the number of copies of an allele at the SNP
+ * whose position is given by ndx.
+ */
+void Boot_addAlleleCount(Boot * boot, unsigned x, const SNP * snp) {
+    register int rep;
+
+    for(rep = 0; rep < boot->nReps; ++rep) {
+        register unsigned wgt = SNP_multiplicity(snp, rep);
+        if(wgt == 0)
+            continue;
+        Spectab_record(boot->spectab[rep], x, wgt);
     }
 }
 
@@ -513,8 +524,8 @@ void Boot_print(const Boot * boot, FILE * ofp) {
 
 #ifndef NDEBUG
 /* For debugging Boot_multiplicity */
-long Boot_multiplicity_slow(Boot * boot, long snp, long rep) {
-    long        i, n = 0;
+unsigned Boot_multiplicity_slow(Boot * boot, long snp, long rep) {
+    unsigned        i, n = 0;
 
     for(i = 0; i < boot->nBlocks; ++i) {
         long        distance = snp - boot->start[rep][i];

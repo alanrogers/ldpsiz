@@ -679,7 +679,7 @@ void Tabulation_test(int verbose) {
     sep_cm = 0.999999 * windowcm;
     bin = getBin(sep_cm, tab->bins_per_cm);
     assert(bin == nbins - 1);
-    Tabulation_record(tab, Dsq, pqpq, sep_cm, 1);
+    Tabulation_record(tab, Dsq, pqpq, sep_cm, 1u);
 
     for(i = 0; i < nbins; ++i) {
         if(i == bin) {

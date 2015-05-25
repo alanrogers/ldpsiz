@@ -2,19 +2,20 @@
  * @file boot.h
  * @author Alan R. Rogers
  * @brief Header for boot.c.
- * @copyright Copyright (c) 2014, Alan R. Rogers
+ * @copyright Copyright (c) 2014, 2015 Alan R. Rogers
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".
  */
 #ifndef LDPSIZ_BOOT_H
 #define LDPSIZ_BOOT_H
 
-#include <gsl/gsl_rng.h>
 #include "typedefs.h"
+#include <gsl/gsl_rng.h>
 void        confidenceBounds(double *lowBnd, double *highBnd,
                              double confidence, double *v, long len);
 double      interpolate(double p, double *v, long len);
-Boot       *Boot_new(long nSNPs, long nReps, long blockLength,
+Boot       *Boot_new(long nSNPs, long nReps, unsigned nHapSamp,
+                     int folded, long blockLength,
                      double windowcm, int nBins, gsl_rng * rng);
 void        Boot_addLD(Boot * boot, double Dsq, double pqpq, double sep_cm,
                        const SNP * snp1, const SNP * snp2);

@@ -29,7 +29,7 @@ struct SNP {
     long        ndx;            /* index of current SNP (begins with 0) */
     double      sum, p, pq;
     int         bootreps;
-    int        *multiplicity;
+    unsigned   *multiplicity;
     struct SNP *prev;           /* previous SNP in linked list */
 };
 
@@ -41,7 +41,7 @@ unsigned    SNP_countDerived(SNP * snp, unsigned ploidy);
 unsigned    SNP_countMinor(SNP * snp, unsigned ploidy);
 double      SNP_getDsq(double *pqpq, SNP * x, SNP * y, unsigned ploidy);
 double      SNP_mappos(const SNP * snp);
-static      inline int SNP_multiplicity(const SNP * snp, int rep);
+static      inline unsigned SNP_multiplicity(const SNP * snp, int rep);
 long        SNP_ndx(const SNP * snp);
 SNP        *SNP_new(unsigned nGtype, int bootreps);
 int         SNP_nGtype(const SNP * snp);
@@ -56,7 +56,7 @@ void        SNPstore_free(SNPstore * sp);
 SNPstore   *SNPstore_new(unsigned nGtype, int bootreps);
 
 /* inline functions */
-static      inline int SNP_multiplicity(const SNP * snp, int rep) {
+static      inline unsigned SNP_multiplicity(const SNP * snp, int rep) {
     myassert(snp);
     myassert(rep < snp->bootreps);
     return snp->multiplicity[rep];
