@@ -9,7 +9,7 @@ incl := -I/usr/local/include -I/opt/local/include -I../src
 tests := xassign xboot xchain xem xfileindex xhayes xhill \
    xini xjobqueue xmisc xmodel xpophist xreadgtp \
    xspectab xstrobeck xsums xtabulation xtokenizer xwindow \
-   xmatcoal xpolya xespectrum
+   xmatcoal xpolya xespectrum xarray
 
 CC := gcc
 
@@ -41,6 +41,7 @@ lib := -L/usr/local/lib -lgsl -lgslcblas -lpthread -lm
 	$(CC) $(CFLAGS) $(incl) -c -o ${@F}  $<
 
 test : $(tests)
+	-./xarray
 	-./xassign
 	-./xboot
 	-./xchain
@@ -61,6 +62,10 @@ test : $(tests)
 	-./xtokenizer 
 	-./xwindow
 	@echo "FINISHED UNIT TESTS."
+
+XARRAY := xarray.o array.o misc.o
+xarray : $(XARRAY)
+	$(CC) $(CFLAGS) -o $@ $(XARRAY) $(lib)
 
 XASSIGN := xassign.o assign.o misc.o tokenizer.o
 xassign : $(XASSIGN)
@@ -116,7 +121,7 @@ XPOPHIST := xpophist.o pophist.o misc.o
 xpophist : $(XPOPHIST)
 	$(CC) $(CFLAGS) -o $@ $(XPOPHIST) $(lib)
 
-XSPECTAB := xspectab.o spectab.o misc.o 
+XSPECTAB := xspectab.o spectab.o misc.o array.o
 xspectab : $(XSPECTAB)
 	$(CC) $(CFLAGS) -o $@ $(XSPECTAB) $(lib)
 
@@ -143,7 +148,7 @@ xtokenizer : $(XTOKENIZER)
 	$(CC) $(CFLAGS) -o $@ $(XTOKENIZER) $(lib)
 
 XWINDOW := xwindow.o window.o snp.o boot.o sums.o misc.o tabulation.o \
-   readgtp.o tokenizer.o assign.o em.o spectab.o
+   readgtp.o tokenizer.o assign.o em.o spectab.o array.o
 xwindow : $(XWINDOW)
 	$(CC) $(CFLAGS) -o $@ $(XWINDOW) $(lib)
 

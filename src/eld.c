@@ -262,13 +262,12 @@ int main(int argc, char **argv) {
     int         verbose = 0;
     int         ploidy = 1;     /* default is haploid. */
     const int   folded = true;
-    unsigned    nGtype, nHapSamp;
+    unsigned    nGtype, twoNsamp;
 
     FILE       *ifp = NULL;
     time_t      currtime = time(NULL);
     gsl_rng    *rng;
     char       *ifname = NULL;
-    double     *sigdsq, *separation, *rsq;
     long unsigned *spectrum;
     int         i, tndx;
     int         chromosome = -99;
@@ -398,7 +397,7 @@ int main(int argc, char **argv) {
         eprintf("ERR@%s:%d: Input file has no data\n", __FILE__, __LINE__);
     }
     assert(ploidy == FileIndex_ploidy(fndx));
-    nHapSamp = nGtype * ploidy; // haploid sample size
+    twoNsamp = nGtype * ploidy; // haploid sample size
 
     /* Number of threads */
     if(nthreads == 0)
@@ -432,20 +431,21 @@ int main(int argc, char **argv) {
     gsl_rng_set(rng, (unsigned) currtime);
 
     /* allocate arrays */
-    sigdsq = (double *) malloc(nbins * sizeof(sigdsq[0]));
+    DblArray *sigdsq = DblArray_new((unsigned long) nbins);
     checkmem(sigdsq, __FILE__, __LINE__);
 
-    rsq = (double *) malloc(nbins * sizeof(rsq[0]));
+    DblArray *rsq = DblArray_new((unsigned long) nbins);
     checkmem(rsq, __FILE__, __LINE__);
 
-    separation = (double *) malloc(nbins * sizeof(separation[0]));
+
+    DblArray *separation = DblArray_new((unsigned long) nbins);
     checkmem(separation, __FILE__, __LINE__);
 
-    nobs = (long unsigned *) malloc(nbins * sizeof(nobs[0]));
+    ULIntArray *nobs = ULIntArray_new((unsigned long) nbins);
     checkmem(nobs, __FILE__, __LINE__);
-
-    unsigned spdim = specdim(nHapSamp, folded); 
-    spectrum = (long unsigned *) malloc(spdim * sizeof(spectrum[0]));
+    
+    unsigned spdim = specdim(twoNsamp, folded); 
+    ULIntArray *spectrum = ULIntArray_new((unsigned long) spdim);
     checkmem(spectrum, __FILE__, __LINE__);
 
     tab = (Tabulation **) malloc(nthreads * sizeof(tab[0]));
@@ -456,7 +456,7 @@ int main(int argc, char **argv) {
 
     for(i = 0; i < nthreads; ++i) {
         tab[i] = Tabulation_new(windowsize_cm, nbins);
-        spectab[i] = Spectab_new(nHapSamp, folded);
+        spectab[i] = Spectab_new(twoNsamp, folded);
     }
 
     /*
@@ -597,15 +597,18 @@ int main(int argc, char **argv) {
         putchar('\n');
         for(i = 0; i < nbins; ++i) {
             // "separation" is is distance in cm.
-            printf("%11.8lf %11.8lf %10lu", separation[i], sigdsq[i], nobs[i]);
+            printf("%11.8lf %11.8lf %10lu",
+                   DblArray_get(separation, i),
+                   DblArray_get(sigdsq,i),
+                   ULIntArray_get(nobs, i));
             if(bootreps > 0)
                 printf(" %10.8lf %10.8lf",
                        BootConf_lowBound(bc, i), BootConf_highBound(bc, i));
-            printf(" %11.8lf", rsq[i]);
+            printf(" %11.8lf", DblArray_get(rsq,i));
             putchar('\n');
         }
 
-        long unsigned nSpec = Spectab_report(spectab[0], spdim, NULL, spectrum);
+        long unsigned nSpec = Spectab_report(spectab[0], spectrum);
         assert(nSpec == nSNPs);
         
         putchar('\n');
@@ -613,7 +616,7 @@ int main(int argc, char **argv) {
                (folded ? "Folded" : "Unfolded"), nSpec);
         printf("#%10s %11s\n", "count", "spectrum");
         for(i=0; i < spdim; ++i) 
-            printf("%11d %11ld\n", i+1, spectrum[i]);
+            printf("%11d %11ld\n", i+1, DblArray_get(spectrum,i));
     }
 
     if(bootreps > 0) {
@@ -623,11 +626,11 @@ int main(int argc, char **argv) {
     if(bc)
         BootConf_free(bc);
     free(boot);
-    free(sigdsq);
-    free(rsq);
-    free(separation);
-    free(nobs);
-    free(spectrum);
+    DblArray_free(sigdsq);
+    DblArray_free(rsq);
+    DblArray_free(separation);
+    ULIntArray_free(nobs);
+    DblArray_free(spectrum);
     for(i = 0; i < nthreads; ++i) {
         Tabulation_free(tab[i]);
     }

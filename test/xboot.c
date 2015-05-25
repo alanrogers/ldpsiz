@@ -12,6 +12,7 @@
 #include "window.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <math.h>
 #include <assert.h>
@@ -31,6 +32,7 @@ int main(int argc, char **argv) {
     int         nBins = 4;
     double      windowcm = 0.3, sep;
     int         verbose = 0;
+    const int   folded = true;
 
     long        i;
     time_t      currtime = time(NULL);
@@ -59,7 +61,7 @@ int main(int argc, char **argv) {
     assert(Dbl_near(interpolate(0.5, v, 5), 2.0));
     unitTstResult("interpolate", "OK");
 
-    boot = Boot_new(nSNPs, nReps, blockLength, windowcm, nBins, rng);
+    boot = Boot_new(nSNPs, nReps, twoNsamp, folded, blockLength, windowcm, nBins, rng);
     if(verbose)
         Boot_print(boot, stdout);
 

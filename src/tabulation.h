@@ -11,6 +11,7 @@
 
 #include "typedefs.h"
 #include "misc.h"
+#include "array.h"
 
 /*
  * tabulation.h. This file defines the Tabulation object, which keeps
@@ -50,9 +51,14 @@ Tabulation *Tabulation_dup(Tabulation * old);
 void        Tabulation_free(Tabulation * tab);
 void        Tabulation_plus_equals(Tabulation * x, const Tabulation * y);
 void        Tabulation_print(Tabulation * tab, FILE * ofp);
-int         Tabulation_report(Tabulation * tab, double *sep_cm,
-                              long unsigned *nobs, double *sigdsq,
-                              double *rsq);
+#if 0
+int         Tabulation_report(Tabulation * tab, double *sep_cm, long unsigned *nobs,
+                              double *sigdsq, double *rsq);
+#else
+int         Tabulation_report(Tabulation *tab,
+                              DblArray *sep_cm, ULIntArray *nobs,
+                              DblArray *sigdsq, DblArray *rsq);
+#endif
 double      Tabulation_sigdsq(Tabulation * tab, int bin, double *sep_cm,
                               long unsigned *nobs);
 double      Tabulation_rsq(Tabulation * tab, int bin, double *sep_cm,

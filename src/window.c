@@ -248,19 +248,22 @@ void Window_test(int verbose) {
     double      windowcm = 0.1;
     int         nbins = 10;
     long        sampling_interval = 1;
-    unsigned    ploidy;
+    unsigned    ploidy = 1;
+    unsigned    nGtype = 4;
+    unsigned    twoNsamp = nGtype * ploidy;
     int         folded = true;
     gsl_rng    *rng = gsl_rng_alloc(gsl_rng_taus);
     gsl_rng_set(rng, (unsigned) time(NULL));
-    Boot       *boot = Boot_new(nSNPs, 0 /* bootreps=0 */, blockLength,
+    Boot       *boot = Boot_new(nSNPs, 0L /* bootreps=0 */,
+                                twoNsamp, folded,
+                                blockLength,
                                 windowcm, nbins, rng);
     assert(boot == NULL);
 
     int         bootreps = 10;
-    boot = Boot_new(nSNPs, bootreps, blockLength, windowcm, nbins, rng);
+    boot = Boot_new(nSNPs, bootreps, twoNsamp, folded, blockLength, windowcm, nbins, rng);
     assert(boot != NULL);
 
-    ploidy = 1;
     Window     *window = Window_new(windowcm, fp, sampling_interval, ploidy);
 
     assert(0 == Window_nGtype(window));
@@ -285,9 +288,10 @@ void Window_test(int verbose) {
     assert(NULL != window->store);
     assert(NULL != Window_currSNP(window));
 
+    assert(twoNsamp == Window_nGtype(window) * Window_ploidy(window));
+
     Tabulation *tab = Tabulation_new(windowcm, nbins);
-    unsigned nHapSamp = Window_nGtype(window) * Window_ploidy(window);
-    Spectab *spectab = Spectab_new(nHapSamp, folded);
+    Spectab *spectab = Spectab_new(twoNsamp, folded);
 
     ++lineno;
     Window_advance(window, tab, spectab, boot, lineno);

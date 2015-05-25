@@ -295,8 +295,9 @@ int Tabulation_isfinite(const Tabulation * tab) {
  * case no values are stored. Returns 0 on success, or 1 if data are invalid
  * because an overflow has occurred.
  */
+#if 0
 int Tabulation_report(Tabulation * tab, double *sep_cm, long unsigned *nobs,
-                      double *sigdsq, double *rsq) {
+                              double *sigdsq, double *rsq) {
     int         i;
     unsigned    n;
 
@@ -326,6 +327,46 @@ int Tabulation_report(Tabulation * tab, double *sep_cm, long unsigned *nobs,
 
     return 0;
 }
+#else
+int         Tabulation_report(Tabulation *tab,
+                              DblArray *sep_cm, ULIntArray *nobs,
+                              DblArray *sigdsq, DblArray *rsq) {
+    int         i;
+    unsigned long  n;
+
+    myassert(tab);
+    myassert(sep_cm);
+    myassert(sigdsq);
+    assert(tab->nbins == DblArray_dim(sep_cm));
+    assert(tab->nbins == DblArray_dim(sigdsq));
+    assert(tab->nbins == DblArray_dim(rsq));
+    assert(tab->nbins == ULIntArray_dim(nobs));
+
+    if(Tabulation_overflow(tab))
+        return 1;
+
+    for(i = 0; i < tab->nbins; ++i) {
+        n = tab->nobs[i];
+        if(nobs)
+            ULIntArray_set(nobs, i, n);
+
+        if(n == 0) {
+            double nanval = strtod("NAN", NULL);
+            DblArray_set(sep_cm, i, nanval);
+            DblArray_set(sigdsq, i, nanval);
+            if(rsq)
+                DblArray_set(rsq, i, nanval);
+        } else {
+            DblArray_set(sigdsq, i, tab->numerator[i] / tab->denominator[i]);
+            DblArray_set(sep_cm, i, tab->sep_cm[i] / n);
+            if(rsq)
+                DblArray_set(rsq, i, tab->rsq[i] / n);
+        }
+    }
+
+    return 0;
+}
+#endif
 
 /*
  * Return the sigdsq estimate for a single bin. On entry, "tab"

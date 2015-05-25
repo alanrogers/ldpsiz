@@ -17,11 +17,13 @@ typedef struct Assignment Assignment;
 typedef struct Boot Boot;
 typedef struct BootConf BootConf;
 typedef struct Chain Chain;
+typedef struct DblArray DblArray;
 typedef struct EpochLink EpochLink;
 typedef struct ESpectrum ESpectrum;
 typedef struct FileIndex FileIndex;
 typedef struct HillData HillData;
 typedef struct Ini Ini;
+typedef struct IntArray IntArray;
 typedef struct JobQueue JobQueue;
 typedef struct LocRef LocRef;
 typedef struct MinimizerResult MinimizerResult;
@@ -43,6 +45,8 @@ typedef struct ThreadBounds ThreadBounds;
 typedef struct Threadpool Threadpool;
 typedef struct ThreadQueue ThreadQueue;
 typedef struct Tokenizer Tokenizer;
+typedef struct UIntArray UIntArray;
+typedef struct ULIntArray ULIntArray;
 typedef struct Window Window;
 
 struct dydt_params {

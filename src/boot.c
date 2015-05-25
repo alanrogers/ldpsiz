@@ -12,6 +12,7 @@
 #include "misc.h"
 #include "window.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -38,9 +39,10 @@ struct BootConf {
     long        nReps;       // repetitions
     long        blockLength; // nucleotide positions per block
     int         nBins;       // # of recombination rate bins
+    unsigned    specDim;     // dimension of spectrum
     double      confidence;  // size of confidence region
     double     *low, *high;  // LD confidence bounds
-    unsigned long *loSpec, *hiSpec; // spectrum confidence bounds
+    double     *loSpec, *hiSpec; // spectrum confidence bounds
     double     *sep_cm;      // sep_cm[i]=mean centimorgans separating
                              // pairs of sites within bin i. 
 };
@@ -71,7 +73,7 @@ static void Boot_allocArrays(Boot * boot) {
 }
 
 /// Constructor for class Boot.
-Boot       *Boot_new(long nSNPs, long nReps, unsigned nHapSamp,
+Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsamp,
                      int folded, long blockLength,
                      double windowcm, int nBins, gsl_rng * rng) {
 
@@ -108,7 +110,7 @@ Boot       *Boot_new(long nSNPs, long nReps, unsigned nHapSamp,
         boot->tab[i] = Tabulation_new(windowcm, nBins);
         checkmem(boot->tab[i], __FILE__, __LINE__);
 
-        boot->spectab[i] = Spectab_new(nHapSamp, folded);
+        boot->spectab[i] = Spectab_new(twoNsamp, folded);
         checkmem(boot->spectab[i], __FILE__, __LINE__);
 
         for(j = 0; j < boot->nBlocks; ++j)
@@ -157,9 +159,7 @@ long Boot_multiplicity(const Boot * boot, long snp, long rep) {
  */
 void Boot_addLD(Boot * boot, double Dsq, double pqpq, double sep_cm,
                 const SNP * snp1, const SNP * snp2) {
-    register int rep;
-
-    for(rep = 0; rep < boot->nReps; ++rep) {
+    for(register int rep = 0; rep < boot->nReps; ++rep) {
         register unsigned wgt = SNP_multiplicity(snp1, rep)
             * SNP_multiplicity(snp2, rep);
 
@@ -175,9 +175,7 @@ void Boot_addLD(Boot * boot, double Dsq, double pqpq, double sep_cm,
  * whose position is given by ndx.
  */
 void Boot_addAlleleCount(Boot * boot, unsigned x, const SNP * snp) {
-    register int rep;
-
-    for(rep = 0; rep < boot->nReps; ++rep) {
+    for(register int rep = 0; rep < boot->nReps; ++rep) {
         register unsigned wgt = SNP_multiplicity(snp, rep);
         if(wgt == 0)
             continue;
@@ -202,11 +200,14 @@ Boot       *Boot_dup(const Boot * old) {
     new->tab = malloc(new->nReps * sizeof(new->tab[0]));
     checkmem(new->tab, __FILE__, __LINE__);
 
-    myassert(sizeof(new->start[0][0]) > 0);
-    int         i;
+    new->spectab = malloc(new->nReps * sizeof(new->spectab[0]));
+    checkmem(new->spectab, __FILE__, __LINE__);
 
-    for(i = 0; i < new->nReps; ++i) {
+    myassert(sizeof(new->start[0][0]) > 0);
+
+    for(int i = 0; i < new->nReps; ++i) {
         new->tab[i] = Tabulation_dup(old->tab[i]);
+        new->spectab[i] = Spectab_dup(old->spectab[i]);
         new->start[i] = memdup(old->start[i],
                                new->nBlocks * sizeof(new->start[0][0]));
     }
@@ -250,11 +251,13 @@ void Boot_free(Boot * boot) {
     for(i = 0; i < boot->nReps; ++i) {
         free(boot->start[i]);
         Tabulation_free(boot->tab[i]);
+        Spectab_free(boot->spectab[i]);
         boot->start[i] = NULL;
         boot->tab[i] = NULL;
     }
     free(boot->start);
     free(boot->tab);
+    free(boot->spectab);
     boot->start = NULL;
     boot->tab = NULL;
     free(boot);
@@ -286,27 +289,30 @@ double interpolate(double p, double *v, long len) {
 /* Return 1 if the two Boot structs are idential; zero otherwise */
 int Boot_equals(const Boot * x, const Boot * y) {
     if(x == NULL || y == NULL)
-        return 0;
+        return false;
     if(x->nSNPs != y->nSNPs)
-        return 0;
+        return false;
     if(x->nReps != y->nReps)
-        return 0;
+        return false;
     if(x->blockLength != y->blockLength)
-        return 0;
+        return false;
     if(x->nBins != y->nBins)
-        return 0;
+        return false;
 
     long        i, j;
 
     for(i = 0; i < x->nReps; ++i) {
         if(!Tabulation_equals(x->tab[i], y->tab[i]))
-            return 0;
+            return false;
+
+        if(!Spectab_equals(x->spectab[i], y->spectab[i]))
+            return false;
 
         for(j = 0; j < x->nBlocks; ++j)
             if(x->start[i][j] != y->start[i][j])
-                return 0;
+                return false;
     }
-    return 1;
+    return true;
 }
 
 /*
@@ -337,6 +343,7 @@ void Boot_plus_equals(Boot * x, const Boot * y) {
                     __FILE__, __LINE__);
         }
         Tabulation_plus_equals(x->tab[rep], y->tab[rep]);
+        Spectab_plus_equals(x->spectab[rep], y->spectab[rep]);
     }
     return;
 }
@@ -360,6 +367,7 @@ void Boot_dump(const Boot * boot, FILE * ofp) {
         }
         putc('\n', ofp);
         Tabulation_dump(boot->tab[rep], ofp);
+        Spectab_dump(boot->spectab[rep], ofp);
     }
 }
 
@@ -409,6 +417,7 @@ Boot       *Boot_restore(FILE * ifp) {
                         __FILE__, __LINE__, rval);
         }
         boot->tab[rep] = Tabulation_restore(ifp);
+        boot->spectab[rep] = Spectab_restore(ifp);
         if(!Tabulation_isfinite(boot->tab[rep])) {
             fprintf(stderr,
                     "Warning@%s:%d: bootstrap replicate %ld is non-finite\n",
@@ -422,14 +431,16 @@ Boot       *Boot_restore(FILE * ifp) {
  * Fill arrays sigdsq, cm, and nobs with values for bootstrap
  * repetition "rep". If nobs==NULL, nothing is stored there.
  */
-void Boot_get_rep(Boot * boot, double *sigdsq, double *rsq, double *cm,
-                  long unsigned *nobs, int rep) {
+void Boot_get_rep(Boot * boot, DblArray *sigdsq, DblArray *rsq,
+                  DblArray *cm, ULIntArray *nobs,
+                  ULIntArray *spectrum, int rep) {
     myassert(boot);
     myassert(sigdsq);
     myassert(cm);
     myassert(rep < boot->nReps);
     myassert(rep >= 0);
     Tabulation_report(boot->tab[rep], cm, nobs, sigdsq, rsq);
+    Spectab_report(boot->spectab[rep], spectrum);
 }
 
 /*
@@ -492,6 +503,7 @@ long Boot_purge(Boot * boot) {
         else {
             free(boot->start[rep]);
             Tabulation_free(boot->tab[rep]);
+            Spectab_free(boot->spectab[rep]);
 
             if(rep < nGoodReps - 1) {
                 boot->start[rep] = boot->start[nGoodReps - 1];
@@ -518,7 +530,8 @@ void Boot_print(const Boot * boot, FILE * ofp) {
         for(block = 0; block < boot->nBlocks; ++block)
             fprintf(ofp, " %ld", boot->start[rep][block]);
         putc('\n', ofp);
-        /*        Tabulation_print(boot->tab[rep], ofp); */
+        // Tabulation_print(boot->tab[rep], ofp);
+        // Spectab_print(boot->spectab[rep], ofp);
     }
 }
 
@@ -538,8 +551,6 @@ unsigned Boot_multiplicity_slow(Boot * boot, long snp, long rep) {
     return n;
 }
 #endif
-
-
 
 BootConf   *BootConf_new(Boot * boot, double confidence) {
     BootConf   *bc = malloc(sizeof(BootConf));
@@ -561,45 +572,62 @@ BootConf   *BootConf_new(Boot * boot, double confidence) {
     checkmem(bc->sep_cm, __FILE__, __LINE__);
     memset(bc->sep_cm, 0, bc->nBins * sizeof(bc->sep_cm[0]));
 
-    int         bin, rep;
-    double     *v = malloc(bc->nReps * sizeof(v[0]));
+    assert(boot->spectab && boot->spectab[0]);
 
-    checkmem(v, __FILE__, __LINE__);
+    // Dimension of site frequency spectrum
+    bc->specDim = Spectab_dim(boot->spectab[0]);
 
-    for(bin = 0; bin < bc->nBins; ++bin) {
+    bc->loSpec = malloc(bc->specDim * sizeof(bc->loSpec[0]));
+    checkmem(bc->loSpec, __FILE__, __LINE__);
+
+    bc->hiSpec = malloc(bc->specDim * sizeof(bc->hiSpec[0]));
+    checkmem(bc->hiSpec, __FILE__, __LINE__);
+
+    int         i, rep, nvals;
+    double     v[bc->nReps];
+
+    // Confidence bounds on sigdsq
+    for(i = 0; i < bc->nBins; ++i) {
         double      tmp1, nobs = 0, sigdsq;
         long unsigned tmp2;
-        int         nvals = 0;
+        nvals = 0;
 
-        /*
-         * Note to self: Insert code into this loop to estimate the
-         * coefficient of variation of the denominator. Use function
-         * Tabulation_denom to get the mean of denominator values for
-         * each bin. Check for NAs. Then use the sum across replicates
-         * to estimate the mean and variance of denom values. Use this
-         * to correct bias, as explained in notes.tex, in the top
-         * directory of this package.
-         */
         for(rep = 0; rep < bc->nReps; ++rep) {
-            sigdsq = Tabulation_sigdsq(boot->tab[rep], bin, &tmp1, &tmp2);
+            sigdsq = Tabulation_sigdsq(boot->tab[rep], i, &tmp1, &tmp2);
             if(isfinite(sigdsq)) {
                 myassert(nvals < bc->nReps);
                 v[nvals] = sigdsq;
-                bc->sep_cm[bin] += tmp1;
+                bc->sep_cm[i] += tmp1;
                 nobs += tmp2;
                 ++nvals;
             }
         }
         nobs /= nvals;
-        bc->sep_cm[bin] /= nvals;
+        bc->sep_cm[i] /= nvals;
         if(nvals < 10) {
-            bc->low[bin] = bc->high[bin] = strtod("NAN", NULL);
+            bc->low[i] = bc->high[i] = strtod("NAN", NULL);
         } else
-            confidenceBounds(bc->low + bin, bc->high + bin,
+            confidenceBounds(bc->low + i, bc->high + i,
                              confidence, v, nvals);
     }
 
-    free(v);
+    // Confidence bounds on spectrum
+    for(i = 0; i < bc->specDim; ++i) {
+        long unsigned count;
+        nvals = 0;
+
+        for(rep = 0; rep < bc->nReps; ++rep) {
+            count = Spectab_get(boot->spectab[rep], i);
+            assert(nvals < bc->specDim);
+            v[nvals++] = (double) count;
+        }
+        if(nvals < 10) {
+            bc->low[i] = bc->high[i] = strtod("NAN", NULL);
+        } else
+            confidenceBounds(bc->loSpec + i, bc->hiSpec + i,
+                             confidence, v, nvals);
+    }
+
     return bc;
 }
 
@@ -650,13 +678,25 @@ double BootConf_highBound(const BootConf * bc, long bin) {
     return bc->high[bin];
 }
 
+double BootConf_loSpecBound(const BootConf * bc, long i) {
+    return bc->loSpec[i];
+}
+
+double BootConf_hiSpecBound(const BootConf * bc, long i) {
+    return bc->hiSpec[i];
+}
+
 void BootConf_print(const BootConf * bc, FILE * ofp) {
-    int         bin;
+    int         i;
 
     BootConf_printHdr(bc, ofp);
-    fprintf(ofp, "%5s %10s %10s\n", "bin", "low", "high");
-    for(bin = 0; bin < bc->nBins; ++bin)
-        fprintf(ofp, "%5d %10g %10g\n", bin, bc->low[bin], bc->high[bin]);
+    fprintf(ofp, "%5s %10s %10s\n", "bin", "loLD", "hiLD");
+    for(i = 0; i < bc->nBins; ++i)
+        fprintf(ofp, "%5d %10g %10g\n", i, bc->low[i], bc->high[i]);
+
+    fprintf(ofp, "%5s %10s %10s\n", "i", "loSpec", "hiSpec");
+    for(i = 0; i < bc->specDim; ++i)
+        fprintf(ofp, "%5d %10g %10g\n", i+1, bc->loSpec[i], bc->hiSpec[i]);
 }
 
 void BootConf_free(BootConf * bc) {

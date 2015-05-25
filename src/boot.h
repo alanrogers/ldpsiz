@@ -14,11 +14,12 @@
 void        confidenceBounds(double *lowBnd, double *highBnd,
                              double confidence, double *v, long len);
 double      interpolate(double p, double *v, long len);
-Boot       *Boot_new(long nSNPs, long nReps, unsigned nHapSamp,
+Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsamp,
                      int folded, long blockLength,
                      double windowcm, int nBins, gsl_rng * rng);
 void        Boot_addLD(Boot * boot, double Dsq, double pqpq, double sep_cm,
                        const SNP * snp1, const SNP * snp2);
+void        Boot_addAlleleCount(Boot * boot, unsigned x, const SNP * snp);
 void        Boot_free(Boot * boot);
 int         Boot_equals(const Boot * x, const Boot * y);
 Boot       *Boot_dup(const Boot * old);
@@ -30,8 +31,9 @@ void        Boot_plus_equals(Boot * x, const Boot * y);
 void        Boot_dump(const Boot * boot, FILE * ofp);
 Boot       *Boot_restore(FILE * ifp);
 long        Boot_multiplicity(const Boot * boot, long ndx, long rep);
-void        Boot_get_rep(Boot * boot, double *sigdsq, double *rsq, double *cm,
-                         long unsigned *nobs, int rep);
+void        Boot_get_rep(Boot * boot, DblArray *sigdsq, DblArray *rsq,
+                         DblArray *cm, ULIntArray *nobs,
+                         ULIntArray *spectrum, int rep);
 long unsigned Boot_rawCounts(const Boot * boot, int rep, int bin,
                              double *numerator, double *denominator,
                              double *sumRsq, double *sep_cm);
@@ -39,13 +41,15 @@ long        Boot_purge(Boot * boot);
 void        Boot_print(const Boot * boot, FILE * ofp);
 
 #ifndef NDEBUG
-long Boot_multiplicity_slow(Boot * boot, long snp, long rep);
+unsigned Boot_multiplicity_slow(Boot * boot, long snp, long rep);
 #endif
 
 BootConf   *BootConf_new(Boot * boot, double confidence);
 void        BootConf_printHdr(const BootConf * bc, FILE * ofp);
 double      BootConf_lowBound(const BootConf * bc, long bin);
 double      BootConf_highBound(const BootConf * bc, long bin);
+double      BootConf_loSpecBound(const BootConf * bc, long i);
+double      BootConf_hiSpecBound(const BootConf * bc, long k);
 void        BootConf_print(const BootConf * bc, FILE * ofp);
 void        BootConf_free(BootConf * bc);
 

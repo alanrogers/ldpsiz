@@ -11,19 +11,20 @@
 
 #  include "typedefs.h"
 #  include "misc.h"
+#  include "array.h"
 
 /**
  * spectab.h. This file defines the Spectab object, which tabulates
  * data for the site frequency spectrum. 
  */
-unsigned    specdim(unsigned nHapSamp, int folded);
-Spectab    *Spectab_new(unsigned nHapSamp, int folded);
+unsigned    specdim(unsigned twoNsamp, int folded);
+Spectab    *Spectab_new(unsigned twoNsamp, int folded);
 Spectab    *Spectab_dup(Spectab * old);
 void        Spectab_free(Spectab * tab);
 void        Spectab_plus_equals(Spectab * x, const Spectab * y);
 void        Spectab_print(Spectab * tab, FILE * ofp);
-long unsigned Spectab_report(const Spectab * tab, unsigned dim, int *folded,
-                             long unsigned *spec);
+long unsigned Spectab_report(const Spectab * tab, ULIntArray *spec);
+long unsigned Spectab_get(const Spectab *st, unsigned i);
 int         Spectab_equals(const Spectab * x, const Spectab * y);
 void        Spectab_dump(const Spectab * tab, FILE * ofp);
 Spectab    *Spectab_restore(FILE * ifp);

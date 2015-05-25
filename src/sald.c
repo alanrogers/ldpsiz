@@ -706,6 +706,7 @@ int main(int argc, char **argv) {
     int         nItr = 1000;     /* total number of iterations */
     int         nPerTmptr;       /* iterations at each temperature */
     int         nTmptrs = 3;     /* number of temperatures */
+    const int   folded = true;   // Folded site frequency spectrum
     double      lo2Ninv = 1e-8, hi2Ninv = 1.0, hi2NinvInit = 0.1;
     double      loT = 1.0, hiT = 1e4, hiTinit = 2000.0;
     double     *stepsize;            /* controls size of initial simplex */
@@ -956,6 +957,8 @@ int main(int argc, char **argv) {
     model = Model_alloc(method, twoNsmp);
     AnnealSched *sched = AnnealSched_alloc(nTmptrs, initTmptr, tmptrDecay);
 
+    unsigned spdim = specdim((unsigned) twoNsmp, folded); // dimension of spectrum
+
     printf("# %-35s = %s\n", "Model", method);
     printf("# %-35s = %lg\n", "mutation rate per nucleotide", u);
     printf("# %-35s = %lg\n", "ftol", ftol);
@@ -1054,15 +1057,22 @@ int main(int argc, char **argv) {
     }
 
     /* create task arguments for each bootstrap replicate */
-    double     *sigdsq_curr = malloc(nbins * sizeof(sigdsq_curr[0]));
+    DblArray *sigdsq_curr = DblArray_new(nbins);
     checkmem(sigdsq_curr, __FILE__, __LINE__);
-    double     *cc_curr = malloc(nbins * sizeof(cc_curr[0]));
-    checkmem(sigdsq_curr, __FILE__, __LINE__);
+    DblArray *cc_curr = DblArray_new(nbins);
+    checkmem(cc_curr, __FILE__, __LINE__);
+    ULIntArray *spec_curr = ULIntArray_new(spdim);
+    checkmem(spec_curr, __FILE__, __LINE__);
 
     for(rndx = 0; rndx < nBootReps; ++rndx) {
-        Boot_get_rep(boot, sigdsq_curr, NULL, cc_curr, NULL, rndx);
-        for(i = 0; i < nbins; ++i)
-            cc_curr[i] *= 0.01; /* conv. cM to recombination rate */
+        Boot_get_rep(boot, sigdsq_curr, NULL, cc_curr, NULL,
+                     spec_curr, rndx);
+
+        // conv. cM to recombination rate
+        for(i = 0; i < nbins; ++i) {
+            double cci = DblArray_get(cc_curr, i);
+            DblArray_set(cc_curr, i, cci*0.01);
+        }
         for(j = 0; j < nOpt; ++j)
             taskarg[rndx + 1][j] = TaskArg_new(j + (1+rndx)*nOpt,
                                                baseSeed,
@@ -1073,7 +1083,9 @@ int main(int argc, char **argv) {
                                                loBnd, hiBnd, hiInit,
                                                odeAbsTol, odeRelTol,
                                                nPerTmptr,
-                                               0, sigdsq_curr, cc_curr,
+                                               0,
+                                               DblArray_ptr(sigdsq_curr),
+                                               DblArray_ptr(cc_curr),
                                                model, ph_init, randomStart);
     }
 
@@ -1288,9 +1300,10 @@ int main(int argc, char **argv) {
         bootfile = NULL;
 	}
 
-    free(sigdsq_curr);
+    DblArray_free(sigdsq_curr);
+    DblArray_free(cc_curr);
+    ULIntArray_free(spec_curr);
     free(best);
-    free(cc_curr);
     for(i = 0; i < nDataSets; ++i) {
         for(j = 0; j < nOpt; ++j)
             TaskArg_free(taskarg[i][j]);
