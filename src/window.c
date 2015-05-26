@@ -165,6 +165,8 @@ int Window_advance(Window * window, Tabulation * tab, Spectab *spectab,
         unsigned    alleleCount = SNP_countMinor(window->curr,
                                                  window->ploidy);
         Spectab_record(spectab, alleleCount, 1);
+        if(boot)
+            Boot_addAlleleCount(boot, alleleCount, window->curr);
 
         // Each pass through loop compares current SNP with a previous
         // SNP, provided that previous SNP is within the window. If it is
