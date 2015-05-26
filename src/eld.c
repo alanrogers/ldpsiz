@@ -263,7 +263,7 @@ int main(int argc, char **argv) {
     int         verbose = 0;
     int         ploidy = 1;     /* default is haploid. */
     const int   folded = true;
-    unsigned    nGtype, twoNsamp;
+    unsigned    nGtype, twoNsmp;
 
     FILE       *ifp = NULL;
     time_t      currtime = time(NULL);
@@ -396,7 +396,7 @@ int main(int argc, char **argv) {
         eprintf("ERR@%s:%d: Input file has no data\n", __FILE__, __LINE__);
     }
     assert(ploidy == FileIndex_ploidy(fndx));
-    twoNsamp = nGtype * ploidy; // haploid sample size
+    twoNsmp = nGtype * ploidy; // haploid sample size
 
     /* Number of threads */
     if(nthreads == 0)
@@ -443,7 +443,7 @@ int main(int argc, char **argv) {
     ULIntArray *nobs = ULIntArray_new((unsigned long) nbins);
     checkmem(nobs, __FILE__, __LINE__);
     
-    unsigned spdim = specdim(twoNsamp, folded); 
+    unsigned spdim = specdim(twoNsmp, folded); 
     ULIntArray *spectrum = ULIntArray_new((unsigned long) spdim);
     checkmem(spectrum, __FILE__, __LINE__);
 
@@ -455,7 +455,7 @@ int main(int argc, char **argv) {
 
     for(i = 0; i < nthreads; ++i) {
         tab[i] = Tabulation_new(windowsize_cm, nbins);
-        spectab[i] = Spectab_new(twoNsamp, folded);
+        spectab[i] = Spectab_new(twoNsmp, folded);
     }
 
     /*
@@ -474,7 +474,7 @@ int main(int argc, char **argv) {
 
     if(bootreps > 0) {
 
-        boot[0] = Boot_new(nSNPs, bootreps, twoNsamp, folded, blocksize,
+        boot[0] = Boot_new(nSNPs, bootreps, twoNsmp, folded, blocksize,
                            windowsize_cm,
                            nbins, rng);
 

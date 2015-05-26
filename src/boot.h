@@ -14,7 +14,7 @@
 void        confidenceBounds(double *lowBnd, double *highBnd,
                              double confidence, double *v, long len);
 double      interpolate(double p, double *v, long len);
-Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsamp,
+Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsmp,
                      int folded, long blockLength,
                      double windowcm, int nBins, gsl_rng * rng);
 void        Boot_addLD(Boot * boot, double Dsq, double pqpq, double sep_cm,

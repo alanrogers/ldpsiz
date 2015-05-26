@@ -17,8 +17,8 @@
  * spectab.h. This file defines the Spectab object, which tabulates
  * data for the site frequency spectrum. 
  */
-unsigned    specdim(unsigned twoNsamp, int folded);
-Spectab    *Spectab_new(unsigned twoNsamp, int folded);
+unsigned    specdim(unsigned twoNsmp, int folded);
+Spectab    *Spectab_new(unsigned twoNsmp, int folded);
 Spectab    *Spectab_dup(Spectab * old);
 void        Spectab_free(Spectab * tab);
 void        Spectab_plus_equals(Spectab * x, const Spectab * y);

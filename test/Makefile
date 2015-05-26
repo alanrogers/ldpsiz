@@ -138,8 +138,9 @@ XSUMS := xsums.o sums.o misc.o
 xsums : $(XSUMS)
 	$(CC) $(CFLAGS) -o $@ $(XSUMS) $(lib)
 
-XTABULATION := xtabulation.o tabulation.o misc.o window.o snp.o sums.o boot.o \
-    readgtp.o fileindex.o tokenizer.o assign.o em.o spectab.o
+XTABULATION := xtabulation.o tabulation.o misc.o window.o snp.o sums.o \
+    boot.o readgtp.o fileindex.o tokenizer.o assign.o em.o spectab.o \
+    array.o
 xtabulation : $(XTABULATION)
 	$(CC) $(CFLAGS) -o $@ $(XTABULATION) $(lib)
 

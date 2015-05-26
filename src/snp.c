@@ -440,7 +440,7 @@ void SNP_test(int verbose) {
     long        ndx = 0;
     double      mappos = 0.005;
     unsigned    ploidy = 1;
-    unsigned    twoNsamp = nGtype * ploidy;
+    unsigned    twoNsmp = nGtype * ploidy;
 
     rval = SNP_set(snp1, ndx, mappos, gtype1, boot, ploidy);
     assert(rval == 1);
@@ -534,7 +534,7 @@ void SNP_test(int verbose) {
     gsl_rng    *rng = gsl_rng_alloc(gsl_rng_taus);
 
     gsl_rng_set(rng, (unsigned) time(NULL));
-    boot = Boot_new(nSNPs, bootreps, twoNsamp, folded, blockLength,
+    boot = Boot_new(nSNPs, bootreps, twoNsmp, folded, blockLength,
                     windowcm, nbins, rng);
     SNP        *snp3 = SNP_new(nGtype, bootreps);
 

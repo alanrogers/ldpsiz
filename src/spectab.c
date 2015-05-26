@@ -17,17 +17,17 @@
 #include <limits.h>
 
 struct Spectab {
-    unsigned    twoNsamp;       // haploid sample size
+    unsigned    twoNsmp;       // haploid sample size
     int         folded;         // true: folded spectrum; false: unfolded
     long unsigned nobs;         // number of observations tabulated
 
     // Unfolded spectrum: s[i] is number of SNPs at which i+1 copies
     // of the derived allele are present in the sample. i ranges from
-    // 0 to twoNsamp-2, so dim is twoNsamp-1.
+    // 0 to twoNsmp-2, so dim is twoNsmp-1.
     //
     // Folded spectrum: s[i] is number of SNPs at which i+1 copies
     // of the minor allele are present in the sample. i ranges from
-    // 0 to floor(twoNsamp/2) - 1, so dim is floor(twoNsamp/2).
+    // 0 to floor(twoNsmp/2) - 1, so dim is floor(twoNsmp/2).
 
     unsigned    dim;            // dimension of array s
     long unsigned *s;
@@ -36,28 +36,28 @@ struct Spectab {
 /// Return dimension of spectrum, based on haploid sample size and
 /// the boolean variable "folded", which indicates whether we're
 /// dealing with a full site-frequency spectrum or a folded one.
-unsigned specdim(unsigned twoNsamp, int folded) {
-    return (folded ? twoNsamp/2u : twoNsamp-1);
+unsigned specdim(unsigned twoNsmp, int folded) {
+    return (folded ? twoNsmp/2u : twoNsmp-1);
 }
 
 /**
  * Allocate a new object of type Spectab.
  *
- * @param[in] twoNsamp The haploid sample size--twice the number of
+ * @param[in] twoNsmp The haploid sample size--twice the number of
  * diploid individuals.  
  *
  * @param[in] folded 1 for a folded spectrum, 0 for unfolded.
  *
  * @returns A newly allocated object of type Spectab.
  */
-Spectab    *Spectab_new(unsigned twoNsamp, int folded) {
+Spectab    *Spectab_new(unsigned twoNsmp, int folded) {
     Spectab *tab = (Spectab *) malloc(sizeof(Spectab));
     checkmem(tab, __FILE__, __LINE__);
     memset(tab, 0, sizeof(Spectab));
 
-    tab->twoNsamp = twoNsamp;
+    tab->twoNsmp = twoNsmp;
     tab->folded = folded;
-    tab->dim = specdim(twoNsamp, folded);
+    tab->dim = specdim(twoNsmp, folded);
     tab->s = malloc(tab->dim * sizeof(tab->s[0]));
     checkmem(tab->s, __FILE__, __LINE__);
     memset(tab->s, 0, tab->dim * sizeof(tab->s[0]));
@@ -89,12 +89,12 @@ Spectab *Spectab_dup(Spectab * old) {
 
 void Spectab_sanityCheck(Spectab * tab, const char *file, int line) {
     REQUIRE(tab != NULL, file, line);
-    REQUIRE(tab->twoNsamp < 10000, file, line);
+    REQUIRE(tab->twoNsmp < 10000, file, line);
     REQUIRE(tab->nobs < ULONG_MAX, file, line);
     if(tab->folded)
-        REQUIRE(tab->dim == tab->twoNsamp/2u, file, line);
+        REQUIRE(tab->dim == tab->twoNsmp/2u, file, line);
     else
-        REQUIRE(tab->dim + 1 == tab->twoNsamp, file, line);
+        REQUIRE(tab->dim + 1 == tab->twoNsmp, file, line);
 
     unsigned i;
     unsigned long tot=0;
@@ -110,7 +110,7 @@ int Spectab_equals(const Spectab * x, const Spectab * y) {
     if(x == NULL || y == NULL)
         return false;
 
-    if(x->twoNsamp != y->twoNsamp
+    if(x->twoNsmp != y->twoNsmp
        || x->folded != y->folded
        || x->nobs != y->nobs
        || x->dim != y->dim)
@@ -125,11 +125,11 @@ int Spectab_equals(const Spectab * x, const Spectab * y) {
 void Spectab_print(Spectab * tab, FILE * ofp) {
     assert(tab);
     fprintf(ofp,
-            "Spectab: twoNsamp  = %u\n"
+            "Spectab: twoNsmp  = %u\n"
             "         folded    = %d\n"
             "         nobs      = %lu\n"
             "         dim       = %u\n",
-            tab->twoNsamp, tab->folded, tab->nobs, tab->dim);
+            tab->twoNsmp, tab->folded, tab->nobs, tab->dim);
     fprintf(ofp, "%10s %10s\n", "i", "spec[i]");
     for(unsigned i = 0; i < tab->dim; ++i)
         fprintf(ofp, "%10u %10lu\n", i, tab->s[i]);
@@ -193,7 +193,7 @@ void Spectab_plus_equals(Spectab * x, const Spectab * y) {
 void Spectab_dump(const Spectab * tab, FILE * ofp) {
 
     if(0 > fprintf(ofp," %u %d %lu %u\n",
-                   tab->twoNsamp, tab->folded, tab->nobs, tab->dim))
+                   tab->twoNsmp, tab->folded, tab->nobs, tab->dim))
         eprintf("%s:%s:%d: fprintf returned %d instead of 4",
                 __FILE__, __func__, __LINE__);
 
@@ -205,14 +205,14 @@ void Spectab_dump(const Spectab * tab, FILE * ofp) {
 }
 
 Spectab *Spectab_restore(FILE * ifp) {
-    unsigned twoNsamp, dim;
+    unsigned twoNsmp, dim;
     int      folded;
     unsigned long nobs;
 
-    if(4 != fscanf(ifp, "%u %d %lu %u", &twoNsamp, &folded, &nobs, &dim))
+    if(4 != fscanf(ifp, "%u %d %lu %u", &twoNsmp, &folded, &nobs, &dim))
         eprintf("%s:%s:%d: fscanf", __FILE__, __func__, __LINE__);
 
-    Spectab *tab = Spectab_new(twoNsamp, folded);
+    Spectab *tab = Spectab_new(twoNsmp, folded);
     checkmem(tab, __FILE__, __LINE__);
     tab->nobs = nobs;
     if(tab->dim != dim)
@@ -265,51 +265,51 @@ unsigned    Spectab_dim(const Spectab * st) {
 
 #ifndef NDEBUG
 void Spectab_test(int verbose) {
-    unsigned twoNsamp = 60;
+    unsigned twoNsmp = 60;
     int folded;
 
-    REQUIRE(twoNsamp/2u == specdim(twoNsamp, true), __FILE__, __LINE__);
-    REQUIRE(twoNsamp-1 == specdim(twoNsamp, false), __FILE__, __LINE__);
+    REQUIRE(twoNsmp/2u == specdim(twoNsmp, true), __FILE__, __LINE__);
+    REQUIRE(twoNsmp-1 == specdim(twoNsmp, false), __FILE__, __LINE__);
     unitTstResult("specdim", "OK");
 
     /* test Spectab_new and Spectab_free */
     folded = false;
-    unsigned dim = (folded ? twoNsamp/2 : twoNsamp-1);
-    Spectab *tab = Spectab_new(twoNsamp, folded);
+    unsigned dim = (folded ? twoNsmp/2 : twoNsmp-1);
+    Spectab *tab = Spectab_new(twoNsmp, folded);
     assert(dim == Spectab_dim(tab));
     Spectab_sanityCheck(tab, __FILE__, __LINE__);
     Spectab_free(tab);
 
     folded = true;
-    tab = Spectab_new(twoNsamp, folded);
+    tab = Spectab_new(twoNsmp, folded);
     Spectab_sanityCheck(tab, __FILE__, __LINE__);
     Spectab_free(tab);
     unitTstResult("Spectab_new", "OK");
     unitTstResult("Spectab_free", "OK");
 
-    tab = Spectab_new(twoNsamp, folded);
+    tab = Spectab_new(twoNsmp, folded);
     Spectab *tab2 = Spectab_dup(tab);
     Spectab_sanityCheck(tab2, __FILE__, __LINE__);
     assert(Spectab_equals(tab, tab2));
     unitTstResult("Spectab_dup", "OK");
 
-    Spectab_record(tab2, twoNsamp/3, 1u);
+    Spectab_record(tab2, twoNsmp/3, 1u);
     assert(!Spectab_equals(tab, tab2));
     Spectab_free(tab2);
-    tab2 = Spectab_new(twoNsamp, !folded);
+    tab2 = Spectab_new(twoNsmp, !folded);
     assert(!Spectab_equals(tab, tab2));
     Spectab_free(tab2);
-    tab2 = Spectab_new(twoNsamp-1, folded);
+    tab2 = Spectab_new(twoNsmp-1, folded);
     assert(!Spectab_equals(tab, tab2));
     unitTstResult("Spectab_equals", "OK");
 
     Spectab_free(tab2);
-    tab2 = Spectab_new(twoNsamp, folded);
+    tab2 = Spectab_new(twoNsmp, folded);
     Spectab_record(tab2, 1, 1u); // nobs=1
     Spectab_record(tab2, 1, 1u); // nobs=2
     Spectab_record(tab2, 2, 2u); // nobs=4
 
-    dim = (folded ? twoNsamp/2 : twoNsamp-1);
+    dim = (folded ? twoNsmp/2 : twoNsmp-1);
     long unsigned nobs;
     ULIntArray *spec = ULIntArray_new(dim);
     checkmem(spec, __FILE__, __LINE__);
@@ -334,7 +334,7 @@ void Spectab_test(int verbose) {
     unitTstResult("Spectab_plus_equals", "OK");
 
     Spectab_free(tab2);
-    tab2 = Spectab_new(twoNsamp, folded);
+    tab2 = Spectab_new(twoNsmp, folded);
     
     const char *fname = "spectab-dummy.tab";
     FILE       *fp = fopen(fname, "w");

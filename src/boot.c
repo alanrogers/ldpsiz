@@ -73,7 +73,7 @@ static void Boot_allocArrays(Boot * boot) {
 }
 
 /// Constructor for class Boot.
-Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsamp,
+Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsmp,
                      int folded, long blockLength,
                      double windowcm, int nBins, gsl_rng * rng) {
 
@@ -110,7 +110,7 @@ Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsamp,
         boot->tab[i] = Tabulation_new(windowcm, nBins);
         checkmem(boot->tab[i], __FILE__, __LINE__);
 
-        boot->spectab[i] = Spectab_new(twoNsamp, folded);
+        boot->spectab[i] = Spectab_new(twoNsmp, folded);
         checkmem(boot->spectab[i], __FILE__, __LINE__);
 
         for(j = 0; j < boot->nBlocks; ++j)
