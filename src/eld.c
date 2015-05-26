@@ -612,8 +612,12 @@ int main(int argc, char **argv) {
         assert(nSpec == nSNPs);
         
         putchar('\n');
-        printf("# %s site frequency spectrum. nSpec=%lu\n",
-               (folded ? "Folded" : "Unfolded"), nSpec);
+        printf("# %s site frequency spectrum",
+               (folded ? "Folded" : "Unfolded"));
+        if(bootreps > 0)
+            printf(" with %0.1lf%% confidence bounds", 100*confidence);
+        putchar('\n');
+        printf("# %lu segregating sites\n", nSpec);
         printf("#%10s %11s", "count", "spectrum");
         if(bootreps > 0)
             printf(" %10s %10s", "loSpec", "hiSpec");

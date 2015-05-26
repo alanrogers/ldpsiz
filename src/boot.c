@@ -664,7 +664,7 @@ void confidenceBounds(double *lowBnd, double *highBnd, double confidence,
 void BootConf_printHdr(const BootConf * bc, FILE * ofp) {
     fprintf(ofp, "#%12s: %lg%% confidence bounds"
             " based on moving blocks bootstrap\n",
-            "low, high", 100.0 * bc->confidence);
+            "loLD, hiLD", 100.0 * bc->confidence);
     fprintf(ofp, "#%12s: nReps=%ld blockLength=%ld nBins=%d\n",
             "Bootstrap parameters", bc->nReps, bc->blockLength, bc->nBins);
 }
