@@ -618,7 +618,6 @@ BootConf   *BootConf_new(Boot * boot, double confidence) {
 
         for(rep = 0; rep < bc->nReps; ++rep) {
             count = Spectab_get(boot->spectab[rep], i);
-            assert(nvals < bc->specDim);
             v[nvals++] = (double) count;
         }
         if(nvals < 10) {
@@ -694,6 +693,7 @@ void BootConf_print(const BootConf * bc, FILE * ofp) {
     for(i = 0; i < bc->nBins; ++i)
         fprintf(ofp, "%5d %10g %10g\n", i, bc->low[i], bc->high[i]);
 
+    putc('\n', ofp);
     fprintf(ofp, "%5s %10s %10s\n", "i", "loSpec", "hiSpec");
     for(i = 0; i < bc->specDim; ++i)
         fprintf(ofp, "%5d %10g %10g\n", i+1, bc->loSpec[i], bc->hiSpec[i]);

@@ -28,6 +28,7 @@
 int main(int argc, char **argv) {
     long        nSNPs = 8;
     long        nReps = 10;
+    unsigned    twoNsamp = 120;
     long        blockLength = 3;
     int         nBins = 4;
     double      windowcm = 0.3, sep;
@@ -61,7 +62,8 @@ int main(int argc, char **argv) {
     assert(Dbl_near(interpolate(0.5, v, 5), 2.0));
     unitTstResult("interpolate", "OK");
 
-    boot = Boot_new(nSNPs, nReps, twoNsamp, folded, blockLength, windowcm, nBins, rng);
+    boot = Boot_new(nSNPs, nReps, twoNsamp, folded, blockLength, windowcm,
+                    nBins, rng);
     if(verbose)
         Boot_print(boot, stdout);
 
@@ -124,7 +126,8 @@ int main(int argc, char **argv) {
     blockLength = 300;
     nBins = 20;
     windowcm = 0.3;
-    boot = Boot_new(nSNPs, nReps, blockLength, windowcm, nBins, rng);
+    boot = Boot_new(nSNPs, nReps, twoNsamp, folded, blockLength,
+                    windowcm, nBins, rng);
     SNP_free(snp1);
     SNP_free(snp2);
     snp1 = SNP_new(10, Boot_nReps(boot));

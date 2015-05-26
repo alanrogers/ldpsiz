@@ -73,7 +73,7 @@ xassign : $(XASSIGN)
 
 # test boot.c
 XBOOT := xboot.o boot.o misc.o tabulation.o window.o snp.o readgtp.o \
-	fileindex.o sums.o tokenizer.o assign.o em.o spectab.o
+	fileindex.o sums.o tokenizer.o assign.o em.o spectab.o array.o
 xboot : $(XBOOT)
 	$(CC) $(CFLAGS) -o $@ $(XBOOT) $(lib)
 
