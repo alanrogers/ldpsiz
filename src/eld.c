@@ -592,7 +592,7 @@ int main(int argc, char **argv) {
             BootConf_printHdr(bc, stdout);
         printf("#%10s %11s %10s", "cM", "sigdsq", "nobs");
         if(bootreps > 0)
-            printf("%10s %10s", "low", "high");
+            printf(" %10s %10s", "loLD", "hiLD");
         printf(" %11s", "rsq");
         putchar('\n');
         for(i = 0; i < nbins; ++i) {
@@ -614,9 +614,18 @@ int main(int argc, char **argv) {
         putchar('\n');
         printf("# %s site frequency spectrum. nSpec=%lu\n",
                (folded ? "Folded" : "Unfolded"), nSpec);
-        printf("#%10s %11s\n", "count", "spectrum");
-        for(i=0; i < spdim; ++i) 
-            printf("%11d %11lu\n", i+1, ULIntArray_get(spectrum,i));
+        printf("#%10s %11s", "count", "spectrum");
+        if(bootreps > 0)
+            printf(" %10s %10s", "loSpec", "hiSpec");
+        putchar('\n');
+        for(i=0; i < spdim; ++i)  {
+            printf("%11d %11lu", i+1, ULIntArray_get(spectrum,i));
+            if(bootreps > 0)
+                printf(" %10.2lf %10.2lf",
+                       BootConf_loSpecBound(bc, i),
+                       BootConf_hiSpecBound(bc, i));
+            putchar('\n');
+        }
     }
 
     if(bootreps > 0) {
