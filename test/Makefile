@@ -152,7 +152,7 @@ XWINDOW := xwindow.o window.o snp.o boot.o sums.o misc.o tabulation.o \
 xwindow : $(XWINDOW)
 	$(CC) $(CFLAGS) -o $@ $(XWINDOW) $(lib)
 
-XSNP := xsnp.o snp.o boot.o sums.o misc.o em.o tabulation.o
+XSNP := xsnp.o snp.o boot.o sums.o misc.o em.o tabulation.o spectab.o array.o
 xsnp : $(XSNP)
 	$(CC) $(CFLAGS) -o $@ $(XSNP) $(lib)
 

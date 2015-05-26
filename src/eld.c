@@ -68,6 +68,7 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include "assign.h"
 #include "spectab.h"
 #include "ini.h"
+#include "array.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -268,10 +269,8 @@ int main(int argc, char **argv) {
     time_t      currtime = time(NULL);
     gsl_rng    *rng;
     char       *ifname = NULL;
-    long unsigned *spectrum;
     int         i, tndx;
     int         chromosome = -99;
-    long unsigned *nobs;
     long        nSNPs = 0;
     Tabulation **tab;
     Spectab   **spectab;
@@ -475,7 +474,8 @@ int main(int argc, char **argv) {
 
     if(bootreps > 0) {
 
-        boot[0] = Boot_new(nSNPs, bootreps, blocksize, windowsize_cm,
+        boot[0] = Boot_new(nSNPs, bootreps, twoNsamp, folded, blocksize,
+                           windowsize_cm,
                            nbins, rng);
 
         myassert(boot[0] != NULL);
@@ -616,7 +616,7 @@ int main(int argc, char **argv) {
                (folded ? "Folded" : "Unfolded"), nSpec);
         printf("#%10s %11s\n", "count", "spectrum");
         for(i=0; i < spdim; ++i) 
-            printf("%11d %11ld\n", i+1, DblArray_get(spectrum,i));
+            printf("%11d %11lu\n", i+1, ULIntArray_get(spectrum,i));
     }
 
     if(bootreps > 0) {
@@ -630,7 +630,7 @@ int main(int argc, char **argv) {
     DblArray_free(rsq);
     DblArray_free(separation);
     ULIntArray_free(nobs);
-    DblArray_free(spectrum);
+    ULIntArray_free(spectrum);
     for(i = 0; i < nthreads; ++i) {
         Tabulation_free(tab[i]);
     }

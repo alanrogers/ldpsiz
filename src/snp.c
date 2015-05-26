@@ -14,6 +14,7 @@
 #include "em.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <assert.h>
 #include <math.h>
@@ -416,6 +417,7 @@ void SNP_test(int verbose) {
     unsigned char gtype2[] = { 0, 0, 1, 1, 1, 1 };
     int         bootreps = 0;
     Boot       *boot = NULL;
+    const int   folded = true;
 
     SNP        *snp1 = SNP_new(nGtype, bootreps);
 
@@ -438,6 +440,7 @@ void SNP_test(int verbose) {
     long        ndx = 0;
     double      mappos = 0.005;
     unsigned    ploidy = 1;
+    unsigned    twoNsamp = nGtype * ploidy;
 
     rval = SNP_set(snp1, ndx, mappos, gtype1, boot, ploidy);
     assert(rval == 1);
@@ -531,7 +534,8 @@ void SNP_test(int verbose) {
     gsl_rng    *rng = gsl_rng_alloc(gsl_rng_taus);
 
     gsl_rng_set(rng, (unsigned) time(NULL));
-    boot = Boot_new(nSNPs, bootreps, blockLength, windowcm, nbins, rng);
+    boot = Boot_new(nSNPs, bootreps, twoNsamp, folded, blockLength,
+                    windowcm, nbins, rng);
     SNP        *snp3 = SNP_new(nGtype, bootreps);
 
     rval = SNP_set(snp3, ndx, mappos, gtype1, boot, ploidy);
