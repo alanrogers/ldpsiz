@@ -86,7 +86,7 @@ try : $(TRY)
 
 SALD := sald.o sasimplex.o model.o misc.o hayes.o hill.o strobeck.o \
 pophist.o tokenizer.o ini.o assign.o jobqueue.o boot.o tabulation.o \
-rusage.o locref.o annealsched.o 
+rusage.o locref.o annealsched.o array.o spectab.o
 sald: $(SALD)
 	$(CC) $(CFLAGS) -o $@ $(SALD) $(lib)
 

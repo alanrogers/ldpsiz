@@ -27,6 +27,14 @@ void        UIntArray_copy(UIntArray * to, const UIntArray *from) {
     memcpy(to->v, from->v, to->nItems * sizeof(to->v[0]));
 }
 
+UIntArray * UIntArray_dup(const UIntArray *from) {
+    UIntArray *to = UIntArray_new(from->nItems);
+    checkmem(to, __FILE__, __LINE__);
+
+    UIntArray_copy(to, from);
+    return to;
+}
+
 ///////////////////////////////////////////////////////
 
 ULIntArray *ULIntArray_new(unsigned long nItems) {
@@ -51,6 +59,14 @@ void        ULIntArray_copy(ULIntArray * to, const ULIntArray *from) {
                 __FILE__, __func__, __LINE__);
 #endif
     memcpy(to->v, from->v, to->nItems * sizeof(to->v[0]));
+}
+
+ULIntArray * ULIntArray_dup(const ULIntArray *from) {
+    ULIntArray *to = ULIntArray_new(from->nItems);
+    checkmem(to, __FILE__, __LINE__);
+
+    ULIntArray_copy(to, from);
+    return to;
 }
 
 ///////////////////////////////////////////////////////
@@ -79,6 +95,14 @@ void        IntArray_copy(IntArray * to, const IntArray *from) {
     memcpy(to->v, from->v, to->nItems * sizeof(to->v[0]));
 }
 
+IntArray *IntArray_dup(const IntArray *from) {
+    IntArray *to = IntArray_new(from->nItems);
+    checkmem(to, __FILE__, __LINE__);
+
+    IntArray_copy(to, from);
+    return to;
+}
+
 ///////////////////////////////////////////////////////
 
 DblArray *DblArray_new(unsigned long nItems) {
@@ -103,4 +127,12 @@ void        DblArray_copy(DblArray * to, const DblArray *from) {
                 __FILE__, __func__, __LINE__);
 #endif
     memcpy(to->v, from->v, to->nItems * sizeof(to->v[0]));
+}
+
+DblArray *DblArray_dup(const DblArray *from) {
+    DblArray *to = DblArray_new(from->nItems);
+    checkmem(to, __FILE__, __LINE__);
+
+    DblArray_copy(to, from);
+    return to;
 }

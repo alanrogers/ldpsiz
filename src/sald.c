@@ -91,28 +91,31 @@ algorithm by adjusting this schedule. See the `--initTmptr`,
 <rogers@anthro.utah.edu>. This file is released under the Internet
 Systems Consortium License, which can be found in file "LICENSE".
 */
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
-#include <gsl/gsl_rng.h>
-#include <gsl/gsl_randist.h>
-#include <float.h>
-#include <getopt.h>
-#include <pthread.h>
-#include <string.h>
-#include <time.h>
-#include <limits.h>
-#include "misc.h"
+#include "annealsched.h"
+#include "array.h"
+#include "assign.h"
 #include "boot.h"
-#include "pophist.h"
-#include "sasimplex.h"
-#include "tokenizer.h"
-#include "jobqueue.h"
 #include "hill.h"
 #include "ini.h"
+#include "jobqueue.h"
+#include "misc.h"
 #include "model.h"
-#include "assign.h"
-#include "annealsched.h"
+#include "pophist.h"
+#include "sasimplex.h"
+#include "spectab.h"
+#include "tokenizer.h"
+#include <assert.h>
+#include <float.h>
+#include <getopt.h>
+#include <gsl/gsl_randist.h>
+#include <gsl/gsl_rng.h>
+#include <limits.h>
+#include <math.h>
+#include <pthread.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
 #include <time.h>
 
 #if 0
@@ -155,6 +158,7 @@ typedef struct TaskArg {
     int         verbose;
     double     *sigdsq_obs;
     double     *c;
+    ULIntArray *spectrum_obs;
     double     *loBnd;
     double     *hiBnd;
     double     *hiInit;
@@ -177,7 +181,8 @@ typedef struct CostPar {
 } CostPar;
 
 void        usage(void);
-int         read_data(FILE * ifp, int nbins, double *cm, double *sigdsq);
+int read_data(FILE * ifp, int nbins, double cm[nbins], double sigdsq[nbins],
+              ULIntArray *spectrum);
 TaskArg    *TaskArg_new(unsigned task,
                         unsigned seed,
                         int nbins,
@@ -195,6 +200,7 @@ TaskArg    *TaskArg_new(unsigned task,
                         int verbose,
                         double *sigdsq_obs,
                         double *c,
+                        ULIntArray *spectrum_obs,
                         Model * model, PopHist * ph_init, int randomStart);
 void        TaskArg_free(TaskArg * targ);
 int         taskfun(void *varg);
@@ -232,6 +238,7 @@ TaskArg    *TaskArg_new(unsigned task,
                         int verbose,
                         double *sigdsq_obs,
                         double *c,
+                        ULIntArray *spectrum_obs,
                         Model * model, PopHist * ph_init, int randomStart) {
     TaskArg    *targ = malloc(sizeof(TaskArg));
 
@@ -280,6 +287,9 @@ TaskArg    *TaskArg_new(unsigned task,
     checkmem(targ->sigdsq_obs, __FILE__, __LINE__);
     memcpy(targ->sigdsq_obs, sigdsq_obs, nbins * sizeof(targ->sigdsq_obs[0]));
 
+    targ->spectrum_obs = ULIntArray_dup(spectrum_obs);
+    checkmem(targ->spectrum_obs, __FILE__, __LINE__);
+
     targ->c = malloc(nbins * sizeof(targ->c[0]));
     checkmem(targ->c, __FILE__, __LINE__);
     memcpy(targ->c, c, nbins * sizeof(targ->c[0]));
@@ -295,6 +305,7 @@ void TaskArg_free(TaskArg * targ) {
     free(targ->loBnd);
     free(targ->hiBnd);
     free(targ->hiInit);
+    ULIntArray_free(targ->spectrum_obs);
     ODE_free(targ->ode);
     AnnealSched_free(targ->sched);
     free(targ);
@@ -355,25 +366,30 @@ void usage(void) {
     exit(1);
 }
 
+enum inputState {in_header, in_LD, in_spectrum};
+
 /**
  * Read the data file produced by eld.
  *
  * @param[in] ifp Points to file produced by eld.
- * @param[in] nbins The length of all arrays.
+ * @param[in] nbins The length of arrays involving LD.
  * @param[out] cm An array giving the average separation (in centimorgans)
  * between pairs of SNPs within the various bins.
  * @param[out] sigdsq An array of estimates of sigma_d^2.
+ * @param[out] spectrum An array for the site frequency spectrum.
  *
  * @returns number of lines read
  */
-int read_data(FILE * ifp, int nbins, double *cm, double *sigdsq) {
+int read_data(FILE * ifp, int nbins, double cm[nbins], double sigdsq[nbins],
+              ULIntArray *spectrum) {
     char        buff[200];
-    int         inData = 0, ntokens, i, tokensExpected = 0;
+    int         ntokens, i, j, tokensExpected = 0;
+    enum inputState state = in_header;
     Tokenizer  *tkz = Tokenizer_new(50);
 
     rewind(ifp);
     /* skip until beginning of data */
-    while(!inData && fgets(buff, (int) sizeof(buff), ifp) != NULL) {
+    while(!in_LD && fgets(buff, (int) sizeof(buff), ifp) != NULL) {
 
         if(!strchr(buff, '\n') && !feof(ifp))
             eprintf("ERR@%s:%d: input buffer overflow."
@@ -384,10 +400,9 @@ int read_data(FILE * ifp, int nbins, double *cm, double *sigdsq) {
         if(ntokens < 2)
             continue;
         if(strcmp(Tokenizer_token(tkz, 0), "cM") == 0) {
-            inData = 1;
+            state = in_LD;
             switch (ntokens) {
-            case 4:
-                /* fall through */
+            case 4: // fall through
             case 6:
                 tokensExpected = ntokens;
                 break;
@@ -400,16 +415,21 @@ int read_data(FILE * ifp, int nbins, double *cm, double *sigdsq) {
         }
     }
 
-    if(!inData)
-        die("Couldn't find data in input file", __FILE__, __LINE__);
+    if(state != in_LD)
+        die("Couldn't find LD data in input file", __FILE__, __LINE__);
 
-    /* read data */
+    // read LD data
     i = 0;
-    while(i < nbins && fgets(buff, (int) sizeof(buff), ifp) != NULL) {
+    while(state==in_LD
+          && i < nbins
+          && fgets(buff, (int) sizeof(buff), ifp) != NULL) {
 
         if(!strchr(buff, '\n') && !feof(ifp))
             eprintf("ERR@%s:%d: input buffer overflow."
                     " buff size: %d\n", __FILE__, __LINE__, sizeof(buff));
+
+        if(strcomment(buff))
+            break;
 
         ntokens = Tokenizer_split(tkz, buff, " \t");    /* tokenize */
         if(ntokens == 0)
@@ -424,9 +444,77 @@ int read_data(FILE * ifp, int nbins, double *cm, double *sigdsq) {
         ++i;
     }
 
+    // Skip comments separating LD data from spectrum
+    while(fgets(buff, (int) sizeof(buff), ifp) != NULL) {
+
+        if(!strchr(buff, '\n') && !feof(ifp))
+            eprintf("ERR@%s:%d: input buffer overflow."
+                    " buff size: %d\n", __FILE__, __LINE__, sizeof(buff));
+
+        if(strempty(buff))
+            continue;
+        if(!strcomment(buff))
+            eprintf("%s:%s:%d: no spectrum in input data",
+                    __FILE__, __func__, __LINE__);
+
+        Tokenizer_split(tkz, buff, " \t#");  /* tokenize */
+        ntokens = Tokenizer_strip(tkz, " \t\n#");   /* strip extraneous */
+        if(ntokens < 2)
+            continue;
+        if(strcmp(Tokenizer_token(tkz, 1), "spectrum") == 0) {
+            state = in_spectrum;
+            switch (ntokens) {
+            case 4: // fall through
+            case 6:
+                tokensExpected = ntokens;
+                break;
+            default:
+                fprintf(stderr, "Current tokens:");
+                Tokenizer_print(tkz, stderr);
+                eprintf("ERR@%s:%d: got %d tokens rather than 4 or 6",
+                        __FILE__, __LINE__, ntokens);
+            }
+            break;
+        }
+    }
+
+    // read spectrum
+    j = 0;
+    while(state==in_spectrum
+          && j < ULIntArray_dim(spectrum)
+          && fgets(buff, (int) sizeof(buff), ifp) != NULL) {
+        unsigned k;
+
+        if(!strchr(buff, '\n') && !feof(ifp))
+            eprintf("ERR@%s:%d: input buffer overflow."
+                    " buff size: %d\n", __FILE__, __LINE__, sizeof(buff));
+
+        ntokens = Tokenizer_split(tkz, buff, " \t");    /* tokenize */
+        if(ntokens == 0)
+            continue;
+
+        if(ntokens != tokensExpected)
+            eprintf("ERR@%s:%d: got %d tokens rather than %d",
+                    __FILE__, __LINE__, ntokens, tokensExpected);
+
+#ifndef NDEBUG
+        k = strtod(Tokenizer_token(tkz, 0), NULL);
+        assert(k == j+1);
+#endif
+        unsigned long s = strtoul(Tokenizer_token(tkz, 1), NULL, 10);
+        ULIntArray_set(spectrum, j, s);
+        ++j;
+    }
+
+    if(j != ULIntArray_dim(spectrum)) 
+        fprintf(stderr,"%s:%s:%d: WARNING! got %d values of site frequency"
+                " spectrum. Was expecting %lu.\n",
+                __FILE__, __func__, __LINE__,
+                j, ULIntArray_dim(spectrum));
+
     Tokenizer_free(tkz);
     tkz = NULL;
-    return i;                   /* return number of lines read */
+    return i+j;                   /* return number of lines read */
 }
 
 int taskfun(void *varg) {
@@ -957,7 +1045,8 @@ int main(int argc, char **argv) {
     model = Model_alloc(method, twoNsmp);
     AnnealSched *sched = AnnealSched_alloc(nTmptrs, initTmptr, tmptrDecay);
 
-    unsigned spdim = specdim((unsigned) twoNsmp, folded); // dimension of spectrum
+    // dimension of spectrum
+    unsigned spdim = specdim((unsigned) twoNsmp, folded); 
 
     printf("# %-35s = %s\n", "Model", method);
     printf("# %-35s = %lg\n", "mutation rate per nucleotide", u);
@@ -987,7 +1076,10 @@ int main(int argc, char **argv) {
     sigdsq_obs = (double *) malloc(nbins * sizeof(sigdsq_obs[0]));
     checkmem(sigdsq_obs, __FILE__, __LINE__);
 
-    rval = read_data(ifp, nbins, cc, sigdsq_obs);
+    ULIntArray *spectrum_obs = ULIntArray_new(spdim);
+    checkmem(spectrum_obs, __FILE__, __LINE__);
+
+    rval = read_data(ifp, nbins, cc, sigdsq_obs, spectrum_obs);
     if(rval != nbins)
         eprintf("ERR@%s:%d: Couldn't read %d lines of data from \"%s\"."
                 " Only found %d lines", nbins, fname, rval);
@@ -1052,7 +1144,9 @@ int main(int argc, char **argv) {
                                     odeAbsTol, odeRelTol,
                                     nPerTmptr,
                                     verbose,
-                                    sigdsq_obs, cc, model, ph_init,
+                                    sigdsq_obs, cc,
+                                    spectrum_obs,
+                                    model, ph_init,
                                     randomStart);
     }
 
@@ -1086,6 +1180,7 @@ int main(int argc, char **argv) {
                                                0,
                                                DblArray_ptr(sigdsq_curr),
                                                DblArray_ptr(cc_curr),
+                                               spec_curr,
                                                model, ph_init, randomStart);
     }
 
@@ -1315,6 +1410,7 @@ int main(int argc, char **argv) {
     PopHist_free(ph_init);
     free(cc);
     free(sigdsq_obs);
+    ULIntArray_free(spectrum_obs);
     if(boot) {
         Boot_free(boot);
     }

@@ -27,6 +27,7 @@ struct DblArray {
 UIntArray  *UIntArray_new(unsigned long nItems);
 void        UIntArray_free(UIntArray * a);
 void        UIntArray_copy(UIntArray * to, const UIntArray *from);
+UIntArray  *UIntArray_dup(const UIntArray *from);
 static inline unsigned long UIntArray_dim(const UIntArray *a);
 static inline unsigned *UIntArray_ptr(UIntArray *a);
 static inline unsigned UIntArray_get(const UIntArray * a, unsigned long i);
@@ -36,6 +37,7 @@ static inline void UIntArray_set(UIntArray * a, unsigned long i,
 ULIntArray  *ULIntArray_new(unsigned long nItems);
 void        ULIntArray_free(ULIntArray * a);
 void        ULIntArray_copy(ULIntArray * to, const ULIntArray *from);
+ULIntArray *ULIntArray_dup(const ULIntArray *from);
 static inline unsigned long ULIntArray_dim(const ULIntArray *a);
 static inline unsigned long *ULIntArray_ptr(ULIntArray *a);
 static inline unsigned long ULIntArray_get(const ULIntArray * a, unsigned long i);
@@ -45,6 +47,7 @@ static inline void ULIntArray_set(ULIntArray * a, unsigned long i,
 IntArray   *IntArray_new(unsigned long nItems);
 void        IntArray_free(IntArray * a);
 void        IntArray_copy(IntArray * to, const IntArray *from);
+IntArray   *IntArray_dup(const IntArray *from);
 static inline unsigned long IntArray_dim(const IntArray *a);
 static inline int *IntArray_ptr(IntArray *a);
 static inline int IntArray_get(const IntArray * a, unsigned long i);
@@ -54,6 +57,7 @@ static inline void IntArray_set(IntArray * a, unsigned long i,
 DblArray   *DblArray_new(unsigned long nItems);
 void        DblArray_free(DblArray * a);
 void        DblArray_copy(DblArray * to, const DblArray *from);
+DblArray   *DblArray_dup(const DblArray *from);
 static inline unsigned long DblArray_dim(const DblArray *a);
 static inline double *DblArray_ptr(DblArray *a);
 static inline double DblArray_get(const DblArray * a, unsigned long i);

@@ -7,6 +7,7 @@
  * Systems Consortium License, which can be found in file "LICENSE".
  */
 #include <stdio.h>
+#include <stdbool.h>
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>
@@ -346,15 +347,18 @@ int strCountSetChunks(const char *str, const char *sep) {
     return nchunks;
 }
 
-/** Return 1 if the first non-white char in string s is '#'; 0 otherwise. */
+/**
+ * Return true if the first non-white char in string s is '#'; false
+ * otherwise.
+ */
 int strcomment(const char *s) {
     const char *p = s;
 
     while(isspace(*p))
         ++p;
     if(*p == '#')
-        return 1;
-    return 0;
+        return true;
+    return false;
 }
 
 /** strip comment ('#' to eol) from a string */
@@ -367,15 +371,15 @@ char       *stripComment(char *s) {
     return s;
 }
 
-/** Return 1 if string contains only whitespace; 0 otherwise. */
+/** Return true if string contains only whitespace; false otherwise. */
 int strempty(const char *s) {
     const char *p = s;
 
     while(isspace(*p))
         ++p;
     if(*p == '\0')
-        return 1;
-    return 0;
+        return true;
+    return false;
 }
 
 /**
