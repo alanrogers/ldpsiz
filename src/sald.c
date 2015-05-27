@@ -95,6 +95,7 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include "array.h"
 #include "assign.h"
 #include "boot.h"
+#include "espectrum.h"
 #include "hill.h"
 #include "ini.h"
 #include "jobqueue.h"
@@ -148,17 +149,18 @@ typedef struct TaskArg {
     unsigned    task;
     unsigned    seed;
     int         nbins;
-    size_t      ndim;           /* number of dimensions in state space */
-    double      u;              /* mutation rate */
-    double      ftol, xtol;     /* controls convergence */
-    AnnealSched *sched;         /* annealing schedule */
-    double     *stepsize;       /* size of initial simplex */
-    int         nPerTmptr;      /* number of iterations per temp */
-    int         randomStart;    /* whether to initialize from random ph */
+    unsigned    spdim;          // dimension of site frequency spectrum
+    size_t      ndim;           // number of dimensions in state space
+    double      u;              // mutation rate
+    double      ftol, xtol;     // controls convergence
+    AnnealSched *sched;         // annealing schedule
+    double     *stepsize;       // size of initial simplex
+    int         nPerTmptr;      // number of iterations per temp
+    int         randomStart;    // whether to initialize from random ph
     int         verbose;
     double     *sigdsq_obs;
     double     *c;
-    ULIntArray *spectrum_obs;
+    double     *spectrum_obs;
     double     *loBnd;
     double     *hiBnd;
     double     *hiInit;
@@ -173,9 +175,11 @@ typedef struct TaskArg {
 /** Parameters of cost function--that which is minimized. */
 typedef struct CostPar {
     int         nbins;
+    unsigned    spdim;
     double      u;
     double     *sigdsq;
     double     *c;
+    double     *spectrum;
     ODE        *ode;
     PopHist    *ph;
 } CostPar;
@@ -188,6 +192,7 @@ int read_data(FILE * ifp,
 TaskArg    *TaskArg_new(unsigned task,
                         unsigned seed,
                         int nbins,
+                        unsigned spdim,
                         double u,
                         double ftol,
                         double xtol,
@@ -202,7 +207,7 @@ TaskArg    *TaskArg_new(unsigned task,
                         int verbose,
                         double *sigdsq_obs,
                         double *c,
-                        ULIntArray *spectrum_obs,
+                        double *spectrum_obs,
                         Model * model, PopHist * ph_init, int randomStart);
 void        TaskArg_free(TaskArg * targ);
 int         taskfun(void *varg);
@@ -226,6 +231,7 @@ void CostPar_print(CostPar * cp) {
 TaskArg    *TaskArg_new(unsigned task,
                         unsigned seed,
                         int nbins,
+                        unsigned spdim,
                         double u,
                         double ftol,
                         double xtol,
@@ -240,7 +246,7 @@ TaskArg    *TaskArg_new(unsigned task,
                         int verbose,
                         double *sigdsq_obs,
                         double *c,
-                        ULIntArray *spectrum_obs,
+                        double *spectrum_obs,
                         Model * model, PopHist * ph_init, int randomStart) {
     TaskArg    *targ = malloc(sizeof(TaskArg));
 
@@ -250,29 +256,25 @@ TaskArg    *TaskArg_new(unsigned task,
     targ->ndim = PopHist_nParams(ph_init);
 
     targ->nbins = nbins;
+    targ->spdim = spdim;
     targ->u = u;
     targ->task = task;
     /* each task gets different seed */
     targ->seed = (seed + (unsigned long long) task) % UINT_MAX;  
 
-
-    targ->stepsize = malloc(targ->ndim * sizeof(targ->stepsize[0]));
+    targ->stepsize = memdup(stepsize, targ->ndim * sizeof(targ->stepsize[0]));
     checkmem(targ->stepsize, __FILE__, __LINE__);
-    memcpy(targ->stepsize, stepsize, targ->ndim * sizeof(targ->stepsize[0]));
 
     targ->sched = AnnealSched_copy(sched);
 
-    targ->loBnd = malloc(targ->ndim * sizeof(targ->loBnd[0]));
+    targ->loBnd = memdup(loBnd, targ->ndim * sizeof(targ->loBnd[0]));
     checkmem(targ->loBnd, __FILE__, __LINE__);
-    memcpy(targ->loBnd, loBnd, targ->ndim * sizeof(targ->loBnd[0]));
 
-    targ->hiBnd = malloc(targ->ndim * sizeof(targ->hiBnd[0]));
+    targ->hiBnd = memdup(hiBnd, targ->ndim * sizeof(targ->hiBnd[0]));
     checkmem(targ->hiBnd, __FILE__, __LINE__);
-    memcpy(targ->hiBnd, hiBnd, targ->ndim * sizeof(targ->hiBnd[0]));
 
-    targ->hiInit = malloc(targ->ndim * sizeof(targ->hiInit[0]));
+    targ->hiInit = memdup(hiInit, targ->ndim * sizeof(targ->hiInit[0]));
     checkmem(targ->hiInit, __FILE__, __LINE__);
-    memcpy(targ->hiInit, hiInit, targ->ndim * sizeof(targ->hiInit[0]));
 
     targ->nPerTmptr = nPerTmptr;
     targ->verbose = verbose;
@@ -285,16 +287,14 @@ TaskArg    *TaskArg_new(unsigned task,
     targ->status = 0;
     targ->simplexSize = DBL_MAX;
 
-    targ->sigdsq_obs = malloc(nbins * sizeof(targ->sigdsq_obs[0]));
+    targ->sigdsq_obs = memdup(sigdsq_obs, nbins * sizeof(targ->sigdsq_obs[0]));
     checkmem(targ->sigdsq_obs, __FILE__, __LINE__);
-    memcpy(targ->sigdsq_obs, sigdsq_obs, nbins * sizeof(targ->sigdsq_obs[0]));
 
-    targ->spectrum_obs = ULIntArray_dup(spectrum_obs);
+    targ->spectrum_obs = memdup(spectrum_obs, spdim * sizeof(spectrum_obs[0]));
     checkmem(targ->spectrum_obs, __FILE__, __LINE__);
 
-    targ->c = malloc(nbins * sizeof(targ->c[0]));
+    targ->c = memdup(c, nbins * sizeof(targ->c[0]));
     checkmem(targ->c, __FILE__, __LINE__);
-    memcpy(targ->c, c, nbins * sizeof(targ->c[0]));
 
     return (targ);
 }
@@ -307,7 +307,7 @@ void TaskArg_free(TaskArg * targ) {
     free(targ->loBnd);
     free(targ->hiBnd);
     free(targ->hiInit);
-    ULIntArray_free(targ->spectrum_obs);
+    free(targ->spectrum_obs);
     ODE_free(targ->ode);
     AnnealSched_free(targ->sched);
     free(targ);
@@ -386,7 +386,6 @@ int read_data(FILE * ifp,
               DblArray *cm,
               DblArray *sigdsq,
               ULIntArray *spectrum) {
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     char        buff[200];
     int         ntokens, i, j, tokensExpected = 0;
     enum inputState state = in_header;
@@ -524,7 +523,6 @@ int read_data(FILE * ifp,
 
     Tokenizer_free(tkz);
     tkz = NULL;
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     return i+j;                   /* return number of lines read */
 }
 
@@ -540,9 +538,11 @@ int taskfun(void *varg) {
 
     CostPar     costPar = {
         .nbins = targ->nbins,
+        .spdim = targ->spdim,
         .u = targ->u,
         .sigdsq = targ->sigdsq_obs,
         .c = targ->c,
+        .spectrum = targ->spectrum_obs,
         .ode = targ->ode,
         .ph = targ->ph
     };
@@ -685,13 +685,15 @@ static double costFun(const gsl_vector *x, void *varg) {
     CostPar    *arg = (CostPar *) varg;
     PopHist    *ph = arg->ph;
     int         nbins = arg->nbins;
+    unsigned    spdim = arg->spdim;
     double      u = arg->u;
     double     *sigdsq = arg->sigdsq;
     double     *c = arg->c;
+    double     *spectrum = arg->spectrum;
     ODE        *ode = arg->ode;
     static const double bigval = 1.0 / DBL_EPSILON;
 
-    double      badness, exp_sigdsq[nbins];
+    double      badness, exp_sigdsq[nbins], exp_spectrum[spdim];
     int         i;
 
 	/* DEBUG: make a vector xx which is absolute value of x */
@@ -712,13 +714,23 @@ static double costFun(const gsl_vector *x, void *varg) {
     fflush(stdout);
 #endif
 
-    /* get vector of expected values of sigdsq */
+    // get vector of expected values of sigdsq
     ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
 
+    // get expected spectrum
+    ESpectrum *espec = ESpectrum_new(twoNsmp, ph, tolMatCoal);
+    for(i=0; i < spdim; ++i)
+        exp_spectrum[i] = ESpectrum_folded(espec, i+1);
+
+
+    double diff;
     badness = 0.0;
     for(i = 0; i < nbins; ++i) {
-        double      diff = exp_sigdsq[i] - sigdsq[i];
-
+        diff = exp_sigdsq[i] - sigdsq[i];
+        badness += diff * diff;
+    }
+    for(i = 0; i < spdim; ++i) {
+        diff = exp_spectrum[i] - spectrum[i];
         badness += diff * diff;
     }
 
@@ -1091,28 +1103,29 @@ int main(int argc, char **argv) {
     checkmem(spectrum_obs, __FILE__, __LINE__);
 
     rval = read_data(ifp, cc, sigdsq_obs, spectrum_obs);
-    printf("%s:%s:%d. rval=%d nbins=%d\n",
-           __FILE__,__func__,__LINE__, rval, nbins);fflush(stdout);
     if(rval != nbins + spdim)
         eprintf("%s:%s:%d: Expected %d lines of data from \"%s\"."
                 " Got %d.",
                 __FILE__,__func__,__LINE__,
                 nbins, fname, rval);
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
-    /* convert centimorgans to recombination rates */
+    // Normalize spectrum as array of doubles
+    double spec_obs_normed[spdim];
+    unsigned long spsum=0.0;
+    for(i=0; i<spdim; ++i)
+        spsum += ULIntArray_get(spectrum_obs, i);
+    for(i=0; i<spdim; ++i)
+        spec_obs_normed[i] = ULIntArray_get(spectrum_obs, i) / ((double) spsum);
+
+    // convert centimorgans to recombination rates 
     for(i = 0; i < nbins; ++i) {
-        printf("%s:%s:%d: i=%d\n",
-               __FILE__,__func__,__LINE__, i);fflush(stdout);
         double c = DblArray_get(cc, i);
         DblArray_set(cc, i, c * 0.01);
     }
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     Boot       *boot = NULL;
     FILE       *bootfile = NULL;
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     if(bootfilename[0]) {
         bootfile = fopen(bootfilename, "r");
         if(bootfile == NULL)
@@ -1126,7 +1139,6 @@ int main(int argc, char **argv) {
         bootfile = NULL;
     }
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     if(boot) {
         nBootReps = Boot_nReps(boot);
         Boot_purge(boot);
@@ -1143,12 +1155,9 @@ int main(int argc, char **argv) {
     nDataSets = 1 + nBootReps;
     nTasks = nDataSets * nOpt;
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
-    /*
-     * taskarg[i][j] points to the j'th optimizer on the i'th data
-     * set, where the observed data are data set 0. i runs from 0
-     * through nDataSets-1, and j from 0 through nOpt-1.
-     */
+    // taskarg[i][j] points to the j'th optimizer on the i'th data
+    // set, where the observed data are data set 0. i runs from 0
+    // through nDataSets-1, and j from 0 through nOpt-1.
     TaskArg  ***taskarg = malloc(nDataSets * sizeof(taskarg[0]));
 
     checkmem(taskarg, __FILE__, __LINE__);
@@ -1158,10 +1167,9 @@ int main(int argc, char **argv) {
         checkmem(taskarg[i], __FILE__, __LINE__);
     }
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     /* create task arguments for the observed sigdsq */
     for(j = 0; j < nOpt; ++j) {
-        taskarg[0][j] = TaskArg_new(j, baseSeed, nbins, u,
+        taskarg[0][j] = TaskArg_new(j, baseSeed, nbins, spdim, u,
                                     ftol, xtol,
                                     stepsize,
                                     sched,
@@ -1171,12 +1179,11 @@ int main(int argc, char **argv) {
                                     verbose,
                                     DblArray_ptr(sigdsq_obs),
                                     DblArray_ptr(cc),
-                                    spectrum_obs,
+                                    spec_obs_normed,
                                     model, ph_init,
                                     randomStart);
     }
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     /* create task arguments for each bootstrap replicate */
     DblArray *sigdsq_curr = DblArray_new(nbins);
     checkmem(sigdsq_curr, __FILE__, __LINE__);
@@ -1185,7 +1192,6 @@ int main(int argc, char **argv) {
     ULIntArray *spec_curr = ULIntArray_new(spdim);
     checkmem(spec_curr, __FILE__, __LINE__);
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     for(rndx = 0; rndx < nBootReps; ++rndx) {
         Boot_get_rep(boot, sigdsq_curr, NULL, cc_curr, NULL,
                      spec_curr, rndx);
@@ -1212,7 +1218,6 @@ int main(int argc, char **argv) {
                                                model, ph_init, randomStart);
     }
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     if(nthreads == 0)
         nthreads = getNumCores();
 
@@ -1229,17 +1234,14 @@ int main(int argc, char **argv) {
         eprintf("ERR@%s:%d: Bad return from JobQueue_new",
                 __FILE__, __LINE__);
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     for(i = 0; i < nDataSets; ++i)
         for(j = 0; j < nOpt; ++j)
             JobQueue_addJob(jq, taskfun, taskarg[i][j]);
 
     if(verbose)
         prHeader(ph_init);
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     JobQueue_waitOnJobs(jq);
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     fprintf(stderr, "Back from threads\n");
 
     TaskArg   **best = malloc(nDataSets * sizeof(best[0]));
@@ -1249,7 +1251,6 @@ int main(int argc, char **argv) {
 	 * best[i] points to the best result among all replicate
 	 * optimizers for data set i.
 	 */
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     for(i = 0; i < nDataSets; ++i) {
         best[i] = TaskArg_best(taskarg[i], nOpt);
     }
@@ -1293,7 +1294,6 @@ int main(int argc, char **argv) {
 
     char        pname[50];
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     if(boot) {
         fprintf(stderr, "Processing bootstrap\n");
         /* output w/ confidence interval */
@@ -1375,7 +1375,6 @@ int main(int argc, char **argv) {
         }
     }
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     /* mean and variance of log badness */
     double      m = 0.0, v = 0.0;
 
@@ -1433,7 +1432,6 @@ int main(int argc, char **argv) {
         bootfile = NULL;
 	}
 
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     DblArray_free(sigdsq_curr);
     DblArray_free(cc_curr);
     ULIntArray_free(spec_curr);
