@@ -85,6 +85,8 @@ int main(int argc, char **argv) {
         printf("after stripping extraneous chars, ntokens is %d\n", ntokens);
         for(i = 0; i < ntokens; ++i)
             printf("%4d \"%s\"\n", i, Tokenizer_token(tkz, i));
+        printf("Tokenizer_print:\n");
+        Tokenizer_print(tkz, stdout);
     }
 
     strcpy(str, "afasf");

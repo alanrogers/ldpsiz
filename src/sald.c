@@ -181,7 +181,9 @@ typedef struct CostPar {
 } CostPar;
 
 void        usage(void);
-int read_data(FILE * ifp, int nbins, double cm[nbins], double sigdsq[nbins],
+int read_data(FILE * ifp, 
+              DblArray *cm,
+              DblArray *sigdsq,
               ULIntArray *spectrum);
 TaskArg    *TaskArg_new(unsigned task,
                         unsigned seed,
@@ -380,16 +382,24 @@ enum inputState {in_header, in_LD, in_spectrum};
  *
  * @returns number of lines read
  */
-int read_data(FILE * ifp, int nbins, double cm[nbins], double sigdsq[nbins],
+int read_data(FILE * ifp, 
+              DblArray *cm,
+              DblArray *sigdsq,
               ULIntArray *spectrum) {
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     char        buff[200];
     int         ntokens, i, j, tokensExpected = 0;
     enum inputState state = in_header;
     Tokenizer  *tkz = Tokenizer_new(50);
 
+    assert(DblArray_dim(cm) == DblArray_dim(sigdsq));
+    unsigned long nbins = DblArray_dim(sigdsq);
+           
+
     rewind(ifp);
     /* skip until beginning of data */
-    while(!in_LD && fgets(buff, (int) sizeof(buff), ifp) != NULL) {
+    while(state == in_header
+          && fgets(buff, (int) sizeof(buff), ifp) != NULL) {
 
         if(!strchr(buff, '\n') && !feof(ifp))
             eprintf("ERR@%s:%d: input buffer overflow."
@@ -439,8 +449,8 @@ int read_data(FILE * ifp, int nbins, double cm[nbins], double sigdsq[nbins],
             eprintf("ERR@%s:%d: got %d tokens rather than %d",
                     __FILE__, __LINE__, ntokens, tokensExpected);
 
-        cm[i] = strtod(Tokenizer_token(tkz, 0), NULL);
-        sigdsq[i] = strtod(Tokenizer_token(tkz, 1), NULL);
+        DblArray_set(cm, i, strtod(Tokenizer_token(tkz, 0), NULL));
+        DblArray_set(sigdsq, i, strtod(Tokenizer_token(tkz, 1), NULL));
         ++i;
     }
 
@@ -514,6 +524,7 @@ int read_data(FILE * ifp, int nbins, double cm[nbins], double sigdsq[nbins],
 
     Tokenizer_free(tkz);
     tkz = NULL;
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     return i+j;                   /* return number of lines read */
 }
 
@@ -800,7 +811,6 @@ int main(int argc, char **argv) {
     double     *stepsize;            /* controls size of initial simplex */
     double      durationEps = 500.0;
     double      twoNinvEps = 0.01;
-    double     *cc, *sigdsq_obs;
 
     int         nbins;
     int         verbose = 0;
@@ -822,6 +832,7 @@ int main(int argc, char **argv) {
     char        bootfilename[FILENAMESIZE] = { '\0' };
     char        fname[FILENAMESIZE] = { '\0' };
     FILE       *ifp = NULL;
+
     int         i, j, rval;
     int         rndx, nparams = 0, pndx;
     PopHist    *ph_init = NULL;
@@ -1070,27 +1081,35 @@ int main(int argc, char **argv) {
         printf("%lg, ", stepsize[i]);
     printf("%lg]\n", stepsize[i]);
 
-    cc = (double *) malloc(nbins * sizeof(cc[0]));
+    DblArray *cc = DblArray_new(nbins);
     checkmem(cc, __FILE__, __LINE__);
 
-    sigdsq_obs = (double *) malloc(nbins * sizeof(sigdsq_obs[0]));
+    DblArray *sigdsq_obs = DblArray_new(nbins);
     checkmem(sigdsq_obs, __FILE__, __LINE__);
 
     ULIntArray *spectrum_obs = ULIntArray_new(spdim);
     checkmem(spectrum_obs, __FILE__, __LINE__);
 
-    rval = read_data(ifp, nbins, cc, sigdsq_obs, spectrum_obs);
+    rval = read_data(ifp, cc, sigdsq_obs, spectrum_obs);
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     if(rval != nbins)
         eprintf("ERR@%s:%d: Couldn't read %d lines of data from \"%s\"."
                 " Only found %d lines", nbins, fname, rval);
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     /* convert centimorgans to recombination rates */
-    for(i = 0; i < nbins; ++i)
-        cc[i] *= 0.01;
+    for(i = 0; i < nbins; ++i) {
+        printf("%s:%s:%d: i=%d\n",
+               __FILE__,__func__,__LINE__, i);fflush(stdout);
+        double c = DblArray_get(cc, i);
+        DblArray_set(cc, i, c * 0.01);
+    }
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     Boot       *boot = NULL;
     FILE       *bootfile = NULL;
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     if(bootfilename[0]) {
         bootfile = fopen(bootfilename, "r");
         if(bootfile == NULL)
@@ -1104,6 +1123,7 @@ int main(int argc, char **argv) {
         bootfile = NULL;
     }
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     if(boot) {
         nBootReps = Boot_nReps(boot);
         Boot_purge(boot);
@@ -1120,6 +1140,7 @@ int main(int argc, char **argv) {
     nDataSets = 1 + nBootReps;
     nTasks = nDataSets * nOpt;
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     /*
      * taskarg[i][j] points to the j'th optimizer on the i'th data
      * set, where the observed data are data set 0. i runs from 0
@@ -1134,6 +1155,7 @@ int main(int argc, char **argv) {
         checkmem(taskarg[i], __FILE__, __LINE__);
     }
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     /* create task arguments for the observed sigdsq */
     for(j = 0; j < nOpt; ++j) {
         taskarg[0][j] = TaskArg_new(j, baseSeed, nbins, u,
@@ -1144,12 +1166,14 @@ int main(int argc, char **argv) {
                                     odeAbsTol, odeRelTol,
                                     nPerTmptr,
                                     verbose,
-                                    sigdsq_obs, cc,
+                                    DblArray_ptr(sigdsq_obs),
+                                    DblArray_ptr(cc),
                                     spectrum_obs,
                                     model, ph_init,
                                     randomStart);
     }
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     /* create task arguments for each bootstrap replicate */
     DblArray *sigdsq_curr = DblArray_new(nbins);
     checkmem(sigdsq_curr, __FILE__, __LINE__);
@@ -1158,6 +1182,7 @@ int main(int argc, char **argv) {
     ULIntArray *spec_curr = ULIntArray_new(spdim);
     checkmem(spec_curr, __FILE__, __LINE__);
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     for(rndx = 0; rndx < nBootReps; ++rndx) {
         Boot_get_rep(boot, sigdsq_curr, NULL, cc_curr, NULL,
                      spec_curr, rndx);
@@ -1184,6 +1209,7 @@ int main(int argc, char **argv) {
                                                model, ph_init, randomStart);
     }
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     if(nthreads == 0)
         nthreads = getNumCores();
 
@@ -1200,14 +1226,17 @@ int main(int argc, char **argv) {
         eprintf("ERR@%s:%d: Bad return from JobQueue_new",
                 __FILE__, __LINE__);
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     for(i = 0; i < nDataSets; ++i)
         for(j = 0; j < nOpt; ++j)
             JobQueue_addJob(jq, taskfun, taskarg[i][j]);
 
     if(verbose)
         prHeader(ph_init);
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     JobQueue_waitOnJobs(jq);
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     fprintf(stderr, "Back from threads\n");
 
     TaskArg   **best = malloc(nDataSets * sizeof(best[0]));
@@ -1217,6 +1246,7 @@ int main(int argc, char **argv) {
 	 * best[i] points to the best result among all replicate
 	 * optimizers for data set i.
 	 */
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     for(i = 0; i < nDataSets; ++i) {
         best[i] = TaskArg_best(taskarg[i], nOpt);
     }
@@ -1260,6 +1290,7 @@ int main(int argc, char **argv) {
 
     char        pname[50];
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     if(boot) {
         fprintf(stderr, "Processing bootstrap\n");
         /* output w/ confidence interval */
@@ -1327,18 +1358,21 @@ int main(int argc, char **argv) {
         double      sigdsq_fit[nbins];
         ODE        *ode = ODE_new(model, odeAbsTol, odeRelTol);
 
-        ODE_ldVec(ode, sigdsq_fit, nbins, cc, u, best[0]->ph);
+        ODE_ldVec(ode, sigdsq_fit, nbins,
+                  DblArray_ptr(cc), u, best[0]->ph);
         ODE_free(ode);
 
         printf("\n# Fitted values of sigma_d^2. (cM = centimorgans)\n");
         printf("#%10s %10s\n", "cM", "sigma_d^2");
         for(i = 0; i < nbins; ++i) {
+            double cci = DblArray_get(cc, i);
             printf("%11.8lf %10.8lf\n",
-                   cc[i] * 100.0,  /*convert to cM*/
+                   cci * 100.0,  /*convert to cM*/
                    sigdsq_fit[i]);
         }
     }
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     /* mean and variance of log badness */
     double      m = 0.0, v = 0.0;
 
@@ -1387,14 +1421,16 @@ int main(int argc, char **argv) {
              * decimal format.
              */
             for(pndx=0; pndx < nparams; ++pndx)
-                fprintf(bootfile, " %.*le", DBL_DIG+3, PopHist_paramValue(best[i]->ph,
-                                                                            pndx));
+                fprintf(bootfile, " %.*le", DBL_DIG+3,
+                        PopHist_paramValue(best[i]->ph,
+                                           pndx));
             putc('\n', bootfile);
         }
         fclose(bootfile);
         bootfile = NULL;
 	}
 
+    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     DblArray_free(sigdsq_curr);
     DblArray_free(cc_curr);
     ULIntArray_free(spec_curr);
@@ -1408,8 +1444,8 @@ int main(int argc, char **argv) {
     free(stepsize);
     EpochLink_free(linkedList);
     PopHist_free(ph_init);
-    free(cc);
-    free(sigdsq_obs);
+    DblArray_free(cc);
+    DblArray_free(sigdsq_obs);
     ULIntArray_free(spectrum_obs);
     if(boot) {
         Boot_free(boot);
