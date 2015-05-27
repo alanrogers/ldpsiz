@@ -757,6 +757,10 @@ static double costFun(const gsl_vector *x, void *varg) {
 #endif
         badness = bigval;
     }
+#ifndef NDEBUG
+    else
+        assert(badness < bigval);
+#endif    
 
     return badness;
 }
