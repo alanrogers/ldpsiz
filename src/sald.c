@@ -1091,10 +1091,13 @@ int main(int argc, char **argv) {
     checkmem(spectrum_obs, __FILE__, __LINE__);
 
     rval = read_data(ifp, cc, sigdsq_obs, spectrum_obs);
-    printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
-    if(rval != nbins)
-        eprintf("ERR@%s:%d: Couldn't read %d lines of data from \"%s\"."
-                " Only found %d lines", nbins, fname, rval);
+    printf("%s:%s:%d. rval=%d nbins=%d\n",
+           __FILE__,__func__,__LINE__, rval, nbins);fflush(stdout);
+    if(rval != nbins + spdim)
+        eprintf("%s:%s:%d: Expected %d lines of data from \"%s\"."
+                " Got %d.",
+                __FILE__,__func__,__LINE__,
+                nbins, fname, rval);
 
     printf("%s:%s:%d\n",__FILE__,__func__,__LINE__);fflush(stdout);
     /* convert centimorgans to recombination rates */
