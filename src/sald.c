@@ -168,6 +168,7 @@ typedef struct TaskArg {
     double     *hiInit;
     ODE        *ode;
 
+    unsigned long nIterations;  // count iterations
     int         status;
     double      simplexSize;
     PopHist    *ph;
@@ -186,6 +187,7 @@ typedef struct CostPar {
     double     *spectrum;
     ODE        *ode;
     PopHist    *ph;
+    unsigned long nIterations;
 } CostPar;
 
 void        usage(void);
@@ -224,9 +226,9 @@ void        prHeader(PopHist * ph);
 void CostPar_print(CostPar * cp) {
     int         i;
 
-    printf("CostPar: nbins=%d spdim=%u twoNsmp=%u u=%lg model=%s\n",
+    printf("CostPar: nbins=%d spdim=%u twoNsmp=%u u=%lg model=%s nIterations=%lu\n",
            cp->nbins, cp->spdim, cp->twoNsmp, cp->u,
-           Model_lbl(ODE_model(cp->ode)));
+           Model_lbl(ODE_model(cp->ode)), cp->nIterations);
     printf("    %15s %15s\n", "c", "sigdsq");
     for(i = 0; i < cp->nbins; ++i)
         printf("    %15.8lg %15.8lg\n", cp->c[i], cp->sigdsq[i]);
@@ -267,6 +269,7 @@ TaskArg    *TaskArg_new(unsigned task,
 
     targ->ndim = PopHist_nParams(ph_init);
 
+    targ->nIterations = 0;
     targ->nbins = nbins;
     targ->spdim = ULIntArray_dim(spectrum);
     targ->twoNsmp = twoNsmp;
@@ -573,7 +576,8 @@ int taskfun(void *varg) {
         .c = targ->c,
         .spectrum = targ->spectrum_obs,
         .ode = targ->ode,
-        .ph = targ->ph
+        .ph = targ->ph,
+        .nIterations = 0
     };
 
     /* Starting point */
@@ -671,6 +675,7 @@ int taskfun(void *varg) {
 
     DPRINTF(("%s:%d:%u done minimizing\n", __func__, __LINE__, targ->task));
 
+    targ->nIterations = costPar.nIterations;
     targ->status = status;
     vector_to_PopHist(targ->ph, minimizer->x);
     targ->cost = minimizer->fval;
@@ -788,7 +793,8 @@ static double costFun(const gsl_vector *x, void *varg) {
 #ifndef NDEBUG
     else
         assert(badness < bigval);
-#endif    
+#endif
+    ++arg->nIterations;
 
     return badness;
 }
@@ -807,9 +813,7 @@ void prHeader(PopHist * ph) {
         else
             printf(" %10s", buff);
     }
-    printf(" %11s", "badness");
-    printf(" %11s", "simplexSize");
-    printf(" %6s\n", "convrg");
+    printf(" %11s %11s %8s %6s\n", "badness", "simplexSize", "nItr", "convrg");
     fflush(stdout);
 }
 
@@ -1295,6 +1299,7 @@ int main(int argc, char **argv) {
         }
         printf(" %11.9lf", taskarg[0][i]->cost);
         printf(" %11.9lf", taskarg[0][i]->simplexSize);
+        printf(" %8lu", taskarg[0][i]->nIterations);
         switch(taskarg[0][i]->status) {
         case GSL_SUCCESS:
             printf(" %-9s\n", "Converg");
