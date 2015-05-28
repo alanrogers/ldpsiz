@@ -441,7 +441,8 @@ int read_data(FILE * ifp,
             default:
                 fprintf(stderr, "Current tokens:");
                 Tokenizer_print(tkz, stderr);
-                eprintf("ERR@%s:%d: got %d tokens rather than 4 or 6",
+                eprintf("ERR@%s:%d: got %d tokens rather than 4 or 6"
+                        " (LD header)",
                         __FILE__, __LINE__, ntokens);
             }
         }
@@ -468,7 +469,8 @@ int read_data(FILE * ifp,
             continue;
 
         if(ntokens != tokensExpected)
-            eprintf("ERR@%s:%d: got %d tokens rather than %d",
+            eprintf("ERR@%s:%d: got %d tokens rather than %d"
+                    " (reading LD)",
                     __FILE__, __LINE__, ntokens, tokensExpected);
 
         DblArray_set(cm, i, strtod(Tokenizer_token(tkz, 0), NULL));
@@ -496,14 +498,15 @@ int read_data(FILE * ifp,
         if(strcmp(Tokenizer_token(tkz, 1), "spectrum") == 0) {
             state = in_spectrum;
             switch (ntokens) {
-            case 4: // fall through
-            case 6:
+            case 2: // fall through
+            case 4:
                 tokensExpected = ntokens;
                 break;
             default:
                 fprintf(stderr, "Current tokens:");
                 Tokenizer_print(tkz, stderr);
-                eprintf("ERR@%s:%d: got %d tokens rather than 4 or 6",
+                eprintf("ERR@%s:%d: got %d tokens rather than 2 or 4"
+                        " (spectrum header)",
                         __FILE__, __LINE__, ntokens);
             }
             break;
@@ -526,7 +529,8 @@ int read_data(FILE * ifp,
             continue;
 
         if(ntokens != tokensExpected)
-            eprintf("ERR@%s:%d: got %d tokens rather than %d",
+            eprintf("ERR@%s:%d: got %d tokens rather than %d"
+                    " (reading spectrum)",
                     __FILE__, __LINE__, ntokens, tokensExpected);
 
 #ifndef NDEBUG
