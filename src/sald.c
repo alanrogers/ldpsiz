@@ -149,9 +149,11 @@ typedef struct TaskArg {
     unsigned    task;
     unsigned    seed;
     int         nbins;
-    unsigned    spdim;          // dimension of site frequency spectrum
+    unsigned    spdim;
+    unsigned    twoNsmp;        // haploid sample size
     size_t      ndim;           // number of dimensions in state space
     double      u;              // mutation rate
+    double      tolMatCoal;     // tolerance for MatCoal
     double      ftol, xtol;     // controls convergence
     AnnealSched *sched;         // annealing schedule
     double     *stepsize;       // size of initial simplex
@@ -176,7 +178,9 @@ typedef struct TaskArg {
 typedef struct CostPar {
     int         nbins;
     unsigned    spdim;
+    unsigned    twoNsmp;
     double      u;
+    double      tolMatCoal;
     double     *sigdsq;
     double     *c;
     double     *spectrum;
@@ -192,8 +196,9 @@ int read_data(FILE * ifp,
 TaskArg    *TaskArg_new(unsigned task,
                         unsigned seed,
                         int nbins,
-                        unsigned spdim,
+                        unsigned twoNsmp,
                         double u,
+                        double tolMatCoal,
                         double ftol,
                         double xtol,
                         double *stepsize,
@@ -207,7 +212,7 @@ TaskArg    *TaskArg_new(unsigned task,
                         int verbose,
                         double *sigdsq_obs,
                         double *c,
-                        double *spectrum_obs,
+                        ULIntArray *spectrum,
                         Model * model, PopHist * ph_init, int randomStart);
 void        TaskArg_free(TaskArg * targ);
 int         taskfun(void *varg);
@@ -219,11 +224,17 @@ void        prHeader(PopHist * ph);
 void CostPar_print(CostPar * cp) {
     int         i;
 
-    printf("CostPar: nbins=%d u=%lg model=%s\n",
-           cp->nbins, cp->u, Model_lbl(ODE_model(cp->ode)));
+    printf("CostPar: nbins=%d spdim=%u twoNsmp=%u u=%lg model=%s\n",
+           cp->nbins, cp->spdim, cp->twoNsmp, cp->u,
+           Model_lbl(ODE_model(cp->ode)));
     printf("    %15s %15s\n", "c", "sigdsq");
     for(i = 0; i < cp->nbins; ++i)
         printf("    %15.8lg %15.8lg\n", cp->c[i], cp->sigdsq[i]);
+
+    putchar ('\n');
+    printf("    %15s %15s\n", "i", "spectrum");
+    for(i = 0; i < cp->spdim; ++i)
+        printf("    %15d %15.8lg\n", i+1, cp->spectrum[i]);
     PopHist_print_comment(cp->ph, "    ", stdout);
 }
 
@@ -231,8 +242,9 @@ void CostPar_print(CostPar * cp) {
 TaskArg    *TaskArg_new(unsigned task,
                         unsigned seed,
                         int nbins,
-                        unsigned spdim,
+                        unsigned twoNsmp,
                         double u,
+                        double tolMatCoal,
                         double ftol,
                         double xtol,
                         double *stepsize,
@@ -246,7 +258,7 @@ TaskArg    *TaskArg_new(unsigned task,
                         int verbose,
                         double *sigdsq_obs,
                         double *c,
-                        double *spectrum_obs,
+                        ULIntArray *spectrum,
                         Model * model, PopHist * ph_init, int randomStart) {
     TaskArg    *targ = malloc(sizeof(TaskArg));
 
@@ -256,7 +268,8 @@ TaskArg    *TaskArg_new(unsigned task,
     targ->ndim = PopHist_nParams(ph_init);
 
     targ->nbins = nbins;
-    targ->spdim = spdim;
+    targ->spdim = ULIntArray_dim(spectrum);
+    targ->twoNsmp = twoNsmp;
     targ->u = u;
     targ->task = task;
     /* each task gets different seed */
@@ -279,6 +292,7 @@ TaskArg    *TaskArg_new(unsigned task,
     targ->nPerTmptr = nPerTmptr;
     targ->verbose = verbose;
     targ->cost = -1.0;
+    targ->tolMatCoal = tolMatCoal;
     targ->ftol = ftol;
     targ->xtol = xtol;
     targ->ode = ODE_new(model, odeAbsTol, odeRelTol);
@@ -290,7 +304,16 @@ TaskArg    *TaskArg_new(unsigned task,
     targ->sigdsq_obs = memdup(sigdsq_obs, nbins * sizeof(targ->sigdsq_obs[0]));
     checkmem(targ->sigdsq_obs, __FILE__, __LINE__);
 
-    targ->spectrum_obs = memdup(spectrum_obs, spdim * sizeof(spectrum_obs[0]));
+    // Normalize spectrum as array of doubles
+    unsigned i, spdim = ULIntArray_dim(spectrum);
+    double spec[spdim];
+    unsigned long spsum=0.0;
+    for(i=0; i<spdim; ++i)
+        spsum += ULIntArray_get(spectrum, i);
+    for(i=0; i<spdim; ++i)
+        spec[i] = ULIntArray_get(spectrum, i) / ((double) spsum);
+
+    targ->spectrum_obs = memdup(spec, spdim * sizeof(spec[0]));
     checkmem(targ->spectrum_obs, __FILE__, __LINE__);
 
     targ->c = memdup(c, nbins * sizeof(targ->c[0]));
@@ -539,6 +562,8 @@ int taskfun(void *varg) {
     CostPar     costPar = {
         .nbins = targ->nbins,
         .spdim = targ->spdim,
+        .twoNsmp = targ->twoNsmp,
+        .tolMatCoal = targ->tolMatCoal,
         .u = targ->u,
         .sigdsq = targ->sigdsq_obs,
         .c = targ->c,
@@ -718,10 +743,9 @@ static double costFun(const gsl_vector *x, void *varg) {
     ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
 
     // get expected spectrum
-    ESpectrum *espec = ESpectrum_new(twoNsmp, ph, tolMatCoal);
+    ESpectrum *espec = ESpectrum_new(arg->twoNsmp, ph, arg->tolMatCoal);
     for(i=0; i < spdim; ++i)
         exp_spectrum[i] = ESpectrum_folded(espec, i+1);
-
 
     double diff;
     badness = 0.0;
@@ -785,7 +809,6 @@ void prHeader(PopHist * ph) {
     fflush(stdout);
 }
 
-
 int main(int argc, char **argv) {
     int         optndx;
     static struct option myopts[] = {
@@ -813,6 +836,7 @@ int main(int argc, char **argv) {
     double      u = 1e-8;
     double      ftol = 5e-5;     /* will be multiplied by nbins */
     double      xtol = 1e-6;
+    double      tolMatCoal = 1e-6; // controls accuracy of MatCoal
     double      odeAbsTol = 1e-7;
     double      odeRelTol = 1e-3;
     double      confidence = 0.95;
@@ -1079,6 +1103,7 @@ int main(int argc, char **argv) {
     printf("# %-35s = %lg\n", "mutation rate per nucleotide", u);
     printf("# %-35s = %lg\n", "ftol", ftol);
     printf("# %-35s = %lg\n", "xtol", xtol);
+    printf("# %-35s = %lg\n", "tolMatCoal", tolMatCoal);
     printf("# %-35s = %lg\n", "odeAbsTol", odeAbsTol);
     printf("# %-35s = %lg\n", "odeRelTol", odeRelTol);
 
@@ -1112,14 +1137,6 @@ int main(int argc, char **argv) {
                 " Got %d.",
                 __FILE__,__func__,__LINE__,
                 nbins, fname, rval);
-
-    // Normalize spectrum as array of doubles
-    double spec_obs_normed[spdim];
-    unsigned long spsum=0.0;
-    for(i=0; i<spdim; ++i)
-        spsum += ULIntArray_get(spectrum_obs, i);
-    for(i=0; i<spdim; ++i)
-        spec_obs_normed[i] = ULIntArray_get(spectrum_obs, i) / ((double) spsum);
 
     // convert centimorgans to recombination rates 
     for(i = 0; i < nbins; ++i) {
@@ -1173,8 +1190,9 @@ int main(int argc, char **argv) {
 
     /* create task arguments for the observed sigdsq */
     for(j = 0; j < nOpt; ++j) {
-        taskarg[0][j] = TaskArg_new(j, baseSeed, nbins, spdim, u,
-                                    ftol, xtol,
+        taskarg[0][j] = TaskArg_new(j, baseSeed, nbins, twoNsmp,
+                                    u,
+                                    tolMatCoal, ftol, xtol,
                                     stepsize,
                                     sched,
                                     loBnd, hiBnd, hiInit,
@@ -1183,7 +1201,7 @@ int main(int argc, char **argv) {
                                     verbose,
                                     DblArray_ptr(sigdsq_obs),
                                     DblArray_ptr(cc),
-                                    spec_obs_normed,
+                                    spectrum_obs,
                                     model, ph_init,
                                     randomStart);
     }
@@ -1208,8 +1226,8 @@ int main(int argc, char **argv) {
         for(j = 0; j < nOpt; ++j)
             taskarg[rndx + 1][j] = TaskArg_new(j + (1+rndx)*nOpt,
                                                baseSeed,
-                                               nbins, u, 
-                                               ftol, xtol,
+                                               nbins, twoNsmp, u, 
+                                               tolMatCoal, ftol, xtol,
                                                stepsize,
                                                sched,
                                                loBnd, hiBnd, hiInit,
