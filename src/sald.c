@@ -522,7 +522,6 @@ int read_data(FILE * ifp,
     while(state==in_spectrum
           && j < ULIntArray_dim(spectrum)
           && fgets(buff, (int) sizeof(buff), ifp) != NULL) {
-        unsigned k;
 
         if(!strchr(buff, '\n') && !feof(ifp))
             eprintf("ERR@%s:%d: input buffer overflow."
@@ -538,7 +537,7 @@ int read_data(FILE * ifp,
                     __FILE__, __LINE__, ntokens, tokensExpected);
 
 #ifndef NDEBUG
-        k = strtod(Tokenizer_token(tkz, 0), NULL);
+        unsigned k = strtod(Tokenizer_token(tkz, 0), NULL);
         assert(k == j+1);
 #endif
         unsigned long s = strtoul(Tokenizer_token(tkz, 1), NULL, 10);
@@ -677,6 +676,7 @@ int taskfun(void *varg) {
     DPRINTF(("%s:%d:%u done minimizing\n", __func__, __LINE__, targ->task));
 
     targ->nIterations += costPar.nIterations;
+    costPar.nIterations = 0;
     targ->status = status;
     vector_to_PopHist(targ->ph, minimizer->x);
     targ->cost = minimizer->fval;
@@ -1147,6 +1147,11 @@ int main(int argc, char **argv) {
                 __FILE__,__func__,__LINE__,
                 nbins, fname, rval);
 
+    long unsigned nSNPs = 0;
+    for(i=0; i < ULIntArray_dim(spectrum_obs); ++i)
+        nSNPs += ULIntArray_get(spectrum_obs, i);
+    printf("# %-35s = %lu\n", "nSNPs", nSNPs);
+
     // convert centimorgans to recombination rates 
     for(i = 0; i < nbins; ++i) {
         double c = DblArray_get(cc, i);
@@ -1389,10 +1394,9 @@ int main(int argc, char **argv) {
     }
 
     if(best[0]) {
-        /* find fitted values of sigdsq */
+        // find fitted values of sigdsq
         double      sigdsq_fit[nbins];
         ODE        *ode = ODE_new(model, odeAbsTol, odeRelTol);
-
         ODE_ldVec(ode, sigdsq_fit, nbins,
                   DblArray_ptr(cc), u, best[0]->ph);
         ODE_free(ode);
@@ -1405,6 +1409,14 @@ int main(int argc, char **argv) {
                    cci * 100.0,  /*convert to cM*/
                    sigdsq_fit[i]);
         }
+
+        // fitted spectrum
+        ESpectrum *espec = ESpectrum_new(twoNsmp, best[0]->ph,
+                                         tolMatCoal);
+        printf("\n#%5s %10s\n", "i", "spectrum");
+        for(i=1; i <= spdim; ++i)
+            printf("%6d %10.0lf\n", i,
+                   floor(0.5 + nSNPs*ESpectrum_folded(espec, i)));
     }
 
     /* mean and variance of log badness */
