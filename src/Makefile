@@ -71,7 +71,7 @@ ms2gtp : $(MS2GTP)
 	$(CC) $(CFLAGS) -o $@ $(MS2GTP) $(lib)
 
 # convert boot file into a table
-BOOT2TBL := boot2tbl.o misc.o boot.o tabulation.o
+BOOT2TBL := boot2tbl.o misc.o boot.o tabulation.o spectab.o array.o
 boot2tbl : $(BOOT2TBL)
 	$(CC) $(CFLAGS) -o $@ $(BOOT2TBL) $(lib)
 
@@ -92,7 +92,7 @@ sald: $(SALD)
 	$(CC) $(CFLAGS) -o $@ $(SALD) $(lib)
 
 TABFBOOT := tabfboot.o misc.o pophist.o boot.o tokenizer.o \
-  tabulation.o
+  tabulation.o spectab.o array.o
 tabfboot: $(TABFBOOT)
 	$(CC) $(CFLAGS) -o $@ $(TABFBOOT) $(lib)
 
