@@ -226,7 +226,8 @@ void        prHeader(PopHist * ph);
 void CostPar_print(CostPar * cp) {
     int         i;
 
-    printf("CostPar: nbins=%d spdim=%u twoNsmp=%u u=%lg model=%s nIterations=%lu\n",
+    printf("CostPar: nbins=%d spdim=%u twoNsmp=%u u=%lg"
+           " model=%s nIterations=%lu\n",
            cp->nbins, cp->spdim, cp->twoNsmp, cp->u,
            Model_lbl(ODE_model(cp->ode)), cp->nIterations);
     printf("    %15s %15s\n", "c", "sigdsq");
@@ -675,7 +676,7 @@ int taskfun(void *varg) {
 
     DPRINTF(("%s:%d:%u done minimizing\n", __func__, __LINE__, targ->task));
 
-    targ->nIterations = costPar.nIterations;
+    targ->nIterations += costPar.nIterations;
     targ->status = status;
     vector_to_PopHist(targ->ph, minimizer->x);
     targ->cost = minimizer->fval;
