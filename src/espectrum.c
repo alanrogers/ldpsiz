@@ -67,6 +67,9 @@ ESpectrum *ESpectrum_new(unsigned nSamples, PopHist *ph,
 	for(i=0; i < -1 + spectrum->nSamples; ++i)
 		spectrum->spec[i] /= sum;
 
+	Polya_free(polya);
+	polya=NULL;
+
 	return spectrum;
 }
 
