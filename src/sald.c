@@ -797,6 +797,8 @@ static double costFun(const gsl_vector *x, void *varg) {
 #endif
     ++arg->nIterations;
 
+    ESpectrum_free(espec);
+
     return badness;
 }
 
@@ -1417,6 +1419,8 @@ int main(int argc, char **argv) {
         for(i=1; i <= spdim; ++i)
             printf("%6d %10.0lf\n", i,
                    floor(0.5 + nSNPs*ESpectrum_folded(espec, i)));
+
+        ESpectrum_free(espec);
     }
 
     /* mean and variance of log badness */
