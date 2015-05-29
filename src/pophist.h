@@ -53,10 +53,10 @@ int         PopHist_paramName(const PopHist * ph, char *buff, int bufflen,
                               int ndx);
 double      PopHist_paramValue(const PopHist * ph, int ndx);
 void        PopHist_to_vector(gsl_vector * v, const PopHist * ph);
-void        PopHist_to_C_array(double *v, int dim, const PopHist * ph);
+void        PopHist_to_C_array(int dim, double v[dim], const PopHist * ph);
 void        PopHist_to_C_array_invert_N(double *v, int dim,
                                         const PopHist * ph);
-void        C_array_to_PopHist(PopHist * ph, const double *v, int dim);
+void        C_array_to_PopHist(PopHist * ph, int dim, const double v[dim]);
 void        PopHist_setSimplexScale(gsl_vector * scale, const PopHist * ph);
 void        PopHist_setAllTwoNinv(double *x, int dim, double value);
 void        PopHist_setAllDuration(double *x, int dim, double value);

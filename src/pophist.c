@@ -509,7 +509,7 @@ void PopHist_to_vector(gsl_vector * v, const PopHist * ph) {
  * @param[out] v  An array into which paramters will be written.
  * @param[in] dim The dimension of array v
  */
-void PopHist_to_C_array(double *v, int dim, const PopHist * ph) {
+void PopHist_to_C_array(int dim, double v[dim], const PopHist * ph) {
 
     assert(dim == PopHist_nParams(ph));
     memcpy(v, ph->p, dim * sizeof v[0]);
@@ -602,7 +602,7 @@ void vector_to_PopHist(PopHist * ph, const gsl_vector * v) {
  * Adjust the parameters in PopHist structure ph to reflect the values
  * in C array p, of dimension "dim".
  */
-void C_array_to_PopHist(PopHist * ph, const double *v, int dim) {
+void C_array_to_PopHist(PopHist * ph, int dim, const double *v) {
 
     if(dim != PopHist_nParams(ph)) {
         printf("%s:%s:%d: dim=%d nParams=%d\n",

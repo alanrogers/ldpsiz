@@ -731,16 +731,12 @@ static double costFun(const gsl_vector *x, void *varg) {
     double      badness, exp_sigdsq[nbins], exp_spectrum[spdim];
     int         i;
 
-	/* DEBUG: make a vector xx which is absolute value of x */
-	gsl_vector *xx = gsl_vector_alloc(x->size);
-	checkmem(xx, __FILE__, __LINE__);
-	gsl_vector_memcpy(xx, x);
+	// DEBUG: make a vector xx = abs(x)
+    double xx[x->size];
 	for(i=0; i < x->size; ++i)
-		gsl_vector_set(xx, i, fabs(gsl_vector_get(x, i)));
+		xx[i] = fabs(gsl_vector_get(x, i));
 
-    vector_to_PopHist(ph, xx);  /* DEBUG: using xx instead of x */
-
-	gsl_vector_free(xx);
+    C_array_to_PopHist(ph, x->size, xx);  // DEBUG: using xx instead of x
 
 #if 0
     printf("%s:%d:%s: initial PopHist:\n", __FILE__,__LINE__,__func__);
