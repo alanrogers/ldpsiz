@@ -918,9 +918,9 @@ int main(int argc, char **argv) {
         Ini_setInt(ini, "nOpt", &nOpt, !MANDATORY);
         if(Ini_setEpochLink(ini, &linkedList, !MANDATORY))
             phSetFromFile = 1;
-        Ini_free(ini);
-        ini = NULL;
     }
+	Ini_free(ini);
+	ini = NULL;
 
     /* command line arguments */
     for(;;) {
