@@ -1066,14 +1066,14 @@ int main(int argc, char **argv) {
     PopHist_setAllDuration(stepsize, nparams, durationEps);
 
     double     *loBnd = malloc(nparams * sizeof(loBnd[0]));
-
     checkmem(loBnd, __FILE__, __LINE__);
+
     PopHist_setAllTwoNinv(loBnd, nparams, lo2Ninv);
     PopHist_setAllDuration(loBnd, nparams, loT);
 
     double     *hiBnd = malloc(nparams * sizeof(hiBnd[0]));
-
     checkmem(hiBnd, __FILE__, __LINE__);
+
     PopHist_setAllTwoNinv(hiBnd, nparams, hi2Ninv);
     PopHist_setAllDuration(hiBnd, nparams, hiT);
 
@@ -1497,6 +1497,9 @@ int main(int argc, char **argv) {
     }
     JobQueue_free(jq);
     AnnealSched_free(sched);
+	free(loBnd);
+	free(hiBnd);
+	free(hiInit);
     fprintf(stderr, "sald is finished\n");
 
     return 0;
