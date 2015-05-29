@@ -637,7 +637,7 @@ int taskfun(void *varg) {
                    __func__,
                    temperature, size, 
                    sasimplex_vertical_scale(minimizer),
-				   minimizer->fval);
+                   minimizer->fval);
             pr_gsl_vector(stdout, "%+7.4le", minimizer->x);
             putchar('\n');
             fflush(stdout);
@@ -651,7 +651,7 @@ int taskfun(void *varg) {
         fprintf(stderr,"%s:size=%.5lf vscale=%.5lf badness=%.5lf x=",
                __func__,
                size, sasimplex_vertical_scale(minimizer),
-			   minimizer->fval);
+               minimizer->fval);
         pr_gsl_vector(stderr, "%+7.4lf", minimizer->x);
     }
     switch (status) {
@@ -731,10 +731,10 @@ static double costFun(const gsl_vector *x, void *varg) {
     double      badness, exp_sigdsq[nbins], exp_spectrum[spdim];
     int         i;
 
-	// DEBUG: make a vector xx = abs(x)
+    // DEBUG: make a vector xx = abs(x)
     double xx[x->size];
-	for(i=0; i < x->size; ++i)
-		xx[i] = fabs(gsl_vector_get(x, i));
+    for(i=0; i < x->size; ++i)
+        xx[i] = fabs(gsl_vector_get(x, i));
 
     C_array_to_PopHist(ph, x->size, xx);  // DEBUG: using xx instead of x
 
@@ -919,8 +919,8 @@ int main(int argc, char **argv) {
         if(Ini_setEpochLink(ini, &linkedList, !MANDATORY))
             phSetFromFile = 1;
     }
-	Ini_free(ini);
-	ini = NULL;
+    Ini_free(ini);
+    ini = NULL;
 
     /* command line arguments */
     for(;;) {
@@ -1281,10 +1281,10 @@ int main(int argc, char **argv) {
     TaskArg   **best = malloc(nDataSets * sizeof(best[0]));
     checkmem(best, __FILE__, __LINE__);
 
-	/*
-	 * best[i] points to the best result among all replicate
-	 * optimizers for data set i.
-	 */
+    /*
+     * best[i] points to the best result among all replicate
+     * optimizers for data set i.
+     */
     for(i = 0; i < nDataSets; ++i) {
         best[i] = TaskArg_best(taskarg[i], nOpt);
     }
@@ -1432,14 +1432,14 @@ int main(int argc, char **argv) {
     v = (v - nOpt * m * m) / (nOpt - 1);
     printf("# log badness:m=%lg sd=%lg\n", m, sqrt(v));
 
-	/*
-	 * Generate an fboot file, which is a rectangular table. There is
-	 * one column for each estimated parameter. Row 1 contains the
-	 * parameter labels. Row 2 is the real data. Each succeeding row
-	 * contains the estimate from one bootstrap replicate. Replicates
-	 * that did not converge are omitted.
-	 */
-	if(boot && best[0]) {
+    /*
+     * Generate an fboot file, which is a rectangular table. There is
+     * one column for each estimated parameter. Row 1 contains the
+     * parameter labels. Row 2 is the real data. Each succeeding row
+     * contains the estimate from one bootstrap replicate. Replicates
+     * that did not converge are omitted.
+     */
+    if(boot && best[0]) {
         /* strip suffix from fname; add suffix .fboot; open file */
         const char *suffix = ".fboot";
         replaceSuffix(fname, sizeof(fname), suffix, strlen(suffix));
@@ -1474,7 +1474,7 @@ int main(int argc, char **argv) {
         }
         fclose(bootfile);
         bootfile = NULL;
-	}
+    }
 
     DblArray_free(sigdsq_curr);
     DblArray_free(cc_curr);
@@ -1497,9 +1497,9 @@ int main(int argc, char **argv) {
     }
     JobQueue_free(jq);
     AnnealSched_free(sched);
-	free(loBnd);
-	free(hiBnd);
-	free(hiInit);
+    free(loBnd);
+    free(hiBnd);
+    free(hiInit);
     fprintf(stderr, "sald is finished\n");
 
     return 0;
