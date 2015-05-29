@@ -1,8 +1,8 @@
 # Where the executable files will be copied
 destination := $(HOME)/bin
 
-opt := -DNDEBUG -O3  -finline-functions  # For full optimization
-#opt :=  -O0 -fno-inline-functions         # For debugging
+#opt := -DNDEBUG -O3  -finline-functions  # For full optimization
+opt :=  -O0 -fno-inline-functions         # For debugging
 #prof := -pg -rdynamic                    # For profiling
 prof :=
 incl := -I/usr/local/include -I/opt/local/include

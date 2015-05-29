@@ -637,7 +637,7 @@ int taskfun(void *varg) {
                    __func__,
                    temperature, size, 
                    sasimplex_vertical_scale(minimizer),
-				   minimizer->fval);
+                   minimizer->fval);
             pr_gsl_vector(stdout, "%+7.4le", minimizer->x);
             putchar('\n');
             fflush(stdout);
@@ -651,7 +651,7 @@ int taskfun(void *varg) {
         fprintf(stderr,"%s:size=%.5lf vscale=%.5lf badness=%.5lf x=",
                __func__,
                size, sasimplex_vertical_scale(minimizer),
-			   minimizer->fval);
+               minimizer->fval);
         pr_gsl_vector(stderr, "%+7.4lf", minimizer->x);
     }
     switch (status) {
@@ -731,16 +731,12 @@ static double costFun(const gsl_vector *x, void *varg) {
     double      badness, exp_sigdsq[nbins], exp_spectrum[spdim];
     int         i;
 
-	/* DEBUG: make a vector xx which is absolute value of x */
-	gsl_vector *xx = gsl_vector_alloc(x->size);
-	checkmem(xx, __FILE__, __LINE__);
-	gsl_vector_memcpy(xx, x);
-	for(i=0; i < x->size; ++i)
-		gsl_vector_set(xx, i, fabs(gsl_vector_get(x, i)));
+    // DEBUG: make a vector xx = abs(x)
+    double xx[x->size];
+    for(i=0; i < x->size; ++i)
+        xx[i] = fabs(gsl_vector_get(x, i));
 
-    vector_to_PopHist(ph, xx);  /* DEBUG: using xx instead of x */
-
-	gsl_vector_free(xx);
+    C_array_to_PopHist(ph, x->size, xx);  // DEBUG: using xx instead of x
 
 #if 0
     printf("%s:%d:%s: initial PopHist:\n", __FILE__,__LINE__,__func__);
@@ -922,9 +918,9 @@ int main(int argc, char **argv) {
         Ini_setInt(ini, "nOpt", &nOpt, !MANDATORY);
         if(Ini_setEpochLink(ini, &linkedList, !MANDATORY))
             phSetFromFile = 1;
-        Ini_free(ini);
-        ini = NULL;
     }
+    Ini_free(ini);
+    ini = NULL;
 
     /* command line arguments */
     for(;;) {
@@ -1070,20 +1066,20 @@ int main(int argc, char **argv) {
     PopHist_setAllDuration(stepsize, nparams, durationEps);
 
     double     *loBnd = malloc(nparams * sizeof(loBnd[0]));
-
     checkmem(loBnd, __FILE__, __LINE__);
+
     PopHist_setAllTwoNinv(loBnd, nparams, lo2Ninv);
     PopHist_setAllDuration(loBnd, nparams, loT);
 
     double     *hiBnd = malloc(nparams * sizeof(hiBnd[0]));
-
     checkmem(hiBnd, __FILE__, __LINE__);
+
     PopHist_setAllTwoNinv(hiBnd, nparams, hi2Ninv);
     PopHist_setAllDuration(hiBnd, nparams, hiT);
 
     double     *hiInit = malloc(nparams * sizeof(hiInit[0]));
-
     checkmem(hiInit, __FILE__, __LINE__);
+
     PopHist_setAllTwoNinv(hiInit, nparams, hi2NinvInit);
     PopHist_setAllDuration(hiInit, nparams, hiTinit);
 
@@ -1285,10 +1281,10 @@ int main(int argc, char **argv) {
     TaskArg   **best = malloc(nDataSets * sizeof(best[0]));
     checkmem(best, __FILE__, __LINE__);
 
-	/*
-	 * best[i] points to the best result among all replicate
-	 * optimizers for data set i.
-	 */
+    /*
+     * best[i] points to the best result among all replicate
+     * optimizers for data set i.
+     */
     for(i = 0; i < nDataSets; ++i) {
         best[i] = TaskArg_best(taskarg[i], nOpt);
     }
@@ -1436,14 +1432,14 @@ int main(int argc, char **argv) {
     v = (v - nOpt * m * m) / (nOpt - 1);
     printf("# log badness:m=%lg sd=%lg\n", m, sqrt(v));
 
-	/*
-	 * Generate an fboot file, which is a rectangular table. There is
-	 * one column for each estimated parameter. Row 1 contains the
-	 * parameter labels. Row 2 is the real data. Each succeeding row
-	 * contains the estimate from one bootstrap replicate. Replicates
-	 * that did not converge are omitted.
-	 */
-	if(boot && best[0]) {
+    /*
+     * Generate an fboot file, which is a rectangular table. There is
+     * one column for each estimated parameter. Row 1 contains the
+     * parameter labels. Row 2 is the real data. Each succeeding row
+     * contains the estimate from one bootstrap replicate. Replicates
+     * that did not converge are omitted.
+     */
+    if(boot && best[0]) {
         /* strip suffix from fname; add suffix .fboot; open file */
         const char *suffix = ".fboot";
         replaceSuffix(fname, sizeof(fname), suffix, strlen(suffix));
@@ -1478,7 +1474,7 @@ int main(int argc, char **argv) {
         }
         fclose(bootfile);
         bootfile = NULL;
-	}
+    }
 
     DblArray_free(sigdsq_curr);
     DblArray_free(cc_curr);
@@ -1501,7 +1497,11 @@ int main(int argc, char **argv) {
     }
     JobQueue_free(jq);
     AnnealSched_free(sched);
+    free(loBnd);
+    free(hiBnd);
+    free(hiInit);
     fprintf(stderr, "sald is finished\n");
+	Model_free(model);
 
     return 0;
 }

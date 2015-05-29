@@ -122,29 +122,42 @@ int main(int argc, char **argv) {
 
     gsl_vector *state = gsl_vector_alloc((unsigned) npar);
 
-    PopHist_to_vector(state, ph);
     PopHist    *ph2 = PopHist_newEmpty(nepoch);
-
+    PopHist_to_vector(state, ph);
     vector_to_PopHist(ph2, state);
 
-    assert(0.0 == PopHist_distance(ph, ph2));
+    PopHist    *ph3 = PopHist_newEmpty(nepoch);
+    double      stateArray[npar];
+    PopHist_to_C_array(npar, stateArray, ph);
+    C_array_to_PopHist(ph3, npar, stateArray);
+
     assert(0.0 == PopHist_distance(ph, ph));
+    assert(0.0 == PopHist_distance(ph, ph2));
+    assert(0.0 == PopHist_distance(ph, ph3));
 
     for(i = 0; i < nepoch; ++i) {
         twoNinv1 = PopHist_twoNinv(ph, i);
         twoNinv2 = PopHist_twoNinv(ph2, i);
         assert(twoNinv1 == twoNinv2);
+        twoNinv2 = PopHist_twoNinv(ph3, i);
+        assert(twoNinv1 == twoNinv2);
         if(i < nepoch - 1) {
             assert(PopHist_duration(ph, i) == PopHist_duration(ph2, i));
+            assert(PopHist_duration(ph, i) == PopHist_duration(ph3, i));
         } else {
             t = PopHist_duration(ph, i);
-            t2 = PopHist_duration(ph2, i);
-            assert(isinf(t) && isinf(t2) && t > 0.0 && t2 > 0.0);
+            assert(isinf(t) && t > 0.0);
+            t = PopHist_duration(ph2, i);
+            assert(isinf(t) && t > 0.0);
+            t = PopHist_duration(ph3, i);
+            assert(isinf(t) && t > 0.0);
         }
     }
     if(verbose) {
         unitTstResult("PopHist_to_vector", "OK");
+        unitTstResult("PopHist_to_C_array", "OK");
         unitTstResult("vector_to_PopHist", "OK");
+        unitTstResult("C_array_to_PopHist", "OK");
     }
 
     PopHist_setDuration(ph, 0, 321.0);
