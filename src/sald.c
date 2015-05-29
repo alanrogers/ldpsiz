@@ -1078,8 +1078,8 @@ int main(int argc, char **argv) {
     PopHist_setAllDuration(hiBnd, nparams, hiT);
 
     double     *hiInit = malloc(nparams * sizeof(hiInit[0]));
-
     checkmem(hiInit, __FILE__, __LINE__);
+
     PopHist_setAllTwoNinv(hiInit, nparams, hi2NinvInit);
     PopHist_setAllDuration(hiInit, nparams, hiTinit);
 
@@ -1501,6 +1501,7 @@ int main(int argc, char **argv) {
     free(hiBnd);
     free(hiInit);
     fprintf(stderr, "sald is finished\n");
+	Model_free(model);
 
     return 0;
 }
