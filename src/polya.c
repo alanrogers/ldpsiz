@@ -19,21 +19,6 @@
 #include <string.h>
 #include <assert.h>
 
-struct Polya {
-    // Number of genes in sample
-    int n;
-
-    // mat represents a matrix of n-1 rows and n columns. But this
-    // matrix is represented here as a 1-dimensional array. 
-    //
-    // Row k contains the polya distribution for mutations that
-    // occur in a coalescent interval containing k+1 lines of descent.
-    //
-    // Column i is the probability that such a mutation has i+i descendants
-    // in a sample of size n. This probability is stored as mat[k*n + i]. 
-    double *mat; 
-};
-
 static void polyaVector(double  *p, int n, int k);
 
 /// Constructor
@@ -74,20 +59,6 @@ void Polya_print(const Polya *polya, FILE *ofp) {
             printf(" %8.4lf", Polya_prob(polya, i, k));
         putchar('\n');
     }
-}
-
-/// Probability of i mutants in sample given that mutation occurred
-/// in a coalescent interval containing k lineages.
-double Polya_prob(const Polya *polya, int i, int k) {
-    assert(polya);
-    if(k < 2 || k > polya->n)
-        eprintf("%s:%d: invalid value: k=%d; must satisfy 2 < k <= %d\n",
-                __FILE__, __LINE__, k, polya->n);
-	    
-    if( i < 1 || i > polya->n - k + 1)
-        return 0;
-
-    return polya->mat[(k-2)*polya->n + i-1];
 }
 
 /**

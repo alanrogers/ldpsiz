@@ -174,7 +174,7 @@ XPOLYA := xpolya.o polya.o misc.o
 xpolya : $(XPOLYA)
 	$(CC) $(CFLAGS) -o $@ $(XPOLYA) $(lib)
 
-XESPECTRUM := xespectrum.o espectrum.o misc.o matcoal.o pophist.o polya.o
+XESPECTRUM := xespectrum.o espectrum.o polya.o matcoal.o misc.o pophist.o
 xespectrum : $(XESPECTRUM)
 	$(CC) $(CFLAGS) -o $@ $(XESPECTRUM) $(lib)
 
