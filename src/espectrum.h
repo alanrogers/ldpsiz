@@ -16,7 +16,8 @@
 
 #include "typedefs.h"
 
-ESpectrum  *ESpectrum_new(unsigned nSamples, PopHist * ph, double errTol);
+ESpectrum  *ESpectrum_new(unsigned nSamples, PopHist *ph,
+                         const Polya *polya, double errTol);
 void        ESpectrum_free(ESpectrum * spectrum);
 double      ESpectrum_unfolded(ESpectrum * spectrum, unsigned i);
 double      ESpectrum_folded(ESpectrum * spectrum, unsigned i);

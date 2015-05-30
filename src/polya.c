@@ -59,7 +59,7 @@ void Polya_free(Polya *polya) {
 }
 
 /// Print Polya distribution
-void Polya_print(Polya *polya, FILE *ofp) {
+void Polya_print(const Polya *polya, FILE *ofp) {
     int i, k;
 
     printf("Pr[i,k]=Prob i mutants in sample of %d,"
@@ -78,7 +78,7 @@ void Polya_print(Polya *polya, FILE *ofp) {
 
 /// Probability of i mutants in sample given that mutation occurred
 /// in a coalescent interval containing k lineages.
-double Polya_prob(Polya *polya, int i, int k) {
+double Polya_prob(const Polya *polya, int i, int k) {
     assert(polya);
     if(k < 2 || k > polya->n)
         eprintf("%s:%d: invalid value: k=%d; must satisfy 2 < k <= %d\n",

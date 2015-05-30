@@ -32,8 +32,11 @@ struct ESpectrum {
    @date 27 Nov 2014
 **/
 /// Constructor
+/// Polya_prob(polya,i,k) = probability that a mutation occurring in
+/// the coalescent interval containing k lineages will have
+/// i descendants in the modern sample.
 ESpectrum *ESpectrum_new(unsigned nSamples, PopHist *ph,
-                         double errTol) {
+                         const Polya *polya, double errTol) {
 	ESpectrum *spectrum = malloc(sizeof(ESpectrum));
 	checkmem(spectrum, __FILE__, __LINE__);
 
@@ -45,12 +48,6 @@ ESpectrum *ESpectrum_new(unsigned nSamples, PopHist *ph,
 	// containing i+1 lineages.
 	double m[nSamples];
 	MatCoal_integrate(nSamples, m, ph, errTol);
-
-	// polya(i,k) = probability that a mutation occurring in
-	// the coalescent interval containing k lineages will have
-	// i descendants in the modern sample.
-	Polya *polya = Polya_new(nSamples);
-	checkmem(polya, __FILE__, __LINE__);
 
 	unsigned i, k;
 	double sum=0.0;
@@ -66,9 +63,6 @@ ESpectrum *ESpectrum_new(unsigned nSamples, PopHist *ph,
 	// normalize
 	for(i=0; i < -1 + spectrum->nSamples; ++i)
 		spectrum->spec[i] /= sum;
-
-	Polya_free(polya);
-	polya=NULL;
 
 	return spectrum;
 }

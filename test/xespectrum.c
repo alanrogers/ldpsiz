@@ -12,6 +12,7 @@
 **/
 
 #include "espectrum.h"
+#include "polya.h"
 #include "pophist.h"
 #include "misc.h"
 #include <stdio.h>
@@ -36,11 +37,17 @@ int main(int argc, char **argv) {
 			nSamples = strtol(argv[i], 0, 10);
 		}
     }
-	
+
+    // Polya is expensive, so allocate once in main.
+	Polya *polya = Polya_new(nSamples);
+	checkmem(polya, __FILE__, __LINE__);
+
+
 	// pophist has 1 epoch with pop size twoN=1.
     EpochLink  *linkedList = EpochLink_new(NULL, HUGE_VAL, 1.0);
     PopHist *ph = PopHist_fromEpochLink(linkedList);
-    ESpectrum *es = ESpectrum_new(nSamples, ph, errTol);
+    ESpectrum *es = ESpectrum_new(nSamples, ph,
+                                  (const Polya *) polya, errTol);
 
 	// Correct spectrum
 	double truUnfolded[nSamples];
@@ -90,13 +97,10 @@ int main(int argc, char **argv) {
 		}
 	}
 
+    ESpectrum_free(es);
+    Polya_free(polya);
 	if(ok)
 		unitTstResult("ESpectrum", "OK");
 	else
 		unitTstResult("ESpectrum", "FAIL");
 }
-
-
-
-
-

@@ -19,7 +19,7 @@
 
 Polya *Polya_new(int n);
 void Polya_free(Polya *polya);
-double Polya_prob(Polya *polya, int i, int k);
-void Polya_print(Polya *polya, FILE *ofp);
+double Polya_prob(const Polya *polya, int i, int k);
+void Polya_print(const Polya *polya, FILE *ofp);
 
 #endif

@@ -102,6 +102,7 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include "misc.h"
 #include "model.h"
 #include "pophist.h"
+#include "polya.h"
 #include "sasimplex.h"
 #include "spectab.h"
 #include "tokenizer.h"
@@ -166,6 +167,7 @@ typedef struct TaskArg {
     double     *loBnd;
     double     *hiBnd;
     double     *hiInit;
+    const Polya *polya;         // not locally owned
     ODE        *ode;
 
     unsigned long nIterations;  // count iterations
@@ -187,6 +189,7 @@ typedef struct CostPar {
     double     *spectrum;
     ODE        *ode;
     PopHist    *ph;
+    const Polya *polya;
     unsigned long nIterations;
 } CostPar;
 
@@ -215,7 +218,9 @@ TaskArg    *TaskArg_new(unsigned task,
                         double *sigdsq_obs,
                         double *c,
                         ULIntArray *spectrum,
-                        Model * model, PopHist * ph_init, int randomStart);
+                        Model * model, PopHist * ph_init,
+                        const Polya *polya,
+                        int randomStart);
 void        TaskArg_free(TaskArg * targ);
 int         taskfun(void *varg);
 static double costFun(const gsl_vector *x, void *varg);
@@ -262,7 +267,9 @@ TaskArg    *TaskArg_new(unsigned task,
                         double *sigdsq_obs,
                         double *c,
                         ULIntArray *spectrum,
-                        Model * model, PopHist * ph_init, int randomStart) {
+                        Model * model, PopHist * ph_init,
+                        const Polya *polya,
+                        int randomStart) {
     TaskArg    *targ = malloc(sizeof(TaskArg));
 
     checkmem(targ, __FILE__, __LINE__);
@@ -301,6 +308,7 @@ TaskArg    *TaskArg_new(unsigned task,
     targ->xtol = xtol;
     targ->ode = ODE_new(model, odeAbsTol, odeRelTol);
     targ->ph = PopHist_dup(ph_init);
+    targ->polya = polya; // not duplicated
     targ->randomStart = randomStart;
     targ->status = 0;
     targ->simplexSize = DBL_MAX;
@@ -327,6 +335,7 @@ TaskArg    *TaskArg_new(unsigned task,
 }
 
 void TaskArg_free(TaskArg * targ) {
+    // polya isn't freed here because it isn't owned locally.
     PopHist_free(targ->ph);
     free(targ->sigdsq_obs);
     free(targ->c);
@@ -577,6 +586,7 @@ int taskfun(void *varg) {
         .spectrum = targ->spectrum_obs,
         .ode = targ->ode,
         .ph = targ->ph,
+        .polya = targ->polya,
         .nIterations = 0
     };
 
@@ -749,7 +759,8 @@ static double costFun(const gsl_vector *x, void *varg) {
     ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
 
     // get expected spectrum
-    ESpectrum *espec = ESpectrum_new(arg->twoNsmp, ph, arg->tolMatCoal);
+    ESpectrum *espec = ESpectrum_new(arg->twoNsmp, ph,
+                                     arg->polya, arg->tolMatCoal);
     for(i=0; i < spdim; ++i)
         exp_spectrum[i] = ESpectrum_folded(espec, i+1);
 
@@ -1104,7 +1115,9 @@ int main(int argc, char **argv) {
     AnnealSched *sched = AnnealSched_alloc(nTmptrs, initTmptr, tmptrDecay);
 
     // dimension of spectrum
-    unsigned spdim = specdim((unsigned) twoNsmp, folded); 
+    unsigned spdim = specdim((unsigned) twoNsmp, folded);
+
+    Polya *polya = Polya_new(twoNsmp);
 
     printf("# %-35s = %s\n", "Model", method);
     printf("# %-35s = %lg\n", "mutation rate per nucleotide", u);
@@ -1215,6 +1228,7 @@ int main(int argc, char **argv) {
                                     DblArray_ptr(cc),
                                     spectrum_obs,
                                     model, ph_init,
+                                    polya,
                                     randomStart);
     }
 
@@ -1249,7 +1263,9 @@ int main(int argc, char **argv) {
                                                DblArray_ptr(sigdsq_curr),
                                                DblArray_ptr(cc_curr),
                                                spec_curr,
-                                               model, ph_init, randomStart);
+                                               model, ph_init,
+                                               polya,
+                                               randomStart);
     }
 
     if(nthreads == 0)
@@ -1410,7 +1426,7 @@ int main(int argc, char **argv) {
 
         // fitted spectrum
         ESpectrum *espec = ESpectrum_new(twoNsmp, best[0]->ph,
-                                         tolMatCoal);
+                                         polya, tolMatCoal);
         printf("\n#%5s %10s\n", "i", "spectrum");
         for(i=1; i <= spdim; ++i)
             printf("%6d %10.0lf\n", i,
@@ -1502,6 +1518,7 @@ int main(int argc, char **argv) {
     free(hiInit);
     fprintf(stderr, "sald is finished\n");
 	Model_free(model);
+    Polya_free(polya);
 
     return 0;
 }
