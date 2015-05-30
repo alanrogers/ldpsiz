@@ -4,7 +4,7 @@ destination := $(HOME)/bin
 opt := -DNDEBUG -O3  -finline-functions  # For full optimization
 #opt :=  -O0 -fno-inline-functions         # For debugging
 prof := -pg -rdynamic                    # For profiling
-prof :=
+#prof :=
 incl := -I/usr/local/include -I/opt/local/include
 
 pytargets := macs2gtp.py vcf2gtp.py ini.py domacs.py 

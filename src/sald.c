@@ -854,7 +854,7 @@ int main(int argc, char **argv) {
     double      u = 1e-8;
     double      ftol = 5e-5;     /* will be multiplied by nbins */
     double      xtol = 1e-6;
-    double      tolMatCoal = 1e-6; // controls accuracy of MatCoal
+    double      tolMatCoal = 1e-3; // controls accuracy of MatCoal
     double      odeAbsTol = 1e-7;
     double      odeRelTol = 1e-3;
     double      confidence = 0.95;
