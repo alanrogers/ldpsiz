@@ -49,14 +49,35 @@ ESpectrum *ESpectrum_new(unsigned nSamples, PopHist *ph,
 	double m[nSamples];
 	MatCoal_integrate(nSamples, m, ph, errTol);
 
-	unsigned i, k;
+	unsigned i, j, k;
 	double sum=0.0;
+    unsigned remainder = (nSamples-1) % 5;  // for unrolled loop
 	for(i=1; i < nSamples; ++i) {
 		spectrum->spec[i-1] = 0;
 		// spectrum->spec[i-1] is probability that a polymorphic
 		// site will have i copies of the mutant allele.
-		for(k=2; k<=nSamples; ++k) 
+#if 0
+        // Normal loop
+		for(j=0; j<nSamples-1; ++j) {
+            k = j+2;
 			spectrum->spec[i-1] += k * m[k-1] * Polya_prob(polya, i, k);
+        }
+#else
+        // Unrolled
+        for(j=0; j<remainder; ++j) {
+            k = j+2;
+			spectrum->spec[i-1] += k * m[k-1] * Polya_prob(polya, i, k);
+        }
+        for(j=remainder; j < nSamples-1; j+=5) {
+            k = j+2;
+			spectrum->spec[i-1] +=
+                k * m[k-1] * Polya_prob(polya, i, k)
+                + (k+1) * m[k] * Polya_prob(polya, i, k+1)
+                + (k+2) * m[k+1] * Polya_prob(polya, i, k+2)
+                + (k+3) * m[k+2] * Polya_prob(polya, i, k+3)
+                + (k+4) * m[k+3] * Polya_prob(polya, i, k+4);
+        }
+#endif        
 		sum += spectrum->spec[i-1];
 	}
 
