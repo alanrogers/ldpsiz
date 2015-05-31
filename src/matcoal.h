@@ -17,17 +17,19 @@
 #include "typedefs.h"
 #include "pophist.h"
 
-void MatCoal_project(unsigned nSamples, double *x, double v,
-                     double betavec[nSamples], double errTol);
+void MatCoal_project(unsigned nSamples, long double *x,
+					 long double v, long double betavec[nSamples],
+					 double errTol);
 void     MatCoal_project_multi(unsigned nEpochs,unsigned nSamples,
 							   double x[nEpochs][nSamples],
 							   double tvec[nEpochs], PopHist *ph,
                                double errTol);
 void MatCoal_integrate_epoch(unsigned nSamples,
-                             double p0[nSamples],
+                             long double p0[nSamples],
                              double dt, double twoN, double errTol,
-                             double p1[nSamples], double m[nSamples],
-                             double betavec[nSamples]);
+                             long double p1[nSamples],
+							 double m[nSamples],
+                             long double betavec[nSamples]);
 void     MatCoal_integrate(unsigned nSamples, double m[nSamples], PopHist *ph,
                            double errTol);
 static inline double MatCoal_beta(unsigned i);

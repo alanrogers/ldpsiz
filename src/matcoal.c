@@ -140,33 +140,41 @@ extern pthread_mutex_t outputLock;
  * approximation at each step should be chosen to keep the per-step
  * error within errTol/J, where errTol is some pre-determined
  * error tolerance.
+ *
+ * This function is very slow if v (=t/2N) and nSamples are both
+ * large. It is therefore important to avoid large values of t and
+ * small values of 2N. Use of long doubles speeds things up, because
+ * it reduces the number of steps needed to avoid underflow. This, in
+ * turn, reduces the number of polynomial terms needed to achieve a
+ * given level of accuracy.
  */
 
-void MatCoal_project(unsigned nSamples, double *x, double v,
-                     double betavec[nSamples], double errTol) {
+void MatCoal_project(unsigned nSamples, long double *x,
+					 long double v, long double betavec[nSamples],
+					 double errTol) {
 
     DPRINTF(("%s:%d %lu entry. errTol=%lf\n", __func__, __LINE__,
              (long unsigned) pthread_self(), errTol));
 
-    if(v < 0.0)
-        printf("%s:%d: v=%lg\n", __FILE__, __LINE__, v);
+    if(v < 0.0L)
+        printf("%s:%d: v=%Lg\n", __FILE__, __LINE__, v);
     assert(v >= 0.0);
 
-	if(v == 0.0) {
+	if(v == 0.0L) {
         DPRINTF(("%s:%d %lu early return\n", __func__, __LINE__,
                  (long unsigned) pthread_self()));
 		return;
     }
 
-	assert(v > 0);
+	assert(v > 0.0L);
 
     // maxGV is the largest value such that exp(-maxGV) is doesn't underflow
-    double maxGV = nextafter(-log(DBL_MIN), 0.0);    
-	double g = betavec[nSamples-1]; /* abs(largest B[i][i]) */
-    double gv = g*v;
-    double y[nSamples];
+    long double maxGV = nextafterl(-logl(LDBL_MIN), 0.0);    
+	long double g = betavec[nSamples-1]; /* abs(largest B[i][i]) */
+    long double gv = g*v;
+    long double y[nSamples];
 
-    DPRINTF(("%s:%d %lu g=%lf v=%lf gv=%lf\n", __func__, __LINE__,
+    DPRINTF(("%s:%d %lu g=%Lf v=%Lf gv=%Lf\n", __func__, __LINE__,
              (long unsigned) pthread_self(), g, v, gv));
 	assert(g > 0);
 
@@ -186,13 +194,13 @@ void MatCoal_project(unsigned nSamples, double *x, double v,
 	// Find K, which determines the number of terms in the
 	// polynomial approximation.  This polynomial is of order K
 	// and contains K+1 terms.  See INSMC, eqn 8.6, p 410.
-	double s=1, p=1;
-	double expMinusGV, rhs;
+	long double s=1, p=1;
+	long double expMinusGV, rhs;
 
     errno = 0;
-	expMinusGV = exp(-gv);
+	expMinusGV = expl(-gv);
     if(errno) 
-        eprintf("%s:%d: exp failed: %s\n", __FILE__, __LINE__,
+        eprintf("%s:%d: expl failed: %s\n", __FILE__, __LINE__,
                 strerror(errno));
     assert(isnormal(expMinusGV));
 
@@ -225,7 +233,7 @@ void MatCoal_project(unsigned nSamples, double *x, double v,
 		// (INSMC eqn 8.4, p 410).  Each pass calculates y = x +
 		// gv*P*y/i, where i = K..1.
 		for(i=K; i > 0; --i) {
-			double p0, p1;
+			long double p0, p1;
 			unsigned j;
 			for(j=1; j < nSamples - 1; ++j) {
 				p0 = 1.0 - betavec[j]/g;
@@ -265,21 +273,21 @@ void MatCoal_project_multi(unsigned nTimes,  unsigned nSamples,
     assert(nSamples != 0);
 
 	// create initial vector.
-	double w[nSamples];
-	memset(w, 0, (nSamples-1)*sizeof(double));
-	w[nSamples - 1] = 1.0;
+	long double w[nSamples];
+	memset(w, 0, nSamples*sizeof(w[0]));
+	w[nSamples - 1] = 1.0L;
 
     unsigned i;
 
     // betavec[i] is i(i+1)/2
-    double betavec[nSamples];
+    long double betavec[nSamples];
     for(i=0; i<nSamples; ++i)
         betavec[i] = MatCoal_beta(i);
 
     int iepoch = 0;
 
 	double t = 0;            // current time   
-	double r = PopHist_duration(ph, iepoch); // time remaining in epoch
+	long double r = PopHist_duration(ph, iepoch); // time remaining in epoch
 	unsigned tndx=0;         // index into tvec
 
 	// Each pass through loop processes either the interval
@@ -289,8 +297,9 @@ void MatCoal_project_multi(unsigned nTimes,  unsigned nSamples,
 
 		if(!isfinite(PopHist_duration(ph, iepoch)) || tvec[tndx] <= t + r) {
 			// Project to next tvec value (w/i current epoch)
-			double step = tvec[tndx] - t;
-			MatCoal_project(nSamples, w, step*PopHist_twoNinv(ph, iepoch),
+			long double step = tvec[tndx] - t;
+			MatCoal_project(nSamples, w,
+							step*PopHist_twoNinv(ph, iepoch),
                             betavec, errTol);
 
 			for(i=0; i < nSamples; ++i)
@@ -300,7 +309,8 @@ void MatCoal_project_multi(unsigned nTimes,  unsigned nSamples,
 			++tndx;
 		}else {
 			// Finish current epoch
-			MatCoal_project(nSamples, w, r*PopHist_twoNinv(ph, iepoch),
+			MatCoal_project(nSamples, w,
+							r*PopHist_twoNinv(ph, iepoch),
                             betavec, errTol);
 			t += r;
 			++iepoch;
@@ -342,10 +352,11 @@ void MatCoal_project_multi(unsigned nTimes,  unsigned nSamples,
  * is set equal to HUGE_VAL. 
  */
 void MatCoal_integrate_epoch(unsigned nSamples,
-                             double p0[nSamples],
+                             long double p0[nSamples],
                              double dt, double twoN, double errTol,
-                             double p1[nSamples], double m[nSamples],
-                             double betavec[nSamples]) {
+                             long double p1[nSamples],
+							 double m[nSamples],
+                             long double betavec[nSamples]) {
     DPRINTF(("%s %lu entry dt=%lf twoN=%lf\n",
              __func__, (long unsigned) pthread_self(),
              dt, twoN));
@@ -355,7 +366,9 @@ void MatCoal_integrate_epoch(unsigned nSamples,
         // Project probability across current epoch. Put result
         // in p1.
         memcpy(p1, p0, nSamples*sizeof(p0[0]));
-        MatCoal_project(nSamples, p1, dt/twoN, betavec, errTol);
+        MatCoal_project(nSamples, p1,
+						(long double) dt/twoN,
+						betavec, errTol);
 
         // Set m equal to difference between probability vectors
         // at either end of current epoch.
@@ -473,16 +486,16 @@ void MatCoal_integrate(unsigned nSamples, double m[nSamples], PopHist *ph,
 	double twoN, dt;
 
 	// pr[i][j]=Pr[j+1 lines of descent at tipward end of epoch i]
-	double pr[nEpochs][nSamples]; 
+	long double pr[nEpochs][nSamples]; 
 
 	// Initial value, for tipward end of epoch zero, says that
 	// there are n lines of descent with probability 1.
-	memset(pr[0], 0, (nSamples-1)*sizeof(double));
-	pr[0][nSamples-1] = 1.0;
+	memset(pr[0], 0, (nSamples-1)*sizeof(pr[0][0]));
+	pr[0][nSamples-1] = 1.0L;
 
 	double y[nSamples];
 
-    double betavec[nSamples];
+    long double betavec[nSamples];
     for(i=0; i<nSamples; ++i)
         betavec[i] = MatCoal_beta(i);
 

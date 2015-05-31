@@ -51,7 +51,7 @@ ESpectrum *ESpectrum_new(unsigned nSamples, PopHist *ph,
 
 	unsigned i, j, k;
 	double sum=0.0;
-    unsigned remainder = (nSamples-1) % 5;  // for unrolled loop
+    unsigned n = (nSamples-1) % 5;  // for unrolled loop
 	for(i=1; i < nSamples; ++i) {
 		spectrum->spec[i-1] = 0;
 		// spectrum->spec[i-1] is probability that a polymorphic
@@ -64,11 +64,11 @@ ESpectrum *ESpectrum_new(unsigned nSamples, PopHist *ph,
         }
 #else
         // Unrolled
-        for(j=0; j<remainder; ++j) {
+        for(j=0; j<n; ++j) {
             k = j+2;
 			spectrum->spec[i-1] += k * m[k-1] * Polya_prob(polya, i, k);
         }
-        for(j=remainder; j < nSamples-1; j+=5) {
+        for(j=n; j < nSamples-1; j+=5) {
             k = j+2;
 			spectrum->spec[i-1] +=
                 k * m[k-1] * Polya_prob(polya, i, k)

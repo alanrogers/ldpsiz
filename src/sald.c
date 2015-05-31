@@ -1395,14 +1395,14 @@ int main(int argc, char **argv) {
     } else if(best[0]) {
         /* output w/o confidence interval */
 
-        printf("# %10s: %10s %9s\n", "param", "initial", "estimated");
+        printf("# %10s: %10s %10s\n", "param", "initial", "estimated");
         for(pndx = 0; pndx < nparams; ++pndx) {
             rval = PopHist_paramName(ph_init, pname, sizeof(pname), pndx);
             if(rval)
                 fprintf(stderr,
                         "%s:%s:%d:Bad return from PopHist_paramName\n",
                         __func__,__FILE__, __LINE__);
-            printf("# %10s: %10.7lg %9.5lg\n",
+            printf("# %10s: %10.7lg %10.5lg\n",
                    pname,
                    PopHist_paramValue(ph_init, pndx),
                    PopHist_paramValue(best[0]->ph, pndx));

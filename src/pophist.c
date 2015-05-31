@@ -582,6 +582,8 @@ void PopHist_setSimplexScale(gsl_vector * scale, const PopHist * ph) {
         gsl_vector_set(scale, 2 * i + 1, duration);
     }
     myassert(i == nepoch - 1);
+	twoN = inflation * gsl_vector_get(scale, 2 * i);
+	twoN = fmax(twoN, minTwoNscale);
     gsl_vector_set(scale, 2 * i, twoN);
 
     return;
