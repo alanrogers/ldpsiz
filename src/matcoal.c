@@ -346,7 +346,9 @@ void MatCoal_integrate_epoch(unsigned nSamples,
                              double dt, double twoN, double errTol,
                              double p1[nSamples], double m[nSamples],
                              double betavec[nSamples]) {
-    DPRINTF(("%s %lu entry\n", __func__, (long unsigned) pthread_self()));
+    DPRINTF(("%s %lu entry dt=%lf twoN=%lf\n",
+             __func__, (long unsigned) pthread_self(),
+             dt, twoN));
     unsigned i;
 
     if(isfinite(dt)) {
