@@ -6,15 +6,16 @@
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".
  */
+#include "boot.h"
+#include "misc.h"
+#include "pophist.h"
+#include "tokenizer.h"
+#include <assert.h>
+#include <math.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
-#include <assert.h>
-#include "misc.h"
-#include "pophist.h"
-#include "boot.h"
-#include "tokenizer.h"
 
 #define NAMESIZE 30
 
@@ -152,8 +153,25 @@ int main(int argc, char **argv) {
         ++nreps;
     }
     rewind(ifp);
+
+    // Read header. Determine whether fboot file tabulates twoNinv or
+    // twoN. If it tabulates twoNinv, then set invert2N=true. Otherwise,
+    // set invert2N=false.
+    int invert2N = false;
+
     if(NULL==fgets(tokbuff, (int) sizeof(tokbuff), ifp))
-        die("Unexpected EOF", __FILE__, __LINE__); /* skip header */
+        die("Unexpected EOF", __FILE__, __LINE__); // read header
+    Tokenizer_split(tkz, tokbuff, " ");
+    ntokens = Tokenizer_strip(tkz, " \n");
+    if(ntokens != nparams)
+        eprintf("ERR@%s:%s:%d: ntokens=%d; should equal nparams=%d",
+                __func__,__FILE__,__LINE__,ntokens,nparams);
+    if(0 != strncmp("twoN", Tokenizer_token(tkz,0), 4))
+        eprintf("%s:%s:%d: read %s; expecting %s or %s",
+                __FILE__,__func__,__LINE__,
+                Tokenizer_token(tkz,0), "twoN", "twoNinv");
+    if(0 == strncmp("twoNinv", Tokenizer_token(tkz,0),7))
+        invert2N = true;
 
     int nepoch = 1 + nparams/2;
     PopHist *ph = PopHist_newEmpty(nepoch);
@@ -183,20 +201,26 @@ int main(int argc, char **argv) {
         if(ntokens != nparams)
             eprintf("ERR@%s:%s:%d: ntokens=%d; should equal nparams=%d",
                     __func__,__FILE__,__LINE__,ntokens,nparams);
-        double duration, twoNinv;
+        double duration, curr2N;
         for(i=0; i< nepoch-1; ++i) {
-            twoNinv = strtod(Tokenizer_token(tkz, 2*i), NULL);
+            if(invert2N)
+                curr2N = 1.0/strtod(Tokenizer_token(tkz, 2*i), NULL);
+            else
+                curr2N = strtod(Tokenizer_token(tkz, 2*i), NULL);
             duration = strtod(Tokenizer_token(tkz, 2*i+1), NULL);
 
-            PopHist_setTwoNinv(ph, i, twoNinv);
+            PopHist_setTwoN(ph, i, curr2N);
             PopHist_setDuration(ph, i, duration);
         }
-        twoNinv = strtod(Tokenizer_token(tkz, 2*(nepoch-1)), NULL);
-        PopHist_setTwoNinv(ph, nepoch-1, twoNinv);
+        if(invert2N)
+            curr2N = 1.0/strtod(Tokenizer_token(tkz, 2*(nepoch-1)), NULL);
+        else
+            curr2N = strtod(Tokenizer_token(tkz, 2*(nepoch-1)), NULL);
+        PopHist_setTwoN(ph, nepoch-1, curr2N);
 
         for(i=0; i<nT; ++i) {
             j = PopHist_findEpoch(ph, tvals[i]);
-            double curr2N = PopHist_twoN(ph, j);
+            curr2N = PopHist_twoN(ph, j);
             twoN[i][rep] = curr2N;
         }
     }

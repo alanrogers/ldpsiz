@@ -118,7 +118,6 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include <time.h>
 
 #if 0
 #define DEBUG

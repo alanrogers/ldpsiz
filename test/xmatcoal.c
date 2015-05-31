@@ -45,13 +45,16 @@ int main(int argc, char **argv) {
         PopHist_print(ph, stdout);
 
     double x[nSamples];
+    double betavec[nSamples];
+    for(i=0; i<nSamples; ++i)
+        betavec[i] = MatCoal_beta(i);
 
     /* construct initial prob vector */
     memset(x, 0, (nSamples-1)*sizeof(x[0]));
     x[nSamples-1] = 1.0;  /* initially all prob is at end */
 
     /* project 0 units into future */
-    MatCoal_project(nSamples, x, 0.0, errTol);
+    MatCoal_project(nSamples, x, 0.0, betavec, errTol);
 
     /* check result */
     if(verbose)
@@ -81,7 +84,7 @@ int main(int argc, char **argv) {
     x[nSamples-1] = 1.0;  /* initially all prob is at end */
 
     /* project 1 units into future */
-    MatCoal_project(nSamples, x, 1.0, errTol);
+    MatCoal_project(nSamples, x, 1.0, betavec, errTol);
 
     if(verbose) {
         /* print projection */
@@ -91,7 +94,7 @@ int main(int argc, char **argv) {
     }
 
     /* project from t=1 to t=2 */
-    MatCoal_project(nSamples, x, 1.0, errTol);
+    MatCoal_project(nSamples, x, 1.0, betavec, errTol);
 
     double y[nSamples];
 
@@ -100,7 +103,7 @@ int main(int argc, char **argv) {
     y[nSamples-1] = 1.0;  /* initially all prob is at end */
 
     /* project from 0 to 2 in 1 step */
-    MatCoal_project(nSamples, y, 2.0, errTol);
+    MatCoal_project(nSamples, y, 2.0, betavec, errTol);
 
     /* x and y should be the same (both are x(2)) */
     maxerr = 0.0;
@@ -119,14 +122,14 @@ int main(int argc, char **argv) {
         ok = 0;
 
     /* project from t=2 to t=3 */
-    MatCoal_project(nSamples, x, 1.0, errTol);
+    MatCoal_project(nSamples, x, 1.0, betavec, errTol);
 
     /* re-construct initial prob vector */
     memset(y, 0, (nSamples-1)*sizeof(y[0]));
     y[nSamples-1] = 1.0;  /* initially all prob is at end */
 
     /* project from 0 to 3 in 1 step */
-    MatCoal_project(nSamples, y, 3.0, errTol);
+    MatCoal_project(nSamples, y, 3.0, betavec, errTol);
 
     /* x and y should be the same (both are x(3)) */
     maxerr = 0.0;

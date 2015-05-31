@@ -17,7 +17,8 @@
 #include "typedefs.h"
 #include "pophist.h"
 
-void     MatCoal_project(unsigned nSamples, double *x, double v, double errTol);
+void MatCoal_project(unsigned nSamples, double *x, double v,
+                     double betavec[nSamples], double errTol);
 void     MatCoal_project_multi(unsigned nEpochs,unsigned nSamples,
 							   double x[nEpochs][nSamples],
 							   double tvec[nEpochs], PopHist *ph,
@@ -25,8 +26,20 @@ void     MatCoal_project_multi(unsigned nEpochs,unsigned nSamples,
 void MatCoal_integrate_epoch(unsigned nSamples,
                              double p0[nSamples],
                              double dt, double twoN, double errTol,
-                             double p1[nSamples], double m[nSamples]);
+                             double p1[nSamples], double m[nSamples],
+                             double betavec[nSamples]);
 void     MatCoal_integrate(unsigned nSamples, double m[nSamples], PopHist *ph,
                            double errTol);
+static inline double MatCoal_beta(unsigned i);
+
+/**
+ * Used to construct the entries of the transition rate matrix, B.
+ * B[i][i] = -beta(i) and B[i][i+1] = beta(i+1).  (All the other
+ * entries of B are zero.)  In this code, index i corresponds to the
+ * coalescent interval containing i+1 distinct lineages.  Thus, the
+ * code below corresponds to j*(j-1)/2, where j is the number of
+ * lineages in the coalescent interval.
+ */
+static inline double MatCoal_beta(unsigned i) { return (i*(i+1))/2; }
 
 #endif

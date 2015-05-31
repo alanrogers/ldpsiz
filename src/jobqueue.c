@@ -179,7 +179,7 @@ void       *threadfun(void *vjq) {
         if(NULL == jq->todo) {
             assert(0 == jq->acceptingJobs);
             DPRINTF(("%s %lu no more jobs\n", __func__, tid));
-            break;
+            break; // exit from loop. Still have lock.
         }
         DPRINTF(("%s %lu got work\n", __func__, tid));
         assert(NULL != jq->todo);
@@ -197,6 +197,7 @@ void       *threadfun(void *vjq) {
         DPRINTF(("%s %lu back fr jobfun\n", __func__, tid));
         free(job);
     }
+    // still have lock
     ++jq->threadsStopped;
 
     if(jq->threadsStopped == jq->nthreads) {
@@ -205,7 +206,7 @@ void       *threadfun(void *vjq) {
             ERR(status, "signal wakeMain");
     }
 
-    status = pthread_mutex_unlock(&jq->lock);   /* UNLOCK */
+    status = pthread_mutex_unlock(&jq->lock);   // UNLOCK
     if(status)
         ERR(status, "unlock");
 

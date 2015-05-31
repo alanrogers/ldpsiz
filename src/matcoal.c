@@ -13,27 +13,15 @@
  **/
 
 #include "matcoal.h"
-#include "pophist.h"
 #include "misc.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <float.h>
-#include <string.h>
+#include "pophist.h"
 #include <assert.h>
 #include <errno.h>
-
-static inline double beta(unsigned i);
-
-/**
- * Used to construct the entries of the transition rate matrix, B.
- * B[i][i] = -beta(i) and B[i][i+1] = beta(i+1).  (All the other
- * entries of B are zero.)  In this code, index i corresponds to the
- * coalescent interval containing i+1 distinct lineages.  Thus, the
- * code below corresponds to j*(j-1)/2, where j is the number of
- * lineages in the coalescent interval.
- */
-static inline double beta(unsigned i) { return (i*(i+1))/2; }
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * Class MatCoal: Matrix Coalescent (Wooding and Rogers 2001)
@@ -98,8 +86,8 @@ static inline double beta(unsigned i) { return (i*(i+1))/2; }
  *
  * This method projects a probability distribution backwards in
  * time using a continuous-time Markov Chain with transition rate
- * matrix A.  Matrix A has diagonal entries A[i][i] = -beta(i) and
- * super-diagonal entries A[i][i+1] = beta(i+1).  All the other
+ * matrix A.  Matrix A has diagonal entries A[i][i] = -MatCoal_beta(i) and
+ * super-diagonal entries A[i][i+1] = MatCoal_beta(i+1).  All the other
  * entries of A are zero.
  *
  * To project the matrix backwards in time, this method uses the
@@ -146,7 +134,9 @@ static inline double beta(unsigned i) { return (i*(i+1))/2; }
  * error within errTol/J, where errTol is some pre-determined
  * error tolerance.
  */
-void MatCoal_project(unsigned nSamples, double *x, double v, double errTol) {
+
+void MatCoal_project(unsigned nSamples, double *x, double v,
+                     double betavec[nSamples], double errTol) {
 
     if(v < 0.0)
         printf("%s:%d: v=%lg\n", __FILE__, __LINE__, v);
@@ -159,7 +149,7 @@ void MatCoal_project(unsigned nSamples, double *x, double v, double errTol) {
 
     // maxGV is the largest value such that exp(-maxGV) is doesn't underflow
     double maxGV = nextafter(-log(DBL_MIN), 0.0);    
-	double g = beta(nSamples-1); /* abs(largest B[i][i]) */
+	double g = betavec[nSamples-1]; /* abs(largest B[i][i]) */
     double gv = g*v;
     double y[nSamples];
 
@@ -220,11 +210,11 @@ void MatCoal_project(unsigned nSamples, double *x, double v, double errTol) {
 			double p0, p1;
 			unsigned j;
 			for(j=1; j < nSamples - 1; ++j) {
-				p0 = 1.0 - beta(j)/g;
-				p1 = beta(j+1)/g;
+				p0 = 1.0 - betavec[j]/g;
+				p1 = betavec[j+1]/g;
 				y[j] = x[j] + (p0* y[j] + p1* y[j+1])*gv/i;
 			}
-			p0 = 1.0 - beta(nSamples - 1)/g;
+			p0 = 1.0 - betavec[nSamples - 1]/g;
 			y[nSamples - 1] = x[nSamples - 1] + p0* y[nSamples - 1]*gv/i;
 		}
 
@@ -259,6 +249,13 @@ void MatCoal_project_multi(unsigned nTimes,  unsigned nSamples,
 	memset(w, 0, (nSamples-1)*sizeof(double));
 	w[nSamples - 1] = 1.0;
 
+    unsigned i;
+
+    // betavec[i] is i(i+1)/2
+    double betavec[nSamples];
+    for(i=0; i<nSamples; ++i)
+        betavec[i] = MatCoal_beta(i);
+
     int iepoch = 0;
 
 	double t = 0;            // current time   
@@ -274,9 +271,8 @@ void MatCoal_project_multi(unsigned nTimes,  unsigned nSamples,
 			// Project to next tvec value (w/i current epoch)
 			double step = tvec[tndx] - t;
 			MatCoal_project(nSamples, w, step*PopHist_twoNinv(ph, iepoch),
-                            errTol);
+                            betavec, errTol);
 
-			unsigned i;
 			for(i=0; i < nSamples; ++i)
                 x[tndx][i] = w[i];
 			r -= step;
@@ -284,7 +280,8 @@ void MatCoal_project_multi(unsigned nTimes,  unsigned nSamples,
 			++tndx;
 		}else {
 			// Finish current epoch
-			MatCoal_project(nSamples, w, r*PopHist_twoNinv(ph, iepoch), errTol);
+			MatCoal_project(nSamples, w, r*PopHist_twoNinv(ph, iepoch),
+                            betavec, errTol);
 			t += r;
 			++iepoch;
 			r = PopHist_duration(ph, iepoch);
@@ -326,14 +323,15 @@ void MatCoal_project_multi(unsigned nTimes,  unsigned nSamples,
 void MatCoal_integrate_epoch(unsigned nSamples,
                              double p0[nSamples],
                              double dt, double twoN, double errTol,
-                             double p1[nSamples], double m[nSamples]) {
+                             double p1[nSamples], double m[nSamples],
+                             double betavec[nSamples]) {
     unsigned i;
 
     if(isfinite(dt)) {
         // Project probability across current epoch. Put result
         // in p1.
         memcpy(p1, p0, nSamples*sizeof(p0[0]));
-        MatCoal_project(nSamples, p1, dt/twoN, errTol);
+        MatCoal_project(nSamples, p1, dt/twoN, betavec, errTol);
 
         // Set m equal to difference between probability vectors
         // at either end of current epoch.
@@ -343,9 +341,9 @@ void MatCoal_integrate_epoch(unsigned nSamples,
         // Form m = A^{-1} m
         for(i= nSamples-2; i > 0; --i) {
             m[i] += m[i+1];
-            m[i+1] *= (-twoN/beta(i+1));
+            m[i+1] *= (-twoN/betavec[i+1]);
         }
-        m[1] *= (-twoN/beta(1));
+        m[1] *= (-twoN/betavec[1]);
     }else{
         // Deal with infinite epoch at end of history.
         // The integral we need is -A^{-1} * x(nEpoch-1).
@@ -354,9 +352,9 @@ void MatCoal_integrate_epoch(unsigned nSamples,
         m[nSamples-1] = p0[nSamples-1];
         for(i = nSamples-2; i > 0; --i) {
             m[i] = p0[i] + m[i+1];
-            m[i+1] *= (twoN/beta(i+1));
+            m[i+1] *= (twoN/betavec[i+1]);
         }
-        m[1] *= (twoN / beta(1));
+        m[1] *= (twoN / betavec[1]);
     }
 }
 
@@ -458,6 +456,10 @@ void MatCoal_integrate(unsigned nSamples, double m[nSamples], PopHist *ph,
 
 	double y[nSamples];
 
+    double betavec[nSamples];
+    for(i=0; i<nSamples; ++i)
+        betavec[i] = MatCoal_beta(i);
+
 	// initialize m
 	memset(m, 0, nSamples * sizeof(double));
 	m[0] = HUGE_VAL;
@@ -472,7 +474,8 @@ void MatCoal_integrate(unsigned nSamples, double m[nSamples], PopHist *ph,
         // at end of current epoch.
         MatCoal_integrate_epoch(nSamples, pr[currEpoch],
                                 dt, twoN, errTol,
-                                pr[currEpoch+1], y);
+                                pr[currEpoch+1], y,
+                                betavec);
 
 		// Add y to m
 		for(i=1; i < nSamples; ++i)

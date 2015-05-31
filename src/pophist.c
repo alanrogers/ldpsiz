@@ -16,21 +16,22 @@
  * Systems Consortium License, which can be found in file "LICENSE".
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <assert.h>
-#include <math.h>
-#include <string.h>
-#include <gsl/gsl_rng.h>
-#include <gsl/gsl_randist.h>
 #include "misc.h"
 #include "pophist.h"
+#include <assert.h>
+#include <gsl/gsl_randist.h>
+#include <gsl/gsl_rng.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /** The number of parameters in each Epoch */
 #define PAR_PER_EPOCH 2
 
 /** Names of the parameters within each lpoch */
-const static char *epochParamName[] = { "twoNinv", "t" };
+const static char *epochParamName[] = { "twoN", "t" };
 
 /**
  * PopHist represents the history of a single population.
@@ -53,6 +54,15 @@ struct EpochLink {
     struct EpochLink *next;     /* pointer to next (earlier) epoch */
     double      t, twoN;
 };
+
+static inline int isPopSize(int ndx);
+
+/// Return true if index refers to a population size parameter.
+static inline int isPopSize(int ndx) {
+    if(ndx % PAR_PER_EPOCH)
+        return false;
+    return true;
+}
 
 void PopHist_sanityCheck(PopHist * ph, const char *file, int lineno) {
 #ifndef NDEBUG
@@ -455,10 +465,8 @@ int PopHist_paramName(const PopHist * ph, char *buff, int bufflen, int ndx) {
     myassert(ndx >= 0);
     myassert(ndx < PopHist_nParams(ph));
 
-    /*
-     * quotrem.quot is the index of the desired epoch.
-     * quotrem.rem = the index of the parameter within the epoch.
-     */
+    // quotrem.quot is the index of the desired epoch.
+    // quotrem.rem = the index of the parameter within the epoch.
     quotrem = div(ndx, PAR_PER_EPOCH);
 
     rval = snprintf(buff, (unsigned) bufflen,
@@ -484,6 +492,8 @@ double PopHist_paramValue(const PopHist * ph, int ndx) {
     myassert(ndx >= 0);
     myassert(ndx < PopHist_nParams(ph));
 
+    if(isPopSize(ndx))
+        return 1.0/ph->p[ndx];
     return ph->p[ndx];
 }
 
