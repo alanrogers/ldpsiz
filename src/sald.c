@@ -1,3 +1,15 @@
+#if 1
+#define DEBUG
+#else
+#undef DEBUG
+#endif
+
+#define DPRINTF_ON
+#include "dprintf.h"
+#ifdef DPRINTF_ON
+extern pthread_mutex_t outputLock;
+#endif
+
 /**
 @file sald.c
 @page sald
@@ -118,18 +130,6 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-
-#if 0
-#define DEBUG
-#else
-#undef DEBUG
-#endif
-
-#ifdef DEBUG
-#define DPRINTF(arg) printf arg
-#else
-#define DPRINTF(arg)
-#endif
 
 #if 0
 extern long tmr_count;
@@ -566,8 +566,9 @@ int read_data(FILE * ifp,
 
 int taskfun(void *varg) {
     TaskArg    *targ = (TaskArg *) varg;
-    DPRINTF(("%s:%d:%s: task %u entry\n",
-             __FILE__, __LINE__, __func__, targ->task));
+    DPRINTF(("%s:%d:%s: enter task %u thread %lu\n",
+             __FILE__, __LINE__, __func__, targ->task,
+             (unsigned long) pthread_self()));
     const int   rotate = 0;
     gsl_vector *x = gsl_vector_alloc(targ->ndim);
     gsl_vector_view ss = gsl_vector_view_array(targ->stepsize, targ->ndim);
@@ -710,7 +711,9 @@ int taskfun(void *varg) {
     gsl_vector_free(x);
     gsl_multimin_fminimizer_free(minimizer);
 
-    DPRINTF(("%s:%d:%u exit\n", __func__, __LINE__, targ->task));
+    DPRINTF(("%s:%d:%s: exit task %u thread %lu\n",
+             __FILE__, __LINE__, __func__, targ->task,
+             (unsigned long) pthread_self()));
     return 0;
 }
 
@@ -726,6 +729,8 @@ int taskfun(void *varg) {
  * associated with the values in sigdsq.
  */
 static double costFun(const gsl_vector *x, void *varg) {
+    DPRINTF(("%s %lu entry\n", __func__,
+             (unsigned long) pthread_self()));
     CostPar    *arg = (CostPar *) varg;
     PopHist    *ph = arg->ph;
     int         nbins = arg->nbins;
@@ -805,6 +810,8 @@ static double costFun(const gsl_vector *x, void *varg) {
 
     ESpectrum_free(espec);
 
+    DPRINTF(("%s %lu exit\n", __func__,
+             (long unsigned) pthread_self()));
     return badness;
 }
 

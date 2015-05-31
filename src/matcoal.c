@@ -19,9 +19,16 @@
 #include <errno.h>
 #include <float.h>
 #include <math.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#define DPRINTF_ON
+#include "dprintf.h"
+#ifdef DPRINTF_ON
+extern pthread_mutex_t outputLock;
+#endif
 
 /**
  * Class MatCoal: Matrix Coalescent (Wooding and Rogers 2001)
@@ -138,6 +145,8 @@
 void MatCoal_project(unsigned nSamples, double *x, double v,
                      double betavec[nSamples], double errTol) {
 
+    DPRINTF(("%s %lu entry\n", __func__, (long unsigned) pthread_self()));
+
     if(v < 0.0)
         printf("%s:%d: v=%lg\n", __FILE__, __LINE__, v);
     assert(v >= 0.0);
@@ -225,6 +234,7 @@ void MatCoal_project(unsigned nSamples, double *x, double v,
 			x[i] = y[i];
 		}
 	}
+    DPRINTF(("%s %lu exit\n", __func__, (long unsigned) pthread_self()));
 }
 
 /**
@@ -242,6 +252,7 @@ void MatCoal_project(unsigned nSamples, double *x, double v,
 void MatCoal_project_multi(unsigned nTimes,  unsigned nSamples,
 						   double x[nTimes][nSamples], double tvec[nTimes],
 						   PopHist *ph, double errTol) {
+    DPRINTF(("%s %lu entry\n", __func__, (long unsigned) pthread_self()));
     assert(nSamples != 0);
 
 	// create initial vector.
@@ -287,6 +298,7 @@ void MatCoal_project_multi(unsigned nTimes,  unsigned nSamples,
 			r = PopHist_duration(ph, iepoch);
 		}
 	}
+    DPRINTF(("%s %lu exit\n", __func__, (long unsigned) pthread_self()));
 }
 
 /**
@@ -325,6 +337,7 @@ void MatCoal_integrate_epoch(unsigned nSamples,
                              double dt, double twoN, double errTol,
                              double p1[nSamples], double m[nSamples],
                              double betavec[nSamples]) {
+    DPRINTF(("%s %lu entry\n", __func__, (long unsigned) pthread_self()));
     unsigned i;
 
     if(isfinite(dt)) {
@@ -356,6 +369,7 @@ void MatCoal_integrate_epoch(unsigned nSamples,
         }
         m[1] *= (twoN / betavec[1]);
     }
+    DPRINTF(("%s %lu exit\n", __func__, (long unsigned) pthread_self()));
 }
 
 /**
@@ -441,6 +455,7 @@ void MatCoal_integrate_epoch(unsigned nSamples,
  */
 void MatCoal_integrate(unsigned nSamples, double m[nSamples], PopHist *ph,
                        double errTol) {
+    DPRINTF(("%s %lu entry\n", __func__, (long unsigned) pthread_self()));
 	unsigned i;
 	unsigned nEpochs = PopHist_nepoch(ph); // number of epochs
 	unsigned currEpoch;
@@ -482,4 +497,5 @@ void MatCoal_integrate(unsigned nSamples, double m[nSamples], PopHist *ph,
 			m[i] += y[i];
 		
 	}
+    DPRINTF(("%s %lu exit\n", __func__, (long unsigned) pthread_self()));
 }

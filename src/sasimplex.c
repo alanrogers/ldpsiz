@@ -69,10 +69,10 @@
 #undef DEBUG
 #endif
 
-#ifdef DEBUG
-#define DPRINTF(arg) printf arg
-#else
-#define DPRINTF(arg)
+#define DPRINTF_ON
+#include "dprintf.h"
+#ifdef DPRINTF_ON
+extern pthread_mutex_t outputLock;
 #endif
 
 /* Abort if random number seed is not yet set */

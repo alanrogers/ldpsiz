@@ -22,16 +22,10 @@
 #include "misc.h"
 #include "jobqueue.h"
 
-#if 0
-#define DEBUG
-#else
-#undef DEBUG
-#endif
-
-#ifdef DEBUG
-#define DPRINTF(arg) printf arg
-#else
-#define DPRINTF(arg)
+#define DPRINTF_ON
+#include "dprintf.h"
+#ifdef DPRINTF_ON
+extern pthread_mutex_t outputLock;
 #endif
 
 typedef struct Job Job;
@@ -156,11 +150,7 @@ void       *threadfun(void *vjq) {
     Job        *job;
     int         status;
 
-#ifdef DEBUG
-    long unsigned tid = (long unsigned) pthread_self();
-#endif
-
-    DPRINTF(("%s %lu entry\n", __func__, tid));
+    DPRINTF(("%s %lu entry\n", __func__, (unsigned long) pthread_self()));
 
     for(;;) {
         status = pthread_mutex_lock(&jq->lock); /* LOCK */
@@ -169,7 +159,8 @@ void       *threadfun(void *vjq) {
 
         while(NULL == jq->todo && 1 == jq->acceptingJobs) {
             DPRINTF(("%s %lu awaiting work. todo=%p acceptingJobs=%d\n",
-                     __func__, tid, jq->todo, jq->acceptingJobs));
+                     __func__, (unsigned long) pthread_self(),
+                     jq->todo, jq->acceptingJobs));
 
             status = pthread_cond_wait(&jq->wakeWorker, &jq->lock);
             if(status)
@@ -178,10 +169,12 @@ void       *threadfun(void *vjq) {
 
         if(NULL == jq->todo) {
             assert(0 == jq->acceptingJobs);
-            DPRINTF(("%s %lu no more jobs\n", __func__, tid));
+            DPRINTF(("%s %lu no more jobs\n", __func__,
+                     (unsigned long) pthread_self()));
             break; // exit from loop. Still have lock.
         }
-        DPRINTF(("%s %lu got work\n", __func__, tid));
+        DPRINTF(("%s %lu got work\n", __func__,
+                 (unsigned long) pthread_self()));
         assert(NULL != jq->todo);
 
         /* remove job from queue */
@@ -192,9 +185,11 @@ void       *threadfun(void *vjq) {
         if(status)
             ERR(status, "unlock");
 
-        DPRINTF(("%s %lu calling jobfun\n", __func__, tid));
+        DPRINTF(("%s %lu calling jobfun\n", __func__,
+                 (unsigned long) pthread_self()));
         job->jobfun(job->param);
-        DPRINTF(("%s %lu back fr jobfun\n", __func__, tid));
+        DPRINTF(("%s %lu back fr jobfun\n", __func__,
+                 (unsigned long) pthread_self()));
         free(job);
     }
     // still have lock
@@ -210,7 +205,8 @@ void       *threadfun(void *vjq) {
     if(status)
         ERR(status, "unlock");
 
-    DPRINTF(("%s %lu exit\n", __func__, tid));
+    DPRINTF(("%s %lu exit\n", __func__,
+             (unsigned long) pthread_self()));
     return NULL;
 }
 

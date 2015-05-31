@@ -33,25 +33,12 @@
 
 #define DIM 4
 
-#if 0
-#define DEBUG
-#else
 #undef DEBUG
-#endif
 
-#ifdef DEBUG
-#include <pthread.h>
-pthread_mutex_t outputLock = PTHREAD_MUTEX_INITIALIZER;
-
-#define DPRINTF(arg) do{\
-        status=pthread_mutex_lock(&outputLock);     \
-        if(status) ERR(status, "lock output");      \
-        printf arg;                                 \
-        status = pthread_mutex_unlock(&outputLock); \
-        if(status) ERR(status, "unlock");           \
-    }while(0)
-#else
-#define DPRINTF(arg)
+#undef DPRINTF_ON
+#include "dprintf.h"
+#ifdef DPRINTF_ON
+extern pthread_mutex_t outputLock;
 #endif
 
 static const char *stateLbl[DIM] = { "Ha*Hb", "4S[abD]", "2S[D^2]", "H" };
@@ -212,7 +199,7 @@ int Hill_geteq(double x[], double twoN, double c, double u) {
         gsl_matrix_set(&A.matrix, i, i, 1.0 + z);
     }
 
-#ifdef DEBUG
+#if 0
     int         status;
 
     status = pthread_mutex_lock(&outputLock);
@@ -239,7 +226,7 @@ int Hill_geteq(double x[], double twoN, double c, double u) {
     gsl_linalg_LU_decomp(&A.matrix, p, &s);
     gsl_linalg_LU_solve(&A.matrix, p, &w.vector, &xvec.vector);
 
-#ifdef DEBUG
+#if 0
     status = pthread_mutex_lock(&outputLock);
     if(status)
         ERR(status, "lock output");
