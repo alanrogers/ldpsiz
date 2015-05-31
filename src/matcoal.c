@@ -145,8 +145,8 @@ extern pthread_mutex_t outputLock;
 void MatCoal_project(unsigned nSamples, double *x, double v,
                      double betavec[nSamples], double errTol) {
 
-    DPRINTF(("%s:%d %lu entry\n", __func__, __LINE__,
-             (long unsigned) pthread_self()));
+    DPRINTF(("%s:%d %lu entry. errTol=%lf\n", __func__, __LINE__,
+             (long unsigned) pthread_self(), errTol));
 
     if(v < 0.0)
         printf("%s:%d: v=%lg\n", __FILE__, __LINE__, v);
