@@ -69,7 +69,7 @@
 #undef DEBUG
 #endif
 
-#define DPRINTF_ON
+#undef DPRINTF_ON
 #include "dprintf.h"
 #ifdef DPRINTF_ON
 extern pthread_mutex_t outputLock;

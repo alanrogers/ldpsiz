@@ -145,14 +145,18 @@ extern pthread_mutex_t outputLock;
 void MatCoal_project(unsigned nSamples, double *x, double v,
                      double betavec[nSamples], double errTol) {
 
-    DPRINTF(("%s %lu entry\n", __func__, (long unsigned) pthread_self()));
+    DPRINTF(("%s:%d %lu entry\n", __func__, __LINE__,
+             (long unsigned) pthread_self()));
 
     if(v < 0.0)
         printf("%s:%d: v=%lg\n", __FILE__, __LINE__, v);
     assert(v >= 0.0);
 
-	if(v == 0.0)
+	if(v == 0.0) {
+        DPRINTF(("%s:%d %lu early return\n", __func__, __LINE__,
+                 (long unsigned) pthread_self()));
 		return;
+    }
 
 	assert(v > 0);
 
@@ -162,6 +166,8 @@ void MatCoal_project(unsigned nSamples, double *x, double v,
     double gv = g*v;
     double y[nSamples];
 
+    DPRINTF(("%s:%d %lu gv=%lf\n", __func__, __LINE__,
+             (long unsigned) pthread_self(), gv));
 	assert(g > 0);
 
 	// If v is large, then v is broken into several steps.  This
@@ -174,7 +180,8 @@ void MatCoal_project(unsigned nSamples, double *x, double v,
         gv = g*v;
     }
 
-    //printf("doing %u uniformization steps\n", J); fflush(stdout);
+    DPRINTF(("%s:%d %lu doing %u steps\n", __func__, __LINE__,
+             (long unsigned) pthread_self(), J));
 
 	// Find K, which determines the number of terms in the
 	// polynomial approximation.  This polynomial is of order K
@@ -196,7 +203,9 @@ void MatCoal_project(unsigned nSamples, double *x, double v,
 		p *= gv/K;
 		s += p;
 	}
-    //printf("doing %u terms in polynomial approximation\n", K); fflush(stdout);
+    DPRINTF(("%s:%d %lu doing %u polynomial terms; J*K=%u\n",
+             __func__, __LINE__,
+             (long unsigned) pthread_self(), K, J*K));
 
 	// Each pass through the loop below performs one step
 	unsigned step;
