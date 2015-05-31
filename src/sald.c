@@ -1,10 +1,6 @@
-#if 1
-#define DEBUG
-#else
 #undef DEBUG
-#endif
 
-#define DPRINTF_ON
+#undef DPRINTF_ON
 #include "dprintf.h"
 #ifdef DPRINTF_ON
 extern pthread_mutex_t outputLock;
@@ -870,8 +866,8 @@ int main(int argc, char **argv) {
     int         nPerTmptr;       /* iterations at each temperature */
     int         nTmptrs = 3;     /* number of temperatures */
     const int   folded = true;   // Folded site frequency spectrum
-    double      lo2Ninv = 1e-8, hi2Ninv = 1.0, hi2NinvInit = 0.1;
-    double      loT = 1.0, hiT = 1e4, hiTinit = 2000.0;
+    double      lo2Ninv = 1e-8, hi2Ninv = 0.002, hi2NinvInit = 0.001;
+    double      loT = 1.0, hiT = 5e3, hiTinit = 2000.0;
     double     *stepsize;            /* controls size of initial simplex */
     double      durationEps = 500.0;
     double      twoNinvEps = 0.01;

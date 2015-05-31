@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DPRINTF_ON
+#undef DPRINTF_ON
 #include "dprintf.h"
 #ifdef DPRINTF_ON
 extern pthread_mutex_t outputLock;
@@ -166,8 +166,8 @@ void MatCoal_project(unsigned nSamples, double *x, double v,
     double gv = g*v;
     double y[nSamples];
 
-    DPRINTF(("%s:%d %lu gv=%lf\n", __func__, __LINE__,
-             (long unsigned) pthread_self(), gv));
+    DPRINTF(("%s:%d %lu g=%lf v=%lf gv=%lf\n", __func__, __LINE__,
+             (long unsigned) pthread_self(), g, v, gv));
 	assert(g > 0);
 
 	// If v is large, then v is broken into several steps.  This
