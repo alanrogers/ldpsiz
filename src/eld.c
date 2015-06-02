@@ -59,27 +59,29 @@ set `nthreads` in the file `ldpsiz.ini`.
 Systems Consortium License, which can be found in file "LICENSE".
 */
 
+#include "array.h"
+#include "assign.h"
+#include "boot.h"
+#include "fileindex.h"
+#include "ini.h"
 #include "misc.h"
 #include "readgtp.h"
-#include "fileindex.h"
+#include "spectab.h"
 #include "tabulation.h"
 #include "window.h"
-#include "boot.h"
-#include "assign.h"
-#include "spectab.h"
-#include "ini.h"
-#include "array.h"
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
 #include <assert.h>
 #include <getopt.h>
-#include <limits.h>
-#include <pthread.h>
 #include <gsl/gsl_rng.h>
+#include <limits.h>
+#include <math.h>
+#include <pthread.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <time.h>
+#include <unistd.h>
 
 /** Data required by a single thread */
 typedef struct ThreadArg {
@@ -281,6 +283,12 @@ int main(int argc, char **argv) {
     BootConf   *bc = NULL;
     char        bootfilename[FILENAMESIZE] = { '\0' };
     char        simcmd[1000] = { '\0' };
+    unsigned    jobid;
+    {
+        char s[200];
+        snprintf(s, sizeof(s), "%u %s", getpid(), ctime(&currtime));
+        jobid = hash(s);
+    }
 
     printf("#################################\n");
     printf("# eld: estimate LD and spectrum #\n");
@@ -382,6 +390,13 @@ int main(int argc, char **argv) {
     }
     myassert(ifname != NULL);
     myassert(ifp != NULL);
+
+    {
+        // strip suffix from fname; add suffix -jobid.fboot; open file
+        char suffix[30];
+        snprintf(suffix, sizeof(suffix), "-%x.fboot", jobid);
+        replaceSuffix(bootfilename, sizeof(bootfilename), suffix, strlen(suffix));
+    }
 
     /* Read assignments from header of gtp file */
     Assignment *asmt = Gtp_readHdr(ifp);
@@ -516,6 +531,7 @@ int main(int argc, char **argv) {
         printf("# %s = %s\n", "sim cmd", simcmd);
     if(chromosome >= 0)
         printf("# %-35s = %d\n", "chromosome", chromosome);
+    printf("# %-35s = %x\n", "JobId", jobid);
     printf("# %-35s = %lg\n", "Window size (cM)", windowsize_cm);
     printf("# %-35s = %s\n", "Input file", ifname);
     printf("# %-35s = %ld\n", "nSNPs", nSNPs);

@@ -524,3 +524,13 @@ int pr_gsl_vector(FILE *fp, const char *fmt, const gsl_vector * v) {
     putc(']', fp);
     return rval;
 }
+
+/// Hash a character string. Used for generating unique file names.
+unsigned hash(const char *s) {
+    unsigned hashval;
+
+    for(hashval=0; *s != '\0'; ++s)
+        hashval += *s + 31 * hashval;
+
+    return hashval % 1001;
+}

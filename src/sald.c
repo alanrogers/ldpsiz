@@ -125,7 +125,9 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
 #include <time.h>
+#include <unistd.h>
 
 #if 0
 extern long tmr_count;
@@ -900,6 +902,14 @@ int main(int argc, char **argv) {
     time_t      currtime = time(NULL);
     unsigned    baseSeed = currtime % UINT_MAX;
 
+    unsigned    jobid;
+    {
+        char s[200];
+        snprintf(s, sizeof(s), "%u %s", getpid(), ctime(&currtime));
+        jobid = hash(s);
+    }
+
+
     printf("############################################\n"
            "# sald: fit population history to LD using #\n"
            "#       simulated annealing                #\n"
@@ -1126,6 +1136,7 @@ int main(int argc, char **argv) {
 
     Polya *polya = Polya_new(twoNsmp);
 
+    printf("# %-35s = %x\n", "JobId", jobid);
     printf("# %-35s = %s\n", "Model", method);
     printf("# %-35s = %lg\n", "mutation rate per nucleotide", u);
     printf("# %-35s = %lg\n", "ftol", ftol);
@@ -1258,7 +1269,7 @@ int main(int argc, char **argv) {
             DblArray_set(cc_curr, i, cci*0.01);
         }
 
-        for(j = 0; j < nOpt; ++j)
+        for(j = 0; j < nOpt; ++j) {
             taskarg[rndx + 1][j] = TaskArg_new(j + (1+rndx)*nOpt,
                                                baseSeed,
                                                nbins, twoNsmp, u, 
@@ -1275,6 +1286,7 @@ int main(int argc, char **argv) {
                                                model, ph_init,
                                                polya,
                                                randomStart);
+        }
     }
 
     if(nthreads == 0)
@@ -1461,7 +1473,8 @@ int main(int argc, char **argv) {
     // that did not converge are omitted.
     if(boot && best[0]) {
         // strip suffix from fname; add suffix .fboot; open file
-        const char *suffix = ".fboot";
+        char suffix[30];
+        snprintf(suffix, sizeof(suffix), "-%x.fboot", jobid);
         replaceSuffix(fname, sizeof(fname), suffix, strlen(suffix));
         bootfile = fopen(fname, "w");
 
