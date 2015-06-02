@@ -62,6 +62,7 @@ static inline unsigned encode01(char c);
 void        unitTstResult(const char *facility, const char *result);
 int  compareLongs(const void *void_x, const void *void_y);
 int  compareDoubles(const void *void_x, const void *void_y);
+long LInt_div_round(long num, long denom);
 
 /**
  * Encode a single character, which should equal either '0' or '1' on

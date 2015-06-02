@@ -298,6 +298,7 @@ int Tabulation_isfinite(const Tabulation * tab) {
 #if 0
 int Tabulation_report(Tabulation * tab, double *sep_cm, long unsigned *nobs,
                               double *sigdsq, double *rsq) {
+	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     int         i;
     unsigned    n;
 
@@ -305,14 +306,17 @@ int Tabulation_report(Tabulation * tab, double *sep_cm, long unsigned *nobs,
     myassert(sep_cm);
     myassert(sigdsq);
 
+	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     if(Tabulation_overflow(tab))
         return 1;
 
+	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     for(i = 0; i < tab->nbins; ++i) {
         n = tab->nobs[i];
         if(nobs)
             nobs[i] = n;
 
+		printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
         if(n == 0) {
             sep_cm[i] = sigdsq[i] = strtod("NAN", NULL);
             if(rsq)
@@ -323,8 +327,10 @@ int Tabulation_report(Tabulation * tab, double *sep_cm, long unsigned *nobs,
             if(rsq)
                 rsq[i] = tab->rsq[i] / n;
         }
+		printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     }
 
+	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     return 0;
 }
 #else

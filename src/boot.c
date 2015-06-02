@@ -77,6 +77,8 @@ Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsmp,
                      int folded, long blockLength,
                      double windowcm, int nBins, gsl_rng * rng) {
 
+	assert(blockLength > 0);
+
     if(nReps==0)
         return NULL;
 
@@ -91,7 +93,7 @@ Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsmp,
 
     long        i, j;
 
-    /* Block positions are uniform on [0, nSNPs-blockLength+1). */
+    // Block positions are uniform on [0, nSNPs-blockLength+1).
     unsigned long endpos = nSNPs - blockLength + 1;
 
     Boot       *boot = malloc(sizeof(Boot));
@@ -100,8 +102,8 @@ Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsmp,
     boot->nSNPs = nSNPs;
     boot->nReps = nReps;
     boot->blockLength = blockLength;
-    boot->nBlocks = (long) round(nSNPs / ((double) blockLength));
-    assert(boot->nBlocks > 0);
+
+    boot->nBlocks = LInt_div_round(nSNPs, blockLength);
     boot->nBins = nBins;
 
     Boot_allocArrays(boot);
@@ -122,7 +124,7 @@ Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsmp,
     return boot;
 }
 
-/*
+/**
  * How many copies of snp are present in a given repetition (rep)?
  */
 long Boot_multiplicity(const Boot * boot, long snp, long rep) {
@@ -434,13 +436,17 @@ Boot       *Boot_restore(FILE * ifp) {
 void Boot_get_rep(Boot * boot, DblArray *sigdsq, DblArray *rsq,
                   DblArray *cm, ULIntArray *nobs,
                   ULIntArray *spectrum, int rep) {
+	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     myassert(boot);
     myassert(sigdsq);
     myassert(cm);
     myassert(rep < boot->nReps);
     myassert(rep >= 0);
+	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     Tabulation_report(boot->tab[rep], cm, nobs, sigdsq, rsq);
+	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     Spectab_report(boot->spectab[rep], spectrum);
+	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
 }
 
 /*

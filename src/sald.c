@@ -866,7 +866,7 @@ int main(int argc, char **argv) {
     int         nPerTmptr;       /* iterations at each temperature */
     int         nTmptrs = 3;     /* number of temperatures */
     const int   folded = true;   // Folded site frequency spectrum
-    double      lo2Ninv = 1e-8, hi2Ninv = 0.002, hi2NinvInit = 0.001;
+    double      lo2N = 500.0, hi2N = 1e8, lo2Ninit = 1000.0;
     double      loT = 1.0, hiT = 5e3, hiTinit = 2000.0;
     double     *stepsize;            /* controls size of initial simplex */
     double      durationEps = 500.0;
@@ -1081,19 +1081,19 @@ int main(int argc, char **argv) {
     double     *loBnd = malloc(nparams * sizeof(loBnd[0]));
     checkmem(loBnd, __FILE__, __LINE__);
 
-    PopHist_setAllTwoNinv(loBnd, nparams, lo2Ninv);
+    PopHist_setAllTwoNinv(loBnd, nparams, 1.0/hi2N);
     PopHist_setAllDuration(loBnd, nparams, loT);
 
     double     *hiBnd = malloc(nparams * sizeof(hiBnd[0]));
     checkmem(hiBnd, __FILE__, __LINE__);
 
-    PopHist_setAllTwoNinv(hiBnd, nparams, hi2Ninv);
+    PopHist_setAllTwoNinv(hiBnd, nparams, 1.0/lo2N);
     PopHist_setAllDuration(hiBnd, nparams, hiT);
 
     double     *hiInit = malloc(nparams * sizeof(hiInit[0]));
     checkmem(hiInit, __FILE__, __LINE__);
 
-    PopHist_setAllTwoNinv(hiInit, nparams, hi2NinvInit);
+    PopHist_setAllTwoNinv(hiInit, nparams, 1.0/lo2Ninit);
     PopHist_setAllDuration(hiInit, nparams, hiTinit);
 
     /* read assignment statements in input file */
@@ -1137,7 +1137,7 @@ int main(int argc, char **argv) {
     printf("# %-35s = %d\n", "iterations/temp", nPerTmptr);
     printf("# %-35s = %d\n", "optimizers/data set", nOpt);
     printf("# %-35s = %d\n", "haploid sample size", twoNsmp);
-    printf("# %-35s = [%lg, %lg]\n", "twoNinv range", lo2Ninv, hi2Ninv);
+    printf("# %-35s = [%lg, %lg]\n", "twoN range", lo2N, hi2N);
     printf("# %-35s = [%lg, %lg]\n", "t range", loT, hiT);
     printf("# %-35s = [", "scale of initial simplex");
     for(i = 0; i + 1 < nparams; ++i)
@@ -1198,22 +1198,30 @@ int main(int argc, char **argv) {
         assert(nBootReps >= 0);
     } else
         nBootReps = 0;
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     printf("# %-35s = %ld\n", "Number of bootstrap replicates", nBootReps);
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
 
     nDataSets = 1 + nBootReps;
     nTasks = nDataSets * nOpt;
+
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
 
     // taskarg[i][j] points to the j'th optimizer on the i'th data
     // set, where the observed data are data set 0. i runs from 0
     // through nDataSets-1, and j from 0 through nOpt-1.
     TaskArg  ***taskarg = malloc(nDataSets * sizeof(taskarg[0]));
-
     checkmem(taskarg, __FILE__, __LINE__);
+
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
+
     for(i = 0; i < nDataSets; ++i) {
         /* allocate a row of pointers for each data set */
         taskarg[i] = malloc(nOpt * sizeof(taskarg[i][0]));
         checkmem(taskarg[i], __FILE__, __LINE__);
     }
+
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
 
     /* create task arguments for the observed sigdsq */
     for(j = 0; j < nOpt; ++j) {
@@ -1234,23 +1242,32 @@ int main(int argc, char **argv) {
                                     randomStart);
     }
 
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
+
     /* create task arguments for each bootstrap replicate */
     DblArray *sigdsq_curr = DblArray_new(nbins);
     checkmem(sigdsq_curr, __FILE__, __LINE__);
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     DblArray *cc_curr = DblArray_new(nbins);
     checkmem(cc_curr, __FILE__, __LINE__);
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     ULIntArray *spec_curr = ULIntArray_new(spdim);
     checkmem(spec_curr, __FILE__, __LINE__);
 
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     for(rndx = 0; rndx < nBootReps; ++rndx) {
+
+		printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
         Boot_get_rep(boot, sigdsq_curr, NULL, cc_curr, NULL,
                      spec_curr, rndx);
+		printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
 
         // conv. cM to recombination rate
         for(i = 0; i < nbins; ++i) {
             double cci = DblArray_get(cc_curr, i);
             DblArray_set(cc_curr, i, cci*0.01);
         }
+		printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
         for(j = 0; j < nOpt; ++j)
             taskarg[rndx + 1][j] = TaskArg_new(j + (1+rndx)*nOpt,
                                                baseSeed,
@@ -1261,7 +1278,7 @@ int main(int argc, char **argv) {
                                                loBnd, hiBnd, hiInit,
                                                odeAbsTol, odeRelTol,
                                                nPerTmptr,
-                                               0,
+                                               false,
                                                DblArray_ptr(sigdsq_curr),
                                                DblArray_ptr(cc_curr),
                                                spec_curr,
@@ -1270,6 +1287,7 @@ int main(int argc, char **argv) {
                                                randomStart);
     }
 
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     if(nthreads == 0)
         nthreads = getNumCores();
 
@@ -1280,16 +1298,19 @@ int main(int argc, char **argv) {
     fprintf(stderr, "Creating %d threads to perform %d tasks\n",
             nthreads, nTasks);
 
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     JobQueue   *jq = JobQueue_new(nthreads);
 
     if(jq == NULL)
         eprintf("ERR@%s:%d: Bad return from JobQueue_new",
                 __FILE__, __LINE__);
 
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     for(i = 0; i < nDataSets; ++i)
         for(j = 0; j < nOpt; ++j)
             JobQueue_addJob(jq, taskfun, taskarg[i][j]);
 
+	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     if(verbose)
         prHeader(ph_init);
     JobQueue_waitOnJobs(jq);
@@ -1299,13 +1320,10 @@ int main(int argc, char **argv) {
     TaskArg   **best = malloc(nDataSets * sizeof(best[0]));
     checkmem(best, __FILE__, __LINE__);
 
-    /*
-     * best[i] points to the best result among all replicate
-     * optimizers for data set i.
-     */
-    for(i = 0; i < nDataSets; ++i) {
+    // best[i] points to the best result among all replicate
+    // optimizers for data set i.
+    for(i = 0; i < nDataSets; ++i)
         best[i] = TaskArg_best(taskarg[i], nOpt);
-    }
 
     if(best[0] == NULL)
         printf("No convergence\n");
@@ -1349,7 +1367,7 @@ int main(int argc, char **argv) {
 
     if(boot) {
         fprintf(stderr, "Processing bootstrap\n");
-        /* output w/ confidence interval */
+        // output with confidence interval
         assert(nBootReps > 0);
         double      low, high;
         char        cibuff[50];
@@ -1450,20 +1468,18 @@ int main(int argc, char **argv) {
     v = (v - nOpt * m * m) / (nOpt - 1);
     printf("# log badness:m=%lg sd=%lg\n", m, sqrt(v));
 
-    /*
-     * Generate an fboot file, which is a rectangular table. There is
-     * one column for each estimated parameter. Row 1 contains the
-     * parameter labels. Row 2 is the real data. Each succeeding row
-     * contains the estimate from one bootstrap replicate. Replicates
-     * that did not converge are omitted.
-     */
+    // Generate an fboot file, which is a rectangular table. There is
+    // one column for each estimated parameter. Row 1 contains the
+    // parameter labels. Row 2 is the real data. Each succeeding row
+    // contains the estimate from one bootstrap replicate. Replicates
+    // that did not converge are omitted.
     if(boot && best[0]) {
-        /* strip suffix from fname; add suffix .fboot; open file */
+        // strip suffix from fname; add suffix .fboot; open file
         const char *suffix = ".fboot";
         replaceSuffix(fname, sizeof(fname), suffix, strlen(suffix));
         bootfile = fopen(fname, "w");
 
-        /* 1st line of fboot file contains parameter names */
+        // 1st line of fboot file contains parameter names
         for(pndx = 0; pndx < nparams; ++pndx) {
             rval = PopHist_paramName(ph_init, pname, sizeof(pname), pndx);
             if(rval)
@@ -1472,22 +1488,19 @@ int main(int argc, char **argv) {
                         __func__,__FILE__, __LINE__, rval);
             fprintf(bootfile, " %*s", DBL_DIG + 9, pname);
         }
-        putc('\n', bootfile); /* end of 1st line */
+        putc('\n', bootfile); // end of 1st line 
 
-        /* each subsequent line contains parameter values */
+        // each subsequent line contains parameter values
         for(i=0; i <= nBootReps; ++i) {
             if(best[i] == NULL)
                 continue;
 
-            /*
-             * Print parameter values in exponential format using
-             * precision DBL_DIG+3.  This is as much as you can do in
-             * decimal format.
-             */
+            // Print parameter values in exponential format using
+            // precision DBL_DIG+3.  This is as much as you can do in
+            // decimal format.
             for(pndx=0; pndx < nparams; ++pndx)
                 fprintf(bootfile, " %.*le", DBL_DIG+3,
-                        PopHist_paramValue(best[i]->ph,
-                                           pndx));
+                        PopHist_paramValue(best[i]->ph, pndx));
             putc('\n', bootfile);
         }
         fclose(bootfile);

@@ -259,6 +259,9 @@ int main(int argc, char **argv) {
     long        sampling_interval = 1;
     long        bootreps = 0;
     long        blocksize = 300;
+
+	printf("%s:%d: blocksize=%ld\n",__FILE__,__LINE__,blocksize);fflush(stdout);
+	
     int         nbins = 25;
     int         verbose = 0;
     int         ploidy = 1;     /* default is haploid. */
@@ -310,6 +313,8 @@ int main(int argc, char **argv) {
         ini = NULL;
     }
 
+	printf("%s:%d: blocksize=%ld\n",__FILE__,__LINE__,blocksize);fflush(stdout);
+	
     /* command line arguments */
     for(;;) {
         i = getopt_long(argc, argv, "b:f:hi:n:R:r:t:vw:W:", myopts, &optndx);
@@ -322,6 +327,12 @@ int main(int argc, char **argv) {
             break;
         case 'b':
             blocksize = strtod(optarg, NULL);
+			if(blocksize <= 0) {
+				fprintf(stderr,
+						"%s:%d: bad argument to -b or --blocksize: \"%s\"\n",
+						__FILE__,__LINE__,optarg);
+				usage();
+			}
             break;
         case 'f':
             snprintf(bootfilename, sizeof(bootfilename), "%s", optarg);
@@ -381,10 +392,8 @@ int main(int argc, char **argv) {
     Assignment_free(asmt);
     asmt = NULL;
 
-    /*
-     * 1st pass through file: count SNPs and figure out which will be
-     * read by each thread.
-     */
+    // 1st pass through file: count SNPs and figure out which will be
+    // read by each thread.
     fprintf(stderr, "Indexing file \"%s\"...\n", ifname);
     FileIndex  *fndx = FileIndex_readFile(ifp);
 
@@ -429,7 +438,7 @@ int main(int argc, char **argv) {
     rng = gsl_rng_alloc(gsl_rng_taus);
     gsl_rng_set(rng, (unsigned) currtime);
 
-    /* allocate arrays */
+    // allocate arrays
     DblArray *sigdsq = DblArray_new((unsigned long) nbins);
     checkmem(sigdsq, __FILE__, __LINE__);
 
@@ -458,11 +467,9 @@ int main(int argc, char **argv) {
         spectab[i] = Spectab_new(twoNsmp, folded);
     }
 
-    /*
-     * Initially, all boot pointers are set to NULL. If they remain
-     * NULL, then each thread will know not do a
-     * bootstrap. Bootstrap is done only if boot[i] is not NULL.
-     */
+    // Initially, all boot pointers are set to NULL. If they remain
+    // NULL, then each thread will know not do a
+    // bootstrap. Bootstrap is done only if boot[i] is not NULL.
     boot = malloc(nthreads * sizeof(*boot));
     checkmem(boot, __FILE__, __LINE__);
     memset(boot, 0, nthreads * sizeof(*boot));
@@ -474,19 +481,18 @@ int main(int argc, char **argv) {
 
     if(bootreps > 0) {
 
+		printf("%s:%d: blocksize=%ld\n",
+			   __FILE__,__LINE__,blocksize);fflush(stdout);
         boot[0] = Boot_new(nSNPs, bootreps, twoNsmp, folded, blocksize,
                            windowsize_cm,
                            nbins, rng);
-
         myassert(boot[0] != NULL);
 
         for(i = 1; i < nthreads; ++i)
             boot[i] = Boot_dup(boot[0]);
     }
 
-    /*
-     * targ[i] = ptr to i'th ThreadArg object.
-     */
+    // targ[i] = ptr to i'th ThreadArg object.
     ThreadArg  *targ = malloc(nthreads * sizeof(targ[0]));
 
     checkmem(targ, __FILE__, __LINE__);
@@ -505,7 +511,7 @@ int main(int argc, char **argv) {
         targ[tndx].overflow = 0;
     }
 
-    /* echo parameters */
+    // echo parameters
     if(strlen(simcmd) > 0)
         printf("# %s = %s\n", "sim cmd", simcmd);
     if(chromosome >= 0)

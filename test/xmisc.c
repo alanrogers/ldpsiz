@@ -177,5 +177,11 @@ int main(int argc, char **argv) {
     assert(0 != mystrcasecmp("AbCde", "aBcD"));
     unitTstResult("mystrcasecmp", "OK");
 
+	assert(3 == LInt_div_round(9L, 3L));
+	assert(3 == LInt_div_round(10L, 3L));
+	assert(4 == LInt_div_round(11L, 3L));
+	assert(4 == LInt_div_round(12L, 3L));
+    unitTstResult("LInt_div_round", "OK");
+
     return 0;
 }

@@ -11,6 +11,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <ctype.h>
 #include <assert.h>
@@ -26,6 +27,15 @@
 #endif
 #include <execinfo.h>
 #include "misc.h"
+
+// Divide num by denom and round the result to the nearest integer.
+long LInt_div_round(long num, long denom) {
+	assert(denom != 0);
+	ldiv_t quotrem = ldiv(num, denom);
+	if(2L * quotrem.rem > denom)
+		return 1 + quotrem.quot;
+	return quotrem.quot;
+}
 
 /**
  * Return 1 if string arg matches either shortOpt or longOpt. ShortOpt
