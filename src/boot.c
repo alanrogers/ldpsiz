@@ -436,17 +436,13 @@ Boot       *Boot_restore(FILE * ifp) {
 void Boot_get_rep(Boot * boot, DblArray *sigdsq, DblArray *rsq,
                   DblArray *cm, ULIntArray *nobs,
                   ULIntArray *spectrum, int rep) {
-	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     myassert(boot);
     myassert(sigdsq);
     myassert(cm);
     myassert(rep < boot->nReps);
     myassert(rep >= 0);
-	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     Tabulation_report(boot->tab[rep], cm, nobs, sigdsq, rsq);
-	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
     Spectab_report(boot->spectab[rep], spectrum);
-	printf("%s:%s:%d\n",__FILE__,__func__,__LINE__); fflush(stdout);
 }
 
 /*

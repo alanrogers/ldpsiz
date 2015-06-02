@@ -345,8 +345,8 @@ int         Tabulation_report(Tabulation *tab,
     myassert(sigdsq);
     assert(tab->nbins == DblArray_dim(sep_cm));
     assert(tab->nbins == DblArray_dim(sigdsq));
-    assert(tab->nbins == DblArray_dim(rsq));
-    assert(tab->nbins == ULIntArray_dim(nobs));
+    assert((rsq==NULL) || (tab->nbins == DblArray_dim(rsq)));
+    assert((nobs==NULL) || (tab->nbins == ULIntArray_dim(nobs)));
 
     if(Tabulation_overflow(tab))
         return 1;

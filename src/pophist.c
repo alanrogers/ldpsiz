@@ -402,10 +402,10 @@ void PopHist_print_comment(const PopHist * ph, const char *comstr,
     myassert(ph != NULL);
     myassert(PopHist_duration(ph, ph->nepoch - 1) == HUGE_VAL);
 
-    fprintf(outfile, "%s%5s %8s %10s\n", comstr, "epoch", "duration", "1/2N");
+    fprintf(outfile, "%s%5s %8s %10s\n", comstr, "epoch", "duration", "2N");
     for(i = 0; i < ph->nepoch; ++i) {
         fprintf(outfile, "%s%5d %8.3lg %10.3lg\n",
-                comstr, i, PopHist_duration(ph, i), PopHist_twoNinv(ph, i));
+                comstr, i, PopHist_duration(ph, i), PopHist_twoN(ph, i));
     }
     return;
 }

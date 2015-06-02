@@ -866,7 +866,7 @@ int main(int argc, char **argv) {
     int         nPerTmptr;       /* iterations at each temperature */
     int         nTmptrs = 3;     /* number of temperatures */
     const int   folded = true;   // Folded site frequency spectrum
-    double      lo2N = 500.0, hi2N = 1e8, lo2Ninit = 1000.0;
+    double      lo2N = 400.0, hi2N = 1e8, lo2Ninit = 1000.0;
     double      loT = 1.0, hiT = 5e3, hiTinit = 2000.0;
     double     *stepsize;            /* controls size of initial simplex */
     double      durationEps = 500.0;
@@ -954,7 +954,7 @@ int main(int argc, char **argv) {
             break;
         case 'E':
             if(!epochPending) {
-                fprintf(stderr, "Arg out of place: %s\n", "--nextEpoch");
+                fprintf(stderr, "Arg out of place: -E or --nextEpoch\n");
                 usage();
             }
             if(phSetFromFile) {
@@ -1015,6 +1015,11 @@ int main(int argc, char **argv) {
                 phSetFromFile = 0;
             }
             curr_t = strtod(optarg, 0);
+            if(curr_t <= 0) {
+                fprintf(stderr, "Arg following -T or --time should be positive. Got %s.\n",
+                        optarg);
+                usage();
+            }
             epochPending = 1;
             break;
         case 'u':
@@ -1069,6 +1074,9 @@ int main(int argc, char **argv) {
 
     ph_init = PopHist_fromEpochLink(linkedList);
     nparams = PopHist_nParams(ph_init);
+
+    printf("# EpochLink:\n");
+    EpochLink_print(0, linkedList, stdout);
 
     printf("# Initial PopHist:\n");
     PopHist_print_comment(ph_init, "# ", stdout);
@@ -1198,14 +1206,10 @@ int main(int argc, char **argv) {
         assert(nBootReps >= 0);
     } else
         nBootReps = 0;
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     printf("# %-35s = %ld\n", "Number of bootstrap replicates", nBootReps);
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
 
     nDataSets = 1 + nBootReps;
     nTasks = nDataSets * nOpt;
-
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
 
     // taskarg[i][j] points to the j'th optimizer on the i'th data
     // set, where the observed data are data set 0. i runs from 0
@@ -1213,15 +1217,11 @@ int main(int argc, char **argv) {
     TaskArg  ***taskarg = malloc(nDataSets * sizeof(taskarg[0]));
     checkmem(taskarg, __FILE__, __LINE__);
 
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
-
     for(i = 0; i < nDataSets; ++i) {
         /* allocate a row of pointers for each data set */
         taskarg[i] = malloc(nOpt * sizeof(taskarg[i][0]));
         checkmem(taskarg[i], __FILE__, __LINE__);
     }
-
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
 
     /* create task arguments for the observed sigdsq */
     for(j = 0; j < nOpt; ++j) {
@@ -1242,32 +1242,25 @@ int main(int argc, char **argv) {
                                     randomStart);
     }
 
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
-
     /* create task arguments for each bootstrap replicate */
     DblArray *sigdsq_curr = DblArray_new(nbins);
     checkmem(sigdsq_curr, __FILE__, __LINE__);
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     DblArray *cc_curr = DblArray_new(nbins);
     checkmem(cc_curr, __FILE__, __LINE__);
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     ULIntArray *spec_curr = ULIntArray_new(spdim);
     checkmem(spec_curr, __FILE__, __LINE__);
 
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     for(rndx = 0; rndx < nBootReps; ++rndx) {
 
-		printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
         Boot_get_rep(boot, sigdsq_curr, NULL, cc_curr, NULL,
                      spec_curr, rndx);
-		printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
 
         // conv. cM to recombination rate
         for(i = 0; i < nbins; ++i) {
             double cci = DblArray_get(cc_curr, i);
             DblArray_set(cc_curr, i, cci*0.01);
         }
-		printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
+
         for(j = 0; j < nOpt; ++j)
             taskarg[rndx + 1][j] = TaskArg_new(j + (1+rndx)*nOpt,
                                                baseSeed,
@@ -1287,7 +1280,6 @@ int main(int argc, char **argv) {
                                                randomStart);
     }
 
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     if(nthreads == 0)
         nthreads = getNumCores();
 
@@ -1298,19 +1290,16 @@ int main(int argc, char **argv) {
     fprintf(stderr, "Creating %d threads to perform %d tasks\n",
             nthreads, nTasks);
 
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     JobQueue   *jq = JobQueue_new(nthreads);
 
     if(jq == NULL)
         eprintf("ERR@%s:%d: Bad return from JobQueue_new",
                 __FILE__, __LINE__);
 
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     for(i = 0; i < nDataSets; ++i)
         for(j = 0; j < nOpt; ++j)
             JobQueue_addJob(jq, taskfun, taskarg[i][j]);
 
-	printf("%s:%d\n",__FILE__,__LINE__); fflush(stdout);
     if(verbose)
         prHeader(ph_init);
     JobQueue_waitOnJobs(jq);
