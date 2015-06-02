@@ -1075,9 +1075,6 @@ int main(int argc, char **argv) {
     ph_init = PopHist_fromEpochLink(linkedList);
     nparams = PopHist_nParams(ph_init);
 
-    printf("# EpochLink:\n");
-    EpochLink_print(0, linkedList, stdout);
-
     printf("# Initial PopHist:\n");
     PopHist_print_comment(ph_init, "# ", stdout);
 
