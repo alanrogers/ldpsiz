@@ -1472,7 +1472,7 @@ int main(int argc, char **argv) {
     // contains the estimate from one bootstrap replicate. Replicates
     // that did not converge are omitted.
     if(boot && best[0]) {
-        // strip suffix from fname; add suffix .fboot; open file
+        // strip suffix from fname; add suffix -jobid.fboot; open file
         char suffix[30];
         snprintf(suffix, sizeof(suffix), "-%x.fboot", jobid);
         replaceSuffix(fname, sizeof(fname), suffix, strlen(suffix));
