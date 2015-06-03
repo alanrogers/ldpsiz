@@ -757,25 +757,35 @@ static double costFun(const gsl_vector *x, void *varg) {
     fflush(stdout);
 #endif
 
+    double diff;
+    badness = 0.0;
+
+#define DO_LD 0
+#define DO_SPEC 1
+
+#ifdef DO_LD
     // get vector of expected values of sigdsq
     ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
 
+    for(i = 0; i < nbins; ++i) {
+        diff = exp_sigdsq[i] - sigdsq[i];
+        badness += diff * diff;
+    }
+#endif
+
+#ifdef DO_SPEC
     // get expected spectrum
     ESpectrum *espec = ESpectrum_new(arg->twoNsmp, ph,
                                      arg->polya, arg->tolMatCoal);
     for(i=0; i < spdim; ++i)
         exp_spectrum[i] = ESpectrum_folded(espec, i+1);
 
-    double diff;
-    badness = 0.0;
-    for(i = 0; i < nbins; ++i) {
-        diff = exp_sigdsq[i] - sigdsq[i];
-        badness += diff * diff;
-    }
     for(i = 0; i < spdim; ++i) {
         diff = exp_spectrum[i] - spectrum[i];
         badness += diff * diff;
     }
+    ESpectrum_free(espec);
+#endif
 
     if(!isfinite(badness)) {
 #ifdef DEBUG
@@ -805,8 +815,6 @@ static double costFun(const gsl_vector *x, void *varg) {
         assert(badness < bigval);
 #endif
     ++arg->nIterations;
-
-    ESpectrum_free(espec);
 
     DPRINTF(("%s %lu exit\n", __func__,
              (long unsigned) pthread_self()));
