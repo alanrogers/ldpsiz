@@ -37,8 +37,6 @@ set `nthreads` in the file `ldpsiz.ini`.
        where options may include:
        -b \<x\> or --blocksize \<x\>
           SNPs per bootstrap block
-       -f \<x\> or --bootfile \<x\>
-          name of bootstrap output file
        -h or --help
           print this message
        -i \<x\> or --interval \<x\>
@@ -222,7 +220,6 @@ static void usage(void) {
     fprintf(stderr, "usage: eld [options] input_file_name\n");
     fprintf(stderr, "   where options may include:\n");
     tellopt("-b <x> or --blocksize <x>", "SNPs per bootstrap block");
-    tellopt("-f <x> or --bootfile <x>", "name of bootstrap output file");
     tellopt("-h or --help", "print this message");
     tellopt("-i <x> or --interval <x>",
             "for debugging: increase speed by examining every x'th focal SNP");
@@ -244,7 +241,6 @@ int main(int argc, char **argv) {
     static struct option myopts[] = {
         /* {char *name, int has_arg, int *flag, int val} */
         {"blocksize", required_argument, 0, 'b'},
-        {"bootfile", required_argument, 0, 'f'},
         {"help", no_argument, 0, 'h'},
         {"interval", required_argument, 0, 'i'},
         {"nbins", required_argument, 0, 'n'},
@@ -261,9 +257,6 @@ int main(int argc, char **argv) {
     long        sampling_interval = 1;
     long        bootreps = 0;
     long        blocksize = 300;
-
-	printf("%s:%d: blocksize=%ld\n",__FILE__,__LINE__,blocksize);fflush(stdout);
-	
     int         nbins = 25;
     int         verbose = 0;
     int         ploidy = 1;     /* default is haploid. */
@@ -321,8 +314,6 @@ int main(int argc, char **argv) {
         ini = NULL;
     }
 
-	printf("%s:%d: blocksize=%ld\n",__FILE__,__LINE__,blocksize);fflush(stdout);
-	
     /* command line arguments */
     for(;;) {
         i = getopt_long(argc, argv, "b:f:hi:n:R:r:t:vw:W:", myopts, &optndx);
@@ -341,9 +332,6 @@ int main(int argc, char **argv) {
 						__FILE__,__LINE__,optarg);
 				usage();
 			}
-            break;
-        case 'f':
-            snprintf(bootfilename, sizeof(bootfilename), "%s", optarg);
             break;
         case 'h':
             usage();
@@ -391,11 +379,14 @@ int main(int argc, char **argv) {
     myassert(ifname != NULL);
     myassert(ifp != NULL);
 
-    {
-        // strip suffix from fname; add suffix -jobid.fboot; open file
+    if(bootreps > 0) {
+        // Generate bootstrap output file name from input file name.
+        // Strip suffix; add -jobid.boot
+        snprintf(bootfilename, sizeof(bootfilename), "%s", ifname);
         char suffix[30];
-        snprintf(suffix, sizeof(suffix), "-%x.fboot", jobid);
-        replaceSuffix(bootfilename, sizeof(bootfilename), suffix, strlen(suffix));
+        snprintf(suffix, sizeof(suffix), "-%x.boot", jobid);
+        replaceSuffix(bootfilename, sizeof(bootfilename), suffix,
+                      strlen(suffix));
     }
 
     /* Read assignments from header of gtp file */

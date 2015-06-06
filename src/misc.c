@@ -526,11 +526,26 @@ int pr_gsl_vector(FILE *fp, const char *fmt, const gsl_vector * v) {
 }
 
 /// Hash a character string. Used for generating unique file names.
-unsigned hash(const char *s) {
-    unsigned hashval;
+unsigned hash(const char *ss) {
+    unsigned long hashval;
+    int c;
+    const unsigned char *s = (const unsigned char *) ss;
+#if 0
+    hashval = 0;
+    // Kernighan and Richie, 2nd edn.
+    while((c = *s++))
+        hashval += c + 31 * hashval;
+#elif 1
+    // djb2
+    hashval = 5381;
+    while((c = *s++))
+        hashval = ((hashval << 5) + hashval) +  c;
+#else
+    // sdbm
+    hashval = 0;
+    while((c = *s++))
+        hashval = c + (hashval << 6) + (hashval << 16) - hashval;
+#endif
 
-    for(hashval=0; *s != '\0'; ++s)
-        hashval += *s + 31 * hashval;
-
-    return hashval % 1001;
+    return hashval % 10001;
 }

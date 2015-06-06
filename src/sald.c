@@ -922,7 +922,6 @@ int main(int argc, char **argv) {
            "# sald: fit population history to LD using #\n"
            "#       simulated annealing                #\n"
            "############################################\n");
-
     putchar('\n');
 #ifdef __TIMESTAMP__
     printf("# Program was compiled: %s\n", __TIMESTAMP__);
@@ -933,6 +932,8 @@ int main(int argc, char **argv) {
     for(i = 0; i < argc; ++i)
         printf(" %s", argv[i]);
     putchar('\n');
+
+    fflush(stdout);
 
     /* import definitions from initialization file */
     Ini        *ini = Ini_new(INIFILE);
@@ -1073,6 +1074,8 @@ int main(int argc, char **argv) {
     assert(fname[0] != '\0');
     assert(ifp != NULL);
 
+    fflush(stdout);
+
     /* specify default model */
     if(method[0] == '\0')
         snprintf(method, sizeof(method), "Hill");
@@ -1139,6 +1142,7 @@ int main(int argc, char **argv) {
     model = Model_alloc(method, twoNsmp);
     AnnealSched *sched = AnnealSched_alloc(nTmptrs, initTmptr, tmptrDecay);
 
+    fflush(stdout);
     // dimension of spectrum
     unsigned spdim = specdim((unsigned) twoNsmp, folded);
 
@@ -1167,6 +1171,8 @@ int main(int argc, char **argv) {
     for(i = 0; i + 1 < nparams; ++i)
         printf("%lg, ", stepsize[i]);
     printf("%lg]\n", stepsize[i]);
+
+    fflush(stdout);
 
     DblArray *cc = DblArray_new(nbins);
     checkmem(cc, __FILE__, __LINE__);
@@ -1211,6 +1217,7 @@ int main(int argc, char **argv) {
         bootfile = NULL;
     }
 
+    fflush(stdout);
     if(boot) {
         nBootReps = Boot_nReps(boot);
         Boot_purge(boot);
@@ -1223,6 +1230,8 @@ int main(int argc, char **argv) {
     } else
         nBootReps = 0;
     printf("# %-35s = %ld\n", "Number of bootstrap replicates", nBootReps);
+
+    fflush(stdout);
 
     nDataSets = 1 + nBootReps;
     nTasks = nDataSets * nOpt;
@@ -1257,6 +1266,8 @@ int main(int argc, char **argv) {
                                     polya,
                                     randomStart);
     }
+
+    fflush(stdout);
 
     /* create task arguments for each bootstrap replicate */
     DblArray *sigdsq_curr = DblArray_new(nbins);
@@ -1297,6 +1308,8 @@ int main(int argc, char **argv) {
         }
     }
 
+    fflush(stdout);
+
     if(nthreads == 0)
         nthreads = getNumCores();
 
@@ -1321,6 +1334,7 @@ int main(int argc, char **argv) {
         prHeader(ph_init);
     JobQueue_waitOnJobs(jq);
 
+    fflush(stdout);
     fprintf(stderr, "Back from threads\n");
 
     TaskArg   **best = malloc(nDataSets * sizeof(best[0]));
@@ -1335,6 +1349,7 @@ int main(int argc, char **argv) {
         printf("No convergence\n");
 
     prHeader(ph_init);
+    fflush(stdout);
     for(i = 0; i < nOpt; ++i) {
         printf("# %2d:", i);
         for(j = 0; j < PopHist_nParams(taskarg[0][i]->ph); ++j) {
@@ -1364,6 +1379,7 @@ int main(int argc, char **argv) {
         }
     }
 
+    fflush(stdout);
     if(best[0] != NULL) {
         badness = best[0]->cost;
         printf("\n# minimum badness = %lg\n", badness);
@@ -1433,6 +1449,8 @@ int main(int argc, char **argv) {
         }
     }
 
+    fflush(stdout);
+
     if(best[0]) {
         // find fitted values of sigdsq
         double      sigdsq_fit[nbins];
@@ -1474,6 +1492,8 @@ int main(int argc, char **argv) {
     v = (v - nOpt * m * m) / (nOpt - 1);
     printf("# log badness:m=%lg sd=%lg\n", m, sqrt(v));
 
+    fflush(stdout);
+
     // Generate an fboot file, which is a rectangular table. There is
     // one column for each estimated parameter. Row 1 contains the
     // parameter labels. Row 2 is the real data. Each succeeding row
@@ -1485,6 +1505,7 @@ int main(int argc, char **argv) {
         snprintf(suffix, sizeof(suffix), "-%x.fboot", jobid);
         replaceSuffix(fname, sizeof(fname), suffix, strlen(suffix));
         bootfile = fopen(fname, "w");
+        printf("# %-35s = %s\n", "fboot file name", fname);
 
         // 1st line of fboot file contains parameter names
         for(pndx = 0; pndx < nparams; ++pndx) {
@@ -1513,6 +1534,8 @@ int main(int argc, char **argv) {
         fclose(bootfile);
         bootfile = NULL;
     }
+
+    fflush(stdout);
 
     DblArray_free(sigdsq_curr);
     DblArray_free(cc_curr);

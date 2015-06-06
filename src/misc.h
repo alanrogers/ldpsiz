@@ -54,7 +54,7 @@ void        dostacktrace(const char *file, int line, FILE * ofp);
 double      reflect(double x, double lo, double hi);
 void        replaceSuffix(char *str, size_t str_size, const char *suffix, size_t suffix_len);
 int         pr_gsl_vector(FILE *fp, const char *fmt, const gsl_vector * v);
-unsigned    hash(const char *s);
+unsigned    hash(const char *s);;
 void        unitTstResult(const char *facility, const char *result);
 int         compareLongs(const void *void_x, const void *void_y);
 int         compareDoubles(const void *void_x, const void *void_y);

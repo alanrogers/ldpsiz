@@ -183,5 +183,12 @@ int main(int argc, char **argv) {
 	assert(4 == LInt_div_round(12L, 3L));
     unitTstResult("LInt_div_round", "OK");
 
+    if(verbose) {
+        printf("hash(%s) = %04x\n", "a", hash("a"));
+        printf("hash(%s) = %04x\n", "abc", hash("abc"));
+        printf("hash(%s) = %04x\n", "abcxxxxxffff", hash("abcxxxxxffff"));
+    }
+    unitTstResult("hash", "OK");
+
     return 0;
 }
