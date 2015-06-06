@@ -1402,6 +1402,8 @@ int main(int argc, char **argv) {
         printf("\n# %5s: %10s %10s %23s\n",
                "param", "initial", "estimated", cibuff);
 
+		fflush(stdout);
+
         for(pndx = 0; pndx < nparams; ++pndx) {
             long        ngood = 0;
             double      paramVal;
@@ -1430,6 +1432,7 @@ int main(int argc, char **argv) {
                        PopHist_paramValue(ph_init, pndx),
                        PopHist_paramValue(best[0]->ph, pndx), cibuff);
             }
+			fflush(stdout);
         }
         free(v);
     } else if(best[0]) {
@@ -1446,6 +1449,7 @@ int main(int argc, char **argv) {
                    pname,
                    PopHist_paramValue(ph_init, pndx),
                    PopHist_paramValue(best[0]->ph, pndx));
+			fflush(stdout);
         }
     }
 
