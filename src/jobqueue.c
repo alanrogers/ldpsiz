@@ -59,7 +59,6 @@ struct JobQueue {
     /** array of threads */
     pthread_t  *thread;
 
-
     /** mutex for locking queue */
     pthread_mutex_t lock;
 

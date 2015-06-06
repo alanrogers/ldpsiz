@@ -34,6 +34,7 @@ struct Boot {
     Spectab    **spectab;    // spectrum tabulation for each replicate
 };
 
+
 /** Contains the data for a bootstrap confidence interval. */
 struct BootConf {
     long        nReps;       // repetitions
@@ -46,6 +47,39 @@ struct BootConf {
     double     *sep_cm;      // sep_cm[i]=mean centimorgans separating
                              // pairs of sites within bin i. 
 };
+
+#ifndef NDEBUG
+void Boot_sanityCheck(const Boot * boot, const char *file, int line) {
+    REQUIRE(boot != NULL, file, line);
+    REQUIRE(boot->nSNPs > 0, file, line);
+    REQUIRE(boot->nReps > 0, file, line);
+    REQUIRE(boot->blockLength > 0, file, line);
+    REQUIRE(boot->blockLength < 100000, file, line);
+    REQUIRE(boot->nBins > 0, file, line);
+    REQUIRE(boot->nBins < 500, file, line);
+
+    REQUIRE(boot->start != NULL, file, line);
+    REQUIRE(boot->tab != NULL, file, line);
+    REQUIRE(boot->spectab != NULL, file, line);
+	
+	long i, j;
+    unsigned long endpos = boot->nSNPs - boot->blockLength + 1;
+	long prev;
+
+	for(i=0; i < boot->nReps; ++i) {
+		REQUIRE(boot->start[i] != NULL, file, line);
+		Tabulation_sanityCheck(boot->tab[i], file, line);
+		Spectab_sanityCheck(boot->spectab[i], file, line);
+		for(j=0; j < boot->nBlocks; ++j) {
+			REQUIRE(boot->start[i][j] >= 0, file, line);
+			REQUIRE(boot->start[i][j] < endpos, file, line);
+			if(j>0)
+				REQUIRE(boot->start[i][j] >= prev, file, line);
+			prev = boot->start[i][j];
+		}
+	}
+}
+#endif
 
 /**
  * Allocate Boot's arrays. This code is used in several places, and I
@@ -121,6 +155,10 @@ Boot       *Boot_new(long nSNPs, long nReps, unsigned twoNsmp,
         qsort(boot->start[i], (size_t) boot->nBlocks,
               sizeof(boot->start[0][0]), compareLongs);
     }
+
+#ifndef NDEBUG
+	Boot_sanityCheck(boot, __FILE__, __LINE__);
+#endif
     return boot;
 }
 
@@ -213,6 +251,10 @@ Boot       *Boot_dup(const Boot * old) {
         new->start[i] = memdup(old->start[i],
                                new->nBlocks * sizeof(new->start[0][0]));
     }
+
+#ifndef NDEBUG
+	Boot_sanityCheck(new, __FILE__, __LINE__);
+#endif
     return new;
 }
 
@@ -248,7 +290,9 @@ long Boot_nSNPs(const Boot * boot) {
 void Boot_free(Boot * boot) {
     long        i;
 
-    myassert(boot != NULL);
+#ifndef NDEBUG
+	Boot_sanityCheck(boot, __FILE__, __LINE__);
+#endif
 
     for(i = 0; i < boot->nReps; ++i) {
         free(boot->start[i]);
@@ -325,6 +369,10 @@ int Boot_equals(const Boot * x, const Boot * y) {
 void Boot_plus_equals(Boot * x, const Boot * y) {
     int         rep;
 
+#ifndef NDEBUG
+	Boot_sanityCheck(x, __FILE__, __LINE__);
+	Boot_sanityCheck(y, __FILE__, __LINE__);
+#endif
     if(x == NULL)
         die("Boot_plus_equals: destination is NULL", __FILE__, __LINE__);
     if(y == NULL)
@@ -347,6 +395,9 @@ void Boot_plus_equals(Boot * x, const Boot * y) {
         Tabulation_plus_equals(x->tab[rep], y->tab[rep]);
         Spectab_plus_equals(x->spectab[rep], y->spectab[rep]);
     }
+#ifndef NDEBUG
+	Boot_sanityCheck(x, __FILE__, __LINE__);
+#endif
     return;
 }
 
@@ -426,6 +477,9 @@ Boot       *Boot_restore(FILE * ifp) {
                     __FILE__, __LINE__, rep);
         }
     }
+#ifndef NDEBUG
+	Boot_sanityCheck(boot, __FILE__, __LINE__);
+#endif
     return boot;
 }
 
@@ -510,11 +564,15 @@ long Boot_purge(Boot * boot) {
             if(rep < nGoodReps - 1) {
                 boot->start[rep] = boot->start[nGoodReps - 1];
                 boot->tab[rep] = boot->tab[nGoodReps - 1];
+                boot->spectab[rep] = boot->spectab[nGoodReps - 1];
             }
             --nGoodReps;
         }
     }
     boot->nReps = nGoodReps;
+#ifndef NDEBUG
+	Boot_sanityCheck(boot, __FILE__, __LINE__);
+#endif
     return boot->nReps;
 }
 

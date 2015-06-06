@@ -30,6 +30,9 @@ long        Boot_nSNPs(const Boot * boot);
 void        Boot_plus_equals(Boot * x, const Boot * y);
 void        Boot_dump(const Boot * boot, FILE * ofp);
 Boot       *Boot_restore(FILE * ifp);
+#ifndef NDEBUG
+void        Boot_sanityCheck(const Boot * boot, const char *file, int line);
+#endif
 long        Boot_multiplicity(const Boot * boot, long ndx, long rep);
 void        Boot_get_rep(Boot * boot, DblArray *sigdsq, DblArray *rsq,
                          DblArray *cm, ULIntArray *nobs,
