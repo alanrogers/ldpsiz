@@ -1,4 +1,4 @@
-.TH "hayes.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "hayes.c" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -67,21 +67,23 @@ Code for Sved's (1971) formula, as used by Hayes et al\&. 2003\&. Genome Researc
 .PP 
 Code for Sved's (1971) formula, as used by Hayes et al\&. 2003\&. Genome Research 13:635-643\&. 
 
-
-.PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "static double svedRsq (doublec, doubletwoN, inttwoNsmp)\fC [inline]\fP, \fC [static]\fP"
-
+.SS "static double \fBsvedRsq\fP (doublec, doubletwoN, inttwoNsmp)\fC [inline, static]\fP"
 .PP
 Sved's (1971; also 2009, p 184) formula for $E[r^2]$, modified to account for sampling bias as suggested by Hudson (1985, Eqn 6, p 624)\&. Hudson uses $n$ throughout his paper without clearly defining it\&. On p 631, he says that 'with probability \\form#6 the
-same gamete will be drawn from the sample twice' (in random sampling with replacement)\&. Thus, Hudson's $n$ is the number of gametes in the sample, which equals twoNsmp in the notation below\&.
+ same gamete will be drawn from the sample twice' (in random sampling with replacement)\&. Thus, Hudson's $n$ is the number of gametes in the sample, which equals twoNsmp in the notation below\&.
 .PP
 The HAYES_MUTATION_ADJUSTMENT is based on Tenesa et al (2007, Genome Research, 17(4):520-526)\&. On p 521, these authors say:
 .PP

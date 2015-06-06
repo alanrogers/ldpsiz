@@ -1,34 +1,43 @@
-.TH "tabfboot.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "tabfboot.c" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 tabfboot.c \- 
 .PP
-Tabulate bootstrap parameter estimates produced by eld\&.  
+Tabulate bootstrap parameter estimates produced by eld\&. 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
 .PP
+\fC#include 'boot\&.h'\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'pophist\&.h'\fP
+.br
+\fC#include 'tokenizer\&.h'\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
 \fC#include <stdio\&.h>\fP
 .br
 \fC#include <stdlib\&.h>\fP
 .br
 \fC#include <string\&.h>\fP
 .br
-\fC#include <math\&.h>\fP
-.br
-\fC#include <assert\&.h>\fP
-.br
-\fC#include 'misc\&.h'\fP
-.br
-\fC#include 'pophist\&.h'\fP
-.br
-\fC#include 'boot\&.h'\fP
-.br
-\fC#include 'tokenizer\&.h'\fP
-.br
 
-.SS "Macros"
+.SS "Defines"
 
 .in +1c
 .ti -1c
@@ -48,17 +57,17 @@ Tabulate bootstrap parameter estimates produced by eld\&.
 .SH "Detailed Description"
 .PP 
 Tabulate bootstrap parameter estimates produced by eld\&. 
-
-
-.PP
-\fBAuthor:\fP
-.RS 4
-Alan R\&. Rogers 
-.RE
 .PP
 \fBCopyright:\fP
 .RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
+\fBAuthor:\fP
+.RS 4
+Alan R\&. Rogers 
 .RE
 .PP
 

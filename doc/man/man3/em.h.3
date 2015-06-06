@@ -1,10 +1,17 @@
-.TH "em.h" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "em.h" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 em.h \- 
 .PP
-Header for \fBem\&.c\fP\&.  
+Header for \fBem\&.c\fP\&. 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
@@ -26,7 +33,7 @@ Header for \fBem\&.c\fP\&.
 .br
 .RI "\fIData used by EM algorithm in estimating Dsq from partially phased diploid data\&. \fP"
 .in -1c
-.SS "Macros"
+.SS "Defines"
 
 .in +1c
 .ti -1c
@@ -76,30 +83,28 @@ Header for \fBem\&.c\fP\&.
 .SH "Detailed Description"
 .PP 
 Header for \fBem\&.c\fP\&. 
-
-
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
-.SH "Macro Definition Documentation"
+.SH "Define Documentation"
 .PP 
-.SS "#define MAKE_PHASED(A)   ((A)==UNPHASED_HETEROZYGOTE ? 1 : (A))"
-
+.SS "#define \fBMAKE_PHASED\fP(A)   ((A)==UNPHASED_HETEROZYGOTE ? 1 : (A))"
 .PP
 If A is an unphased heterozygote, then convert it to a phased one (genotype 1)\&. Otherwise leave it alone\&. 
 .PP
 Referenced by SNP_getDsq()\&.
-.SS "#define UNPHASED_PAIR(A, B)"
-\fBValue:\fP
+.SS "#define \fBUNPHASED_PAIR\fP(A, B)"\fBValue:\fP
 .PP
 .nf
 (((A)==UNPHASED_HETEROZYGOTE && !HOMOZYGOTE(B)) \
@@ -111,14 +116,12 @@ True if A and B are both heterozygotes and at least one is unphased\&.
 Referenced by SNP_getDsq()\&.
 .SH "Function Documentation"
 .PP 
-.SS "void DsqData_reset (\fBDsqData\fP *dd)"
-
+.SS "void \fBDsqData_reset\fP (\fBDsqData\fP *dd)"
 .PP
 Make \fBDsqData\fP object consistent with its current allele freqs\&. 
 .PP
 References DsqData::alpha, DsqData::beta, DsqData::hiD, hiD(), DsqData::loD, loD(), DsqData::nGam, DsqData::px, and DsqData::py\&.
-.SS "int minimize1D (double *D, \fBDsqData\fP *dd)"
-
+.SS "int \fBminimize1D\fP (double *D, \fBDsqData\fP *dd)"
 .PP
 This algorithm finds the minimum of function negLnL within the range [a,b], where a = dd->loD, and b=dd->hiD\&. The algorithm uses Newton steps when these go downhill, and otherwise bisects in the downhill direction\&.
 .PP
@@ -141,8 +144,7 @@ the integer 0
 References DsqData::hiD, initialD(), DsqData::loD, negLnL_df(), negLnL_df12(), and DsqData::tol\&.
 .PP
 Referenced by SNP_getDsq()\&.
-.SS "static void trBits (unsigned char *x, unsigned char *y)\fC [inline]\fP, \fC [static]\fP"
-
+.SS "static void \fBtrBits\fP (unsigned char *x, unsigned char *y)\fC [inline, static]\fP"
 .PP
 Think of x and y as the two rows of a matrix, with the columns of the matrix equal to the bits of x and y\&. We are only interested in the low-order (rightmost) pair of bits\&. Transpose that 2X2 matrix, so that x and y are set equal to the bits that had previously been in the columns\&.
 .PP

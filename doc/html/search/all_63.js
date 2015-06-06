@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['c_5farray_5fto_5fpophist',['C_array_to_PopHist',['../pophist_8c.html#a9c13fa126ca492dde926758c73e6743b',1,'C_array_to_PopHist(PopHist *ph, const double *v, int dim):&#160;pophist.c'],['../pophist_8h.html#a9c13fa126ca492dde926758c73e6743b',1,'C_array_to_PopHist(PopHist *ph, const double *v, int dim):&#160;pophist.c']]],
+  ['c_5farray_5fto_5fpophist',['C_array_to_PopHist',['../pophist_8c.html#a348601d901c52c6b451b6946b0aef8d5',1,'pophist.c']]],
+  ['ccmp',['ccmp',['../misc_8c.html#a5e3cf757a9bfcbaa626e2e64990fd083',1,'misc.c']]],
   ['chain',['Chain',['../struct_chain.html',1,'']]],
   ['chain_2ec',['chain.c',['../chain_8c.html',1,'']]],
   ['chain_2eh',['chain.h',['../chain_8h.html',1,'']]],
@@ -35,7 +36,6 @@ var searchData=
   ['check_5ftn',['check_tn',['../preld_8c.html#a0f5c513e57ad8982a75cc3f52cfd757f',1,'preld.c']]],
   ['comparedoubles',['compareDoubles',['../misc_8c.html#a762ddf5508ef0417ffdb2ec0c10481f1',1,'compareDoubles(const void *void_x, const void *void_y):&#160;misc.c'],['../misc_8h.html#a762ddf5508ef0417ffdb2ec0c10481f1',1,'compareDoubles(const void *void_x, const void *void_y):&#160;misc.c']]],
   ['comparelongs',['compareLongs',['../misc_8c.html#aa90ca3a7aa29b1b6f75f586b17f16f0e',1,'compareLongs(const void *void_x, const void *void_y):&#160;misc.c'],['../misc_8h.html#aa90ca3a7aa29b1b6f75f586b17f16f0e',1,'compareLongs(const void *void_x, const void *void_y):&#160;misc.c']]],
-  ['confidence',['confidence',['../struct_boot_conf.html#a755fb4fbfa8e079445e1c6a8298446f9',1,'BootConf']]],
   ['confidencebounds',['confidenceBounds',['../boot_8c.html#a7bcdf296769ab230446519338b332e98',1,'confidenceBounds(double *lowBnd, double *highBnd, double confidence, double *v, long len):&#160;boot.c'],['../boot_8h.html#a7bcdf296769ab230446519338b332e98',1,'confidenceBounds(double *lowBnd, double *highBnd, double confidence, double *v, long len):&#160;boot.c']]],
   ['costfun',['costFun',['../sald_8c.html#a3feac96e0bc0242affd3d39e663d6469',1,'sald.c']]],
   ['costpar',['CostPar',['../struct_cost_par.html',1,'']]],

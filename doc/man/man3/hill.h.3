@@ -1,10 +1,17 @@
-.TH "hill.h" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "hill.h" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 hill.h \- 
 .PP
-Header for \fBhill\&.c\fP\&.  
+Header for \fBhill\&.c\fP 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
@@ -76,33 +83,31 @@ Header for \fBhill\&.c\fP\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Header for \fBhill\&.c\fP\&. 
-
-
+Header for \fBhill\&.c\fP 
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "int Hill_dydt (doublet_notused, const doublex[], doublef[], void *params)"
-
+.SS "int \fBHill_dydt\fP (doublet_notused, const doublex[], doublef[], void *params)"
 .PP
 params points to a structure of type \fBdydt_params\fP\&. On return, f[] contains the derivatives of y1[], as approximated by difference equations\&. 
 .PP
 References onestep()\&.
 .PP
 Referenced by Hill_sigdsq()\&.
-.SS "int Hill_evolveDiscrete (doubley[], \fBPopHist\fP *ph, doublec, doubleu)"
-
+.SS "int \fBHill_evolveDiscrete\fP (doubley[], \fBPopHist\fP *ph, doublec, doubleu)"
 .PP
 Evolve through all Epochs of population history, using step size h and beginning with initial equilibrium\&. Calculation iterates Hill's difference equation\&. The initial value of y is set using Hill's equation for equilibrium\&.
 .PP
@@ -125,16 +130,14 @@ Always returns 0\&.
 
 .PP
 References iterate(), PopHist_duration(), PopHist_nepoch(), and PopHist_twoN()\&.
-.SS "double Hill_get_sigdsq (doubley[], inttwoNsmp)"
-
+.SS "double \fBHill_get_sigdsq\fP (doubley[], inttwoNsmp)"
 .PP
 Calculate sigma_d^2 from state vector\&. On page 124, just after eqn 14, in Hill, William G\&. 1975\&. TPB 8:117-126\&. 
 .PP
 References onestep()\&.
 .PP
 Referenced by Hill_sigdsq(), and Hill_sigdsqEq()\&.
-.SS "int onestep_slow (const doublex[], doubley[], doubletwoN, doublec, doubleu)"
-
+.SS "int \fBonestep_slow\fP (const doublex[], doubley[], doubletwoN, doublec, doubleu)"
 .PP
 This version does not have unrolled loops\&. Move the state vector forward one generation, using Hill's recurrence (Eqns 5 and 8)\&.
 .PP

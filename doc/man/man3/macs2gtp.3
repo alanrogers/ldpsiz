@@ -1,35 +1,24 @@
-.TH "macs2gtp" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "macs2gtp" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 macs2gtp \- Parse output of macs, produce gtp format, the input for eld\&.
 .PP
-.SH "\fBmacs2gtp\&.py\fP, a program that converts \fCmacs\fP output into \&.gtp format "
+\fBmacs2gtp\&.py\fP, a program that converts `macs` output into \&.gtp format ===================================================================
 .PP
+Usage: \fBmacs2gtp\&.py\fP [options] <input file> where options may include: -R <x> : set recombination rate for adjacent sites
 .PP
+For example,
 .PP
-.nf
-Usage: macs2gtp.py [options] \<input file\> 
-where options may include:
-  -R \<x\> : set recombination rate for adjacent sites
-.fi
+\fBmacs2gtp\&.py\fP -R 1e-8 macs\&.out > macs\&.gtp
 .PP
+Would read file `macs\&.out`, generate map distances assuming a recombination rate of 1e-8 per nucleotide, and write the output into macs\&.gtp\&.
 .PP
-For example, 
-.PP
-.nf
-macs2gtp.py -R 1e-8 macs.out > macs.gtp
-
-.fi
-.PP
-.PP
-Would read file \fCmacs\&.out\fP, generate map distances assuming a recombination rate of 1e-8 per nucleotide, and write the output into macs\&.gtp\&.
-.PP
-If the recombination rate is not specified, \fC\fBmacs2gtp\&.py\fP\fP tries to get it from the initialization file \fCldpsiz\&.ini\fP\&.
+If the recombination rate is not specified, `macs2gtp\&.py` tries to get it from the initialization file `ldpsiz\&.ini`\&.
 .PP
 \fBCopyright:\fP
 .RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
 .RE
 .PP
 

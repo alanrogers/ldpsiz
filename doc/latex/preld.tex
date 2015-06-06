@@ -1,44 +1,13 @@
-This file contains code related preld, a program that predicts $\sigma_d^2$ from assumptions about population history.
+\-This file contains code related preld, a program that predicts $\sigma_d^2$ from assumptions about population history.
 
-\subsection*{{\ttfamily preld}, a program that predicts $\sigma_d^2$ from population history }
+`preld`, a program that predicts $\sigma_d^2$ from population history ==========================================================================
 
-Parameter values, including those describing population history, may be read either from the initialization file {\ttfamily ldpsiz.\+ini} or specified on the command line. Command-\/line arguments override values in the initialization file. Several methods are implemented for predicting L\+D, and one or more of these may be specified either in the initialization file or via the {\ttfamily -\/-\/methods} argument. For the current list of available methods, see \hyperlink{model_8h_a1c02862e00fd2fd232c5ba777beadc84}{Model\+\_\+alloc}.
+\-Parameter values, including those describing population history, may be read either from the initialization file `ldpsiz.ini` or specified on the command line. \-Command-\/line arguments override values in the initialization file. \-Several methods are implemented for predicting \-L\-D, and one or more of these may be specified either in the initialization file or via the `-\/-\/methods` argument. \-For the current list of available methods, see \hyperlink{model_8h_a1c02862e00fd2fd232c5ba777beadc84}{\-Model\-\_\-alloc}.
 
-\subsubsection*{Usage }
+\-Usage -\/-\/-\/-\/-\/
 
-\begin{DoxyVerb}usage: preld [options]
-   where options may include:
-   -u \<x\> or --mutation \<x\>
-      set mutation rate/generation
-   -b \<x\> or --nbins \<x\>
-      specify the number of recombination rates
-   -r \<x\> or --lo_r \<x\>
-      low end of range of recombination rates in centimorgans
-   -R \<x\> or --hi_r \<x\>
-      high end of range of recombination rates in centimorgans
-   -e or --equilibria
-      show equilibrium for each epoch
-   --log
-      print log10 of sigdsq values
-   -n or --twoNsmp
-      set haploid sample size
-   -E or --nextepoch
-      move to next earlier epoch
-   --twoN \<x\>
-      set haploid pop size to x in current epoch
-   -T \<x\> or --time \<x\>
-      set length of current epoch to x generations
-   -S or --printState
-      print state vectors
-   -m <method list> or --methods <method list>
-      specify methods
-   --exact
-      don't use ODE to approximate difference equations
-   -h or --help
-      print this message
-\end{DoxyVerb}
+usage\-: preld \mbox{[}options\mbox{]} where options may include\-: -\/u $<$x$>$ or -\/-\/mutation $<$x$>$ set mutation rate/generation -\/b $<$x$>$ or -\/-\/nbins $<$x$>$ specify the number of recombination rates -\/r $<$x$>$ or -\/-\/lo\-\_\-r $<$x$>$ low end of range of recombination rates in centimorgans -\/\-R $<$x$>$ or -\/-\/hi\-\_\-r $<$x$>$ high end of range of recombination rates in centimorgans -\/e or -\/-\/equilibria show equilibrium for each epoch -\/-\/log print log10 of sigdsq values -\/n or -\/-\/two\-Nsmp set haploid sample size -\/\-E or -\/-\/nextepoch move to next earlier epoch -\/-\/two\-N $<$x$>$ set haploid pop size to x in current epoch -\/\-T $<$x$>$ or -\/-\/time $<$x$>$ set length of current epoch to x generations -\/\-S or -\/-\/print\-State print state vectors -\/m $<$method list$>$=\char`\"{}\char`\"{}$>$ or -\/-\/methods $<$method list$>$=\char`\"{}\char`\"{}$>$ specify methods -\/-\/exact don't use \hyperlink{struct_o_d_e}{\-O\-D\-E} to approximate difference equations -\/h or -\/-\/help print this message
 
-
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
+\begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}

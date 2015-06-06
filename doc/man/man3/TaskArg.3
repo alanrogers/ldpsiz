@@ -1,4 +1,4 @@
-.TH "TaskArg" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "TaskArg" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -22,10 +22,19 @@ The total job is divided into tasks, which are placed on a queue\&.
 .RI "int \fBnbins\fP"
 .br
 .ti -1c
+.RI "unsigned \fBspdim\fP"
+.br
+.ti -1c
+.RI "unsigned \fBtwoNsmp\fP"
+.br
+.ti -1c
 .RI "size_t \fBndim\fP"
 .br
 .ti -1c
 .RI "double \fBu\fP"
+.br
+.ti -1c
+.RI "double \fBtolMatCoal\fP"
 .br
 .ti -1c
 .RI "double \fBftol\fP"
@@ -55,6 +64,9 @@ The total job is divided into tasks, which are placed on a queue\&.
 .RI "double * \fBc\fP"
 .br
 .ti -1c
+.RI "double * \fBspectrum_obs\fP"
+.br
+.ti -1c
 .RI "double * \fBloBnd\fP"
 .br
 .ti -1c
@@ -64,7 +76,13 @@ The total job is divided into tasks, which are placed on a queue\&.
 .RI "double * \fBhiInit\fP"
 .br
 .ti -1c
+.RI "const \fBPolya\fP * \fBpolya\fP"
+.br
+.ti -1c
 .RI "\fBODE\fP * \fBode\fP"
+.br
+.ti -1c
+.RI "unsigned long \fBnIterations\fP"
 .br
 .ti -1c
 .RI "int \fBstatus\fP"

@@ -1,10 +1,17 @@
-.TH "rusage.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "rusage.c" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 rusage.c \- 
 .PP
-Use getrusage to measure use of system resources\&.  
+Use getrusage to measure use of system resources\&. 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
@@ -47,24 +54,30 @@ Use getrusage to measure use of system resources\&.
 .SH "Detailed Description"
 .PP 
 Use getrusage to measure use of system resources\&. 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
 
-Header for \fBrusage\&.c\fP\&.
+
+Header for \fBrusage\&.c\fP 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&.
+.RE
 .PP
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "void tms_subtractFrom (struct tms *x, struct tms *y)"
-
+.SS "void \fBtms_subtractFrom\fP (struct tms *x, struct tms *y)"
 .PP
 Subtract each element of y from the corresponding element of x, provided that the result would be >= zero\&. Otherwise, set the element to zero\&. 
 .SH "Author"

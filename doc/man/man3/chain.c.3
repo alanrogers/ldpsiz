@@ -1,10 +1,17 @@
-.TH "chain.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "chain.c" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 chain.c \- 
 .PP
-A linked list of Markov chains, used in Markov-coupled Markov chain Monte Carlo (MCMCMC)\&.  
+A linked list of Markov chains, used in Markov-coupled Markov chain Monte Carlo (MCMCMC)\&. 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
@@ -172,28 +179,25 @@ A linked list of Markov chains, used in Markov-coupled Markov chain Monte Carlo 
 .SH "Detailed Description"
 .PP 
 A linked list of Markov chains, used in Markov-coupled Markov chain Monte Carlo (MCMCMC)\&. 
-
-
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "void Chain_bestFit (\fBChain\fP *chain, double *bestLnObj, \fBPopHist\fP *bestPh)"
-
+.SS "void \fBChain_bestFit\fP (\fBChain\fP *chain, double *bestLnObj, \fBPopHist\fP *bestPh)"
 .PP
-Return values corresponding to the best fit\&. 
-.PP
-\fBParameters:\fP
+Return values corresponding to the best fit\&. \fBParameters:\fP
 .RS 4
 \fIbestLnObj\fP Pointer to double, into which the function will write the value of the log objective function\&.
 .br
@@ -203,44 +207,36 @@ Return values corresponding to the best fit\&.
 
 .PP
 References PopHist_copy()\&.
-.SS "double Chain_flatness (\fBChain\fP *chain)"
-
+.SS "double \fBChain_flatness\fP (\fBChain\fP *chain)"
 .PP
 Return flatness parameter of chain\&. 
 .PP
 References Chain::flatness\&.
-.SS "double Chain_lnObj (\fBChain\fP *chain)"
-
+.SS "double \fBChain_lnObj\fP (\fBChain\fP *chain)"
 .PP
 Log of objective function\&. Does not calculate function\&. Just returns current stored value\&. 
 .PP
 Referenced by Chain_printState()\&.
-.SS "void Chain_setDataAvailable (\fBChain\fP *chain)"
-
+.SS "void \fBChain_setDataAvailable\fP (\fBChain\fP *chain)"
 .PP
 Indicate that data are available\&. \fBChain\fP should be locked before calling this function\&. 
 .PP
 Referenced by Chain_publish()\&.
-.SS "void Chain_setDataNeeded (\fBChain\fP *chain)"
-
+.SS "void \fBChain_setDataNeeded\fP (\fBChain\fP *chain)"
 .PP
 Indicate that data are needed\&. \fBChain\fP should be locked before calling this function\&. 
-.SS "void Chain_swapState (\fBChain\fP *c)"
-
+.SS "void \fBChain_swapState\fP (\fBChain\fP *c)"
 .PP
 Swap states of chains c and c->next\&. Lock both chains before calling this function\&. 
 .PP
 References Chain::next\&.
-.SS "void Chain_waitForData (\fBChain\fP *chain)"
-
+.SS "void \fBChain_waitForData\fP (\fBChain\fP *chain)"
 .PP
 Wait until thread has completed another iteration and made the resulting data available\&. On return, chain will be locked\&. 
-.SS "void Chain_waitUntilDataNeeded (\fBChain\fP *chain)"
-
+.SS "void \fBChain_waitUntilDataNeeded\fP (\fBChain\fP *chain)"
 .PP
 Wait until main thread has finished with data from last iteration\&. On return, the chain will be locked\&. 
-.SS "\fBChainState\fP * ChainState_new (\fBPopHist\fP *ph)"
-
+.SS "\fBChainState\fP * \fBChainState_new\fP (\fBPopHist\fP *ph)"
 .PP
 Allocate and initialize a new \fBChainState\fP structure\&. Occupies a single block of memory, using the 'struct hack' of C programming\&. 
 .PP

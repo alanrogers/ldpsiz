@@ -1,4 +1,4 @@
-.TH "sald.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "sald.c" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -6,49 +6,65 @@ sald.c \-
 .SH SYNOPSIS
 .br
 .PP
-\fC#include <stdio\&.h>\fP
+\fC#include 'dprintf\&.h'\fP
 .br
-\fC#include <math\&.h>\fP
+\fC#include 'annealsched\&.h'\fP
 .br
-\fC#include <assert\&.h>\fP
+\fC#include 'array\&.h'\fP
 .br
-\fC#include <gsl/gsl_rng\&.h>\fP
-.br
-\fC#include <gsl/gsl_randist\&.h>\fP
-.br
-\fC#include <float\&.h>\fP
-.br
-\fC#include <getopt\&.h>\fP
-.br
-\fC#include <pthread\&.h>\fP
-.br
-\fC#include <string\&.h>\fP
-.br
-\fC#include <time\&.h>\fP
-.br
-\fC#include <limits\&.h>\fP
-.br
-\fC#include 'misc\&.h'\fP
+\fC#include 'assign\&.h'\fP
 .br
 \fC#include 'boot\&.h'\fP
 .br
-\fC#include 'pophist\&.h'\fP
-.br
-\fC#include 'sasimplex\&.h'\fP
-.br
-\fC#include 'tokenizer\&.h'\fP
-.br
-\fC#include 'jobqueue\&.h'\fP
+\fC#include 'espectrum\&.h'\fP
 .br
 \fC#include 'hill\&.h'\fP
 .br
 \fC#include 'ini\&.h'\fP
 .br
+\fC#include 'jobqueue\&.h'\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
 \fC#include 'model\&.h'\fP
 .br
-\fC#include 'assign\&.h'\fP
+\fC#include 'pophist\&.h'\fP
 .br
-\fC#include 'annealsched\&.h'\fP
+\fC#include 'polya\&.h'\fP
+.br
+\fC#include 'sasimplex\&.h'\fP
+.br
+\fC#include 'spectab\&.h'\fP
+.br
+\fC#include 'tokenizer\&.h'\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <float\&.h>\fP
+.br
+\fC#include <getopt\&.h>\fP
+.br
+\fC#include <gsl/gsl_randist\&.h>\fP
+.br
+\fC#include <gsl/gsl_rng\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
 .br
 
 .SS "Data Structures"
@@ -63,11 +79,21 @@ sald.c \-
 .br
 .RI "\fIParameters of cost function--that which is minimized\&. \fP"
 .in -1c
-.SS "Macros"
+.SS "Defines"
 
 .in +1c
 .ti -1c
-.RI "#define \fBDPRINTF\fP(arg)"
+.RI "#define \fBDO_LD\fP   0"
+.br
+.ti -1c
+.RI "#define \fBDO_SPEC\fP   1"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBinputState\fP { \fBin_header\fP, \fBin_LD\fP, \fBin_spectrum\fP }"
 .br
 .in -1c
 .SS "Functions"
@@ -77,11 +103,11 @@ sald.c \-
 .RI "void \fBusage\fP (void)"
 .br
 .ti -1c
-.RI "int \fBread_data\fP (FILE *ifp, int nbins, double *cm, double *sigdsq)"
+.RI "int \fBread_data\fP (FILE *ifp, \fBDblArray\fP *cm, \fBDblArray\fP *sigdsq, \fBULIntArray\fP *spectrum)"
 .br
 .RI "\fIRead the data file produced by eld\&. \fP"
 .ti -1c
-.RI "\fBTaskArg\fP * \fBTaskArg_new\fP (unsigned task, unsigned seed, int nbins, double u, double ftol, double xtol, double *stepsize, \fBAnnealSched\fP *sched, double *loBnd, double *hiBnd, double *hiInit, double odeAbsTol, double odeRelTol, int nPerTmptr, int verbose, double *sigdsq_obs, double *c, \fBModel\fP *model, \fBPopHist\fP *ph_init, int randomStart)"
+.RI "\fBTaskArg\fP * \fBTaskArg_new\fP (unsigned task, unsigned seed, int nbins, unsigned twoNsmp, double u, double tolMatCoal, double ftol, double xtol, double *stepsize, \fBAnnealSched\fP *sched, double *loBnd, double *hiBnd, double *hiInit, double odeAbsTol, double odeRelTol, int nPerTmptr, int verbose, double *sigdsq_obs, double *c, \fBULIntArray\fP *spectrum, \fBModel\fP *model, \fBPopHist\fP *ph_init, const \fBPolya\fP *polya, int randomStart)"
 .br
 .RI "\fIConstruct a new \fBTaskArg\fP\&. \fP"
 .ti -1c
@@ -119,14 +145,14 @@ sald.c \-
 .RI "pthread_mutex_t \fBstdoutLock\fP = PTHREAD_MUTEX_INITIALIZER"
 .br
 .in -1c
+.SH "Detailed Description"
+.PP 
+
 .SH "Function Documentation"
 .PP 
-.SS "static double costFun (const gsl_vector *x, void *varg)\fC [static]\fP"
-
+.SS "static double \fBcostFun\fP (const gsl_vector *x, void *varg)\fC [static]\fP"
 .PP
-Sum of differences between observed and expected sigma_d^2 vectors\&. 
-.PP
-\fBParameters:\fP
+Sum of differences between observed and expected sigma_d^2 vectors\&. \fBParameters:\fP
 .RS 4
 \fIph\fP Current population history 
 .br
@@ -141,21 +167,20 @@ Sum of differences between observed and expected sigma_d^2 vectors\&.
 .PP
 
 .PP
-References ODE_ldVec(), PopHist_nParams(), PopHist_paramName(), PopHist_paramValue(), PopHist_print(), and vector_to_PopHist()\&.
-.SS "int read_data (FILE *ifp, intnbins, double *cm, double *sigdsq)"
-
+References C_array_to_PopHist(), ESpectrum_folded(), ESpectrum_free(), ESpectrum_new(), ODE_ldVec(), PopHist_nParams(), PopHist_paramName(), PopHist_paramValue(), PopHist_print(), and PopHist::size\&.
+.SS "int \fBread_data\fP (FILE *ifp, \fBDblArray\fP *cm, \fBDblArray\fP *sigdsq, \fBULIntArray\fP *spectrum)"
 .PP
-Read the data file produced by eld\&. 
-.PP
-\fBParameters:\fP
+Read the data file produced by eld\&. \fBParameters:\fP
 .RS 4
 \fIifp\fP Points to file produced by eld\&. 
 .br
-\fInbins\fP The length of all arrays\&. 
+\fInbins\fP The length of arrays involving LD\&. 
 .br
 \fIcm\fP An array giving the average separation (in centimorgans) between pairs of SNPs within the various bins\&. 
 .br
-\fIsigdsq\fP An array of estimates of sigma_d^2\&.
+\fIsigdsq\fP An array of estimates of sigma_d^2\&. 
+.br
+\fIspectrum\fP An array for the site frequency spectrum\&.
 .RE
 .PP
 \fBReturns:\fP
@@ -164,6 +189,8 @@ number of lines read
 .RE
 .PP
 
+.PP
+References strcomment(), and strempty()\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for ldpsiz from the source code\&.

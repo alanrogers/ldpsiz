@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['read_5fdata',['read_data',['../fithayes_8c.html#a670464452cc05ee03114c66bb157c2f7',1,'read_data(FILE *ifp, int nbins, double *cm, double *rsq, long *nobs):&#160;fithayes.c'],['../mcmcld_8c.html#a6352349211b84d065a9575af7bd9524d',1,'read_data(FILE *ifp, int nbins, int twoNsmp, double *cm, double *sigdsq):&#160;mcmcld.c'],['../sald_8c.html#a206510e6ec3ac6cdc6f486e2eb905a2e',1,'read_data(FILE *ifp, int nbins, double *cm, double *sigdsq):&#160;sald.c']]],
+  ['read_5fdata',['read_data',['../fithayes_8c.html#a670464452cc05ee03114c66bb157c2f7',1,'read_data(FILE *ifp, int nbins, double *cm, double *rsq, long *nobs):&#160;fithayes.c'],['../mcmcld_8c.html#a6352349211b84d065a9575af7bd9524d',1,'read_data(FILE *ifp, int nbins, int twoNsmp, double *cm, double *sigdsq):&#160;mcmcld.c'],['../sald_8c.html#a8b59b7be54c35ee1918decaeb0a10301',1,'read_data(FILE *ifp, DblArray *cm, DblArray *sigdsq, ULIntArray *spectrum):&#160;sald.c']]],
   ['readgtp_2ec',['readgtp.c',['../readgtp_8c.html',1,'']]],
   ['readgtp_2eh',['readgtp.h',['../readgtp_8h.html',1,'']]],
   ['reflect',['reflect',['../misc_8c.html#a2dfe91aee70b669f89ecec619eef1aa8',1,'reflect(double x, double lo, double hi):&#160;misc.c'],['../misc_8h.html#a2dfe91aee70b669f89ecec619eef1aa8',1,'reflect(double x, double lo, double hi):&#160;misc.c']]],

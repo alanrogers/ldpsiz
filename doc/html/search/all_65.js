@@ -17,5 +17,13 @@ var searchData=
   ['epochlink_5fprint',['EpochLink_print',['../pophist_8c.html#ac1fe84164580f9f6bccec764debe6a42',1,'EpochLink_print(int ndx, const EpochLink *link, FILE *ofp):&#160;pophist.c'],['../pophist_8h.html#ac1fe84164580f9f6bccec764debe6a42',1,'EpochLink_print(int ndx, const EpochLink *link, FILE *ofp):&#160;pophist.c']]],
   ['epochlink_5ftwon',['EpochLink_twoN',['../pophist_8c.html#aee2e6a621ee28c97fe2a0b97fa2990fa',1,'EpochLink_twoN(const EpochLink *link):&#160;pophist.c'],['../pophist_8h.html#aee2e6a621ee28c97fe2a0b97fa2990fa',1,'EpochLink_twoN(const EpochLink *link):&#160;pophist.c']]],
   ['epochlist',['epochList',['../struct_ini.html#a7197dc62d2deaaf4f2592384966f0a97',1,'Ini']]],
-  ['epochparamname',['epochParamName',['../pophist_8c.html#a118a3f465782c2b244ce893f77f4fdc9',1,'pophist.c']]]
+  ['epochparamname',['epochParamName',['../pophist_8c.html#a118a3f465782c2b244ce893f77f4fdc9',1,'pophist.c']]],
+  ['espectrum',['ESpectrum',['../struct_e_spectrum.html',1,'']]],
+  ['espectrum_2ec',['espectrum.c',['../espectrum_8c.html',1,'']]],
+  ['espectrum_2eh',['espectrum.h',['../espectrum_8h.html',1,'']]],
+  ['espectrum_5ffolded',['ESpectrum_folded',['../espectrum_8c.html#a46702453263b75297ea07b774761db4b',1,'ESpectrum_folded(ESpectrum *spectrum, unsigned i):&#160;espectrum.c'],['../espectrum_8h.html#a46702453263b75297ea07b774761db4b',1,'ESpectrum_folded(ESpectrum *spectrum, unsigned i):&#160;espectrum.c']]],
+  ['espectrum_5ffree',['ESpectrum_free',['../espectrum_8c.html#a7012bcdf5a299293a473f059ee023a5d',1,'ESpectrum_free(ESpectrum *spectrum):&#160;espectrum.c'],['../espectrum_8h.html#a7012bcdf5a299293a473f059ee023a5d',1,'ESpectrum_free(ESpectrum *spectrum):&#160;espectrum.c']]],
+  ['espectrum_5fnew',['ESpectrum_new',['../espectrum_8c.html#a106d593660aefda19605f802cf6c2e2d',1,'ESpectrum_new(unsigned nSamples, PopHist *ph, const Polya *polya, double errTol):&#160;espectrum.c'],['../espectrum_8h.html#a106d593660aefda19605f802cf6c2e2d',1,'ESpectrum_new(unsigned nSamples, PopHist *ph, const Polya *polya, double errTol):&#160;espectrum.c']]],
+  ['espectrum_5fnsamples',['ESpectrum_nSamples',['../espectrum_8c.html#abea335d69a027c09b1ba2812d7d1fe53',1,'ESpectrum_nSamples(const ESpectrum *spectrum):&#160;espectrum.c'],['../espectrum_8h.html#abea335d69a027c09b1ba2812d7d1fe53',1,'ESpectrum_nSamples(const ESpectrum *spectrum):&#160;espectrum.c']]],
+  ['espectrum_5funfolded',['ESpectrum_unfolded',['../espectrum_8c.html#a5ae20ad457c141cda8b359d24789f820',1,'ESpectrum_unfolded(ESpectrum *spectrum, unsigned i):&#160;espectrum.c'],['../espectrum_8h.html#a5ae20ad457c141cda8b359d24789f820',1,'ESpectrum_unfolded(ESpectrum *spectrum, unsigned i):&#160;espectrum.c']]]
 ];

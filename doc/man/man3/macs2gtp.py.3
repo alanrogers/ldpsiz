@@ -1,4 +1,4 @@
-.TH "macs2gtp.py" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "macs2gtp.py" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -48,15 +48,21 @@ macs2gtp.py \-
 .RI "int \fBmacs2gtp\&.lineno\fP = 0"
 .br
 .ti -1c
+.RI "int \fBmacs2gtp\&.oldNucpos\fP = 0"
+.br
+.ti -1c
 .RI "tuple \fBmacs2gtp\&.nfields\fP = len(line)"
 .br
 .ti -1c
 .RI "tuple \fBmacs2gtp\&.nucpos\fP = int(round(nnucleotides*float(line[2])))"
 .br
 .ti -1c
-.RI "float \fBmacs2gtp\&.centimorgan\fP = nucpos*recombination*100\&.0"
+.RI "float \fBmacs2gtp\&.centimorgan\fP = 100\&.0"
 .br
 .in -1c
+.SH "Detailed Description"
+.PP 
+
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for ldpsiz from the source code\&.

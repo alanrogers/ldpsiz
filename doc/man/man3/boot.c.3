@@ -1,15 +1,34 @@
-.TH "boot.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "boot.c" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 boot.c \- 
 .PP
-Functions for a moving blocks bootstrap\&.  
+Functions for a moving blocks bootstrap\&. 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
 .PP
+\fC#include 'boot\&.h'\fP
+.br
+\fC#include 'tabulation\&.h'\fP
+.br
+\fC#include 'spectab\&.h'\fP
+.br
+\fC#include 'misc\&.h'\fP
+.br
+\fC#include 'window\&.h'\fP
+.br
 \fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
 .br
 \fC#include <stdlib\&.h>\fP
 .br
@@ -20,14 +39,6 @@ Functions for a moving blocks bootstrap\&.
 \fC#include <assert\&.h>\fP
 .br
 \fC#include <gsl/gsl_rng\&.h>\fP
-.br
-\fC#include 'tabulation\&.h'\fP
-.br
-\fC#include 'misc\&.h'\fP
-.br
-\fC#include 'window\&.h'\fP
-.br
-\fC#include 'boot\&.h'\fP
 .br
 
 .SS "Data Structures"
@@ -46,19 +57,27 @@ Functions for a moving blocks bootstrap\&.
 
 .in +1c
 .ti -1c
+.RI "void \fBBoot_sanityCheck\fP (const \fBBoot\fP *boot, const char *file, int line)"
+.br
+.ti -1c
 .RI "static void \fBBoot_allocArrays\fP (\fBBoot\fP *boot)"
 .br
 .RI "\fIAllocate \fBBoot\fP's arrays\&. \fP"
 .ti -1c
-.RI "\fBBoot\fP * \fBBoot_new\fP (long nSNPs, long nReps, long blockLength, double windowcm, int nBins, gsl_rng *rng)"
+.RI "\fBBoot\fP * \fBBoot_new\fP (long nSNPs, long nReps, unsigned twoNsmp, int folded, long blockLength, double windowcm, int nBins, gsl_rng *rng)"
 .br
 .RI "\fIConstructor for class \fBBoot\fP\&. \fP"
 .ti -1c
 .RI "long \fBBoot_multiplicity\fP (const \fBBoot\fP *boot, long snp, long rep)"
 .br
+.RI "\fIHow many copies of snp are present in a given repetition (rep)? \fP"
 .ti -1c
 .RI "void \fBBoot_addLD\fP (\fBBoot\fP *boot, double Dsq, double pqpq, double sep_cm, const \fBSNP\fP *snp1, const \fBSNP\fP *snp2)"
 .br
+.ti -1c
+.RI "void \fBBoot_addAlleleCount\fP (\fBBoot\fP *boot, unsigned x, const \fBSNP\fP *snp)"
+.br
+.RI "\fIAdd one allele count to a \fBBoot\fP structure\&. \fP"
 .ti -1c
 .RI "\fBBoot\fP * \fBBoot_dup\fP (const \fBBoot\fP *old)"
 .br
@@ -96,7 +115,7 @@ Functions for a moving blocks bootstrap\&.
 .RI "\fBBoot\fP * \fBBoot_restore\fP (FILE *ifp)"
 .br
 .ti -1c
-.RI "void \fBBoot_get_rep\fP (\fBBoot\fP *boot, double *sigdsq, double *rsq, double *cm, long unsigned *nobs, int rep)"
+.RI "void \fBBoot_get_rep\fP (\fBBoot\fP *boot, \fBDblArray\fP *sigdsq, \fBDblArray\fP *rsq, \fBDblArray\fP *cm, \fBULIntArray\fP *nobs, \fBULIntArray\fP *spectrum, int rep)"
 .br
 .RI "\fIFill arrays sigdsq, cm, and nobs with values for bootstrap repetition 'rep'\&. \fP"
 .ti -1c
@@ -111,7 +130,7 @@ Functions for a moving blocks bootstrap\&.
 .br
 .RI "\fIPrint a \fBBoot\fP object\&. \fP"
 .ti -1c
-.RI "long \fBBoot_multiplicity_slow\fP (\fBBoot\fP *boot, long snp, long rep)"
+.RI "unsigned \fBBoot_multiplicity_slow\fP (\fBBoot\fP *boot, long snp, long rep)"
 .br
 .ti -1c
 .RI "\fBBootConf\fP * \fBBootConf_new\fP (\fBBoot\fP *boot, double confidence)"
@@ -130,6 +149,12 @@ Functions for a moving blocks bootstrap\&.
 .RI "double \fBBootConf_highBound\fP (const \fBBootConf\fP *bc, long bin)"
 .br
 .ti -1c
+.RI "double \fBBootConf_loSpecBound\fP (const \fBBootConf\fP *bc, long i)"
+.br
+.ti -1c
+.RI "double \fBBootConf_hiSpecBound\fP (const \fBBootConf\fP *bc, long i)"
+.br
+.ti -1c
 .RI "void \fBBootConf_print\fP (const \fBBootConf\fP *bc, FILE *ofp)"
 .br
 .ti -1c
@@ -139,44 +164,43 @@ Functions for a moving blocks bootstrap\&.
 .SH "Detailed Description"
 .PP 
 Functions for a moving blocks bootstrap\&. 
-
-
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "static void Boot_allocArrays (\fBBoot\fP *boot)\fC [static]\fP"
-
+.SS "void \fBBoot_addAlleleCount\fP (\fBBoot\fP *boot, unsignedx, const \fBSNP\fP *snp)"
+.PP
+Add one allele count to a \fBBoot\fP structure\&. On entry, boot points to the \fBBoot\fP structure, x is the number of copies of an allele at the \fBSNP\fP whose position is given by ndx\&. 
+.PP
+Referenced by Window_advance()\&.
+.SS "static void \fBBoot_allocArrays\fP (\fBBoot\fP *boot)\fC [static]\fP"
 .PP
 Allocate \fBBoot\fP's arrays\&. This code is used in several places, and I have it here to ensure consistency\&. 
 .PP
-References Boot::nBlocks, Boot::nReps, Boot::start, and Boot::tab\&.
-.PP
 Referenced by Boot_new()\&.
-.SS "void Boot_get_rep (\fBBoot\fP *boot, double *sigdsq, double *rsq, double *cm, long unsigned *nobs, intrep)"
-
+.SS "void \fBBoot_get_rep\fP (\fBBoot\fP *boot, \fBDblArray\fP *sigdsq, \fBDblArray\fP *rsq, \fBDblArray\fP *cm, \fBULIntArray\fP *nobs, \fBULIntArray\fP *spectrum, intrep)"
 .PP
 Fill arrays sigdsq, cm, and nobs with values for bootstrap repetition 'rep'\&. If nobs==NULL, nothing is stored there\&. 
 .PP
-References Boot::tab\&.
-.SS "long Boot_purge (\fBBoot\fP *boot)"
-
+References Spectab_report()\&.
+.SS "long \fBBoot_purge\fP (\fBBoot\fP *boot)"
 .PP
 Remove replicates in which some bins have zero observations\&. These would generate NaN values in the calculation of sigdsq, which are not handled by the minimizer\&. Return revised number of bootstrap replicates\&. 
 .PP
-References Boot::nBins, Boot::nReps, Boot::start, Boot::tab, Tabulation_nObs(), and Tabulation_overflow()\&.
-.SS "void confidenceBounds (double *lowBnd, double *highBnd, doubleconfidence, double *v, longlen)"
-
+References Tabulation_nObs(), and Tabulation_overflow()\&.
+.SS "void \fBconfidenceBounds\fP (double *lowBnd, double *highBnd, doubleconfidence, double *v, longlen)"
 .PP
 Calculate confidence bounds from a vector of values representing samples drawn from the sampling distribution of some estimator\&. To calculate the lower bound (*lowBnd), the function calculates the total probability mass in the tails (1 - confidence) and divides this into two equal parts to find p, the probability mass in each tail\&. It then estimates a value L such that a fraction p of the data values are less than or equal to L\&. To find this value, the function uses linear interpolation between the sorted list of data values\&.
 .PP
@@ -201,8 +225,7 @@ The function sorts the vector v\&.
 
 .PP
 References compareDoubles(), and interpolate()\&.
-.SS "double interpolate (doublep, double *v, longlen)"
-
+.SS "double \fBinterpolate\fP (doublep, double *v, longlen)"
 .PP
 Interpolate in order to approximate the value v[p*(len-1)]\&. Return NaN if len==0\&. 
 .PP

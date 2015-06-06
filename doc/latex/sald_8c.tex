@@ -1,138 +1,166 @@
-\hypertarget{sald_8c}{\subsection{sald.\+c File Reference}
-\label{sald_8c}\index{sald.\+c@{sald.\+c}}
+\hypertarget{sald_8c}{\subsection{sald.\-c \-File \-Reference}
+\label{sald_8c}\index{sald.\-c@{sald.\-c}}
 }
-{\ttfamily \#include $<$stdio.\+h$>$}\\*
-{\ttfamily \#include $<$math.\+h$>$}\\*
-{\ttfamily \#include $<$assert.\+h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\+\_\+rng.\+h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\+\_\+randist.\+h$>$}\\*
-{\ttfamily \#include $<$float.\+h$>$}\\*
-{\ttfamily \#include $<$getopt.\+h$>$}\\*
-{\ttfamily \#include $<$pthread.\+h$>$}\\*
-{\ttfamily \#include $<$string.\+h$>$}\\*
-{\ttfamily \#include $<$time.\+h$>$}\\*
-{\ttfamily \#include $<$limits.\+h$>$}\\*
-{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}boot.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}pophist.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}sasimplex.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}tokenizer.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}jobqueue.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}hill.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}ini.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}model.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}assign.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}annealsched.\+h\char`\"{}}\\*
-\subsubsection*{Data Structures}
+{\ttfamily \#include \char`\"{}dprintf.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}annealsched.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}array.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}assign.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}boot.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}espectrum.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}hill.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}ini.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}jobqueue.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}model.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}pophist.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}polya.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}sasimplex.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}spectab.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}tokenizer.\-h\char`\"{}}\*
+{\ttfamily \#include $<$assert.\-h$>$}\*
+{\ttfamily \#include $<$float.\-h$>$}\*
+{\ttfamily \#include $<$getopt.\-h$>$}\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-randist.\-h$>$}\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-rng.\-h$>$}\*
+{\ttfamily \#include $<$limits.\-h$>$}\*
+{\ttfamily \#include $<$math.\-h$>$}\*
+{\ttfamily \#include $<$pthread.\-h$>$}\*
+{\ttfamily \#include $<$stdbool.\-h$>$}\*
+{\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include $<$string.\-h$>$}\*
+{\ttfamily \#include $<$sys/types.\-h$>$}\*
+{\ttfamily \#include $<$time.\-h$>$}\*
+{\ttfamily \#include $<$unistd.\-h$>$}\*
+\subsubsection*{\-Data \-Structures}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{struct_task_arg}{Task\+Arg}
-\begin{DoxyCompactList}\small\item\em The total job is divided into tasks, which are placed on a queue. \end{DoxyCompactList}\item 
-struct \hyperlink{struct_cost_par}{Cost\+Par}
-\begin{DoxyCompactList}\small\item\em Parameters of cost function--that which is minimized. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsubsection*{Macros}
+struct \hyperlink{struct_task_arg}{\-Task\-Arg}
+\begin{DoxyCompactList}\small\item\em \-The total job is divided into tasks, which are placed on a queue. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_cost_par}{\-Cost\-Par}
+\begin{DoxyCompactList}\small\item\em \-Parameters of cost function-\/-\/that which is minimized. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{\-Defines}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{sald_8c_a18891ed90ad4c8ca93859cb64935f396}{\#define {\bfseries D\+P\+R\+I\+N\+T\+F}(arg)}\label{sald_8c_a18891ed90ad4c8ca93859cb64935f396}
+\hypertarget{sald_8c_af34b80d1d7317b6c9836c8cf1a6ef923}{\#define {\bfseries \-D\-O\-\_\-\-L\-D}~0}\label{sald_8c_af34b80d1d7317b6c9836c8cf1a6ef923}
+
+\item 
+\hypertarget{sald_8c_a94430e2e34422260d76a6135a4004835}{\#define {\bfseries \-D\-O\-\_\-\-S\-P\-E\-C}~1}\label{sald_8c_a94430e2e34422260d76a6135a4004835}
 
 \end{DoxyCompactItemize}
-\subsubsection*{Functions}
+\subsubsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries input\-State} \{ {\bfseries in\-\_\-header}, 
+{\bfseries in\-\_\-\-L\-D}, 
+{\bfseries in\-\_\-spectrum}
+ \}
+\end{DoxyCompactItemize}
+\subsubsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{sald_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}{void {\bfseries usage} (void)}\label{sald_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}
 
 \item 
-int \hyperlink{sald_8c_a206510e6ec3ac6cdc6f486e2eb905a2e}{read\+\_\+data} (F\+I\+L\+E $\ast$ifp, int nbins, double $\ast$cm, double $\ast$sigdsq)
-\begin{DoxyCompactList}\small\item\em Read the data file produced by eld. \end{DoxyCompactList}\item 
-\hypertarget{sald_8c_a74d36ee8105258d687814f0d895083f1}{\hyperlink{struct_task_arg}{Task\+Arg} $\ast$ \hyperlink{sald_8c_a74d36ee8105258d687814f0d895083f1}{Task\+Arg\+\_\+new} (unsigned task, unsigned seed, int nbins, double u, double ftol, double xtol, double $\ast$stepsize, \hyperlink{struct_anneal_sched}{Anneal\+Sched} $\ast$sched, double $\ast$lo\+Bnd, double $\ast$hi\+Bnd, double $\ast$hi\+Init, double ode\+Abs\+Tol, double ode\+Rel\+Tol, int n\+Per\+Tmptr, int verbose, double $\ast$sigdsq\+\_\+obs, double $\ast$c, \hyperlink{struct_model}{Model} $\ast$model, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph\+\_\+init, int random\+Start)}\label{sald_8c_a74d36ee8105258d687814f0d895083f1}
+int \hyperlink{sald_8c_a8b59b7be54c35ee1918decaeb0a10301}{read\-\_\-data} (\-F\-I\-L\-E $\ast$ifp, \hyperlink{struct_dbl_array}{\-Dbl\-Array} $\ast$cm, \hyperlink{struct_dbl_array}{\-Dbl\-Array} $\ast$sigdsq, \hyperlink{struct_u_l_int_array}{\-U\-L\-Int\-Array} $\ast$spectrum)
+\begin{DoxyCompactList}\small\item\em \-Read the data file produced by eld. \end{DoxyCompactList}\item 
+\hypertarget{sald_8c_a4e9ba554cd5cb028de37ce012a03b944}{\hyperlink{struct_task_arg}{\-Task\-Arg} $\ast$ \hyperlink{sald_8c_a4e9ba554cd5cb028de37ce012a03b944}{\-Task\-Arg\-\_\-new} (unsigned task, unsigned seed, int nbins, unsigned two\-Nsmp, double u, double tol\-Mat\-Coal, double ftol, double xtol, double $\ast$stepsize, \hyperlink{struct_anneal_sched}{\-Anneal\-Sched} $\ast$sched, double $\ast$lo\-Bnd, double $\ast$hi\-Bnd, double $\ast$hi\-Init, double ode\-Abs\-Tol, double ode\-Rel\-Tol, int n\-Per\-Tmptr, int verbose, double $\ast$sigdsq\-\_\-obs, double $\ast$c, \hyperlink{struct_u_l_int_array}{\-U\-L\-Int\-Array} $\ast$spectrum, \hyperlink{struct_model}{\-Model} $\ast$model, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph\-\_\-init, const \hyperlink{struct_polya}{\-Polya} $\ast$polya, int random\-Start)}\label{sald_8c_a4e9ba554cd5cb028de37ce012a03b944}
 
-\begin{DoxyCompactList}\small\item\em Construct a new \hyperlink{struct_task_arg}{Task\+Arg}. \end{DoxyCompactList}\item 
-\hypertarget{sald_8c_a30b29c5e8d06aa549b3045aece563d2f}{void {\bfseries Task\+Arg\+\_\+free} (\hyperlink{struct_task_arg}{Task\+Arg} $\ast$targ)}\label{sald_8c_a30b29c5e8d06aa549b3045aece563d2f}
+\begin{DoxyCompactList}\small\item\em \-Construct a new \hyperlink{struct_task_arg}{\-Task\-Arg}. \end{DoxyCompactList}\item 
+\hypertarget{sald_8c_a30b29c5e8d06aa549b3045aece563d2f}{void {\bfseries \-Task\-Arg\-\_\-free} (\hyperlink{struct_task_arg}{\-Task\-Arg} $\ast$targ)}\label{sald_8c_a30b29c5e8d06aa549b3045aece563d2f}
 
 \item 
 \hypertarget{sald_8c_a4064d6ea80117361c95527ae2de4812d}{int {\bfseries taskfun} (void $\ast$varg)}\label{sald_8c_a4064d6ea80117361c95527ae2de4812d}
 
 \item 
-static double \hyperlink{sald_8c_a3feac96e0bc0242affd3d39e663d6469}{cost\+Fun} (const gsl\+\_\+vector $\ast$x, void $\ast$varg)
-\begin{DoxyCompactList}\small\item\em Sum of differences between observed and expected sigma\+\_\+d$^\wedge$2 vectors. \end{DoxyCompactList}\item 
-\hypertarget{sald_8c_a4eed297e36284a739792864bee6880c7}{void {\bfseries Cost\+Par\+\_\+print} (\hyperlink{struct_cost_par}{Cost\+Par} $\ast$cp)}\label{sald_8c_a4eed297e36284a739792864bee6880c7}
+static double \hyperlink{sald_8c_a3feac96e0bc0242affd3d39e663d6469}{cost\-Fun} (const gsl\-\_\-vector $\ast$x, void $\ast$varg)
+\begin{DoxyCompactList}\small\item\em \-Sum of differences between observed and expected sigma\-\_\-d$^\wedge$2 vectors. \end{DoxyCompactList}\item 
+\hypertarget{sald_8c_a4eed297e36284a739792864bee6880c7}{void {\bfseries \-Cost\-Par\-\_\-print} (\hyperlink{struct_cost_par}{\-Cost\-Par} $\ast$cp)}\label{sald_8c_a4eed297e36284a739792864bee6880c7}
 
 \item 
-\hypertarget{sald_8c_a8d9f16780283c0282645438e5ec9d9ba}{\hyperlink{struct_task_arg}{Task\+Arg} $\ast$ \hyperlink{sald_8c_a8d9f16780283c0282645438e5ec9d9ba}{Task\+Arg\+\_\+best} (\hyperlink{struct_task_arg}{Task\+Arg} $\ast$$\ast$tpvec, int n)}\label{sald_8c_a8d9f16780283c0282645438e5ec9d9ba}
+\hypertarget{sald_8c_a8d9f16780283c0282645438e5ec9d9ba}{\hyperlink{struct_task_arg}{\-Task\-Arg} $\ast$ \hyperlink{sald_8c_a8d9f16780283c0282645438e5ec9d9ba}{\-Task\-Arg\-\_\-best} (\hyperlink{struct_task_arg}{\-Task\-Arg} $\ast$$\ast$tpvec, int n)}\label{sald_8c_a8d9f16780283c0282645438e5ec9d9ba}
 
-\begin{DoxyCompactList}\small\item\em Given a vector of \hyperlink{struct_task_arg}{Task\+Arg} pointers, return a pointer to the one with lowest cost among those that have converged. \end{DoxyCompactList}\item 
-\hypertarget{sald_8c_a9aede0633e8d9580fba4c6fbb51bb4c5}{void \hyperlink{sald_8c_a9aede0633e8d9580fba4c6fbb51bb4c5}{pr\+Header} (\hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph)}\label{sald_8c_a9aede0633e8d9580fba4c6fbb51bb4c5}
+\begin{DoxyCompactList}\small\item\em \-Given a vector of \hyperlink{struct_task_arg}{\-Task\-Arg} pointers, return a pointer to the one with lowest cost among those that have converged. \end{DoxyCompactList}\item 
+\hypertarget{sald_8c_a9aede0633e8d9580fba4c6fbb51bb4c5}{void \hyperlink{sald_8c_a9aede0633e8d9580fba4c6fbb51bb4c5}{pr\-Header} (\hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph)}\label{sald_8c_a9aede0633e8d9580fba4c6fbb51bb4c5}
 
-\begin{DoxyCompactList}\small\item\em Print header. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Print header. \end{DoxyCompactList}\item 
 \hypertarget{sald_8c_a3c04138a5bfe5d72780bb7e82a18e627}{int {\bfseries main} (int argc, char $\ast$$\ast$argv)}\label{sald_8c_a3c04138a5bfe5d72780bb7e82a18e627}
 
 \end{DoxyCompactItemize}
-\subsubsection*{Variables}
+\subsubsection*{\-Variables}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{sald_8c_a477d3d43ac129230718eb9cef3c39d2e}{const int {\bfseries set\+Simplex\+Version}}\label{sald_8c_a477d3d43ac129230718eb9cef3c39d2e}
+\hypertarget{sald_8c_a477d3d43ac129230718eb9cef3c39d2e}{const int {\bfseries set\-Simplex\-Version}}\label{sald_8c_a477d3d43ac129230718eb9cef3c39d2e}
 
 \item 
-\hypertarget{sald_8c_afa7545f118a9db1a066a2f0c4fd79357}{pthread\+\_\+mutex\+\_\+t {\bfseries stdout\+Lock} = P\+T\+H\+R\+E\+A\+D\+\_\+\+M\+U\+T\+E\+X\+\_\+\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+R}\label{sald_8c_afa7545f118a9db1a066a2f0c4fd79357}
+\hypertarget{sald_8c_afa7545f118a9db1a066a2f0c4fd79357}{pthread\-\_\-mutex\-\_\-t {\bfseries stdout\-Lock} = \-P\-T\-H\-R\-E\-A\-D\-\_\-\-M\-U\-T\-E\-X\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-E\-R}\label{sald_8c_afa7545f118a9db1a066a2f0c4fd79357}
 
 \end{DoxyCompactItemize}
 
 
-\subsubsection{Function Documentation}
-\hypertarget{sald_8c_a3feac96e0bc0242affd3d39e663d6469}{\index{sald.\+c@{sald.\+c}!cost\+Fun@{cost\+Fun}}
-\index{cost\+Fun@{cost\+Fun}!sald.\+c@{sald.\+c}}
-\paragraph[{cost\+Fun}]{\setlength{\rightskip}{0pt plus 5cm}static double cost\+Fun (
+\subsubsection{\-Detailed \-Description}
+
+
+\subsubsection{\-Function \-Documentation}
+\hypertarget{sald_8c_a3feac96e0bc0242affd3d39e663d6469}{\index{sald.\-c@{sald.\-c}!cost\-Fun@{cost\-Fun}}
+\index{cost\-Fun@{cost\-Fun}!sald.c@{sald.\-c}}
+\paragraph[{cost\-Fun}]{\setlength{\rightskip}{0pt plus 5cm}static double {\bf cost\-Fun} (
 \begin{DoxyParamCaption}
-\item[{const gsl\+\_\+vector $\ast$}]{x, }
+\item[{const gsl\-\_\-vector $\ast$}]{x, }
 \item[{void $\ast$}]{varg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}}\label{sald_8c_a3feac96e0bc0242affd3d39e663d6469}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{sald_8c_a3feac96e0bc0242affd3d39e663d6469}
 
 
-Sum of differences between observed and expected sigma\+\_\+d$^\wedge$2 vectors. 
+\-Sum of differences between observed and expected sigma\-\_\-d$^\wedge$2 vectors. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ph} & Current population history \\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em ph} & \-Current population history \\
 \hline
 \mbox{\tt in}  & {\em u} & mutation rate per site per generation \\
 \hline
-\mbox{\tt in}  & {\em nbins} & Number of values in vectors obs and c \\
+\mbox{\tt in}  & {\em nbins} & \-Number of values in vectors obs and c \\
 \hline
-\mbox{\tt in}  & {\em sigdsq} & Vector of nbins values, the observed values of sigdsq. \\
+\mbox{\tt in}  & {\em sigdsq} & \-Vector of nbins values, the observed values of sigdsq. \\
 \hline
-\mbox{\tt in}  & {\em c} & Vector of nbins values, the recombination rates associated with the values in sigdsq. \\
+\mbox{\tt in}  & {\em c} & \-Vector of nbins values, the recombination rates associated with the values in sigdsq. \\
 \hline
 \end{DoxyParams}
 
 
-References O\+D\+E\+\_\+ld\+Vec(), Pop\+Hist\+\_\+n\+Params(), Pop\+Hist\+\_\+param\+Name(), Pop\+Hist\+\_\+param\+Value(), Pop\+Hist\+\_\+print(), and vector\+\_\+to\+\_\+\+Pop\+Hist().
+\-References \-C\-\_\-array\-\_\-to\-\_\-\-Pop\-Hist(), \-E\-Spectrum\-\_\-folded(), \-E\-Spectrum\-\_\-free(), \-E\-Spectrum\-\_\-new(), \-O\-D\-E\-\_\-ld\-Vec(), \-Pop\-Hist\-\_\-n\-Params(), \-Pop\-Hist\-\_\-param\-Name(), \-Pop\-Hist\-\_\-param\-Value(), \-Pop\-Hist\-\_\-print(), and \-Pop\-Hist\-::size.
 
-\hypertarget{sald_8c_a206510e6ec3ac6cdc6f486e2eb905a2e}{\index{sald.\+c@{sald.\+c}!read\+\_\+data@{read\+\_\+data}}
-\index{read\+\_\+data@{read\+\_\+data}!sald.\+c@{sald.\+c}}
-\paragraph[{read\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}int read\+\_\+data (
+\hypertarget{sald_8c_a8b59b7be54c35ee1918decaeb0a10301}{\index{sald.\-c@{sald.\-c}!read\-\_\-data@{read\-\_\-data}}
+\index{read\-\_\-data@{read\-\_\-data}!sald.c@{sald.\-c}}
+\paragraph[{read\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf read\-\_\-data} (
 \begin{DoxyParamCaption}
-\item[{F\+I\+L\+E $\ast$}]{ifp, }
-\item[{int}]{nbins, }
-\item[{double $\ast$}]{cm, }
-\item[{double $\ast$}]{sigdsq}
+\item[{\-F\-I\-L\-E $\ast$}]{ifp, }
+\item[{{\bf \-Dbl\-Array} $\ast$}]{cm, }
+\item[{{\bf \-Dbl\-Array} $\ast$}]{sigdsq, }
+\item[{{\bf \-U\-L\-Int\-Array} $\ast$}]{spectrum}
 \end{DoxyParamCaption}
-)}}\label{sald_8c_a206510e6ec3ac6cdc6f486e2eb905a2e}
+)}}\label{sald_8c_a8b59b7be54c35ee1918decaeb0a10301}
 
 
-Read the data file produced by eld. 
+\-Read the data file produced by eld. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ifp} & Points to file produced by eld. \\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em ifp} & \-Points to file produced by eld. \\
 \hline
-\mbox{\tt in}  & {\em nbins} & The length of all arrays. \\
+\mbox{\tt in}  & {\em nbins} & \-The length of arrays involving \-L\-D. \\
 \hline
-\mbox{\tt out}  & {\em cm} & An array giving the average separation (in centimorgans) between pairs of S\+N\+Ps within the various bins. \\
+\mbox{\tt out}  & {\em cm} & \-An array giving the average separation (in centimorgans) between pairs of \-S\-N\-Ps within the various bins. \\
 \hline
-\mbox{\tt out}  & {\em sigdsq} & An array of estimates of sigma\+\_\+d$^\wedge$2.\\
+\mbox{\tt out}  & {\em sigdsq} & \-An array of estimates of sigma\-\_\-d$^\wedge$2. \\
+\hline
+\mbox{\tt out}  & {\em spectrum} & \-An array for the site frequency spectrum.\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 number of lines read 
 \end{DoxyReturn}
+
+
+\-References strcomment(), and strempty().
+

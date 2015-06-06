@@ -1,70 +1,71 @@
-\hypertarget{fithayes_8c}{\subsection{fithayes.\+c File Reference}
-\label{fithayes_8c}\index{fithayes.\+c@{fithayes.\+c}}
+\hypertarget{fithayes_8c}{\subsection{fithayes.\-c \-File \-Reference}
+\label{fithayes_8c}\index{fithayes.\-c@{fithayes.\-c}}
 }
 
 
-Functions implementing the method of Hayes et al (Genome Research, 13(4)\+: 635-\/643).  
+\-Functions implementing the method of \-Hayes et al (\-Genome \-Research, 13(4)\-: 635-\/643). \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}
+ 
 
 
-{\ttfamily \#include $<$stdio.\+h$>$}\\*
-{\ttfamily \#include $<$math.\+h$>$}\\*
-{\ttfamily \#include $<$assert.\+h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\+\_\+rng.\+h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\+\_\+randist.\+h$>$}\\*
-{\ttfamily \#include $<$time.\+h$>$}\\*
-{\ttfamily \#include $<$float.\+h$>$}\\*
-{\ttfamily \#include $<$getopt.\+h$>$}\\*
-{\ttfamily \#include $<$pthread.\+h$>$}\\*
-{\ttfamily \#include $<$string.\+h$>$}\\*
-{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}tokenizer.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}assign.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}ini.\+h\char`\"{}}\\*
-\subsubsection*{Macros}
+{\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include $<$math.\-h$>$}\*
+{\ttfamily \#include $<$assert.\-h$>$}\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-rng.\-h$>$}\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-randist.\-h$>$}\*
+{\ttfamily \#include $<$time.\-h$>$}\*
+{\ttfamily \#include $<$float.\-h$>$}\*
+{\ttfamily \#include $<$getopt.\-h$>$}\*
+{\ttfamily \#include $<$pthread.\-h$>$}\*
+{\ttfamily \#include $<$string.\-h$>$}\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}tokenizer.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}assign.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}ini.\-h\char`\"{}}\*
+\subsubsection*{\-Defines}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{fithayes_8c_ad5a4898d322ab25d2e9e0da38b07ee37}{\#define {\bfseries N\+T\+R\+I\+E\+S}~20}\label{fithayes_8c_ad5a4898d322ab25d2e9e0da38b07ee37}
+\hypertarget{fithayes_8c_ad5a4898d322ab25d2e9e0da38b07ee37}{\#define {\bfseries \-N\-T\-R\-I\-E\-S}~20}\label{fithayes_8c_ad5a4898d322ab25d2e9e0da38b07ee37}
 
 \item 
-\hypertarget{fithayes_8c_a8f8363c09813b315aad1233fd06c7ca9}{\#define {\bfseries M\+I\+N\+K\+B}~1.\+0}\label{fithayes_8c_a8f8363c09813b315aad1233fd06c7ca9}
+\hypertarget{fithayes_8c_a8f8363c09813b315aad1233fd06c7ca9}{\#define {\bfseries \-M\-I\-N\-K\-B}~1.\-0}\label{fithayes_8c_a8f8363c09813b315aad1233fd06c7ca9}
 
 \item 
-\hypertarget{fithayes_8c_a3882c756e366cff449a995d1c29f2f08}{\#define {\bfseries M\+A\+X\+K\+B}~300.\+0}\label{fithayes_8c_a3882c756e366cff449a995d1c29f2f08}
+\hypertarget{fithayes_8c_a3882c756e366cff449a995d1c29f2f08}{\#define {\bfseries \-M\-A\-X\-K\-B}~300.\-0}\label{fithayes_8c_a3882c756e366cff449a995d1c29f2f08}
 
 \end{DoxyCompactItemize}
-\subsubsection*{Functions}
+\subsubsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{fithayes_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}{void {\bfseries usage} (void)}\label{fithayes_8c_ae8605e2b78cd4a81b6c6b5c30cb7366a}
 
 \item 
-\hypertarget{fithayes_8c_a12f14084044a83a8f7b2b4928ca6294e}{void {\bfseries write\+\_\+data} (F\+I\+L\+E $\ast$outfile, int nvars, int ncc, double $\ast$cc, double $\ast$$\ast$ld, const char $\ast$$\ast$lbl)}\label{fithayes_8c_a12f14084044a83a8f7b2b4928ca6294e}
+\hypertarget{fithayes_8c_a12f14084044a83a8f7b2b4928ca6294e}{void {\bfseries write\-\_\-data} (\-F\-I\-L\-E $\ast$outfile, int nvars, int ncc, double $\ast$cc, double $\ast$$\ast$ld, const char $\ast$$\ast$lbl)}\label{fithayes_8c_a12f14084044a83a8f7b2b4928ca6294e}
 
 \item 
-int \hyperlink{fithayes_8c_a670464452cc05ee03114c66bb157c2f7}{read\+\_\+data} (F\+I\+L\+E $\ast$ifp, int nbins, double $\ast$cm, double $\ast$rsq, long $\ast$nobs)
-\begin{DoxyCompactList}\small\item\em Read the data file produced by eld. \end{DoxyCompactList}\item 
+int \hyperlink{fithayes_8c_a670464452cc05ee03114c66bb157c2f7}{read\-\_\-data} (\-F\-I\-L\-E $\ast$ifp, int nbins, double $\ast$cm, double $\ast$rsq, long $\ast$nobs)
+\begin{DoxyCompactList}\small\item\em \-Read the data file produced by eld. \end{DoxyCompactList}\item 
 \hypertarget{fithayes_8c_a3c04138a5bfe5d72780bb7e82a18e627}{int {\bfseries main} (int argc, char $\ast$$\ast$argv)}\label{fithayes_8c_a3c04138a5bfe5d72780bb7e82a18e627}
 
 \end{DoxyCompactItemize}
 
 
-\subsubsection{Detailed Description}
-Functions implementing the method of Hayes et al (Genome Research, 13(4)\+: 635-\/643). 
-
-\begin{DoxyAuthor}{Author}
-Alan R. Rogers 
-\end{DoxyAuthor}
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
+\subsubsection{\-Detailed \-Description}
+\-Functions implementing the method of \-Hayes et al (\-Genome \-Research, 13(4)\-: 635-\/643). \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}
+\begin{DoxyAuthor}{\-Author}
+\-Alan \-R. \-Rogers 
+\end{DoxyAuthor}
 
 
-\subsubsection{Function Documentation}
-\hypertarget{fithayes_8c_a670464452cc05ee03114c66bb157c2f7}{\index{fithayes.\+c@{fithayes.\+c}!read\+\_\+data@{read\+\_\+data}}
-\index{read\+\_\+data@{read\+\_\+data}!fithayes.\+c@{fithayes.\+c}}
-\paragraph[{read\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}int read\+\_\+data (
+\subsubsection{\-Function \-Documentation}
+\hypertarget{fithayes_8c_a670464452cc05ee03114c66bb157c2f7}{\index{fithayes.\-c@{fithayes.\-c}!read\-\_\-data@{read\-\_\-data}}
+\index{read\-\_\-data@{read\-\_\-data}!fithayes.c@{fithayes.\-c}}
+\paragraph[{read\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf read\-\_\-data} (
 \begin{DoxyParamCaption}
-\item[{F\+I\+L\+E $\ast$}]{ifp, }
+\item[{\-F\-I\-L\-E $\ast$}]{ifp, }
 \item[{int}]{nbins, }
 \item[{double $\ast$}]{cm, }
 \item[{double $\ast$}]{rsq, }
@@ -73,21 +74,21 @@ Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt roge
 )}}\label{fithayes_8c_a670464452cc05ee03114c66bb157c2f7}
 
 
-Read the data file produced by eld. 
+\-Read the data file produced by eld. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ifp} & Points to file produced by eld. \\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em ifp} & \-Points to file produced by eld. \\
 \hline
-\mbox{\tt in}  & {\em nbins} & The length of all arrays. \\
+\mbox{\tt in}  & {\em nbins} & \-The length of all arrays. \\
 \hline
-\mbox{\tt out}  & {\em cm} & An array giving the average separation (in centimorgans) between pairs of S\+N\+Ps within the various bins. \\
+\mbox{\tt out}  & {\em cm} & \-An array giving the average separation (in centimorgans) between pairs of \-S\-N\-Ps within the various bins. \\
 \hline
-\mbox{\tt out}  & {\em rsq} & An array of estimates of r$^\wedge$2. \\
+\mbox{\tt out}  & {\em rsq} & \-An array of estimates of r$^\wedge$2. \\
 \hline
-\mbox{\tt out}  & {\em nobs} & An array whose i'th entry is the number of pairs of S\+N\+Ps contributing to bin i.\\
+\mbox{\tt out}  & {\em nobs} & \-An array whose i'th entry is the number of pairs of \-S\-N\-Ps contributing to bin i.\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 number of lines read 
 \end{DoxyReturn}

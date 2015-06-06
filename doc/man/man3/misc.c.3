@@ -1,21 +1,32 @@
-.TH "misc.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "misc.c" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 misc.c \- 
 .PP
-Miscellaneous functions\&.  
+Miscellaneous functions\&. 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
 .PP
 \fC#include <stdio\&.h>\fP
 .br
+\fC#include <stdbool\&.h>\fP
+.br
 \fC#include <math\&.h>\fP
 .br
 \fC#include <string\&.h>\fP
 .br
 \fC#include <stdarg\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
 .br
 \fC#include <errno\&.h>\fP
 .br
@@ -34,9 +45,13 @@ Miscellaneous functions\&.
 \fC#include 'misc\&.h'\fP
 .br
 
-.SS "Macros"
+.SS "Defines"
 
 .in +1c
+.ti -1c
+.RI "#define \fBccmp\fP(a, b)   ((a) == (b) ? 0 : ((a) > (b) ? 1 : -1))"
+.br
+.RI "\fIOlder C compilers lack strcasecmp, which compares strings ignoring case\&. \fP"
 .ti -1c
 .RI "#define \fBCALLSTACK_SIZE\fP   128"
 .br
@@ -44,6 +59,9 @@ Miscellaneous functions\&.
 .SS "Functions"
 
 .in +1c
+.ti -1c
+.RI "long \fBLInt_div_round\fP (long num, long denom)"
+.br
 .ti -1c
 .RI "int \fBisopt\fP (const char *shortOpt, const char *longOpt, const char *arg)"
 .br
@@ -55,6 +73,9 @@ Miscellaneous functions\&.
 .RI "char * \fBstrlowercase\fP (char *s)"
 .br
 .RI "\fIConvert NULL-terminated string to lower case\&. \fP"
+.ti -1c
+.RI "int \fBmystrcasecmp\fP (const char *s1, const char *s2)"
+.br
 .ti -1c
 .RI "void \fBcheckmem\fP (void *obj, const char *file, int line)"
 .br
@@ -101,7 +122,7 @@ Miscellaneous functions\&.
 .ti -1c
 .RI "int \fBstrcomment\fP (const char *s)"
 .br
-.RI "\fIReturn 1 if the first non-white char in string s is '#'; 0 otherwise\&. \fP"
+.RI "\fIReturn true if the first non-white char in string s is '#'; false otherwise\&. \fP"
 .ti -1c
 .RI "char * \fBstripComment\fP (char *s)"
 .br
@@ -109,7 +130,7 @@ Miscellaneous functions\&.
 .ti -1c
 .RI "int \fBstrempty\fP (const char *s)"
 .br
-.RI "\fIReturn 1 if string contains only whitespace; 0 otherwise\&. \fP"
+.RI "\fIReturn true if string contains only whitespace; false otherwise\&. \fP"
 .ti -1c
 .RI "int \fBdblEquals\fP (double x, double y)"
 .br
@@ -139,28 +160,36 @@ Miscellaneous functions\&.
 .ti -1c
 .RI "int \fBpr_gsl_vector\fP (FILE *fp, const char *fmt, const gsl_vector *v)"
 .br
+.ti -1c
+.RI "unsigned \fBhash\fP (const char *ss)"
+.br
+.RI "\fIHash a character string\&. Used for generating unique file names\&. \fP"
 .in -1c
 .SH "Detailed Description"
 .PP 
 Miscellaneous functions\&. 
-
-
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
+.SH "Define Documentation"
+.PP 
+.SS "#define \fBccmp\fP(a, b)   ((a) == (b) ? 0 : ((a) > (b) ? 1 : -1))"
+.PP
+Older C compilers lack strcasecmp, which compares strings ignoring case\&. For portability, I provide this here under a different name\&. 
 .SH "Function Documentation"
 .PP 
-.SS "int compareDoubles (const void *void_x, const void *void_y)"
-
+.SS "int \fBcompareDoubles\fP (const void *void_x, const void *void_y)"
 .PP
 Compare two doubles\&. Function interprets its arguments as pointers to doubles\&.
 .PP
@@ -177,8 +206,7 @@ Compare two doubles\&. Function interprets its arguments as pointers to doubles\
 
 .PP
 Referenced by confidenceBounds()\&.
-.SS "int compareLongs (const void *void_x, const void *void_y)"
-
+.SS "int \fBcompareLongs\fP (const void *void_x, const void *void_y)"
 .PP
 Compare two long ints\&. Function interprets its arguments as pointers to long ints\&.
 .PP
@@ -195,32 +223,23 @@ Compare two long ints\&. Function interprets its arguments as pointers to long i
 
 .PP
 Referenced by Boot_new()\&.
-.SS "int dblEquals (doublex, doubley)"
-
+.SS "int \fBdblEquals\fP (doublex, doubley)"
 .PP
 Test equality of x and y\&. In this test NaN == NaN, Inf == Inf, and -Inf == -Inf\&. 
-.SS "int isopt (const char *shortOpt, const char *longOpt, const char *arg)"
-
+.SS "int \fBisopt\fP (const char *shortOpt, const char *longOpt, const char *arg)"
 .PP
 Return 1 if string arg matches either shortOpt or longOpt\&. ShortOpt and longOpt are ignored if their values are NULL\&. If arg doesn't match either shortOpt or longOpt, then return 0\&. 
-.SS "void replaceSuffix (char *str, size_tstr_size, const char *suffix, size_tsuffix_len)"
-
+.SS "void \fBreplaceSuffix\fP (char *str, size_tstr_size, const char *suffix, size_tsuffix_len)"
 .PP
 Replace suffix (part after last period) of string 'str' with new suffix\&. If original string has no suffix, then append one to string\&. Abort if string isn't long enough\&. 
-.SS "char* strcenter (const char *text, unsignedwidth, char *buff, unsignedbuffsize)"
-
+.SS "char* \fBstrcenter\fP (const char *text, unsignedwidth, char *buff, unsignedbuffsize)"
 .PP
 Center string 'text' in a field of width 'width'\&. The centered string is written into the character string 'buff', whose size is 'buffsize'\&. 
-.SS "int strcomment (const char *s)"
-
+.SS "int \fBstrempty\fP (const char *s)"
 .PP
-Return 1 if the first non-white char in string s is '#'; 0 otherwise\&. 
-.SS "int strempty (const char *s)"
-
+Return true if string contains only whitespace; false otherwise\&. 
 .PP
-Return 1 if string contains only whitespace; 0 otherwise\&. 
-.PP
-Referenced by Ini_new()\&.
+Referenced by Ini_new(), and read_data()\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for ldpsiz from the source code\&.

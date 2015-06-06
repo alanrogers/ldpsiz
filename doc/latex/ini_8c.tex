@@ -1,109 +1,110 @@
-\hypertarget{ini_8c}{\subsection{ini.\+c File Reference}
-\label{ini_8c}\index{ini.\+c@{ini.\+c}}
+\hypertarget{ini_8c}{\subsection{ini.\-c \-File \-Reference}
+\label{ini_8c}\index{ini.\-c@{ini.\-c}}
 }
 
 
-Functions for objects of class \hyperlink{struct_ini}{Ini}, which reads parameters from an initialization file.  
-
-
-{\ttfamily \#include $<$stdio.\+h$>$}\\*
-{\ttfamily \#include $<$stdlib.\+h$>$}\\*
-{\ttfamily \#include $<$string.\+h$>$}\\*
-{\ttfamily \#include $<$assert.\+h$>$}\\*
-{\ttfamily \#include $<$math.\+h$>$}\\*
-{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}pophist.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}tokenizer.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}assign.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}ini.\+h\char`\"{}}\\*
-\subsubsection*{Data Structures}
-\begin{DoxyCompactItemize}
-\item 
-struct \hyperlink{struct_ini}{Ini}
-\begin{DoxyCompactList}\small\item\em The information read from an initialization file. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsubsection*{Functions}
-\begin{DoxyCompactItemize}
-\item 
-\hyperlink{struct_ini}{Ini} $\ast$ \hyperlink{ini_8c_a68e606705d3fd423e6729dd28cd8a8a3}{Ini\+\_\+new} (const char $\ast$ifname)
-\begin{DoxyCompactList}\small\item\em Open and read an initialization file, putting the information therein into a newly-\/allocated object of type \hyperlink{struct_ini}{Ini}. \end{DoxyCompactList}\item 
-\hypertarget{ini_8c_a2734f309bf5f70d576e58a9c0257e0c3}{void \hyperlink{ini_8c_a2734f309bf5f70d576e58a9c0257e0c3}{Ini\+\_\+free} (\hyperlink{struct_ini}{Ini} $\ast$ini)}\label{ini_8c_a2734f309bf5f70d576e58a9c0257e0c3}
-
-\begin{DoxyCompactList}\small\item\em Free object of type \hyperlink{struct_ini}{Ini}. \end{DoxyCompactList}\item 
-void \hyperlink{ini_8c_aa56f722e2bc62d734e0d2b3ed9f8d61e}{Ini\+\_\+print} (\hyperlink{struct_ini}{Ini} $\ast$ini, F\+I\+L\+E $\ast$ofp)
-\begin{DoxyCompactList}\small\item\em Print object of type \hyperlink{struct_ini}{Ini} to file ofp. \end{DoxyCompactList}\item 
-\hypertarget{ini_8c_a429595993263fdc2027a37991f5ddffd}{double \hyperlink{ini_8c_a429595993263fdc2027a37991f5ddffd}{Ini\+\_\+two\+N0} (const \hyperlink{struct_ini}{Ini} $\ast$ini)}\label{ini_8c_a429595993263fdc2027a37991f5ddffd}
-
-\begin{DoxyCompactList}\small\item\em Return the value of two\+N in the 0th epoch. \end{DoxyCompactList}\item 
-int \hyperlink{ini_8c_a216f758adfe5a6b2dc8c187ca2353803}{Ini\+\_\+set\+Dbl} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, double $\ast$ptr, int mandatory)
-\begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr to value corresponding to given key. \end{DoxyCompactList}\item 
-int \hyperlink{ini_8c_ac21b30c5f65cab4ec649de86b5bb2f42}{Ini\+\_\+set\+Long} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, long $\ast$ptr, int mandatory)
-\begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
-int \hyperlink{ini_8c_ae2b34c75eedbb76ae836d36320e7ec34}{Ini\+\_\+set\+Int} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, int $\ast$ptr, int mandatory)
-\begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
-unsigned \hyperlink{ini_8c_aec52a7bf415b0c27c00d637293d9a6d5}{Ini\+\_\+set\+Unsigned\+Int} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, unsigned $\ast$ptr, int mandatory)
-\begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
-int \hyperlink{ini_8c_abd37ee8c3f9f112fcc3e3dbd2399d286}{Ini\+\_\+set\+String} (const \hyperlink{struct_ini}{Ini} $\ast$ini, const char $\ast$key, char $\ast$ptr, int size, int mandatory)
-\begin{DoxyCompactList}\small\item\em Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
-int \hyperlink{ini_8c_a204ffbd112e418de218d8be67412606b}{Ini\+\_\+set\+Epoch\+Link} (const \hyperlink{struct_ini}{Ini} $\ast$ini, \hyperlink{struct_epoch_link}{Epoch\+Link} $\ast$$\ast$ptr, int mandatory)
-\begin{DoxyCompactList}\small\item\em Initialize linked list of Epochs from value (if any) specified in initialization file. \end{DoxyCompactList}\end{DoxyCompactItemize}
-
-
-\subsubsection{Detailed Description}
-Functions for objects of class \hyperlink{struct_ini}{Ini}, which reads parameters from an initialization file. 
-
-\begin{DoxyAuthor}{Author}
-Alan R. Rogers 
-\end{DoxyAuthor}
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
+\-Functions for objects of class \hyperlink{struct_ini}{\-Ini}, which reads parameters from an initialization file \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}
+ 
 
 
-\subsubsection{Function Documentation}
-\hypertarget{ini_8c_a68e606705d3fd423e6729dd28cd8a8a3}{\index{ini.\+c@{ini.\+c}!Ini\+\_\+new@{Ini\+\_\+new}}
-\index{Ini\+\_\+new@{Ini\+\_\+new}!ini.\+c@{ini.\+c}}
-\paragraph[{Ini\+\_\+new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Ini}$\ast$ Ini\+\_\+new (
+{\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\*
+{\ttfamily \#include $<$string.\-h$>$}\*
+{\ttfamily \#include $<$assert.\-h$>$}\*
+{\ttfamily \#include $<$math.\-h$>$}\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}pophist.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}tokenizer.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}assign.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}ini.\-h\char`\"{}}\*
+\subsubsection*{\-Data \-Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_ini}{\-Ini}
+\begin{DoxyCompactList}\small\item\em \-The information read from an initialization file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_ini}{\-Ini} $\ast$ \hyperlink{ini_8c_a68e606705d3fd423e6729dd28cd8a8a3}{\-Ini\-\_\-new} (const char $\ast$ifname)
+\begin{DoxyCompactList}\small\item\em \-Open and read an initialization file, putting the information therein into a newly-\/allocated object of type \hyperlink{struct_ini}{\-Ini}. \end{DoxyCompactList}\item 
+\hypertarget{ini_8c_a2734f309bf5f70d576e58a9c0257e0c3}{void \hyperlink{ini_8c_a2734f309bf5f70d576e58a9c0257e0c3}{\-Ini\-\_\-free} (\hyperlink{struct_ini}{\-Ini} $\ast$ini)}\label{ini_8c_a2734f309bf5f70d576e58a9c0257e0c3}
+
+\begin{DoxyCompactList}\small\item\em \-Free object of type \hyperlink{struct_ini}{\-Ini}. \end{DoxyCompactList}\item 
+void \hyperlink{ini_8c_aa56f722e2bc62d734e0d2b3ed9f8d61e}{\-Ini\-\_\-print} (\hyperlink{struct_ini}{\-Ini} $\ast$ini, \-F\-I\-L\-E $\ast$ofp)
+\begin{DoxyCompactList}\small\item\em \-Print object of type \hyperlink{struct_ini}{\-Ini} to file ofp. \end{DoxyCompactList}\item 
+\hypertarget{ini_8c_a429595993263fdc2027a37991f5ddffd}{double \hyperlink{ini_8c_a429595993263fdc2027a37991f5ddffd}{\-Ini\-\_\-two\-N0} (const \hyperlink{struct_ini}{\-Ini} $\ast$ini)}\label{ini_8c_a429595993263fdc2027a37991f5ddffd}
+
+\begin{DoxyCompactList}\small\item\em \-Return the value of two\-N in the 0th epoch. \end{DoxyCompactList}\item 
+int \hyperlink{ini_8c_a216f758adfe5a6b2dc8c187ca2353803}{\-Ini\-\_\-set\-Dbl} (const \hyperlink{struct_ini}{\-Ini} $\ast$ini, const char $\ast$key, double $\ast$ptr, int mandatory)
+\begin{DoxyCompactList}\small\item\em \-Initialize $\ast$ptr to value corresponding to given key. \end{DoxyCompactList}\item 
+int \hyperlink{ini_8c_ac21b30c5f65cab4ec649de86b5bb2f42}{\-Ini\-\_\-set\-Long} (const \hyperlink{struct_ini}{\-Ini} $\ast$ini, const char $\ast$key, long $\ast$ptr, int mandatory)
+\begin{DoxyCompactList}\small\item\em \-Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
+int \hyperlink{ini_8c_ae2b34c75eedbb76ae836d36320e7ec34}{\-Ini\-\_\-set\-Int} (const \hyperlink{struct_ini}{\-Ini} $\ast$ini, const char $\ast$key, int $\ast$ptr, int mandatory)
+\begin{DoxyCompactList}\small\item\em \-Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
+unsigned \hyperlink{ini_8c_aec52a7bf415b0c27c00d637293d9a6d5}{\-Ini\-\_\-set\-Unsigned\-Int} (const \hyperlink{struct_ini}{\-Ini} $\ast$ini, const char $\ast$key, unsigned $\ast$ptr, int mandatory)
+\begin{DoxyCompactList}\small\item\em \-Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
+int \hyperlink{ini_8c_abd37ee8c3f9f112fcc3e3dbd2399d286}{\-Ini\-\_\-set\-String} (const \hyperlink{struct_ini}{\-Ini} $\ast$ini, const char $\ast$key, char $\ast$ptr, int size, int mandatory)
+\begin{DoxyCompactList}\small\item\em \-Initialize $\ast$ptr do value corresponding to given key. \end{DoxyCompactList}\item 
+int \hyperlink{ini_8c_a204ffbd112e418de218d8be67412606b}{\-Ini\-\_\-set\-Epoch\-Link} (const \hyperlink{struct_ini}{\-Ini} $\ast$ini, \hyperlink{struct_epoch_link}{\-Epoch\-Link} $\ast$$\ast$ptr, int mandatory)
+\begin{DoxyCompactList}\small\item\em \-Initialize linked list of \-Epochs from value (if any) specified in initialization file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{\-Detailed \-Description}
+\-Functions for objects of class \hyperlink{struct_ini}{\-Ini}, which reads parameters from an initialization file \begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
+\end{DoxyCopyright}
+\begin{DoxyAuthor}{\-Author}
+\-Alan \-R. \-Rogers 
+\end{DoxyAuthor}
+
+
+\subsubsection{\-Function \-Documentation}
+\hypertarget{ini_8c_a68e606705d3fd423e6729dd28cd8a8a3}{\index{ini.\-c@{ini.\-c}!\-Ini\-\_\-new@{\-Ini\-\_\-new}}
+\index{\-Ini\-\_\-new@{\-Ini\-\_\-new}!ini.c@{ini.\-c}}
+\paragraph[{\-Ini\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Ini}$\ast$ {\bf \-Ini\-\_\-new} (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{ifname}
 \end{DoxyParamCaption}
 )}}\label{ini_8c_a68e606705d3fd423e6729dd28cd8a8a3}
 
 
-Open and read an initialization file, putting the information therein into a newly-\/allocated object of type \hyperlink{struct_ini}{Ini}. 
+\-Open and read an initialization file, putting the information therein into a newly-\/allocated object of type \hyperlink{struct_ini}{\-Ini}. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ifname} & Name of input file\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em ifname} & \-Name of input file\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Newly-\/allocate \hyperlink{struct_ini}{Ini} object containing info from input file. 
+\begin{DoxyReturn}{\-Returns}
+\-Newly-\/allocate \hyperlink{struct_ini}{\-Ini} object containing info from input file. 
 \end{DoxyReturn}
 
 
-References Ini\+::a, Assignment\+\_\+new(), Epoch\+Link\+\_\+new(), Ini\+::epoch\+List, strempty(), and strip\+Comment().
+\-References \-Ini\-::a, \-Assignment\-\_\-new(), \-Epoch\-Link\-\_\-new(), \-Ini\-::epoch\-List, strempty(), and strip\-Comment().
 
-\hypertarget{ini_8c_aa56f722e2bc62d734e0d2b3ed9f8d61e}{\index{ini.\+c@{ini.\+c}!Ini\+\_\+print@{Ini\+\_\+print}}
-\index{Ini\+\_\+print@{Ini\+\_\+print}!ini.\+c@{ini.\+c}}
-\paragraph[{Ini\+\_\+print}]{\setlength{\rightskip}{0pt plus 5cm}void Ini\+\_\+print (
+\hypertarget{ini_8c_aa56f722e2bc62d734e0d2b3ed9f8d61e}{\index{ini.\-c@{ini.\-c}!\-Ini\-\_\-print@{\-Ini\-\_\-print}}
+\index{\-Ini\-\_\-print@{\-Ini\-\_\-print}!ini.c@{ini.\-c}}
+\paragraph[{\-Ini\-\_\-print}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Ini\-\_\-print} (
 \begin{DoxyParamCaption}
-\item[{{\bf Ini} $\ast$}]{ini, }
-\item[{F\+I\+L\+E $\ast$}]{ofp}
+\item[{{\bf \-Ini} $\ast$}]{ini, }
+\item[{\-F\-I\-L\-E $\ast$}]{ofp}
 \end{DoxyParamCaption}
 )}}\label{ini_8c_aa56f722e2bc62d734e0d2b3ed9f8d61e}
 
 
-Print object of type \hyperlink{struct_ini}{Ini} to file ofp. 
+\-Print object of type \hyperlink{struct_ini}{\-Ini} to file ofp. 
 
 
 
-References Ini\+::a, Epoch\+Link\+\_\+print(), and Ini\+::epoch\+List.
+\-References \-Ini\-::a, \-Epoch\-Link\-\_\-print(), and \-Ini\-::epoch\-List.
 
-\hypertarget{ini_8c_a216f758adfe5a6b2dc8c187ca2353803}{\index{ini.\+c@{ini.\+c}!Ini\+\_\+set\+Dbl@{Ini\+\_\+set\+Dbl}}
-\index{Ini\+\_\+set\+Dbl@{Ini\+\_\+set\+Dbl}!ini.\+c@{ini.\+c}}
-\paragraph[{Ini\+\_\+set\+Dbl}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\+\_\+set\+Dbl (
+\hypertarget{ini_8c_a216f758adfe5a6b2dc8c187ca2353803}{\index{ini.\-c@{ini.\-c}!\-Ini\-\_\-set\-Dbl@{\-Ini\-\_\-set\-Dbl}}
+\index{\-Ini\-\_\-set\-Dbl@{\-Ini\-\_\-set\-Dbl}!ini.c@{ini.\-c}}
+\paragraph[{\-Ini\-\_\-set\-Dbl}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Ini\-\_\-set\-Dbl} (
 \begin{DoxyParamCaption}
-\item[{const {\bf Ini} $\ast$}]{ini, }
+\item[{const {\bf \-Ini} $\ast$}]{ini, }
 \item[{const char $\ast$}]{key, }
 \item[{double $\ast$}]{ptr, }
 \item[{int}]{mandatory}
@@ -111,58 +112,58 @@ References Ini\+::a, Epoch\+Link\+\_\+print(), and Ini\+::epoch\+List.
 )}}\label{ini_8c_a216f758adfe5a6b2dc8c187ca2353803}
 
 
-Initialize $\ast$ptr to value corresponding to given key. 
+\-Initialize $\ast$ptr to value corresponding to given key. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ini} & A structure containing the assigned values.\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em ini} & \-A structure containing the assigned values.\\
 \hline
-\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{Ini} structure.\\
+\mbox{\tt in}  & {\em mandatory} & \-If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{\-Ini} structure.\\
 \hline
-\mbox{\tt out}  & {\em ptr} & Points to a double variable, which will be initialized. If variable was set in initialization file, then this value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered.\\
+\mbox{\tt out}  & {\em ptr} & \-Points to a double variable, which will be initialized. \-If variable was set in initialization file, then this value will be written into $\ast$ptr. \-Otherwise, $\ast$ptr is unaltered.\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 1 if variable was initialized, 0 otherwise. 
 \end{DoxyReturn}
 
 
-References Ini\+::a, and Assignment\+\_\+set\+Dbl().
+\-References \-Ini\-::a, and \-Assignment\-\_\-set\-Dbl().
 
-\hypertarget{ini_8c_a204ffbd112e418de218d8be67412606b}{\index{ini.\+c@{ini.\+c}!Ini\+\_\+set\+Epoch\+Link@{Ini\+\_\+set\+Epoch\+Link}}
-\index{Ini\+\_\+set\+Epoch\+Link@{Ini\+\_\+set\+Epoch\+Link}!ini.\+c@{ini.\+c}}
-\paragraph[{Ini\+\_\+set\+Epoch\+Link}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\+\_\+set\+Epoch\+Link (
+\hypertarget{ini_8c_a204ffbd112e418de218d8be67412606b}{\index{ini.\-c@{ini.\-c}!\-Ini\-\_\-set\-Epoch\-Link@{\-Ini\-\_\-set\-Epoch\-Link}}
+\index{\-Ini\-\_\-set\-Epoch\-Link@{\-Ini\-\_\-set\-Epoch\-Link}!ini.c@{ini.\-c}}
+\paragraph[{\-Ini\-\_\-set\-Epoch\-Link}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Ini\-\_\-set\-Epoch\-Link} (
 \begin{DoxyParamCaption}
-\item[{const {\bf Ini} $\ast$}]{ini, }
-\item[{{\bf Epoch\+Link} $\ast$$\ast$}]{ptr, }
+\item[{const {\bf \-Ini} $\ast$}]{ini, }
+\item[{{\bf \-Epoch\-Link} $\ast$$\ast$}]{ptr, }
 \item[{int}]{mandatory}
 \end{DoxyParamCaption}
 )}}\label{ini_8c_a204ffbd112e418de218d8be67412606b}
 
 
-Initialize linked list of Epochs from value (if any) specified in initialization file. 
+\-Initialize linked list of \-Epochs from value (if any) specified in initialization file. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ini} & A structure containing the values specified in the initialization file.\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em ini} & \-A structure containing the values specified in the initialization file.\\
 \hline
-\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{Ini} structure.\\
+\mbox{\tt in}  & {\em mandatory} & \-If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{\-Ini} structure.\\
 \hline
-\mbox{\tt out}  & {\em ptr} & Points to variable to be initialized. If variable was set in initialization file, then this value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered. If ptr is initialized, it will point to a newly-\/allocated linked list of \hyperlink{struct_epoch_link}{Epoch\+Link} structures, which must be freed by the calling routine.\\
+\mbox{\tt out}  & {\em ptr} & \-Points to variable to be initialized. \-If variable was set in initialization file, then this value will be written into $\ast$ptr. \-Otherwise, $\ast$ptr is unaltered. \-If ptr is initialized, it will point to a newly-\/allocated linked list of \hyperlink{struct_epoch_link}{\-Epoch\-Link} structures, which must be freed by the calling routine.\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 1 if variable was initialized, 0 otherwise. 
 \end{DoxyReturn}
 
 
-References Epoch\+Link\+\_\+dup(), and Ini\+::epoch\+List.
+\-References \-Epoch\-Link\-\_\-dup(), and \-Ini\-::epoch\-List.
 
-\hypertarget{ini_8c_ae2b34c75eedbb76ae836d36320e7ec34}{\index{ini.\+c@{ini.\+c}!Ini\+\_\+set\+Int@{Ini\+\_\+set\+Int}}
-\index{Ini\+\_\+set\+Int@{Ini\+\_\+set\+Int}!ini.\+c@{ini.\+c}}
-\paragraph[{Ini\+\_\+set\+Int}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\+\_\+set\+Int (
+\hypertarget{ini_8c_ae2b34c75eedbb76ae836d36320e7ec34}{\index{ini.\-c@{ini.\-c}!\-Ini\-\_\-set\-Int@{\-Ini\-\_\-set\-Int}}
+\index{\-Ini\-\_\-set\-Int@{\-Ini\-\_\-set\-Int}!ini.c@{ini.\-c}}
+\paragraph[{\-Ini\-\_\-set\-Int}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Ini\-\_\-set\-Int} (
 \begin{DoxyParamCaption}
-\item[{const {\bf Ini} $\ast$}]{ini, }
+\item[{const {\bf \-Ini} $\ast$}]{ini, }
 \item[{const char $\ast$}]{key, }
 \item[{int $\ast$}]{ptr, }
 \item[{int}]{mandatory}
@@ -170,29 +171,29 @@ References Epoch\+Link\+\_\+dup(), and Ini\+::epoch\+List.
 )}}\label{ini_8c_ae2b34c75eedbb76ae836d36320e7ec34}
 
 
-Initialize $\ast$ptr do value corresponding to given key. 
+\-Initialize $\ast$ptr do value corresponding to given key. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ini} & A structure containing the assigned values.\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em ini} & \-A structure containing the assigned values.\\
 \hline
-\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{Ini} structure.\\
+\mbox{\tt in}  & {\em mandatory} & \-If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{\-Ini} structure.\\
 \hline
-\mbox{\tt out}  & {\em ptr} & Points to a variable of type \char`\"{}int\char`\"{}, which will be initialized. If variable was set in initialization file, then this value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered.\\
+\mbox{\tt out}  & {\em ptr} & \-Points to a variable of type \char`\"{}int\char`\"{}, which will be initialized. \-If variable was set in initialization file, then this value will be written into $\ast$ptr. \-Otherwise, $\ast$ptr is unaltered.\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 1 if variable was initialized, 0 otherwise. 
 \end{DoxyReturn}
 
 
-References Ini\+::a, and Assignment\+\_\+set\+Int().
+\-References \-Ini\-::a, and \-Assignment\-\_\-set\-Int().
 
-\hypertarget{ini_8c_ac21b30c5f65cab4ec649de86b5bb2f42}{\index{ini.\+c@{ini.\+c}!Ini\+\_\+set\+Long@{Ini\+\_\+set\+Long}}
-\index{Ini\+\_\+set\+Long@{Ini\+\_\+set\+Long}!ini.\+c@{ini.\+c}}
-\paragraph[{Ini\+\_\+set\+Long}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\+\_\+set\+Long (
+\hypertarget{ini_8c_ac21b30c5f65cab4ec649de86b5bb2f42}{\index{ini.\-c@{ini.\-c}!\-Ini\-\_\-set\-Long@{\-Ini\-\_\-set\-Long}}
+\index{\-Ini\-\_\-set\-Long@{\-Ini\-\_\-set\-Long}!ini.c@{ini.\-c}}
+\paragraph[{\-Ini\-\_\-set\-Long}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Ini\-\_\-set\-Long} (
 \begin{DoxyParamCaption}
-\item[{const {\bf Ini} $\ast$}]{ini, }
+\item[{const {\bf \-Ini} $\ast$}]{ini, }
 \item[{const char $\ast$}]{key, }
 \item[{long $\ast$}]{ptr, }
 \item[{int}]{mandatory}
@@ -200,29 +201,29 @@ References Ini\+::a, and Assignment\+\_\+set\+Int().
 )}}\label{ini_8c_ac21b30c5f65cab4ec649de86b5bb2f42}
 
 
-Initialize $\ast$ptr do value corresponding to given key. 
+\-Initialize $\ast$ptr do value corresponding to given key. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ini} & A structure containing the assigned values.\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em ini} & \-A structure containing the assigned values.\\
 \hline
-\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{Ini} structure.\\
+\mbox{\tt in}  & {\em mandatory} & \-If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{\-Ini} structure.\\
 \hline
-\mbox{\tt out}  & {\em ptr} & Points to a variable of type \char`\"{}long int\char`\"{}, which will be initialized. If variable was set in initialization file, then this value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered.\\
+\mbox{\tt out}  & {\em ptr} & \-Points to a variable of type \char`\"{}long int\char`\"{}, which will be initialized. \-If variable was set in initialization file, then this value will be written into $\ast$ptr. \-Otherwise, $\ast$ptr is unaltered.\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 1 if variable was initialized, 0 otherwise. 
 \end{DoxyReturn}
 
 
-References Ini\+::a, and Assignment\+\_\+set\+Long().
+\-References \-Ini\-::a, and \-Assignment\-\_\-set\-Long().
 
-\hypertarget{ini_8c_abd37ee8c3f9f112fcc3e3dbd2399d286}{\index{ini.\+c@{ini.\+c}!Ini\+\_\+set\+String@{Ini\+\_\+set\+String}}
-\index{Ini\+\_\+set\+String@{Ini\+\_\+set\+String}!ini.\+c@{ini.\+c}}
-\paragraph[{Ini\+\_\+set\+String}]{\setlength{\rightskip}{0pt plus 5cm}int Ini\+\_\+set\+String (
+\hypertarget{ini_8c_abd37ee8c3f9f112fcc3e3dbd2399d286}{\index{ini.\-c@{ini.\-c}!\-Ini\-\_\-set\-String@{\-Ini\-\_\-set\-String}}
+\index{\-Ini\-\_\-set\-String@{\-Ini\-\_\-set\-String}!ini.c@{ini.\-c}}
+\paragraph[{\-Ini\-\_\-set\-String}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Ini\-\_\-set\-String} (
 \begin{DoxyParamCaption}
-\item[{const {\bf Ini} $\ast$}]{ini, }
+\item[{const {\bf \-Ini} $\ast$}]{ini, }
 \item[{const char $\ast$}]{key, }
 \item[{char $\ast$}]{ptr, }
 \item[{int}]{size, }
@@ -231,29 +232,29 @@ References Ini\+::a, and Assignment\+\_\+set\+Long().
 )}}\label{ini_8c_abd37ee8c3f9f112fcc3e3dbd2399d286}
 
 
-Initialize $\ast$ptr do value corresponding to given key. 
+\-Initialize $\ast$ptr do value corresponding to given key. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ini} & A structure containing the assigned values.\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em ini} & \-A structure containing the assigned values.\\
 \hline
-\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{Ini} structure.\\
+\mbox{\tt in}  & {\em mandatory} & \-If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{\-Ini} structure.\\
 \hline
-\mbox{\tt out}  & {\em ptr} & Points to a character array containing \char`\"{}size\char`\"{} bytes. If the variable \char`\"{}key\char`\"{} is assigned within \char`\"{}ini\char`\"{}, its value will be copied into \char`\"{}ptr\char`\"{}. Otherwise, $\ast$ptr is unaltered.\\
+\mbox{\tt out}  & {\em ptr} & \-Points to a character array containing \char`\"{}size\char`\"{} bytes. \-If the variable \char`\"{}key\char`\"{} is assigned within \char`\"{}ini\char`\"{}, its value will be copied into \char`\"{}ptr\char`\"{}. \-Otherwise, $\ast$ptr is unaltered.\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 1 if variable was initialized, 0 otherwise. 
 \end{DoxyReturn}
 
 
-References Ini\+::a, and Assignment\+\_\+set\+String().
+\-References \-Ini\-::a, and \-Assignment\-\_\-set\-String().
 
-\hypertarget{ini_8c_aec52a7bf415b0c27c00d637293d9a6d5}{\index{ini.\+c@{ini.\+c}!Ini\+\_\+set\+Unsigned\+Int@{Ini\+\_\+set\+Unsigned\+Int}}
-\index{Ini\+\_\+set\+Unsigned\+Int@{Ini\+\_\+set\+Unsigned\+Int}!ini.\+c@{ini.\+c}}
-\paragraph[{Ini\+\_\+set\+Unsigned\+Int}]{\setlength{\rightskip}{0pt plus 5cm}unsigned Ini\+\_\+set\+Unsigned\+Int (
+\hypertarget{ini_8c_aec52a7bf415b0c27c00d637293d9a6d5}{\index{ini.\-c@{ini.\-c}!\-Ini\-\_\-set\-Unsigned\-Int@{\-Ini\-\_\-set\-Unsigned\-Int}}
+\index{\-Ini\-\_\-set\-Unsigned\-Int@{\-Ini\-\_\-set\-Unsigned\-Int}!ini.c@{ini.\-c}}
+\paragraph[{\-Ini\-\_\-set\-Unsigned\-Int}]{\setlength{\rightskip}{0pt plus 5cm}unsigned {\bf \-Ini\-\_\-set\-Unsigned\-Int} (
 \begin{DoxyParamCaption}
-\item[{const {\bf Ini} $\ast$}]{ini, }
+\item[{const {\bf \-Ini} $\ast$}]{ini, }
 \item[{const char $\ast$}]{key, }
 \item[{unsigned $\ast$}]{ptr, }
 \item[{int}]{mandatory}
@@ -261,21 +262,21 @@ References Ini\+::a, and Assignment\+\_\+set\+String().
 )}}\label{ini_8c_aec52a7bf415b0c27c00d637293d9a6d5}
 
 
-Initialize $\ast$ptr do value corresponding to given key. 
+\-Initialize $\ast$ptr do value corresponding to given key. 
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em ini} & A structure containing the assigned values.\\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt in}  & {\em ini} & \-A structure containing the assigned values.\\
 \hline
-\mbox{\tt in}  & {\em mandatory} & If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{Ini} structure.\\
+\mbox{\tt in}  & {\em mandatory} & \-If mandatory!=0, the function aborts execution if \char`\"{}key\char`\"{} is missing from \hyperlink{struct_ini}{\-Ini} structure.\\
 \hline
-\mbox{\tt out}  & {\em ptr} & Points to a variable of type \char`\"{}unsigned int\char`\"{}, which will be initialized. If variable was set in initialization file, then this value will be written into $\ast$ptr. Otherwise, $\ast$ptr is unaltered.\\
+\mbox{\tt out}  & {\em ptr} & \-Points to a variable of type \char`\"{}unsigned int\char`\"{}, which will be initialized. \-If variable was set in initialization file, then this value will be written into $\ast$ptr. \-Otherwise, $\ast$ptr is unaltered.\\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{\-Returns}
 1 if variable was initialized, 0 otherwise. 
 \end{DoxyReturn}
 
 
-References Ini\+::a, and Assignment\+\_\+set\+Unsigned\+Int().
+\-References \-Ini\-::a, and \-Assignment\-\_\-set\-Unsigned\-Int().
 

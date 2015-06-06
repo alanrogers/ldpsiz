@@ -1,120 +1,117 @@
-\hypertarget{hill_8c}{\subsection{hill.\+c File Reference}
-\label{hill_8c}\index{hill.\+c@{hill.\+c}}
+\hypertarget{hill_8c}{\subsection{hill.\-c \-File \-Reference}
+\label{hill_8c}\index{hill.\-c@{hill.\-c}}
 }
 
 
-Method of Hill, William G. 1975. T\+P\+B 8\+:117-\/126.  
+\-Method of \-Hill, \-William \-G. 1975. \-T\-P\-B 8\-:117-\/126.  
 
 
-{\ttfamily \#include $<$math.\+h$>$}\\*
-{\ttfamily \#include $<$string.\+h$>$}\\*
-{\ttfamily \#include $<$gsl/gsl\+\_\+matrix.\+h$>$}\\*
-{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}pophist.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}model.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}hill.\+h\char`\"{}}\\*
-\subsubsection*{Data Structures}
+{\ttfamily \#include $<$math.\-h$>$}\*
+{\ttfamily \#include $<$string.\-h$>$}\*
+{\ttfamily \#include $<$gsl/gsl\-\_\-matrix.\-h$>$}\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}pophist.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}model.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}hill.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}dprintf.\-h\char`\"{}}\*
+\subsubsection*{\-Data \-Structures}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{struct_hill_data}{Hill\+Data}
+struct \hyperlink{struct_hill_data}{\-Hill\-Data}
 \end{DoxyCompactItemize}
-\subsubsection*{Macros}
+\subsubsection*{\-Defines}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{hill_8c_ac25189db92959bff3c6c2adf4c34b50a}{\#define {\bfseries D\+I\+M}~4}\label{hill_8c_ac25189db92959bff3c6c2adf4c34b50a}
-
-\item 
-\hypertarget{hill_8c_a18891ed90ad4c8ca93859cb64935f396}{\#define {\bfseries D\+P\+R\+I\+N\+T\+F}(arg)}\label{hill_8c_a18891ed90ad4c8ca93859cb64935f396}
+\hypertarget{hill_8c_ac25189db92959bff3c6c2adf4c34b50a}{\#define {\bfseries \-D\-I\-M}~4}\label{hill_8c_ac25189db92959bff3c6c2adf4c34b50a}
 
 \end{DoxyCompactItemize}
-\subsubsection*{Functions}
+\subsubsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
-static int \hyperlink{hill_8c_aced5e1a804d1c760589f6df5c827b79e}{onestep} (const double x\mbox{[}$\,$\mbox{]}, double y\mbox{[}$\,$\mbox{]}, double two\+N, double c, double u)
-\begin{DoxyCompactList}\small\item\em Move the state vector forward one generation, using Hill's recurrence (Eqns 5 and 8). \end{DoxyCompactList}\item 
-\hypertarget{hill_8c_a57b10a39d30a0085852490861eaf5fa1}{static int {\bfseries get\+D\+R\+M} (double D\+R\+M\mbox{[}$\,$\mbox{]}\mbox{[}D\+I\+M\mbox{]}, double two\+N, const double c, double u)}\label{hill_8c_a57b10a39d30a0085852490861eaf5fa1}
+static int \hyperlink{hill_8c_aced5e1a804d1c760589f6df5c827b79e}{onestep} (const double x\mbox{[}$\,$\mbox{]}, double y\mbox{[}$\,$\mbox{]}, double two\-N, double c, double u)
+\begin{DoxyCompactList}\small\item\em \-Move the state vector forward one generation, using \-Hill's recurrence (\-Eqns 5 and 8). \end{DoxyCompactList}\item 
+\hypertarget{hill_8c_a57b10a39d30a0085852490861eaf5fa1}{static int {\bfseries get\-D\-R\-M} (double \-D\-R\-M\mbox{[}$\,$\mbox{]}\mbox{[}\-D\-I\-M\mbox{]}, double two\-N, const double c, double u)}\label{hill_8c_a57b10a39d30a0085852490861eaf5fa1}
 
 \item 
-\hypertarget{hill_8c_ab05d16a93d0df4c7a81cb964b4301ff3}{static int {\bfseries get\+D\+R\+M\+\_\+slow} (double D\+R\+M\mbox{[}$\,$\mbox{]}\mbox{[}D\+I\+M\mbox{]}, double two\+N, const double c, double u)}\label{hill_8c_ab05d16a93d0df4c7a81cb964b4301ff3}
+\hypertarget{hill_8c_ab05d16a93d0df4c7a81cb964b4301ff3}{static int {\bfseries get\-D\-R\-M\-\_\-slow} (double \-D\-R\-M\mbox{[}$\,$\mbox{]}\mbox{[}\-D\-I\-M\mbox{]}, double two\-N, const double c, double u)}\label{hill_8c_ab05d16a93d0df4c7a81cb964b4301ff3}
 
 \item 
-int \hyperlink{hill_8c_adcdeacbc0d325ff13ef5b87b31febd2c}{iterate} (double y\mbox{[}$\,$\mbox{]}, int t, double two\+N, double c, double u)
-\begin{DoxyCompactList}\small\item\em Iterate the difference equation across t generations. \end{DoxyCompactList}\item 
-\hypertarget{hill_8c_a272f0a4ea14b9a9c0ee86f3f52a8bb1d}{double {\bfseries Hill\+\_\+exact\+L\+D} (double c, double u, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int two\+Nsmp, void $\ast$data)}\label{hill_8c_a272f0a4ea14b9a9c0ee86f3f52a8bb1d}
+int \hyperlink{hill_8c_adcdeacbc0d325ff13ef5b87b31febd2c}{iterate} (double y\mbox{[}$\,$\mbox{]}, int t, double two\-N, double c, double u)
+\begin{DoxyCompactList}\small\item\em \-Iterate the difference equation across t generations. \end{DoxyCompactList}\item 
+\hypertarget{hill_8c_a272f0a4ea14b9a9c0ee86f3f52a8bb1d}{double {\bfseries \-Hill\-\_\-exact\-L\-D} (double c, double u, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph, int two\-Nsmp, void $\ast$data)}\label{hill_8c_a272f0a4ea14b9a9c0ee86f3f52a8bb1d}
 
 \item 
-\hypertarget{hill_8c_a3ddab9127b62bc05149871d7f4784fb2}{void $\ast$ {\bfseries Hill\+Data\+\_\+new} (void)}\label{hill_8c_a3ddab9127b62bc05149871d7f4784fb2}
+\hypertarget{hill_8c_a3ddab9127b62bc05149871d7f4784fb2}{void $\ast$ {\bfseries \-Hill\-Data\-\_\-new} (void)}\label{hill_8c_a3ddab9127b62bc05149871d7f4784fb2}
 
 \item 
-\hypertarget{hill_8c_aadf2ca244b8e8611fe1e53d0c9c06d0d}{double \hyperlink{hill_8c_aadf2ca244b8e8611fe1e53d0c9c06d0d}{Hill\+Data\+\_\+state\+Val} (void $\ast$vdata, unsigned i)}\label{hill_8c_aadf2ca244b8e8611fe1e53d0c9c06d0d}
+\hypertarget{hill_8c_aadf2ca244b8e8611fe1e53d0c9c06d0d}{double \hyperlink{hill_8c_aadf2ca244b8e8611fe1e53d0c9c06d0d}{\-Hill\-Data\-\_\-state\-Val} (void $\ast$vdata, unsigned i)}\label{hill_8c_aadf2ca244b8e8611fe1e53d0c9c06d0d}
 
 \begin{DoxyCompactList}\small\item\em i'th state value \end{DoxyCompactList}\item 
-\hypertarget{hill_8c_a319079d8fa984f2b6d11987c60f293d4}{void \hyperlink{hill_8c_a319079d8fa984f2b6d11987c60f293d4}{Hill\+Data\+\_\+free} (void $\ast$vdata)}\label{hill_8c_a319079d8fa984f2b6d11987c60f293d4}
+\hypertarget{hill_8c_a319079d8fa984f2b6d11987c60f293d4}{void \hyperlink{hill_8c_a319079d8fa984f2b6d11987c60f293d4}{\-Hill\-Data\-\_\-free} (void $\ast$vdata)}\label{hill_8c_a319079d8fa984f2b6d11987c60f293d4}
 
 \begin{DoxyCompactList}\small\item\em free state variables \end{DoxyCompactList}\item 
-\hypertarget{hill_8c_a6eb1cc5c598fc7342700ad6eb8205ab0}{\hyperlink{struct_model}{Model} $\ast$ {\bfseries Model\+\_\+alloc\+Hill} (int two\+Nsmp)}\label{hill_8c_a6eb1cc5c598fc7342700ad6eb8205ab0}
+\hypertarget{hill_8c_a6eb1cc5c598fc7342700ad6eb8205ab0}{\hyperlink{struct_model}{\-Model} $\ast$ {\bfseries \-Model\-\_\-alloc\-Hill} (int two\-Nsmp)}\label{hill_8c_a6eb1cc5c598fc7342700ad6eb8205ab0}
 
 \item 
-\hypertarget{hill_8c_adae980ef72ef0a54baf36900fa0fdaaf}{size\+\_\+t {\bfseries Hill\+\_\+state\+Dim} (void)}\label{hill_8c_adae980ef72ef0a54baf36900fa0fdaaf}
+\hypertarget{hill_8c_adae980ef72ef0a54baf36900fa0fdaaf}{size\-\_\-t {\bfseries \-Hill\-\_\-state\-Dim} (void)}\label{hill_8c_adae980ef72ef0a54baf36900fa0fdaaf}
 
 \item 
-\hypertarget{hill_8c_ad010999089feaa2dcb731fa916dbd633}{const char $\ast$ {\bfseries Hill\+\_\+state\+Lbl} (unsigned i)}\label{hill_8c_ad010999089feaa2dcb731fa916dbd633}
+\hypertarget{hill_8c_ad010999089feaa2dcb731fa916dbd633}{const char $\ast$ {\bfseries \-Hill\-\_\-state\-Lbl} (unsigned i)}\label{hill_8c_ad010999089feaa2dcb731fa916dbd633}
 
 \item 
-\hypertarget{hill_8c_a39041a2d4253285b325a623e582bdc3b}{int {\bfseries Hill\+\_\+geteq} (double x\mbox{[}$\,$\mbox{]}, double two\+N, double c, double u)}\label{hill_8c_a39041a2d4253285b325a623e582bdc3b}
+\hypertarget{hill_8c_a39041a2d4253285b325a623e582bdc3b}{int {\bfseries \-Hill\-\_\-geteq} (double x\mbox{[}$\,$\mbox{]}, double two\-N, double c, double u)}\label{hill_8c_a39041a2d4253285b325a623e582bdc3b}
 
 \item 
-\hypertarget{hill_8c_a7c015fac844b9182f0882921a5563ae8}{void {\bfseries Hill\+\_\+approxeq} (double x\mbox{[}$\,$\mbox{]}, double two\+N, double c, double u)}\label{hill_8c_a7c015fac844b9182f0882921a5563ae8}
+\hypertarget{hill_8c_a7c015fac844b9182f0882921a5563ae8}{void {\bfseries \-Hill\-\_\-approxeq} (double x\mbox{[}$\,$\mbox{]}, double two\-N, double c, double u)}\label{hill_8c_a7c015fac844b9182f0882921a5563ae8}
 
 \item 
-int \hyperlink{hill_8c_a19e03150835d0d4622e9c2247c3ed2a1}{Hill\+\_\+dydt} (double t\+\_\+notused, const double x\mbox{[}$\,$\mbox{]}, double f\mbox{[}$\,$\mbox{]}, void $\ast$params)
-\begin{DoxyCompactList}\small\item\em params points to a structure of type \hyperlink{structdydt__params}{dydt\+\_\+params}. \end{DoxyCompactList}\item 
-\hypertarget{hill_8c_a9b86867656c9f5f274b91bdfea6f6961}{int {\bfseries Hill\+\_\+test\+\_\+get\+D\+R\+M} (double two\+N, double c, double u)}\label{hill_8c_a9b86867656c9f5f274b91bdfea6f6961}
+int \hyperlink{hill_8c_a19e03150835d0d4622e9c2247c3ed2a1}{\-Hill\-\_\-dydt} (double t\-\_\-notused, const double x\mbox{[}$\,$\mbox{]}, double f\mbox{[}$\,$\mbox{]}, void $\ast$params)
+\begin{DoxyCompactList}\small\item\em params points to a structure of type \hyperlink{structdydt__params}{dydt\-\_\-params}. \end{DoxyCompactList}\item 
+\hypertarget{hill_8c_a9b86867656c9f5f274b91bdfea6f6961}{int {\bfseries \-Hill\-\_\-test\-\_\-get\-D\-R\-M} (double two\-N, double c, double u)}\label{hill_8c_a9b86867656c9f5f274b91bdfea6f6961}
 
 \item 
-\hypertarget{hill_8c_a9a0a1d1b916840b5a536b0c47c28c695}{int {\bfseries Hill\+\_\+test\+\_\+onestep} (double $\ast$x1, int dim, double two\+N, double c, double u)}\label{hill_8c_a9a0a1d1b916840b5a536b0c47c28c695}
+\hypertarget{hill_8c_a9a0a1d1b916840b5a536b0c47c28c695}{int {\bfseries \-Hill\-\_\-test\-\_\-onestep} (double $\ast$x1, int dim, double two\-N, double c, double u)}\label{hill_8c_a9a0a1d1b916840b5a536b0c47c28c695}
 
 \item 
-\hypertarget{hill_8c_a693bf14d713bed6f4b7f4ef655ddde49}{double \hyperlink{hill_8c_a693bf14d713bed6f4b7f4ef655ddde49}{Hill\+\_\+sigdsq\+Eq} (double c, double u, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, unsigned which\+Epoch, int two\+Nsmp, void $\ast$vdata)}\label{hill_8c_a693bf14d713bed6f4b7f4ef655ddde49}
+\hypertarget{hill_8c_a693bf14d713bed6f4b7f4ef655ddde49}{double \hyperlink{hill_8c_a693bf14d713bed6f4b7f4ef655ddde49}{\-Hill\-\_\-sigdsq\-Eq} (double c, double u, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph, unsigned which\-Epoch, int two\-Nsmp, void $\ast$vdata)}\label{hill_8c_a693bf14d713bed6f4b7f4ef655ddde49}
 
-\begin{DoxyCompactList}\small\item\em Set state vector to equilibrium for Epoch \char`\"{}which\+Epoch\char`\"{} and then use it to calculate sigmdsq. \end{DoxyCompactList}\item 
-\hypertarget{hill_8c_abb006dbddcd1bc8ef31efe3d83066db3}{double \hyperlink{hill_8c_abb006dbddcd1bc8ef31efe3d83066db3}{Hill\+\_\+sigdsq} (\hyperlink{struct_o_d_e}{O\+D\+E} $\ast$ode, double c, double u, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, int two\+Nsmp)}\label{hill_8c_abb006dbddcd1bc8ef31efe3d83066db3}
+\begin{DoxyCompactList}\small\item\em \-Set state vector to equilibrium for \-Epoch \char`\"{}which\-Epoch\char`\"{} and then use it to calculate sigmdsq. \end{DoxyCompactList}\item 
+\hypertarget{hill_8c_abb006dbddcd1bc8ef31efe3d83066db3}{double \hyperlink{hill_8c_abb006dbddcd1bc8ef31efe3d83066db3}{\-Hill\-\_\-sigdsq} (\hyperlink{struct_o_d_e}{\-O\-D\-E} $\ast$ode, double c, double u, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph, int two\-Nsmp)}\label{hill_8c_abb006dbddcd1bc8ef31efe3d83066db3}
 
-\begin{DoxyCompactList}\small\item\em Set state vector to initial equilibrium, then evolve it through the population history, and then use this state vector to calculate sigmdsq. \end{DoxyCompactList}\item 
-double \hyperlink{hill_8c_a794ee2bad24a1057c0d5c96f0adbe1a6}{Hill\+\_\+get\+\_\+sigdsq} (double y\mbox{[}$\,$\mbox{]}, int two\+Nsmp)
-\begin{DoxyCompactList}\small\item\em Calculate sigma\+\_\+d$^\wedge$2 from state vector. \end{DoxyCompactList}\item 
-int \hyperlink{hill_8c_a921e7febb90128da0f65ff2f88c33d9e}{Hill\+\_\+evolve\+Discrete} (double y\mbox{[}$\,$\mbox{]}, \hyperlink{struct_pop_hist}{Pop\+Hist} $\ast$ph, double c, double u)
-\begin{DoxyCompactList}\small\item\em Evolve through all Epochs of population history, using step size h and beginning with initial equilibrium. \end{DoxyCompactList}\item 
-int \hyperlink{hill_8c_ad3af683d4146dd0b3d0ac1204fbf83e4}{onestep\+\_\+slow} (const double x\mbox{[}$\,$\mbox{]}, double y\mbox{[}$\,$\mbox{]}, double two\+N, double c, double u)
-\begin{DoxyCompactList}\small\item\em This version does not have unrolled loops. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsubsection*{Variables}
+\begin{DoxyCompactList}\small\item\em \-Set state vector to initial equilibrium, then evolve it through the population history, and then use this state vector to calculate sigmdsq. \end{DoxyCompactList}\item 
+double \hyperlink{hill_8c_a794ee2bad24a1057c0d5c96f0adbe1a6}{\-Hill\-\_\-get\-\_\-sigdsq} (double y\mbox{[}$\,$\mbox{]}, int two\-Nsmp)
+\begin{DoxyCompactList}\small\item\em \-Calculate sigma\-\_\-d$^\wedge$2 from state vector. \end{DoxyCompactList}\item 
+int \hyperlink{hill_8c_a921e7febb90128da0f65ff2f88c33d9e}{\-Hill\-\_\-evolve\-Discrete} (double y\mbox{[}$\,$\mbox{]}, \hyperlink{struct_pop_hist}{\-Pop\-Hist} $\ast$ph, double c, double u)
+\begin{DoxyCompactList}\small\item\em \-Evolve through all \-Epochs of population history, using step size h and beginning with initial equilibrium. \end{DoxyCompactList}\item 
+int \hyperlink{hill_8c_ad3af683d4146dd0b3d0ac1204fbf83e4}{onestep\-\_\-slow} (const double x\mbox{[}$\,$\mbox{]}, double y\mbox{[}$\,$\mbox{]}, double two\-N, double c, double u)
+\begin{DoxyCompactList}\small\item\em \-This version does not have unrolled loops. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{\-Variables}
 \begin{DoxyCompactItemize}
 \item 
-static const char $\ast$ {\bfseries state\+Lbl} \mbox{[}D\+I\+M\mbox{]}
+\hypertarget{hill_8c_a8ff690d75a6011defbc74c5de4edebaa}{static const char $\ast$ {\bfseries state\-Lbl} \mbox{[}\-D\-I\-M\mbox{]} = \{ \char`\"{}\-Ha$\ast$\-Hb\char`\"{}, \char`\"{}4\-S\mbox{[}ab\-D\mbox{]}\char`\"{}, \char`\"{}2\-S\mbox{[}\-D$^\wedge$2\mbox{]}\char`\"{}, \char`\"{}\-H\char`\"{} \}}\label{hill_8c_a8ff690d75a6011defbc74c5de4edebaa}
+
 \end{DoxyCompactItemize}
 
 
-\subsubsection{Detailed Description}
-Method of Hill, William G. 1975. T\+P\+B 8\+:117-\/126. 
-
-\begin{DoxyAuthor}{Author}
-Alan R. Rogers The state variable is as defined on p 120 of Hill (1975). Hill's x corresponds to entries 0, 1, and 2 of my vector below. Hill also needs the expected heterozygosity (see his eqn 7), so I have added that on as element 3 of the state vector.
+\subsubsection{\-Detailed \-Description}
+\-Method of \-Hill, \-William \-G. 1975. \-T\-P\-B 8\-:117-\/126. \begin{DoxyAuthor}{\-Author}
+\-Alan \-R. \-Rogers \-The state variable is as defined on p 120 of \-Hill (1975). \-Hill's x corresponds to entries 0, 1, and 2 of my vector below. \-Hill also needs the expected heterozygosity (see his eqn 7), so \-I have added that on as element 3 of the state vector.
 \end{DoxyAuthor}
-y\mbox{[}0\mbox{]} = E\mbox{[}H\+\_\+\+A$\ast$\+H\+\_\+\+B\mbox{]} y\mbox{[}1\mbox{]} = 4 E\mbox{[}sum\+\_\+\{ij\} a\+\_\+i b\+\_\+j D\+\_\+\{ij\}\mbox{]} y\mbox{[}2\mbox{]} = 2 E\mbox{[}sum\+\_\+\{ij\} D\+\_\+\{ij\}$^\wedge$2 y\mbox{[}3\mbox{]} = E\mbox{[}H\+\_\+\+A\mbox{]} = E\mbox{[}H\+\_\+\+B\mbox{]}
+y\mbox{[}0\mbox{]} = \-E\mbox{[}\-H\-\_\-\-A$\ast$\-H\-\_\-\-B\mbox{]} y\mbox{[}1\mbox{]} = 4 \-E\mbox{[}sum\-\_\-\{ij\} a\-\_\-i b\-\_\-j \-D\-\_\-\{ij\}\mbox{]} y\mbox{[}2\mbox{]} = 2 \-E\mbox{[}sum\-\_\-\{ij\} \-D\-\_\-\{ij\}$^\wedge$2 y\mbox{[}3\mbox{]} = \-E\mbox{[}\-H\-\_\-\-A\mbox{]} = \-E\mbox{[}\-H\-\_\-\-B\mbox{]}
 
-Here, a\+\_\+i and b\+\_\+j are the frequencies of the i'th allele at locus A and the j'th allele at locus B. D\+\_\+\{ij\} is the coefficient of linkage disequilibrium between these alleles, H\+\_\+\+A = 1 -\/ sum a\+\_\+i$^\wedge$2 is the heterozygosity at locus A and H\+\_\+\+B is the corresponding value for locus B.
+\-Here, a\-\_\-i and b\-\_\-j are the frequencies of the i'th allele at locus \-A and the j'th allele at locus \-B. \-D\-\_\-\{ij\} is the coefficient of linkage disequilibrium between these alleles, \-H\-\_\-\-A = 1 -\/ sum a\-\_\-i$^\wedge$2 is the heterozygosity at locus \-A and \-H\-\_\-\-B is the corresponding value for locus \-B.
 
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
+\begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}
 
 
-\subsubsection{Function Documentation}
-\hypertarget{hill_8c_a19e03150835d0d4622e9c2247c3ed2a1}{\index{hill.\+c@{hill.\+c}!Hill\+\_\+dydt@{Hill\+\_\+dydt}}
-\index{Hill\+\_\+dydt@{Hill\+\_\+dydt}!hill.\+c@{hill.\+c}}
-\paragraph[{Hill\+\_\+dydt}]{\setlength{\rightskip}{0pt plus 5cm}int Hill\+\_\+dydt (
+\subsubsection{\-Function \-Documentation}
+\hypertarget{hill_8c_a19e03150835d0d4622e9c2247c3ed2a1}{\index{hill.\-c@{hill.\-c}!\-Hill\-\_\-dydt@{\-Hill\-\_\-dydt}}
+\index{\-Hill\-\_\-dydt@{\-Hill\-\_\-dydt}!hill.c@{hill.\-c}}
+\paragraph[{\-Hill\-\_\-dydt}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Hill\-\_\-dydt} (
 \begin{DoxyParamCaption}
-\item[{double}]{t\+\_\+notused, }
+\item[{double}]{t\-\_\-notused, }
 \item[{const double}]{x\mbox{[}$\,$\mbox{]}, }
 \item[{double}]{f\mbox{[}$\,$\mbox{]}, }
 \item[{void $\ast$}]{params}
@@ -122,110 +119,110 @@ Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt roge
 )}}\label{hill_8c_a19e03150835d0d4622e9c2247c3ed2a1}
 
 
-params points to a structure of type \hyperlink{structdydt__params}{dydt\+\_\+params}. 
+params points to a structure of type \hyperlink{structdydt__params}{dydt\-\_\-params}. 
 
-On return, f\mbox{[}\mbox{]} contains the derivatives of y1\mbox{[}\mbox{]}, as approximated by difference equations. 
+\-On return, f\mbox{[}\mbox{]} contains the derivatives of y1\mbox{[}\mbox{]}, as approximated by difference equations. 
 
-References onestep().
+\-References onestep().
 
 
 
-Referenced by Hill\+\_\+sigdsq().
+\-Referenced by \-Hill\-\_\-sigdsq().
 
-\hypertarget{hill_8c_a921e7febb90128da0f65ff2f88c33d9e}{\index{hill.\+c@{hill.\+c}!Hill\+\_\+evolve\+Discrete@{Hill\+\_\+evolve\+Discrete}}
-\index{Hill\+\_\+evolve\+Discrete@{Hill\+\_\+evolve\+Discrete}!hill.\+c@{hill.\+c}}
-\paragraph[{Hill\+\_\+evolve\+Discrete}]{\setlength{\rightskip}{0pt plus 5cm}int Hill\+\_\+evolve\+Discrete (
+\hypertarget{hill_8c_a921e7febb90128da0f65ff2f88c33d9e}{\index{hill.\-c@{hill.\-c}!\-Hill\-\_\-evolve\-Discrete@{\-Hill\-\_\-evolve\-Discrete}}
+\index{\-Hill\-\_\-evolve\-Discrete@{\-Hill\-\_\-evolve\-Discrete}!hill.c@{hill.\-c}}
+\paragraph[{\-Hill\-\_\-evolve\-Discrete}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Hill\-\_\-evolve\-Discrete} (
 \begin{DoxyParamCaption}
 \item[{double}]{y\mbox{[}$\,$\mbox{]}, }
-\item[{{\bf Pop\+Hist} $\ast$}]{ph, }
+\item[{{\bf \-Pop\-Hist} $\ast$}]{ph, }
 \item[{double}]{c, }
 \item[{double}]{u}
 \end{DoxyParamCaption}
 )}}\label{hill_8c_a921e7febb90128da0f65ff2f88c33d9e}
 
 
-Evolve through all Epochs of population history, using step size h and beginning with initial equilibrium. 
+\-Evolve through all \-Epochs of population history, using step size h and beginning with initial equilibrium. 
 
-Calculation iterates Hill's difference equation. The initial value of y is set using Hill's equation for equilibrium.
+\-Calculation iterates \-Hill's difference equation. \-The initial value of y is set using \-Hill's equation for equilibrium.
 
 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em y} & On return, y contains Hill's vector of moments. \\
+\begin{DoxyParams}[1]{\-Parameters}
+\mbox{\tt out}  & {\em y} & \-On return, y contains \-Hill's vector of moments. \\
 \hline
-\mbox{\tt in}  & {\em ph} & Describes the population's history. If ph contains just one Epoch, y gets its equilibrium value. \\
+\mbox{\tt in}  & {\em ph} & \-Describes the population's history. \-If ph contains just one \-Epoch, y gets its equilibrium value. \\
 \hline
-\mbox{\tt in}  & {\em c} & Recombination rate; overrides values in ph. \\
+\mbox{\tt in}  & {\em c} & \-Recombination rate; overrides values in ph. \\
 \hline
-\mbox{\tt in}  & {\em u} & Mutation rate. \\
+\mbox{\tt in}  & {\em u} & \-Mutation rate. \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Always returns 0. 
+\begin{DoxyReturn}{\-Returns}
+\-Always returns 0. 
 \end{DoxyReturn}
 
 
-References iterate(), Pop\+Hist\+\_\+duration(), Pop\+Hist\+\_\+nepoch(), and Pop\+Hist\+\_\+two\+N().
+\-References iterate(), \-Pop\-Hist\-\_\-duration(), \-Pop\-Hist\-\_\-nepoch(), and \-Pop\-Hist\-\_\-two\-N().
 
-\hypertarget{hill_8c_a794ee2bad24a1057c0d5c96f0adbe1a6}{\index{hill.\+c@{hill.\+c}!Hill\+\_\+get\+\_\+sigdsq@{Hill\+\_\+get\+\_\+sigdsq}}
-\index{Hill\+\_\+get\+\_\+sigdsq@{Hill\+\_\+get\+\_\+sigdsq}!hill.\+c@{hill.\+c}}
-\paragraph[{Hill\+\_\+get\+\_\+sigdsq}]{\setlength{\rightskip}{0pt plus 5cm}double Hill\+\_\+get\+\_\+sigdsq (
+\hypertarget{hill_8c_a794ee2bad24a1057c0d5c96f0adbe1a6}{\index{hill.\-c@{hill.\-c}!\-Hill\-\_\-get\-\_\-sigdsq@{\-Hill\-\_\-get\-\_\-sigdsq}}
+\index{\-Hill\-\_\-get\-\_\-sigdsq@{\-Hill\-\_\-get\-\_\-sigdsq}!hill.c@{hill.\-c}}
+\paragraph[{\-Hill\-\_\-get\-\_\-sigdsq}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Hill\-\_\-get\-\_\-sigdsq} (
 \begin{DoxyParamCaption}
 \item[{double}]{y\mbox{[}$\,$\mbox{]}, }
-\item[{int}]{two\+Nsmp}
+\item[{int}]{two\-Nsmp}
 \end{DoxyParamCaption}
 )}}\label{hill_8c_a794ee2bad24a1057c0d5c96f0adbe1a6}
 
 
-Calculate sigma\+\_\+d$^\wedge$2 from state vector. 
+\-Calculate sigma\-\_\-d$^\wedge$2 from state vector. 
 
-On page 124, just after eqn 14, in Hill, William G. 1975. T\+P\+B 8\+:117-\/126. 
+\-On page 124, just after eqn 14, in \-Hill, \-William \-G. 1975. \-T\-P\-B 8\-:117-\/126. 
 
-References onestep().
+\-References onestep().
 
 
 
-Referenced by Hill\+\_\+sigdsq(), and Hill\+\_\+sigdsq\+Eq().
+\-Referenced by \-Hill\-\_\-sigdsq(), and \-Hill\-\_\-sigdsq\-Eq().
 
-\hypertarget{hill_8c_adcdeacbc0d325ff13ef5b87b31febd2c}{\index{hill.\+c@{hill.\+c}!iterate@{iterate}}
-\index{iterate@{iterate}!hill.\+c@{hill.\+c}}
-\paragraph[{iterate}]{\setlength{\rightskip}{0pt plus 5cm}static int iterate (
+\hypertarget{hill_8c_adcdeacbc0d325ff13ef5b87b31febd2c}{\index{hill.\-c@{hill.\-c}!iterate@{iterate}}
+\index{iterate@{iterate}!hill.c@{hill.\-c}}
+\paragraph[{iterate}]{\setlength{\rightskip}{0pt plus 5cm}static int {\bf iterate} (
 \begin{DoxyParamCaption}
 \item[{double}]{y\mbox{[}$\,$\mbox{]}, }
 \item[{int}]{t, }
-\item[{double}]{two\+N, }
+\item[{double}]{two\-N, }
 \item[{double}]{c, }
 \item[{double}]{u}
 \end{DoxyParamCaption}
 )}}\label{hill_8c_adcdeacbc0d325ff13ef5b87b31febd2c}
 
 
-Iterate the difference equation across t generations. 
+\-Iterate the difference equation across t generations. 
 
 
 
-References onestep().
+\-References onestep().
 
 
 
-Referenced by Hill\+\_\+evolve\+Discrete().
+\-Referenced by \-Hill\-\_\-evolve\-Discrete(), and \-Strobeck\-\_\-evolve\-Discrete().
 
-\hypertarget{hill_8c_aced5e1a804d1c760589f6df5c827b79e}{\index{hill.\+c@{hill.\+c}!onestep@{onestep}}
-\index{onestep@{onestep}!hill.\+c@{hill.\+c}}
-\paragraph[{onestep}]{\setlength{\rightskip}{0pt plus 5cm}static int onestep (
+\hypertarget{hill_8c_aced5e1a804d1c760589f6df5c827b79e}{\index{hill.\-c@{hill.\-c}!onestep@{onestep}}
+\index{onestep@{onestep}!hill.c@{hill.\-c}}
+\paragraph[{onestep}]{\setlength{\rightskip}{0pt plus 5cm}static int {\bf onestep} (
 \begin{DoxyParamCaption}
 \item[{const double}]{x\mbox{[}$\,$\mbox{]}, }
 \item[{double}]{y\mbox{[}$\,$\mbox{]}, }
-\item[{double}]{two\+N, }
+\item[{double}]{two\-N, }
 \item[{double}]{c, }
 \item[{double}]{u}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}}\label{hill_8c_aced5e1a804d1c760589f6df5c827b79e}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{hill_8c_aced5e1a804d1c760589f6df5c827b79e}
 
 
-Move the state vector forward one generation, using Hill's recurrence (Eqns 5 and 8). 
+\-Move the state vector forward one generation, using \-Hill's recurrence (\-Eqns 5 and 8). 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{\-Parameters}
 {\em input\mbox{]}} & x is the initial state vector. \\
 \hline
 {\em output\mbox{]}} & y is the new state vector. \\
@@ -233,43 +230,29 @@ Move the state vector forward one generation, using Hill's recurrence (Eqns 5 an
 \end{DoxyParams}
 
 
-Referenced by Hill\+\_\+dydt(), Hill\+\_\+get\+\_\+sigdsq(), and iterate().
+\-Referenced by \-Hill\-\_\-dydt(), \-Hill\-\_\-get\-\_\-sigdsq(), and iterate().
 
-\hypertarget{hill_8c_ad3af683d4146dd0b3d0ac1204fbf83e4}{\index{hill.\+c@{hill.\+c}!onestep\+\_\+slow@{onestep\+\_\+slow}}
-\index{onestep\+\_\+slow@{onestep\+\_\+slow}!hill.\+c@{hill.\+c}}
-\paragraph[{onestep\+\_\+slow}]{\setlength{\rightskip}{0pt plus 5cm}int onestep\+\_\+slow (
+\hypertarget{hill_8c_ad3af683d4146dd0b3d0ac1204fbf83e4}{\index{hill.\-c@{hill.\-c}!onestep\-\_\-slow@{onestep\-\_\-slow}}
+\index{onestep\-\_\-slow@{onestep\-\_\-slow}!hill.c@{hill.\-c}}
+\paragraph[{onestep\-\_\-slow}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf onestep\-\_\-slow} (
 \begin{DoxyParamCaption}
 \item[{const double}]{x\mbox{[}$\,$\mbox{]}, }
 \item[{double}]{y\mbox{[}$\,$\mbox{]}, }
-\item[{double}]{two\+N, }
+\item[{double}]{two\-N, }
 \item[{double}]{c, }
 \item[{double}]{u}
 \end{DoxyParamCaption}
 )}}\label{hill_8c_ad3af683d4146dd0b3d0ac1204fbf83e4}
 
 
-This version does not have unrolled loops. 
+\-This version does not have unrolled loops. 
 
-Move the state vector forward one generation, using Hill's recurrence (Eqns 5 and 8).
+\-Move the state vector forward one generation, using \-Hill's recurrence (\-Eqns 5 and 8).
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{\-Parameters}
 {\em input\mbox{]}} & x is the initial state vector. \\
 \hline
 {\em output\mbox{]}} & y is the new state vector. \\
 \hline
 \end{DoxyParams}
-
-
-\subsubsection{Variable Documentation}
-\hypertarget{hill_8c_a8ff690d75a6011defbc74c5de4edebaa}{\index{hill.\+c@{hill.\+c}!state\+Lbl@{state\+Lbl}}
-\index{state\+Lbl@{state\+Lbl}!hill.\+c@{hill.\+c}}
-\paragraph[{state\+Lbl}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ state\+Lbl\mbox{[}D\+I\+M\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}}\label{hill_8c_a8ff690d75a6011defbc74c5de4edebaa}
-{\bfseries Initial value\+:}
-\begin{DoxyCode}
-= \{ \textcolor{stringliteral}{"Ha*Hb"},
-    \textcolor{stringliteral}{"4S[abD]"},
-    \textcolor{stringliteral}{"2S[D^2]"},
-    \textcolor{stringliteral}{"H"}
-\}
-\end{DoxyCode}

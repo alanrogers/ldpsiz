@@ -1,4 +1,4 @@
-.TH "BootConf" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "BootConf" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -15,48 +15,39 @@ Contains the data for a bootstrap confidence interval\&.
 .ti -1c
 .RI "long \fBnReps\fP"
 .br
-.RI "\fI
-.SH "of repetitions"
-.PP
-\fP"
 .ti -1c
 .RI "long \fBblockLength\fP"
 .br
-.RI "\fI
-.SH "of nucleotide positions per block"
-.PP
-\fP"
 .ti -1c
 .RI "int \fBnBins\fP"
 .br
-.RI "\fItabulate recombination rates into this number of bins \fP"
+.ti -1c
+.RI "unsigned \fBspecDim\fP"
+.br
 .ti -1c
 .RI "double \fBconfidence\fP"
 .br
-.RI "\fIfraction of sampling dist inside confidence region \fP"
 .ti -1c
 .RI "double * \fBlow\fP"
 .br
 .ti -1c
 .RI "double * \fBhigh\fP"
 .br
-.RI "\fIconfidence bounds \fP"
+.ti -1c
+.RI "double * \fBloSpec\fP"
+.br
+.ti -1c
+.RI "double * \fBhiSpec\fP"
+.br
 .ti -1c
 .RI "double * \fBsep_cm\fP"
 .br
-.RI "\fIsep_cm[i] is the mean centimorgans separating pairs of sites within bin i\&. \fP"
 .in -1c
 .SH "Detailed Description"
 .PP 
 Contains the data for a bootstrap confidence interval\&. 
 
 
-.SH "Field Documentation"
-.PP 
-.SS "double* BootConf::sep_cm"
-
-.PP
-sep_cm[i] is the mean centimorgans separating pairs of sites within bin i\&. 
 
 .SH "Author"
 .PP 

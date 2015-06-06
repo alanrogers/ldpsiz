@@ -1,152 +1,103 @@
-\subsection*{Introduction}
+\# \-Introduction \-Ldpsiz is a computer package that estimates the history of population size from data on linkage disequilibrium (\-L\-D).
 
-Ldpsiz is a computer package that estimates the history of population size from data on linkage disequilibrium (L\+D).
+\-L\-D is estimated in terms of the \char`\"{}standard linkage deviation\char`\"{}, $\sigma_d^2$ (\-Ohta and \-Kimura, 1971, \-Genetics 68\-: 571-\/580). \-This parameter is usually interpreted as an approximation to the expected value of $r^2$, the squared correlation between loci. $\sigma_d^2$ is a weighted average of $r^2$ values, where the weight given each pair of loci is the product of the two heterozygosities. \-Because of these weights, $\sigma_d^2$ is not affected much by loci near fixation. \-For this reason, it is ideal for use with low-\/coverage sequence data. \-Most of the sequencing errors in such data show up as singleton loci, which have little effect on $\sigma_d^2$.
 
-L\+D is estimated in terms of the \char`\"{}standard linkage deviation\char`\"{}, $\sigma_d^2$ (Ohta and Kimura, 1971, Genetics 68\+: 571-\/580). This parameter is usually interpreted as an approximation to the expected value of $r^2$, the squared correlation between loci. $\sigma_d^2$ is a weighted average of $r^2$ values, where the weight given each pair of loci is the product of the two heterozygosities. Because of these weights, $\sigma_d^2$ is not affected much by loci near fixation. For this reason, it is ideal for use with low-\/coverage sequence data. Most of the sequencing errors in such data show up as singleton loci, which have little effect on $\sigma_d^2$.
+\-To estimate population history parameters, `ldpsiz` minimizes the difference between values of $\sigma_d^2$ estimated from data and values predicted from population history. \-The predicted values are obtained from the recurrence equations either of \-Hill (1975, \-Theoretical \-Population \-Biology 8\-:117-\/126) or of \-Strobeck and \-Morgan (1978, \-Genetics 88\-:829-\/844). \-This calculation can be done in two different ways. \-The slow way (invoked using the `-\/-\/exact` option of \hyperlink{preld}{preld}) iterates the difference equations one generation at a time. \-The default method speeds things up by solving differential equations that approximate the difference equations. \-These methods are fast enough to allow one to examine a large number of hypotheses about history parameters.
 
-To estimate population history parameters, {\ttfamily ldpsiz} minimizes the difference between values of $\sigma_d^2$ estimated from data and values predicted from population history. The predicted values are obtained from the recurrence equations either of Hill (1975, Theoretical Population Biology 8\+:117-\/126) or of Strobeck and Morgan (1978, Genetics 88\+:829-\/844). This calculation can be done in two different ways. The slow way (invoked using the {\ttfamily -\/-\/exact} option of \hyperlink{preld}{preld}) iterates the difference equations one generation at a time. The default method speeds things up by solving differential equations that approximate the difference equations. These methods are fast enough to allow one to examine a large number of hypotheses about history parameters.
+\-To model population history, `ldpsiz` divides the past into a fixed number of epochs. \-Within each epoch, the population is assumed constant in size. \-There is no provision for multiple populations in the current version of the code. \-In the earliest epoch, the population is assumed to be at equilibrium with respect to genetic drift, mutation, and recombination.
 
-To model population history, {\ttfamily ldpsiz} divides the past into a fixed number of epochs. Within each epoch, the population is assumed constant in size. There is no provision for multiple populations in the current version of the code. In the earliest epoch, the population is assumed to be at equilibrium with respect to genetic drift, mutation, and recombination.
+\-Uncertainties are estimated using a moving-\/blocks bootstrap. \-In calculating $\sigma_d^2$, most operations are done only once for each pair of sites and are not repeated for each bootstrap replicate. \-Furthermore, calculations are parallelized. \-These provisions make it possible to use hundreds of bootstrap replicates in genome-\/scale analyses, on computers with large numbers of \-C\-P\-U cores.
 
-Uncertainties are estimated using a moving-\/blocks bootstrap. In calculating $\sigma_d^2$, most operations are done only once for each pair of sites and are not repeated for each bootstrap replicate. Furthermore, calculations are parallelized. These provisions make it possible to use hundreds of bootstrap replicates in genome-\/scale analyses, on computers with large numbers of C\+P\+U cores.
+\# \-Installation and testing
 
-\subsection*{Installation and testing}
+\-The package is available at \mbox{[}github\mbox{]}(github.\-com/alanrogers/ldpsiz) in various formats. \-Before compiling, you must install two libraries\-: `pthreads` and \mbox{[}`gsl`\mbox{]}(\href{http://www.gnu.org/software/gsl}{\tt http\-://www.\-gnu.\-org/software/gsl}). \-You will need not only the libraries themselves but also several header files, such as `pthread.h`. \-I didn't need to install `pthreads`, because it came bundled with the \-Gnu \-C compiler. \-But the gsl was an extra. \-Under ubuntu \-Linux, you can install it like this\-:
 
-The package is available at \href{github.com/alanrogers/ldpsiz}{\tt github} in various formats. Before compiling, you must install two libraries\+: {\ttfamily pthreads} and \href{http://www.gnu.org/software/gsl}{\tt `gsl`}. You will need not only the libraries themselves but also several header files, such as {\ttfamily pthread.\+h}. I didn't need to install {\ttfamily pthreads}, because it came bundled with the Gnu C compiler. But the gsl was an extra. Under ubuntu Linux, you can install it like this\+: \begin{DoxyVerb}sudo apt-get install libgsl0-dev
-\end{DoxyVerb}
+sudo apt-\/get install libgsl0-\/dev
 
+\-On the mac, using homebrew, the command is
 
-On the mac, using homebrew, the command is \begin{DoxyVerb}brew install gsl
-\end{DoxyVerb}
+brew install gsl
 
+\-By default, the executable files will be copied into a directory named `bin` in your home directory. \-If you want them to go somewhere else, edit the first non-\/comment line of src/\-Makefile.
 
-By default, the executable files will be copied into a directory named {\ttfamily bin} in your home directory. If you want them to go somewhere else, edit the first non-\/comment line of src/\+Makefile.
+\-Then
 
-Then
+1. \-Cd into the src directory. 2. \-Type \char`\"{}make\char`\"{}. 3. \-Type \char`\"{}make install\char`\"{}.
 
+\-This will try to place the executables into directory \char`\"{}bin\char`\"{} in the user's home directory. \-Make sure this directory appears in your \-P\-A\-T\-H, so that the shell can find it.
 
-\begin{DoxyEnumerate}
-\item Cd into the src directory.
-\item Type \char`\"{}make\char`\"{}.
-\item Type \char`\"{}make install\char`\"{}.
-\end{DoxyEnumerate}
+\-This installation will work under unix-\/like operating systems, such as linux and \-Apple's osx. \-I haven't tried to port this software to \-Windows.
 
-This will try to place the executables into directory \char`\"{}bin\char`\"{} in the user's home directory. Make sure this directory appears in your P\+A\+T\+H, so that the shell can find it.
+\-The directory `test` contains a unit test for many of the .c files in directory `src`. \-Within this directory, type
 
-This installation will work under unix-\/like operating systems, such as linux and Apple's osx. I haven't tried to port this software to Windows.
+1. make xhill 2. ./xhill
 
-The directory {\ttfamily test} contains a unit test for many of the .c files in directory {\ttfamily src}. Within this directory, type
+to test the source file `hill.c`. \-To run all unit tests, type \char`\"{}make\char`\"{}. \-This will take awhile, as some of the unit tests are slow.
 
+\-The unit tests will not compile if `\-N\-D\-E\-B\-U\-G` is defined. \-If optimization is turned on during optimization, some of the unit tests may be removed by the optimizer. \-To avoid these problems, comment out the relevant line at the top of src/\-Makefile.
 
-\begin{DoxyEnumerate}
-\item make xhill
-\item ./xhill
-\end{DoxyEnumerate}
+\# \-Genetic input data
 
-to test the source file {\ttfamily \hyperlink{hill_8c}{hill.\+c}}. To run all unit tests, type \char`\"{}make\char`\"{}. This will take awhile, as some of the unit tests are slow.
+`ldpsiz` reads data files in \char`\"{}gtp\char`\"{} format. \-In the distribution, the names of all such files end with the suffix \char`\"{}.\-gtp\char`\"{}. \-Here are the first few lines of a sample .gtp file containing haploid data\-:
 
-The unit tests will not compile if {\ttfamily N\+D\+E\+B\+U\+G} is defined. If optimization is turned on during optimization, some of the unit tests may be removed by the optimizer. To avoid these problems, comment out the relevant line at the top of src/\+Makefile.
+\# data source = /\-Users/rogers/bin/macs2gtp.py out \# time = 2012-\/05-\/28 09\-:28\-:11.\-098762 \# ploidy = 1 \# snp\-\_\-id nucpos mappos alleles genotypes 0 262 0.\-0262 \-A\-G 0001000000 1 362 0.\-0362 \-A\-T 0000010000 2 536 0.\-0536 \-T\-C 1000000000 3 799 0.\-0799 \-T\-A 0010000000 4 861 0.\-0861 \-C\-T 0000000100
 
-\subsection*{Genetic input data}
+\-The first 3 lines are optional, but the line of column headers is not. \-After the header (the lines beginning with '\#'), each line refers to a single-\/nucleotide polymorphism (a \hyperlink{struct_s_n_p}{\-S\-N\-P}). \-The columns are as follows\-:
 
-{\ttfamily ldpsiz} reads data files in \char`\"{}gtp\char`\"{} format. In the distribution, the names of all such files end with the suffix \char`\"{}.\+gtp\char`\"{}. Here are the first few lines of a sample .gtp file containing haploid data\+: \begin{DoxyVerb}# data source           = /Users/rogers/bin/macs2gtp.py out
-# time                  = 2012-05-28 09:28:11.098762
-# ploidy                = 1
-#   snp_id     nucpos   mappos alleles genotypes
-         0        262   0.0262      AG 0001000000
-         1        362   0.0362      AT 0000010000
-         2        536   0.0536      TC 1000000000
-         3        799   0.0799      TA 0010000000
-         4        861   0.0861      CT 0000000100
-\end{DoxyVerb}
+1. snp\-\_\-id is an arbitrary label associated with the \hyperlink{struct_s_n_p}{\-S\-N\-P}. \-These labels are not used. 2. nucpos \-The position of the \hyperlink{struct_s_n_p}{\-S\-N\-P} on the chromosome, measured in nucleotides. 3. mappos \-The position of the \hyperlink{struct_s_n_p}{\-S\-N\-P} on the chromosome, measured in centimorgans (c\-M). 4. \-The alleles present at this \hyperlink{struct_s_n_p}{\-S\-N\-P} locus (for example, \-A\-C or 01). 5. \-The state of each individual in the sample. \-State is always either 0 or 1. \-A \char`\"{}1\char`\"{} indicates that the allele at this position was the first allele in the list of alleles. \-A \char`\"{}0\char`\"{} indicates any of the alternate alleles. \-For example, if the alleles list was \char`\"{}\-A\-T\char`\"{}, then genotypes \char`\"{}0110\char`\"{} mean \char`\"{}\-T\-A\-A\-T\char`\"{}. \-There is no provision for missing values.
 
+\-For diploid data, the header must contain the line
 
-The first 3 lines are optional, but the line of column headers is not. After the header (the lines beginning with '\#'), each line refers to a single-\/nucleotide polymorphism (a \hyperlink{struct_s_n_p}{S\+N\+P}). The columns are as follows\+:
+\# ploidy = 2
 
+\-For diploid data, each phased genotype is a $\ast$pair$\ast$ of adjacent character values. \-Homozygotes look like \char`\"{}00\char`\"{} or \char`\"{}11\char`\"{}, and phased heterozygotes look like \char`\"{}01\char`\"{} or \char`\"{}10\char`\"{}. \-Unphased heterozygotes look like \char`\"{}h\char`\"{} and occupy just a single character position.
 
-\begin{DoxyEnumerate}
-\item snp\+\_\+id is an arbitrary label associated with the \hyperlink{struct_s_n_p}{S\+N\+P}. These labels are not used.
-\item nucpos The position of the \hyperlink{struct_s_n_p}{S\+N\+P} on the chromosome, measured in nucleotides.
-\item mappos The position of the \hyperlink{struct_s_n_p}{S\+N\+P} on the chromosome, measured in centimorgans (c\+M).
-\item The alleles present at this \hyperlink{struct_s_n_p}{S\+N\+P} locus (for example, A\+C or 01).
-\item The state of each individual in the sample. State is always either 0 or 1. A \char`\"{}1\char`\"{} indicates that the allele at this position was the first allele in the list of alleles. A \char`\"{}0\char`\"{} indicates any of the alternate alleles. For example, if the alleles list was \char`\"{}\+A\+T\char`\"{}, then genotypes \char`\"{}0110\char`\"{} mean \char`\"{}\+T\+A\+A\+T\char`\"{}. There is no provision for missing values.
-\end{DoxyEnumerate}
+\# \-Initialization file
 
-For diploid data, the header must contain the line \begin{DoxyVerb}# ploidy                = 2
-\end{DoxyVerb}
+\-Many of the programs read an initialization file called `ldpsiz.ini`, which can be used to set various parameters and to specify a population history. \-This makes it easy to use a single set of parameters in a variety of operations, involving different programs within the package.
 
+\-Here is an example initialization file\-:
 
-For diploid data, each phased genotype is a {\itshape pair} of adjacent character values. Homozygotes look like \char`\"{}00\char`\"{} or \char`\"{}11\char`\"{}, and phased heterozygotes look like \char`\"{}01\char`\"{} or \char`\"{}10\char`\"{}. Unphased heterozygotes look like \char`\"{}h\char`\"{} and occupy just a single character position.
+\# \-Comments go from \char`\"{}\#\char`\"{} to end of line. blocksize = 300 \# \-S\-N\-Ps per block in bootstrap bootfilename = eld.\-boot bootreps = 25 \# number of bootstrap replicates recombination = 2e-\/7 \# per site per generation mutation = 1e-\/7 \# per site per generation confidence = 0.\-8 \# size of confidence interval window\-Cm = 0.\-1 \# maximum difference (c\-M) btw \-S\-N\-Ps compared lo\-Cm = 0.\-0 \# lowest recombination rate in centimorgans hi\-Cm = 0.\-3 \# highest methods = \-Hill \# models of evolution; comma-\/separated nbins = 25 \# number of bins, each referring to a \# narrow range of recombination rates nthreads = 3 \# number of threads two\-Nsmp = 30 \# number of gene copies in sample
 
-\subsection*{Initialization file}
+\# \-Population history must come last in the file. \-In begins \# with a line containing the single word \char`\"{}\-Pop\-Hist\char`\"{}. \# \-Each row defines an epoch of population history. \-The first row \# refers to the most recent epoch. \# \-Column 1\-: length of epoch in generations \# \-Column 2\-: haploid population size, 2\-N \hyperlink{struct_pop_hist}{\-Pop\-Hist} \# generations two\-N 40 1e5 \# epoch 0 \-Inf 1e2 \# epoch 1
 
-Many of the programs read an initialization file called {\ttfamily ldpsiz.\+ini}, which can be used to set various parameters and to specify a population history. This makes it easy to use a single set of parameters in a variety of operations, involving different programs within the package.
+\-Parameters specified in `ldpsiz.ini` can be overridden by command-\/line arguments. \-Default values are provided for parameters not specified in either of these ways.
 
-Here is an example initialization file\+: \begin{DoxyVerb}# Comments go from "#" to end of line.
-blocksize       = 300  # SNPs per block in bootstrap
-bootfilename    = eld.boot
-bootreps        = 25   # number of bootstrap replicates
-recombination   = 2e-7 # per site per generation
-mutation        = 1e-7 # per site per generation
-confidence      = 0.8  # size of confidence interval
-windowCm        = 0.1  # maximum difference (cM) btw SNPs compared
-loCm            = 0.0  # lowest recombination rate in centimorgans
-hiCm            = 0.3  # highest
-methods         = Hill # models of evolution; comma-separated
-nbins           = 25   # number of bins, each referring to a 
-                       # narrow range of recombination rates
-nthreads        = 3    # number of threads
-twoNsmp         = 30   # number of gene copies in sample
+\# \-Usage
 
-# Population history must come last in the file. In begins 
-# with a line containing the single word "PopHist".
-# Each row defines an epoch of population history. The first row
-# refers to the most recent epoch.
-# Column 1: length of epoch in generations
-# Column 2: haploid population size, 2N
-PopHist
-# generations twoN
-           40  1e5   # epoch 0
-          Inf  1e2   # epoch 1
-\end{DoxyVerb}
+\-The `ldpsiz` package is not a single monolithic program, but rather a suite of programs. \-These programs are designed to be run at the command line\-: there is no graphical user interface. \-Each program will print a usage message in response to the command-\/line argument `-\/-\/help` or `-\/h`. \-The various programs are described briefly below. \-For more detail, see the documentation for each individual program.
 
+\#\# \-Converting genetic data into .gtp format
 
-Parameters specified in {\ttfamily ldpsiz.\+ini} can be overridden by command-\/line arguments. Default values are provided for parameters not specified in either of these ways.
+\-The package provides several programs for converting into .gtp format. `ms2gtp` and `macs2gtp.py` convert simulated data produced by `ms` and `macs`, and `vcf2gtp.py` converts the vcf-\/format data provided by the 1000 \-Genomes \-Project. \-These programs are written in \-Python, except for `ms2gtp`, which is in \-C.
 
-\subsection*{Usage}
+\#\#\# \-Converting data produced by `ms`
 
-The {\ttfamily ldpsiz} package is not a single monolithic program, but rather a suite of programs. These programs are designed to be run at the command line\+: there is no graphical user interface. Each program will print a usage message in response to the command-\/line argument {\ttfamily -\/-\/help} or {\ttfamily -\/h}. The various programs are described briefly below. For more detail, see the documentation for each individual program.
+`ms` is \-Dick \-Hudson's program for doing coalescent simulations with recombination. \-It can be downloaded from \-Dick's \mbox{[}homepage\mbox{]}(\href{http://home.uchicago.edu/rhudson1/source.html}{\tt http\-://home.\-uchicago.\-edu/rhudson1/source.\-html}). \-The `ldpsiz` package provides a program, \hyperlink{ms2gtp}{ms2gtp}, which converts the output of `ms` into .gtp format.
 
-\subsubsection*{Converting genetic data into .gtp format}
+\-This program is written in \-C, because it involves transposing a large matrix. \-The original version, written in \-Python, was slow.
 
-The package provides several programs for converting into .gtp format. {\ttfamily ms2gtp} and {\ttfamily \hyperlink{macs2gtp_8py}{macs2gtp.\+py}} convert simulated data produced by {\ttfamily ms} and {\ttfamily macs}, and {\ttfamily \hyperlink{vcf2gtp_8py}{vcf2gtp.\+py}} converts the vcf-\/format data provided by the 1000 Genomes Project. These programs are written in Python, except for {\ttfamily ms2gtp}, which is in C.
+\#\#\# \-Converting data produced by `macs`
 
-\paragraph*{Converting data produced by {\ttfamily ms}}
+\-Gary \-Chen's program, `macs`, uses an approximation to the coalescent algorithm, which makes it possible to simulate genome-\/scale data very fast. \-You can get it from \-Gary's \mbox{[}homepage\mbox{]}(\href{http://www-hsc.usc.edu/~garykche}{\tt http\-://www-\/hsc.\-usc.\-edu/$\sim$garykche}). \-To translate `macs` output into .gtp format, use the program \hyperlink{macs2gtp}{macs2gtp}.
 
-{\ttfamily ms} is Dick Hudson's program for doing coalescent simulations with recombination. It can be downloaded from Dick's \href{http://home.uchicago.edu/rhudson1/source.html}{\tt homepage}. The {\ttfamily ldpsiz} package provides a program, \hyperlink{ms2gtp}{ms2gtp}, which converts the output of {\ttfamily ms} into .gtp format.
+\#\#\# \-Converting data from the 1000-\/\-Genomes \-Project
 
-This program is written in C, because it involves transposing a large matrix. The original version, written in Python, was slow.
+\-To convert data files from the 1000-\/\-Genomes \-Project, use the program \hyperlink{vcf2gtp}{vcf2gtp}.
 
-\paragraph*{Converting data produced by {\ttfamily macs}}
+\#\# \-Predicting $\sigma_d^2$ from population history
 
-Gary Chen's program, {\ttfamily macs}, uses an approximation to the coalescent algorithm, which makes it possible to simulate genome-\/scale data very fast. You can get it from Gary's \href{http://www-hsc.usc.edu/~garykche}{\tt homepage}. To translate {\ttfamily macs} output into .gtp format, use the program \hyperlink{macs2gtp}{macs2gtp}.
+\-See the documentation for \hyperlink{preld}{preld}.
 
-\paragraph*{Converting data from the 1000-\/\+Genomes Project}
+\#\# \-Estimating $\sigma_d^2$
 
-To convert data files from the 1000-\/\+Genomes Project, use the program \hyperlink{vcf2gtp}{vcf2gtp}.
+\-See the documentation for \hyperlink{eld}{eld}.
 
-\subsubsection*{Predicting $\sigma_d^2$ from population history}
+\#\# \-Estimating parameters of population history
 
-See the documentation for \hyperlink{preld}{preld}.
+\-See the documentation for \hyperlink{sald}{sald}.
 
-\subsubsection*{Estimating $\sigma_d^2$}
+\#\# \-Examining the cost function.
 
-See the documentation for \hyperlink{eld}{eld}.
-
-\subsubsection*{Estimating parameters of population history}
-
-See the documentation for \hyperlink{sald}{sald}.
-
-\subsubsection*{Examining the cost function.}
-
-See the documentation for \hyperlink{mcmcld}{mcmcld}. 
+\-See the documentation for \hyperlink{mcmcld}{mcmcld}. 

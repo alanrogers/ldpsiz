@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['c_5farray_5fto_5fpophist',['C_array_to_PopHist',['../pophist_8c.html#a9c13fa126ca492dde926758c73e6743b',1,'C_array_to_PopHist(PopHist *ph, const double *v, int dim):&#160;pophist.c'],['../pophist_8h.html#a9c13fa126ca492dde926758c73e6743b',1,'C_array_to_PopHist(PopHist *ph, const double *v, int dim):&#160;pophist.c']]],
+  ['c_5farray_5fto_5fpophist',['C_array_to_PopHist',['../pophist_8c.html#a348601d901c52c6b451b6946b0aef8d5',1,'pophist.c']]],
   ['chain_5faccepted',['Chain_accepted',['../chain_8c.html#a0f451521959f64d3ab3266708b1db1b0',1,'Chain_accepted(const Chain *c):&#160;chain.c'],['../chain_8h.html#a0f451521959f64d3ab3266708b1db1b0',1,'Chain_accepted(const Chain *c):&#160;chain.c']]],
   ['chain_5fbestfit',['Chain_bestFit',['../chain_8c.html#a2f9437986928d01c19535b1da005386a',1,'Chain_bestFit(Chain *chain, double *bestLnObj, PopHist *bestPh):&#160;chain.c'],['../chain_8h.html#a2f9437986928d01c19535b1da005386a',1,'Chain_bestFit(Chain *chain, double *bestLnObj, PopHist *bestPh):&#160;chain.c']]],
   ['chain_5fflatness',['Chain_flatness',['../chain_8c.html#a2906747a6904acc6e573a2d3bb36ea09',1,'Chain_flatness(Chain *chain):&#160;chain.c'],['../chain_8h.html#a2906747a6904acc6e573a2d3bb36ea09',1,'Chain_flatness(Chain *chain):&#160;chain.c']]],

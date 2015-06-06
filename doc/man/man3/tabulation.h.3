@@ -1,10 +1,17 @@
-.TH "tabulation.h" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "tabulation.h" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 tabulation.h \- 
 .PP
-Header for \fBtabulation\&.c\fP\&.  
+Header for \fBtabulation\&.c\fP 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
@@ -12,6 +19,8 @@ Header for \fBtabulation\&.c\fP\&.
 \fC#include 'typedefs\&.h'\fP
 .br
 \fC#include 'misc\&.h'\fP
+.br
+\fC#include 'array\&.h'\fP
 .br
 
 .SS "Data Structures"
@@ -41,7 +50,7 @@ Header for \fBtabulation\&.c\fP\&.
 .RI "void \fBTabulation_print\fP (\fBTabulation\fP *tab, FILE *ofp)"
 .br
 .ti -1c
-.RI "int \fBTabulation_report\fP (\fBTabulation\fP *tab, double *sep_cm, long unsigned *nobs, double *sigdsq, double *rsq)"
+.RI "int \fBTabulation_report\fP (\fBTabulation\fP *tab, \fBDblArray\fP *sep_cm, \fBULIntArray\fP *nobs, \fBDblArray\fP *sigdsq, \fBDblArray\fP *rsq)"
 .br
 .ti -1c
 .RI "double \fBTabulation_sigdsq\fP (\fBTabulation\fP *tab, int bin, double *sep_cm, long unsigned *nobs)"
@@ -91,25 +100,24 @@ Header for \fBtabulation\&.c\fP\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Header for \fBtabulation\&.c\fP\&. 
-
-
+Header for \fBtabulation\&.c\fP 
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "\fBTabulation\fP* Tabulation_new (doublewindowcm, intnbins)"
-
+.SS "\fBTabulation\fP* \fBTabulation_new\fP (doublewindowcm, intnbins)"
 .PP
 Allocate a new object of type \fBTabulation\fP\&. This is accomplished via a single call to malloc, so that the entire object will reside in contiguous memory\&. This minimizes page faults and should make time-critical functions such as Tabulation_record run faster\&.
 .PP

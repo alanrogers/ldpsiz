@@ -1,16 +1,16 @@
-.TH "SNP" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "SNP" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 SNP \- 
 .PP
-Estimate the linkage disequilibrium (LD) between single nucleotide polymorphisms (SNPs) as a function of the map distance between those SNPs\&.  
+The \fBSNP\fP class represents a single nucleotide polymorphism\&.  
 
 .SH SYNOPSIS
 .br
 .PP
 .PP
-\fC#include <window\&.h>\fP
+\fC#include <snp\&.h>\fP
 .SS "Data Fields"
 
 .in +1c
@@ -39,21 +39,31 @@ Estimate the linkage disequilibrium (LD) between single nucleotide polymorphisms
 .RI "int \fBbootreps\fP"
 .br
 .ti -1c
-.RI "int * \fBmultiplicity\fP"
+.RI "unsigned * \fBmultiplicity\fP"
 .br
 .ti -1c
 .RI "struct \fBSNP\fP * \fBprev\fP"
 .br
+.ti -1c
+.RI "int * \fBmultiplicity\fP"
+.br
 .in -1c
 .SH "Detailed Description"
 .PP 
-Estimate the linkage disequilibrium (LD) between single nucleotide polymorphisms (SNPs) as a function of the map distance between those SNPs\&. 
+The \fBSNP\fP class represents a single nucleotide polymorphism\&. 
 
-Definition is provided openly here (rather than hidden in \fBwindow\&.h\fP) so that functions can be inlined\&.
+Estimate the site frequency spectrum\&.
 .PP
 \fBCopyright:\fP
 .RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+Copyright (c) 2015, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&.
+.RE
+.PP
+Definition is provided openly here (rather than hidden in \fBspecscan\&.c\fP) so that functions can be inlined\&.
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2015, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
 .RE
 .PP
 

@@ -1,4 +1,4 @@
-.TH "CostPar" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "CostPar" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -16,7 +16,16 @@ Parameters of cost function--that which is minimized\&.
 .RI "int \fBnbins\fP"
 .br
 .ti -1c
+.RI "unsigned \fBspdim\fP"
+.br
+.ti -1c
+.RI "unsigned \fBtwoNsmp\fP"
+.br
+.ti -1c
 .RI "double \fBu\fP"
+.br
+.ti -1c
+.RI "double \fBtolMatCoal\fP"
 .br
 .ti -1c
 .RI "double * \fBsigdsq\fP"
@@ -25,10 +34,19 @@ Parameters of cost function--that which is minimized\&.
 .RI "double * \fBc\fP"
 .br
 .ti -1c
+.RI "double * \fBspectrum\fP"
+.br
+.ti -1c
 .RI "\fBODE\fP * \fBode\fP"
 .br
 .ti -1c
 .RI "\fBPopHist\fP * \fBph\fP"
+.br
+.ti -1c
+.RI "const \fBPolya\fP * \fBpolya\fP"
+.br
+.ti -1c
+.RI "unsigned long \fBnIterations\fP"
 .br
 .in -1c
 .SH "Detailed Description"

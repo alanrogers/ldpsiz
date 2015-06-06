@@ -13,5 +13,6 @@ var searchData=
   ['initiald',['initialD',['../em_8c.html#ac6b55dd3fa20189828cd95479cf123b6',1,'em.c']]],
   ['interpolate',['interpolate',['../boot_8c.html#ad50eea9b7a2a52b39359590f368d93ca',1,'interpolate(double p, double *v, long len):&#160;boot.c'],['../boot_8h.html#ad50eea9b7a2a52b39359590f368d93ca',1,'interpolate(double p, double *v, long len):&#160;boot.c']]],
   ['isopt',['isopt',['../mcmcld_8c.html#ace5f1dedd7c98a3533870d4140beb7f5',1,'isopt(const char *shortOpt, const char *longOpt, const char *arg):&#160;misc.c'],['../misc_8c.html#ace5f1dedd7c98a3533870d4140beb7f5',1,'isopt(const char *shortOpt, const char *longOpt, const char *arg):&#160;misc.c'],['../misc_8h.html#ace5f1dedd7c98a3533870d4140beb7f5',1,'isopt(const char *shortOpt, const char *longOpt, const char *arg):&#160;misc.c']]],
+  ['ispopsize',['isPopSize',['../pophist_8c.html#aa2612e590e805bad6c763b086c05dc5d',1,'pophist.c']]],
   ['iterate',['iterate',['../hill_8c.html#adcdeacbc0d325ff13ef5b87b31febd2c',1,'iterate(double y[], int t, double twoN, double c, double u):&#160;hill.c'],['../strobeck_8c.html#adcdeacbc0d325ff13ef5b87b31febd2c',1,'iterate(double y[], int t, double twoN, double c, double u):&#160;strobeck.c']]]
 ];

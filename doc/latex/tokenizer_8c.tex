@@ -1,69 +1,67 @@
-\hypertarget{tokenizer_8c}{\subsection{tokenizer.\+c File Reference}
-\label{tokenizer_8c}\index{tokenizer.\+c@{tokenizer.\+c}}
+\hypertarget{tokenizer_8c}{\subsection{tokenizer.\-c \-File \-Reference}
+\label{tokenizer_8c}\index{tokenizer.\-c@{tokenizer.\-c}}
 }
 
 
-Tokenize a character string.  
+\-Tokenize a character string.  
 
 
-{\ttfamily \#include $<$stdio.\+h$>$}\\*
-{\ttfamily \#include $<$stdlib.\+h$>$}\\*
-{\ttfamily \#include $<$string.\+h$>$}\\*
-{\ttfamily \#include $<$assert.\+h$>$}\\*
-{\ttfamily \#include \char`\"{}misc.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}tokenizer.\+h\char`\"{}}\\*
-\subsubsection*{Functions}
+{\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\*
+{\ttfamily \#include $<$string.\-h$>$}\*
+{\ttfamily \#include $<$assert.\-h$>$}\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}tokenizer.\-h\char`\"{}}\*
+\subsubsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{tokenizer_8c_a7d509009afe4ef03674efc01336c7257}{\hyperlink{struct_tokenizer}{Tokenizer} $\ast$ {\bfseries Tokenizer\+\_\+new} (int max\+Tokens)}\label{tokenizer_8c_a7d509009afe4ef03674efc01336c7257}
+\hypertarget{tokenizer_8c_a7d509009afe4ef03674efc01336c7257}{\hyperlink{struct_tokenizer}{\-Tokenizer} $\ast$ {\bfseries \-Tokenizer\-\_\-new} (int max\-Tokens)}\label{tokenizer_8c_a7d509009afe4ef03674efc01336c7257}
 
 \item 
-\hypertarget{tokenizer_8c_adb9007f2fd938123bafee4ae8f30549d}{void {\bfseries Tokenizer\+\_\+free} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t)}\label{tokenizer_8c_adb9007f2fd938123bafee4ae8f30549d}
+\hypertarget{tokenizer_8c_adb9007f2fd938123bafee4ae8f30549d}{void {\bfseries \-Tokenizer\-\_\-free} (\hyperlink{struct_tokenizer}{\-Tokenizer} $\ast$t)}\label{tokenizer_8c_adb9007f2fd938123bafee4ae8f30549d}
 
 \item 
-\hypertarget{tokenizer_8c_aeedc80b92256e157dfcb0fe6a401e1a7}{int {\bfseries Tokenizer\+\_\+split} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t, char $\ast$buff, const char $\ast$sep)}\label{tokenizer_8c_aeedc80b92256e157dfcb0fe6a401e1a7}
+\hypertarget{tokenizer_8c_aeedc80b92256e157dfcb0fe6a401e1a7}{int {\bfseries \-Tokenizer\-\_\-split} (\hyperlink{struct_tokenizer}{\-Tokenizer} $\ast$t, char $\ast$buff, const char $\ast$sep)}\label{tokenizer_8c_aeedc80b92256e157dfcb0fe6a401e1a7}
 
 \item 
-\hypertarget{tokenizer_8c_a44f946e9abb35171c137c87fad9820c4}{char $\ast$ {\bfseries Tokenizer\+\_\+token} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t, int ndx)}\label{tokenizer_8c_a44f946e9abb35171c137c87fad9820c4}
+\hypertarget{tokenizer_8c_a44f946e9abb35171c137c87fad9820c4}{char $\ast$ {\bfseries \-Tokenizer\-\_\-token} (\hyperlink{struct_tokenizer}{\-Tokenizer} $\ast$t, int ndx)}\label{tokenizer_8c_a44f946e9abb35171c137c87fad9820c4}
 
 \item 
-\hypertarget{tokenizer_8c_ad89701d3d4406a68fb5f57e4520a789b}{int {\bfseries Tokenizer\+\_\+strip} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t, const char $\ast$extraneous)}\label{tokenizer_8c_ad89701d3d4406a68fb5f57e4520a789b}
+\hypertarget{tokenizer_8c_ad89701d3d4406a68fb5f57e4520a789b}{int {\bfseries \-Tokenizer\-\_\-strip} (\hyperlink{struct_tokenizer}{\-Tokenizer} $\ast$t, const char $\ast$extraneous)}\label{tokenizer_8c_ad89701d3d4406a68fb5f57e4520a789b}
 
 \item 
-\hypertarget{tokenizer_8c_a49055f5a86c2b0f1a4d83b36519500e5}{int {\bfseries Tokenizer\+\_\+ntokens} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t)}\label{tokenizer_8c_a49055f5a86c2b0f1a4d83b36519500e5}
+\hypertarget{tokenizer_8c_a49055f5a86c2b0f1a4d83b36519500e5}{int {\bfseries \-Tokenizer\-\_\-ntokens} (\hyperlink{struct_tokenizer}{\-Tokenizer} $\ast$t)}\label{tokenizer_8c_a49055f5a86c2b0f1a4d83b36519500e5}
 
 \item 
-\hypertarget{tokenizer_8c_a92038008ca79a13362dd34b49bbe0863}{int {\bfseries Tokenizer\+\_\+find} (\hyperlink{struct_tokenizer}{Tokenizer} $\ast$t, const char $\ast$s)}\label{tokenizer_8c_a92038008ca79a13362dd34b49bbe0863}
+\hypertarget{tokenizer_8c_a92038008ca79a13362dd34b49bbe0863}{int {\bfseries \-Tokenizer\-\_\-find} (\hyperlink{struct_tokenizer}{\-Tokenizer} $\ast$t, const char $\ast$s)}\label{tokenizer_8c_a92038008ca79a13362dd34b49bbe0863}
 
 \item 
-\hypertarget{tokenizer_8c_a1155068bc8802af29bf9b779c0eac607}{void {\bfseries Tokenizer\+\_\+print\+Summary} (const \hyperlink{struct_tokenizer}{Tokenizer} $\ast$tkz, F\+I\+L\+E $\ast$ofp)}\label{tokenizer_8c_a1155068bc8802af29bf9b779c0eac607}
+\hypertarget{tokenizer_8c_a1155068bc8802af29bf9b779c0eac607}{void {\bfseries \-Tokenizer\-\_\-print\-Summary} (const \hyperlink{struct_tokenizer}{\-Tokenizer} $\ast$tkz, \-F\-I\-L\-E $\ast$ofp)}\label{tokenizer_8c_a1155068bc8802af29bf9b779c0eac607}
 
 \item 
-\hypertarget{tokenizer_8c_a6f863b84319366c51ad658c7e4aeb8f1}{void {\bfseries Tokenizer\+\_\+print} (const \hyperlink{struct_tokenizer}{Tokenizer} $\ast$tkz, F\+I\+L\+E $\ast$ofp)}\label{tokenizer_8c_a6f863b84319366c51ad658c7e4aeb8f1}
+\hypertarget{tokenizer_8c_a6f863b84319366c51ad658c7e4aeb8f1}{void {\bfseries \-Tokenizer\-\_\-print} (const \hyperlink{struct_tokenizer}{\-Tokenizer} $\ast$tkz, \-F\-I\-L\-E $\ast$ofp)}\label{tokenizer_8c_a6f863b84319366c51ad658c7e4aeb8f1}
 
 \end{DoxyCompactItemize}
 
 
-\subsubsection{Detailed Description}
-Tokenize a character string. 
-
-\begin{DoxyAuthor}{Author}
-Alan R. Rogers This file implements a class that tokenizes a string. Usage is like this\+:
+\subsubsection{\-Detailed \-Description}
+\-Tokenize a character string. \begin{DoxyAuthor}{\-Author}
+\-Alan \-R. \-Rogers \-This file implements a class that tokenizes a string. \-Usage is like this\-:
 \end{DoxyAuthor}
-int ntokens; char buff\mbox{[}100\mbox{]}; \hyperlink{struct_tokenizer}{Tokenizer} $\ast$tkz = Tokenizer\+\_\+new(max\+Tokens);
+int ntokens; char buff\mbox{[}100\mbox{]}; \hyperlink{struct_tokenizer}{\-Tokenizer} $\ast$tkz = \-Tokenizer\-\_\-new(max\-Tokens);
 
-strcpy(buff, \char`\"{}my\+: input   ; ; string\char`\"{}); ntokens = Tokenizer\+\_\+split(tkz, buff, \char`\"{}\+:;\char`\"{});
+strcpy(buff, \char`\"{}my\-: input   ; ; string\char`\"{}); ntokens = \-Tokenizer\-\_\-split(tkz, buff, \char`\"{}\-:;\char`\"{});
 
-The 3rd argument to Tokenizer\+\_\+split defines the characters that separate tokens. Then you can access individual tokens like this\+:
+\-The 3rd argument to \-Tokenizer\-\_\-split defines the characters that separate tokens. \-Then you can access individual tokens like this\-:
 
 char $\ast$token;
 
-token = Tokenizer\+\_\+token(tkz, 3);
+token = \-Tokenizer\-\_\-token(tkz, 3);
 
-The tokens themselves still reside in buff, so this array must not change until the next call to Tokenizer\+\_\+split.
+\-The tokens themselves still reside in buff, so this array must not change until the next call to \-Tokenizer\-\_\-split.
 
-The memory allocated by Tokenizer\+\_\+new is freed by Tokenizer\+\_\+free.
+\-The memory allocated by \-Tokenizer\-\_\-new is freed by \-Tokenizer\-\_\-free.
 
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
+\begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}

@@ -1,42 +1,30 @@
-Convert .vcf files into .gtp format.
+\-Convert .vcf files into .gtp format.
 
-\subsection*{\hyperlink{vcf2gtp_8py}{vcf2gtp.\+py}, a program that converts .vcf files into .gtp format }
+\hyperlink{vcf2gtp_8py}{vcf2gtp.\-py}, a program that converts .vcf files into .gtp format ===============================================================
 
-\begin{DoxyVerb}usage: vcf2gtp [options filename.vcf geneticMapFile]
-where options may include:
+usage\-: vcf2gtp \mbox{[}options filename.\-vcf genetic\-Map\-File\mbox{]} where options may include\-:
 
-  -r <x> or --recombPerBP <x>     Set recombination rate per nucleotide.
+-\/r $<$x$>$ or -\/-\/recomb\-Per\-B\-P $<$x$>$ \-Set recombination rate per nucleotide.
 
-If two filenames are provided, the first must be a vcf file and the
-second a file of recombination rates. In this case, the -r option is
-not allowed.
+\-If two filenames are provided, the first must be a vcf file and the second a file of recombination rates. \-In this case, the -\/r option is not allowed.
 
-If one filename is provided, it must be a vcf file, and the -r option
-is mandatory.
+\-If one filename is provided, it must be a vcf file, and the -\/r option is mandatory.
 
-If no filename is provided, the program reads vcf data from standard
-input and the -r option is mandatory.
+\-If no filename is provided, the program reads vcf data from standard input and the -\/r option is mandatory.
 
-The program writes to standard output.
-\end{DoxyVerb}
+\-The program writes to standard output.
 
+\-If no file is provided for recombination rates, the rate must be specified using the `-\/r` or `-\/-\/recomb\-Per\-B\-P` option, and the program generates map distances assuming that the recombination rate between two sites is proportional to the number of nucleotides that separate them.
 
-If no file is provided for recombination rates, the rate must be specified using the {\ttfamily -\/r} or {\ttfamily -\/-\/recomb\+Per\+B\+P} option, and the program generates map distances assuming that the recombination rate between two sites is proportional to the number of nucleotides that separate them.
+\-The genetic map file must have a format like this\-:
 
-The genetic map file must have a format like this\+: \begin{DoxyVerb}position COMBINED_rate(cM/Mb) Genetic_Map(cM)
-14431347 9.6640973708 0
-14432618 9.7078062447 0.0122830678
-14433624 9.7138922111 0.0220491208
-14433659 9.7163435060 0.0223891071
-14433758 9.7078087850 0.0233510251
-\end{DoxyVerb}
+position \-C\-O\-M\-B\-I\-N\-E\-D\-\_\-rate(c\-M/\-Mb) \-Genetic\-\_\-\-Map(c\-M) 14431347 9.\-6640973708 0 14432618 9.\-7078062447 0.\-0122830678 14433624 9.\-7138922111 0.\-0220491208 14433659 9.\-7163435060 0.\-0223891071 14433758 9.\-7078087850 0.\-0233510251
 
+\-The first line is a list of column labels. \-After that, each row corresponds to a \hyperlink{struct_s_n_p}{\-S\-N\-P}. \-The first column gives the position, in nucleotides from the end of the chromosome. \-The second column gives the recombination rate, in c\-M per \-Mb, between that \hyperlink{struct_s_n_p}{\-S\-N\-P} and the next one, and the third column gives the map distance in c\-M. \-This is the format used by the 1000-\/\-Genomes \-Project
 
-The first line is a list of column labels. After that, each row corresponds to a \hyperlink{struct_s_n_p}{S\+N\+P}. The first column gives the position, in nucleotides from the end of the chromosome. The second column gives the recombination rate, in c\+M per Mb, between that \hyperlink{struct_s_n_p}{S\+N\+P} and the next one, and the third column gives the map distance in c\+M. This is the format used by the 1000-\/\+Genomes Project
-
-\begin{DoxyAuthor}{Author}
-Ryan Bohlender and Alan Rogers 
+\begin{DoxyAuthor}{\-Author}
+\-Ryan \-Bohlender and \-Alan \-Rogers 
 \end{DoxyAuthor}
-\begin{DoxyCopyright}{Copyright}
-Copyright (c) 2014, Ryan Bohlender and Alan R. Rogers \href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\+utah.\+edu}. This file is released under the Internet Systems Consortium License, which can be found in file \char`\"{}\+L\+I\+C\+E\+N\+S\+E\char`\"{}. 
+\begin{DoxyCopyright}{\-Copyright}
+\-Copyright (c) 2014, \-Ryan \-Bohlender and \-Alan \-R. \-Rogers $<$\href{mailto:rogers@anthro.utah.edu}{\tt rogers@anthro.\-utah.\-edu}$>$. \-This file is released under the \-Internet \-Systems \-Consortium \-License, which can be found in file \char`\"{}\-L\-I\-C\-E\-N\-S\-E\char`\"{}. 
 \end{DoxyCopyright}

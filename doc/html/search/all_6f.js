@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['obsspec_2ec',['obsspec.c',['../obsspec_8c.html',1,'']]],
   ['ode',['ODE',['../struct_o_d_e.html',1,'']]],
   ['ode_5fevolve',['ODE_evolve',['../model_8c.html#a53b5215058e5f35305bea4e9cca668fb',1,'ODE_evolve(ODE *ode, double *y, unsigned ydim, double c, double u, PopHist *ph, int dydt(double t_notused, const double y1[], double f[], void *params), int verbose):&#160;model.c'],['../model_8h.html#a53b5215058e5f35305bea4e9cca668fb',1,'ODE_evolve(ODE *ode, double *y, unsigned ydim, double c, double u, PopHist *ph, int dydt(double t_notused, const double y1[], double f[], void *params), int verbose):&#160;model.c']]],
   ['ode_5fldvec',['ODE_ldVec',['../model_8c.html#a64672253a3cad1e64368b829f52f252a',1,'ODE_ldVec(ODE *ode, double *ld, int nbins, const double *c, double u, PopHist *ph):&#160;model.c'],['../model_8h.html#a64672253a3cad1e64368b829f52f252a',1,'ODE_ldVec(ODE *ode, double *ld, int nbins, const double *c, double u, PopHist *ph):&#160;model.c']]],

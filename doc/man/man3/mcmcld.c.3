@@ -1,4 +1,4 @@
-.TH "mcmcld.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "mcmcld.c" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -59,18 +59,17 @@ mcmcld.c \-
 .RI "int \fBmain\fP (int argc, char **argv)"
 .br
 .in -1c
+.SH "Detailed Description"
+.PP 
+
 .SH "Function Documentation"
 .PP 
-.SS "int isopt (const char *shortOpt, const char *longOpt, const char *arg)"
-
+.SS "int \fBisopt\fP (const char *shortOpt, const char *longOpt, const char *arg)"
 .PP
 Return 1 if string arg matches either shortOpt or longOpt\&. ShortOpt and longOpt are ignored if their values are NULL\&. If arg doesn't match either shortOpt or longOpt, then return 0\&. 
-.SS "double lnObjFun (\fBPopHist\fP *ph, doubleu, \fBODE\fP *ode, intnbins, double *sigdsq, double *c)"
-
+.SS "double \fBlnObjFun\fP (\fBPopHist\fP *ph, doubleu, \fBODE\fP *ode, intnbins, double *sigdsq, double *c)"
 .PP
-Log of objective function: negative of sum of squared differences between observed and expected sigma_d^2 vectors\&. 
-.PP
-\fBParameters:\fP
+Log of objective function: negative of sum of squared differences between observed and expected sigma_d^2 vectors\&. \fBParameters:\fP
 .RS 4
 \fIph\fP Current population history 
 .br
@@ -88,12 +87,9 @@ Log of objective function: negative of sum of squared differences between observ
 References ODE_ldVec()\&.
 .PP
 Referenced by Chain_new()\&.
-.SS "int read_data (FILE *ifp, intnbins, inttwoNsmp, double *cm, double *sigdsq)"
-
+.SS "int \fBread_data\fP (FILE *ifp, intnbins, inttwoNsmp, double *cm, double *sigdsq)"
 .PP
-Read the data file produced by eld\&. 
-.PP
-\fBParameters:\fP
+Read the data file produced by eld\&. \fBParameters:\fP
 .RS 4
 \fIifp\fP Points to file produced by eld\&. 
 .br

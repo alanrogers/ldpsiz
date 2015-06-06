@@ -1,10 +1,17 @@
-.TH "em.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "em.c" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 em.c \- 
 .PP
-Estimate D from partially phased diploid data using the EM algorithm\&.  
+Estimate D from partially phased diploid data using the EM algorithm\&. 
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+ 
 
 .SH SYNOPSIS
 .br
@@ -28,7 +35,7 @@ Estimate D from partially phased diploid data using the EM algorithm\&.
 \fC#include 'misc\&.h'\fP
 .br
 
-.SS "Macros"
+.SS "Defines"
 
 .in +1c
 .ti -1c
@@ -105,34 +112,30 @@ Estimate D from partially phased diploid data using the EM algorithm\&.
 .SH "Detailed Description"
 .PP 
 Estimate D from partially phased diploid data using the EM algorithm\&. 
-
-
 .PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2014, Alan R\&. Rogers <rogers@anthro.utah.edu>\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
+.RE
+.PP
+
+
 \fBAuthor:\fP
 .RS 4
 Alan R\&. Rogers 
 .RE
 .PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2014, Alan R\&. Rogers rogers@anthro.utah.edu\&. This file is released under the Internet Systems Consortium License, which can be found in file 'LICENSE'\&. 
-.RE
-.PP
 
 .SH "Function Documentation"
 .PP 
-.SS "void DsqData_reset (\fBDsqData\fP *dd)"
-
+.SS "void \fBDsqData_reset\fP (\fBDsqData\fP *dd)"
 .PP
 Make \fBDsqData\fP object consistent with its current allele freqs\&. 
 .PP
 References DsqData::alpha, DsqData::beta, DsqData::hiD, hiD(), DsqData::loD, loD(), DsqData::nGam, DsqData::px, and DsqData::py\&.
-.SS "double find_D (doubleD0, \fBDsqData\fP *dd)"
-
+.SS "double \fBfind_D\fP (doubleD0, \fBDsqData\fP *dd)"
 .PP
-Ad hoc iterations to find D\&. 
-.PP
-\fBParameters:\fP
+Ad hoc iterations to find D\&. \fBParameters:\fP
 .RS 4
 \fID0\fP Starting value for EM algorithm\&. 
 .br
@@ -142,12 +145,9 @@ Ad hoc iterations to find D\&.
 
 .PP
 References get_w(), getD(), and DsqData::tol\&.
-.SS "static double getD (doublew, \fBDsqData\fP *dd)\fC [inline]\fP, \fC [static]\fP"
-
+.SS "static double \fBgetD\fP (doublew, \fBDsqData\fP *dd)\fC [inline, static]\fP"
 .PP
-Return value of D implied by given value of w\&. 
-.PP
-\fBParameters:\fP
+Return value of D implied by given value of w\&. \fBParameters:\fP
 .RS 4
 \fIw\fP Current guess as to fraction of unphased double-heterozygotes with two-locus genotype 11/00 rather than 10/01\&.
 .br
@@ -164,8 +164,7 @@ improved estimate of w
 References DsqData::nGam, DsqData::nGtype, DsqData::nUnphased, DsqData::px, and DsqData::py\&.
 .PP
 Referenced by find_D(), and next_w()\&.
-.SS "int minimize1D (double *D, \fBDsqData\fP *dd)"
-
+.SS "int \fBminimize1D\fP (double *D, \fBDsqData\fP *dd)"
 .PP
 This algorithm finds the minimum of function negLnL within the range [a,b], where a = dd->loD, and b=dd->hiD\&. The algorithm uses Newton steps when these go downhill, and otherwise bisects in the downhill direction\&.
 .PP
@@ -188,40 +187,33 @@ the integer 0
 References DsqData::hiD, initialD(), DsqData::loD, negLnL_df(), negLnL_df12(), and DsqData::tol\&.
 .PP
 Referenced by SNP_getDsq()\&.
-.SS "double negLnL_df (doubleD, void *data)"
-
+.SS "double \fBnegLnL_df\fP (doubleD, void *data)"
 .PP
 Negative of log Likelihood of given value of D\&. This version returns only the 1st derivative\&. 
 .PP
 References get_w(), DsqData::nGam, DsqData::nUnphased, DsqData::px, and DsqData::py\&.
 .PP
 Referenced by minimize1D()\&.
-.SS "void negLnL_df12 (doubleD, double *df, double *ddf, void *data)"
-
+.SS "void \fBnegLnL_df12\fP (doubleD, double *df, double *ddf, void *data)"
 .PP
 Negative of log Likelihood of given value of D\&. This version calculates the 1st derivative (placed in *df), and the 2nd derivative (in ddf)\&. 
 .PP
 References get_w(), DsqData::nGam, DsqData::nUnphased, DsqData::px, and DsqData::py\&.
 .PP
 Referenced by minimize1D()\&.
-.SS "void negLnL_fddf (doubleD, double *f, double *df, double *ddf, void *data)"
-
+.SS "void \fBnegLnL_fddf\fP (doubleD, double *f, double *df, double *ddf, void *data)"
 .PP
 Negative of log Likelihood of given value of D\&. This version calculates, the function value (placed in *f), its 1st derivative (placed in *df), and its 2nd derivative (in ddf)\&. 
 .PP
 References get_w(), DsqData::nGam, DsqData::nUnphased, DsqData::px, and DsqData::py\&.
-.SS "void negLnL_fdf (doubleD, double *f, double *df, void *data)"
-
+.SS "void \fBnegLnL_fdf\fP (doubleD, double *f, double *df, void *data)"
 .PP
 Negative of log Likelihood of given value of D\&. This version calculates both the function value (placed in *f) and its derivative (placed in *df)\&. 
 .PP
 References get_w(), DsqData::nGam, DsqData::nUnphased, DsqData::px, and DsqData::py\&.
-.SS "static double next_w (doublew, \fBDsqData\fP *dd)\fC [inline]\fP, \fC [static]\fP"
-
+.SS "static double \fBnext_w\fP (doublew, \fBDsqData\fP *dd)\fC [inline, static]\fP"
 .PP
-One step of EM algorithm\&. 
-.PP
-\fBParameters:\fP
+One step of EM algorithm\&. \fBParameters:\fP
 .RS 4
 \fIw\fP Current guess as to fraction of unphased double-heterozygotes with two-locus genotype 11/00 rather than 10/01\&.
 .br

@@ -1,4 +1,4 @@
-.TH "ThreadArg" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "ThreadArg" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -53,6 +53,10 @@ Data required by a single thread\&.
 .br
 .RI "\fIHolds tabulated values of numerator and denominator of sigdsq and also of rsq\&. \fP"
 .ti -1c
+.RI "\fBSpectab\fP * \fBspectab\fP"
+.br
+.RI "\fIHolds data for site frequency spectrum\&. \fP"
+.ti -1c
 .RI "\fBBoot\fP * \fBboot\fP"
 .br
 .RI "\fIData used in bootstrap\&. \fP"
@@ -66,20 +70,22 @@ Data required by a single thread\&.
 Data required by a single thread\&. 
 .SH "Field Documentation"
 .PP 
-.SS "\fBBoot\fP* ThreadArg::boot"
-
+.SS "\fBBoot\fP * \fBThreadArg::boot\fP"
 .PP
 Data used in bootstrap\&. Not locally owned\&. 
 .PP
 Referenced by threadfun()\&.
-.SS "long ThreadArg::sampling_interval"
-
+.SS "long \fBThreadArg::sampling_interval\fP"
 .PP
 For production, set sampling_interval=1\&. For debugging, set to (say) 5 to process only every 5th \fBSNP\fP\&. This makes execution faster\&. 
 .PP
 Referenced by ThreadArg_print(), and threadfun()\&.
-.SS "\fBThreadBounds\fP* ThreadArg::tb"
-
+.SS "\fBTabulation\fP * \fBThreadArg::tab\fP"
+.PP
+Holds tabulated values of numerator and denominator of sigdsq and also of rsq\&. Holds tabulated values\&.
+.PP
+Referenced by ThreadArg_print(), and threadfun()\&.
+.SS "\fBThreadBounds\fP * \fBThreadArg::tb\fP"
 .PP
 In a multithreaded environment, each thread operates only on a portion of the chromosome\&. The Threadbounds object, tb, specifies the SNPs to be considered by the current thread\&. 
 .PP

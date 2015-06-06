@@ -1,4 +1,4 @@
-.TH "eld.c" 3 "Thu May 29 2014" "Version 0.1" "ldpsiz" \" -*- nroff -*-
+.TH "eld.c" 3 "Sat Jun 6 2015" "Version 0.1" "ldpsiz" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -6,43 +6,51 @@ eld.c \-
 .SH SYNOPSIS
 .br
 .PP
-\fC#include <stdio\&.h>\fP
+\fC#include 'array\&.h'\fP
 .br
-\fC#include <string\&.h>\fP
+\fC#include 'assign\&.h'\fP
 .br
-\fC#include <stdlib\&.h>\fP
+\fC#include 'boot\&.h'\fP
 .br
-\fC#include <math\&.h>\fP
+\fC#include 'fileindex\&.h'\fP
 .br
-\fC#include <time\&.h>\fP
-.br
-\fC#include <assert\&.h>\fP
-.br
-\fC#include <getopt\&.h>\fP
-.br
-\fC#include <limits\&.h>\fP
-.br
-\fC#include <pthread\&.h>\fP
-.br
-\fC#include <gsl/gsl_rng\&.h>\fP
-.br
-\fC#include 'typedefs\&.h'\fP
+\fC#include 'ini\&.h'\fP
 .br
 \fC#include 'misc\&.h'\fP
 .br
 \fC#include 'readgtp\&.h'\fP
 .br
-\fC#include 'fileindex\&.h'\fP
+\fC#include 'spectab\&.h'\fP
 .br
 \fC#include 'tabulation\&.h'\fP
 .br
 \fC#include 'window\&.h'\fP
 .br
-\fC#include 'boot\&.h'\fP
+\fC#include <assert\&.h>\fP
 .br
-\fC#include 'assign\&.h'\fP
+\fC#include <getopt\&.h>\fP
 .br
-\fC#include 'ini\&.h'\fP
+\fC#include <gsl/gsl_rng\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
 .br
 
 .SS "Data Structures"
@@ -67,17 +75,21 @@ eld.c \-
 .ti -1c
 .RI "void * \fBthreadfun\fP (void *varg)"
 .br
-.RI "\fI\fCeld\fP runs a copy of this function within each thread\&. \fP"
+.RI "\fI`eld` runs a copy of this function within each thread\&. \fP"
 .ti -1c
 .RI "int \fBmain\fP (int argc, char **argv)"
 .br
 .in -1c
+.SH "Detailed Description"
+.PP 
+
 .SH "Function Documentation"
 .PP 
-.SS "void * threadfun (void *vjq)"
-
+.SS "void * \fBthreadfun\fP (void *varg)"
 .PP
-\fCeld\fP runs a copy of this function within each thread\&. Waits until there is a job in the queue, pops it off and executes it, then waits for another\&.
+`eld` runs a copy of this function within each thread\&. `obsspec` runs a copy of this function within each thread\&.
+.PP
+Waits until there is a job in the queue, pops it off and executes it, then waits for another\&.
 .PP
 The function opens the input file, which gives the thread its own input buffer so that it can move around in the file without locking it\&. Then it examines pairs of SNPs within a window that slides across the SNPs it is responsible for, placing the results into an object of type \fBTabulation\fP\&.
 .PP
@@ -88,7 +100,7 @@ The function opens the input file, which gives the thread its own input buffer s
 .PP
 Runs until jobs are completed and main thread sets acceptingJobs=0\&. 
 .PP
-References ThreadArg::boot, ThreadArg::ifname, ThreadArg::nGtype, ThreadArg::overflow, ThreadArg::ploidy, ThreadArg::sampling_interval, ThreadArg::tab, Tabulation_overflow(), ThreadArg::tb, ThreadBounds_ndx_1stFocal(), ThreadBounds_ndx_initial(), ThreadBounds_ndx_lastFocal(), ThreadBounds_seekpos_initial(), Window_advance(), ThreadArg::window_cm, Window_free(), Window_new(), Window_nextSNP(), and Window_nGtype()\&.
+References ThreadArg::boot, ThreadArg::ifname, ThreadArg::nGtype, ThreadArg::overflow, ThreadArg::ploidy, ThreadArg::sampling_interval, ThreadArg::spectab, ThreadArg::tab, Tabulation_overflow(), ThreadArg::tb, ThreadBounds_ndx_1stFocal(), ThreadBounds_ndx_initial(), ThreadBounds_ndx_lastFocal(), ThreadBounds_seekpos_initial(), Window_advance(), ThreadArg::window_cm, Window_free(), Window_new(), Window_nextSNP(), and Window_nGtype()\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for ldpsiz from the source code\&.

@@ -15,11 +15,12 @@ extern pthread_mutex_t outputLock;
 ======================================================================
 
 To estimate the parameters describing population history, we need to
-find values that provide the best fit to LD data. This involves
-maximization on a complex surface with lots of local peaks. (To verify
-this for yourself, see \ref mcmcld "mcmcld".) To avoid getting stuck
-on local peaks, `sald` uses the simplex version of simulated
-annealing. 
+find values that provide the best fit to data, which include both
+linkage disequilibrium (measured by \f$\sigma_d^2\f$) and the site
+frequency spectrum. This involves maximization on a complex surface
+with lots of local peaks. (To verify this for yourself, see \ref
+mcmcld "mcmcld".) To avoid getting stuck on local peaks, `sald` uses
+the simplex version of simulated annealing.
 
 Usage
 -----
@@ -46,17 +47,25 @@ actually running. If you launch 20 threads but only 10 run at any
 given time, your job will run slower. Stop it and launch again with
 `--threads 10`.
 
-Simulated annealing works by beginning with a flattened version of
-your objective function. In this flattened version, all the peaks are
+Simulated annealing works by beginning with a flattened version of the
+objective function. In this flattened version, all the peaks are
 smaller, so it is easy for the simplex to move from peak to peak. The
 extent of flattening is controlled by a parameter called
-"temperature". High temperature corresponds to lots of flattening.
-The annealing algorithm runs for awhile at a high temperature, then
-lowers the temperature and runs awhile more. The succession of
-temperatures and the number of iterations at each temperature is
-called the "annealing schedule". You can change the performance of the
-algorithm by adjusting this schedule. See the `--initTmptr`,
-`--nPerTmptr` and `--tmptrDecay` arguments.
+"temperature". High temperature implies lots of flattening.  The
+annealing algorithm runs for awhile at a high temperature, then lowers
+the temperature and runs awhile more. The succession of temperatures
+and the number of iterations at each temperature is called the
+"annealing schedule". You can change the performance of the algorithm
+by adjusting this schedule. See the `--initTmptr`, `--nPerTmptr` and
+`--tmptrDecay` arguments.
+
+If a bootstrap file is specified using the -f or --bootfile option,
+`sald` will also write a file containing the parameter estimates for
+each bootstrap replicate. This file has a name like
+<input_file_name>-<jobid>.fboot, where <input_file_name> is the base
+name of the input file, and <jobid> is a hexadecimal number intended
+to uniquely identify the current job. This .fboot file can be used as
+input to the program `tabfboot`.
 
     usage: sald [options] input_file_name
        where options may include:
@@ -95,7 +104,7 @@ algorithm by adjusting this schedule. See the `--initTmptr`,
        -h or --help
           print this message
 
-@copyright Copyright (c) 2014, Alan R. Rogers 
+@copyright Copyright (c) 2014, 2015, Alan R. Rogers 
 <rogers@anthro.utah.edu>. This file is released under the Internet
 Systems Consortium License, which can be found in file "LICENSE".
 */
