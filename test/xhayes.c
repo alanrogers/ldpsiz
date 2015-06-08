@@ -48,13 +48,12 @@ int main(int argc, char **argv) {
     linkedList = EpochLink_new(linkedList, strtod("Inf", 0), 1e2);
     ph = PopHist_fromEpochLink(linkedList);
 
+    if(verbose) {
 #ifdef HAYES_MUTATION_ADJUSTMENT
         printf("Adjusting for mutation: E[rsq] = 1/(4Nc+2)\n");
 #else
         printf("Not adjusting for mutation: E[rsq] = 1/(4Nc+1)\n");
 #endif
-
-    if(verbose) {
         printf("%8s %8s %9s\n", "c", "Sved", "Sved");
     }
     for(kb = 1.0; kb <= 300; kb += 20.0) {

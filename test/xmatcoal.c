@@ -32,7 +32,12 @@ int main(int argc, char **argv) {
                 exit(1);
             }
 
-            nSamples = strtol(argv[j], 0, 10);
+            errno = 0;
+            nSamples = strtoul(argv[j], 0, 10);
+            if(errno) {
+                perror("strtoul");
+                exit(EXIT_FAILURE);
+            }
         }
     }
 	
@@ -44,8 +49,8 @@ int main(int argc, char **argv) {
     if(verbose)
         PopHist_print(ph, stdout);
 
-    double x[nSamples];
-    double betavec[nSamples];
+    long double x[nSamples];
+    long double betavec[nSamples];
     for(i=0; i<nSamples; ++i)
         betavec[i] = MatCoal_beta(i);
 
@@ -65,16 +70,16 @@ int main(int argc, char **argv) {
         if(err > maxerr)
             maxerr = err;
         if(verbose) {
-            fprintf(stderr, "x[%d]=%lf; should=%lf; err=%lf\n",
-                    i, x[i], 0.0, err);
+            fprintf(stderr, "x[%d]=%Lf; should=%Lf; err=%lf\n",
+                    i, x[i], 0.0L, err);
         }
     }
     err = fabs(x[nSamples-1] - 1.0);
     if(err > maxerr)
         maxerr = err;
     if(verbose) {
-        fprintf(stderr, "x[%d]=%lf; should=%lf; err=%lf\n",
-                nSamples-1, x[nSamples-1], 1.0, err);
+        fprintf(stderr, "x[%u]=%Lf; should=%Lf; err=%lf\n",
+                nSamples-1, x[nSamples-1], 1.0L, err);
     }
     if(maxerr > errTol)
         ok = 0;
@@ -90,17 +95,17 @@ int main(int argc, char **argv) {
         /* print projection */
         printf("t=1:\n");
         for(i=0; i<nSamples; ++i)
-            printf("  x[%d] = %lf\n", i+1, x[i]);
+            printf("  x[%d] = %Lf\n", i+1, x[i]);
     }
 
     /* project from t=1 to t=2 */
     MatCoal_project(nSamples, x, 1.0, betavec, errTol);
 
-    double y[nSamples];
+    long double y[nSamples];
 
     /* re-construct initial prob vector */
     memset(y, 0, (nSamples-1)*sizeof(y[0]));
-    y[nSamples-1] = 1.0;  /* initially all prob is at end */
+    y[nSamples-1] = 1.0L;  /* initially all prob is at end */
 
     /* project from 0 to 2 in 1 step */
     MatCoal_project(nSamples, y, 2.0, betavec, errTol);
@@ -114,7 +119,7 @@ int main(int argc, char **argv) {
         if(err > maxerr)
             maxerr = err;
         if(verbose)
-            printf("      %15.8lg %15.8lg\n", x[i], y[i]);
+            printf("      %15.8Lg %15.8Lg\n", x[i], y[i]);
     }
     if(verbose)
         printf("t=2: maxerr=%lf\n", maxerr);
@@ -141,7 +146,7 @@ int main(int argc, char **argv) {
         if(err > maxerr)
             maxerr = err;
         if(verbose)
-            printf("%5d %15.8g %15.8g\n", i+1, x[i], y[i]);
+            printf("%5d %15.8Lg %15.8Lg\n", i+1, x[i], y[i]);
     }
     if(verbose)
         printf("t=3: maxerr=%lg\n", maxerr);
