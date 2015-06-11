@@ -382,7 +382,10 @@ int main(int argc, char **argv) {
     if(bootreps > 0) {
         // Generate bootstrap output file name from input file name.
         // Strip suffix; add -jobid.boot
-        snprintf(bootfilename, sizeof(bootfilename), "%s", ifname);
+        char *basename = strrchr(ifname, '/'); // linux only!!!
+        if(basename == NULL)
+            basename = ifname;
+        snprintf(bootfilename, sizeof(bootfilename), "%s", basename);
         char suffix[30];
         snprintf(suffix, sizeof(suffix), "-%x.boot", jobid);
         replaceSuffix(bootfilename, sizeof(bootfilename), suffix,

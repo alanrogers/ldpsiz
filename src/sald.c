@@ -1514,11 +1514,16 @@ int main(int argc, char **argv) {
     // that did not converge are omitted.
     if(boot && best[0]) {
         // strip suffix from fname; add suffix -jobid.fboot; open file
+        char *basename = strrchr(fname, '/'); // linux only!!!
+        if(basename == NULL)
+            basename = fname;
+        snprintf(bootfilename, sizeof(bootfilename), "%s", basename);
         char suffix[30];
         snprintf(suffix, sizeof(suffix), "-%x.fboot", jobid);
-        replaceSuffix(fname, sizeof(fname), suffix, strlen(suffix));
-        bootfile = fopen(fname, "w");
-        printf("# %-35s = %s\n", "fboot file name", fname);
+        replaceSuffix(bootfilename, sizeof(bootfilename), suffix,
+                      strlen(suffix));
+        bootfile = fopen(bootfilename, "w");
+        printf("# %-35s = %s\n", "fboot file name", bootfilename);
 
         // 1st line of fboot file contains parameter names
         for(pndx = 0; pndx < nparams; ++pndx) {
