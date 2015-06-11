@@ -162,8 +162,14 @@ int Window_advance(Window * window, Tabulation * tab, Spectab *spectab,
     if(lineno % window->sampling_interval == 0) {
         // Add current SNP to site frequency spectrum.
         // weight=1 because this isn't a bootstrap replicate.
-        unsigned    alleleCount = SNP_countMinor(window->curr,
-                                                 window->ploidy);
+        unsigned    alleleCount;
+
+        do{
+            // This do-while shouldn't be necessary, because readgtp
+            // ignores monomorphic SNPs.
+            alleleCount = SNP_countMinor(window->curr,
+                                         window->ploidy);
+        }while(alleleCount == 0);
         Spectab_record(spectab, alleleCount, 1);
         if(boot)
             Boot_addAlleleCount(boot, alleleCount, window->curr);
