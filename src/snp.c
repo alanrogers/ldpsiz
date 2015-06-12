@@ -245,7 +245,7 @@ unsigned SNP_countDerived(SNP * snp, unsigned ploidy) {
 /// Count copies of minor allele.
 unsigned SNP_countMinor(SNP * snp, unsigned ploidy) {
     unsigned count = SNP_countDerived(snp, ploidy);
-    unsigned complement = snp->nGtype - count;
+    unsigned complement = ploidy*snp->nGtype - count;
     return (count<complement ? count : complement);
 }
 

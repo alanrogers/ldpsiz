@@ -156,6 +156,8 @@ unsigned sumDiploid(const unsigned char *x, unsigned n) {
             + S[x[i + 3]]
             + S[x[i + 4]];
 
+    assert(rval > 0);
+    assert(rval < 2*n);
     return rval;
 }
 
@@ -267,6 +269,8 @@ unsigned sum_char(const unsigned char *x, unsigned n) {
     for(i = m; i < n; i += 5)
         rval += x[i] + x[i + 1] + x[i + 2] + x[i + 3] + x[i + 4];
 
+    assert(rval > 0);
+    assert(rval < n);
     return rval;
 }
 

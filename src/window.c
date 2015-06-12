@@ -164,12 +164,17 @@ int Window_advance(Window * window, Tabulation * tab, Spectab *spectab,
         // weight=1 because this isn't a bootstrap replicate.
         unsigned    alleleCount;
 
-        do{
-            // This do-while shouldn't be necessary, because readgtp
-            // ignores monomorphic SNPs.
-            alleleCount = SNP_countMinor(window->curr,
+        alleleCount = SNP_countMinor(window->curr,
                                          window->ploidy);
-        }while(alleleCount == 0);
+#ifndef NDEBUG
+        if(alleleCount == 0 || alleleCount > Spectab_dim(spectab)) {
+            fprintf(stderr,"%s:%d: alleleCount=%u must be in [1,%u]\n",
+                    __FILE__, __LINE__, alleleCount,
+                    Spectab_dim(spectab));
+        }
+#endif
+        assert(alleleCount > 0);
+        assert(alleleCount <= Spectab_dim(spectab));
         Spectab_record(spectab, alleleCount, 1);
         if(boot)
             Boot_addAlleleCount(boot, alleleCount, window->curr);

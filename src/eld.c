@@ -537,6 +537,10 @@ int main(int argc, char **argv) {
         printf("# %-35s = %s\n", "bootstrap output file", bootfilename);
     else
         printf("# %-35s = %s\n", "bootstrap output file", "none");
+    printf("# %-35s = %u\n", "Number of genotypes", nGtype);
+    printf("# %-35s = %d\n", "Ploidy", ploidy);
+    printf("# %-35s = %d\n", "Haploid sample size", nGtype * ploidy);
+
     fflush(stdout);
 
     pthread_t  *thread;
@@ -568,10 +572,6 @@ int main(int argc, char **argv) {
     fprintf(stderr, "Back from threads\n");
 
     assert(nGtype == targ[nthreads - 1].nGtype);
-
-    printf("# %-35s = %u\n", "Number of genotypes", nGtype);
-    printf("# %-35s = %d\n", "Ploidy", ploidy);
-    printf("# %-35s = %d\n", "Haploid sample size", nGtype * ploidy);
 
     /* aggregate tabulations from threads */
     for(tndx = 1; tndx < nthreads; ++tndx) {
