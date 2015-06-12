@@ -385,6 +385,8 @@ int main(int argc, char **argv) {
         char *basename = strrchr(ifname, '/'); // linux only!!!
         if(basename == NULL)
             basename = ifname;
+        else
+            basename += 1;    // skip '/' character
         snprintf(bootfilename, sizeof(bootfilename), "%s", basename);
         char suffix[30];
         snprintf(suffix, sizeof(suffix), "-%x.boot", jobid);
@@ -594,6 +596,11 @@ int main(int argc, char **argv) {
 
             if(bootfilename[0]) {
                 FILE       *bootfile = fopen(bootfilename, "w");
+                if(bootfile==NULL) {
+                    fprintf(stderr,"%s:%s:%d: Can't open file %s for output\n",
+                            __FILE__, __func__, __LINE__, bootfilename);
+                    exit(EXIT_FAILURE);
+                }
 
                 Boot_dump(boot[0], bootfile);
                 fclose(bootfile);

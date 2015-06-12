@@ -1517,6 +1517,8 @@ int main(int argc, char **argv) {
         char *basename = strrchr(fname, '/'); // linux only!!!
         if(basename == NULL)
             basename = fname;
+        else
+            basename += 1;    // skip '/' character
         snprintf(bootfilename, sizeof(bootfilename), "%s", basename);
         char suffix[30];
         snprintf(suffix, sizeof(suffix), "-%x.fboot", jobid);
