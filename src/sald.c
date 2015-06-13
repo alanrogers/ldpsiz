@@ -384,7 +384,9 @@ void usage(void) {
     tellopt("-n <x> or --twoNsmp <x>", "haploid sample size");
     tellopt("-t <x> or --threads <x>", "number of threads (default is auto)");
     tellopt("-u <x> or --mutation <x>", "mutation rate/generation");
-    tellopt("-v <x> or --verbose", "more output");
+    tellopt("-v or --verbose", "more output");
+	tellopt("-s <x> or --truncateSpectrum <x>",
+			"truncate <x> entries from site frequency spectrum (def: 0)");
 
     /* bootstrap */
     tellopt("-f <x> or --bootfile <x>", "read bootstrap file x");
@@ -869,6 +871,7 @@ int main(int argc, char **argv) {
         {"time", required_argument, 0, 'T'},
         {"mutation", required_argument, 0, 'u'},
         {"verbose", no_argument, 0, 'v'},
+		{"truncateSpectrum", required_argument, 0, 's'},
         {NULL, 0, NULL, 0}
     };
 
@@ -885,6 +888,7 @@ int main(int argc, char **argv) {
     int         nPerTmptr;       /* iterations at each temperature */
     int         nTmptrs = 3;     /* number of temperatures */
     const int   folded = true;   // Folded site frequency spectrum
+	int         truncSFS = 0;    // Truncate site frequency spectrum
     double      lo2N = 400.0, hi2N = 1e8, lo2Ninit = 1000.0;
     double      loT = 1.0, hiT = 5e3, hiTinit = 2000.0;
     double     *stepsize;            /* controls size of initial simplex */
@@ -1031,6 +1035,14 @@ int main(int argc, char **argv) {
         case 'p':
             nTmptrs = strtol(optarg, NULL, 10);
             break;
+		case 's':
+			truncSFS = strtol(optarg, NULL, 10);
+            if(truncSFS <= 0) {
+                fprintf(stderr,"Arg following -s or --truncateSpectrum"
+						" should be positive. Got %s.\n", optarg);
+                usage();
+            }
+			break;
         case 't':
             nthreads = strtol(optarg, NULL, 10);
             break;
@@ -1044,8 +1056,8 @@ int main(int argc, char **argv) {
             }
             curr_t = strtod(optarg, 0);
             if(curr_t <= 0) {
-                fprintf(stderr, "Arg following -T or --time should be positive. Got %s.\n",
-                        optarg);
+                fprintf(stderr,"Arg following -T or --time should be positive."
+						" Got %s.\n", optarg);
                 usage();
             }
             epochPending = 1;
