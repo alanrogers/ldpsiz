@@ -1,11 +1,3 @@
-#undef DEBUG
-
-#undef DPRINTF_ON
-#include "dprintf.h"
-#ifdef DPRINTF_ON
-extern pthread_mutex_t outputLock;
-#endif
-
 /**
 @file sald.c
 @page sald
@@ -108,6 +100,18 @@ input to the program `tabfboot`.
 <rogers@anthro.utah.edu>. This file is released under the Internet
 Systems Consortium License, which can be found in file "LICENSE".
 */
+
+#undef DEBUG
+
+#undef DPRINTF_ON
+#include "dprintf.h"
+#ifdef DPRINTF_ON
+extern pthread_mutex_t outputLock;
+#endif
+
+#define DO_LD 1
+#define DO_SPEC 1
+
 #include "annealsched.h"
 #include "array.h"
 #include "assign.h"
@@ -771,9 +775,6 @@ static double costFun(const gsl_vector *x, void *varg) {
     double diff;
     badness = 0.0;
 
-#define DO_LD 0
-#define DO_SPEC 1
-
 #ifdef DO_LD
     // get vector of expected values of sigdsq
     ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
@@ -785,17 +786,19 @@ static double costFun(const gsl_vector *x, void *varg) {
 #endif
 
 #ifdef DO_SPEC
-    // get expected spectrum
-    ESpectrum *espec = ESpectrum_new(arg->twoNsmp, ph,
-                                     arg->polya, arg->tolMatCoal);
-    for(i=0; i < spdim; ++i)
-        exp_spectrum[i] = ESpectrum_folded(espec, i+1);
+    {
+        // get expected spectrum
+        ESpectrum *espec = ESpectrum_new(arg->twoNsmp, ph,
+                                         arg->polya, arg->tolMatCoal);
+        for(i=0; i < spdim; ++i)
+            exp_spectrum[i] = ESpectrum_folded(espec, i+1);
 
-    for(i = 0; i < spdim; ++i) {
-        diff = exp_spectrum[i] - spectrum[i];
-        badness += diff * diff;
+        for(i = 0; i < spdim; ++i) {
+            diff = exp_spectrum[i] - spectrum[i];
+            badness += diff * diff;
+        }
+        ESpectrum_free(espec);
     }
-    ESpectrum_free(espec);
 #endif
 
     if(!isfinite(badness)) {
@@ -1177,6 +1180,9 @@ int main(int argc, char **argv) {
     printf("# %-35s = %lg\n", "tolMatCoal", tolMatCoal);
     printf("# %-35s = %lg\n", "odeAbsTol", odeAbsTol);
     printf("# %-35s = %lg\n", "odeRelTol", odeRelTol);
+    printf("# %-35s = %s\n", "Fitting LD", (DO_LD ? "true" : "false"));
+    printf("# %-35s = %s\n", "Fitting site frequency spectrum",
+           (DO_SPEC ? "true" : "false"));
 
     printf("# %-35s = %lg\n", "Initial temp", initTmptr);
     printf("# %-35s = %lg\n", "final temp", 0.0);
@@ -1496,7 +1502,8 @@ int main(int argc, char **argv) {
         // fitted spectrum
         ESpectrum *espec = ESpectrum_new(twoNsmp, best[0]->ph,
                                          polya, tolMatCoal);
-        printf("\n#%5s %10s\n", "i", "spectrum");
+        printf("\n# Fitted site frequency spectrum\n");
+        printf("#%5s %10s\n", "i", "spectrum");
         for(i=1; i <= spdim; ++i)
             printf("%6d %10.0lf\n", i,
                    floor(0.5 + nSNPs*ESpectrum_folded(espec, i)));
