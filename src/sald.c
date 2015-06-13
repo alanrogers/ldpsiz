@@ -24,7 +24,9 @@ different runs end up on different peaks. Therefore, `sald` is able to
 launch multiple simulated annealing jobs, each from a random starting
 point. These can run in parallel, on separate threads. The number of
 parallel optimizers is set using the `--nOpt` argument described
-below.
+below. The 0th optimizer always starts from the population history
+parameters specified in `ldpsiz.ini` or on the command line. The other
+optimizers start from randomly chosen history parameters.
 
 The program also deals with bootstrap data, as provided by \ref eld
 "eld". The various boostrap data sets also run in parallel if your
@@ -81,8 +83,6 @@ input to the program `tabfboot`.
           length of current epoch (generations)
        -E or --nextepoch
           move to next earlier epoch
-       --noRandomStart
-          Don't initialize PopHist at random
        --nOpt <x>
           optimizers per data set
        --initTmptr <x>
@@ -401,7 +401,6 @@ void usage(void) {
     tellopt("--twoN <x>", "haploid pop size to x in current epoch");
     tellopt("-T <x> or --time <x>", "length of current epoch (generations)");
     tellopt("-E or --nextepoch", "move to next earlier epoch");
-    tellopt("--noRandomStart", "Don't initialize PopHist at random");
 
     /* number of parallel optimizers */
     tellopt("--nOpt <x>", "optimizers per data set");
@@ -862,7 +861,6 @@ int main(int argc, char **argv) {
         {"nextepoch", no_argument, 0, 'E'},
         {"tmptrDecay", required_argument, 0, 'd'},
         {"help", no_argument, 0, 'h'},
-        {"noRandomStart", no_argument, 0, 'R'},
         {"initTmptr", required_argument, 0, 'I'},
         {"nItr", required_argument, 0, 'i'},
         {"nOpt", required_argument, 0, 'o'},
@@ -907,7 +905,6 @@ int main(int argc, char **argv) {
                                  * per data set */
     int         nTasks = 0;     /* total number of tasks */
     long        nBootReps = 0;  /* bootstrap replicates */
-    int         randomStart = 1;    /* initialize ph from random values */
     int         curr_epoch = 0, epochPending = 1, phSetFromFile = 0;
     double      curr_t = strtod("Inf", 0);
     double      curr_twoN = 1000.0;
@@ -1025,9 +1022,6 @@ int main(int argc, char **argv) {
             break;
         case 'n':
             twoNsmp = strtol(optarg, NULL, 10);
-            break;
-        case 'R':
-            randomStart = 0;
             break;
         case 'i':
             nItr = strtol(optarg, NULL, 10);
@@ -1277,6 +1271,7 @@ int main(int argc, char **argv) {
 
     /* create task arguments for the observed sigdsq */
     for(j = 0; j < nOpt; ++j) {
+        int randomStart = (j==0 ? true : false);
         taskarg[0][j] = TaskArg_new(j, baseSeed, nbins, twoNsmp,
                                     u,
                                     tolMatCoal, ftol, xtol,
@@ -1316,6 +1311,7 @@ int main(int argc, char **argv) {
         }
 
         for(j = 0; j < nOpt; ++j) {
+            int randomStart = (j==0 ? true : false);
             taskarg[rndx + 1][j] = TaskArg_new(j + (1+rndx)*nOpt,
                                                baseSeed,
                                                nbins, twoNsmp, u, 
