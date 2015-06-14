@@ -122,10 +122,11 @@ extern pthread_mutex_t outputLock;
 #include "jobqueue.h"
 #include "misc.h"
 #include "model.h"
-#include "pophist.h"
 #include "polya.h"
+#include "pophist.h"
 #include "sasimplex.h"
 #include "spectab.h"
+#include "tfespectrum.h"
 #include "tokenizer.h"
 #include <assert.h>
 #include <float.h>
@@ -162,6 +163,7 @@ typedef struct TaskArg {
     int         nbins;
     unsigned    spdim;
     unsigned    twoNsmp;        // haploid sample size
+    unsigned    truncSFS;       // how much to truncate site frequency spectrum
     size_t      ndim;           // number of dimensions in state space
     double      u;              // mutation rate
     double      tolMatCoal;     // tolerance for MatCoal
@@ -192,6 +194,7 @@ typedef struct CostPar {
     int         nbins;
     unsigned    spdim;
     unsigned    twoNsmp;
+    unsigned    truncSFS;
     double      u;
     double      tolMatCoal;
     double     *sigdsq;
@@ -208,6 +211,7 @@ typedef struct TaskArgArg {
     unsigned seed;
     int nbins;
     unsigned twoNsmp;
+    unsigned truncSFS;
     double u;
     double tolMatCoal;
     double ftol;
@@ -245,9 +249,9 @@ void        prHeader(PopHist * ph);
 void CostPar_print(CostPar * cp) {
     int         i;
 
-    printf("CostPar: nbins=%d spdim=%u twoNsmp=%u u=%lg"
+    printf("CostPar: nbins=%d spdim=%u twoNsmp=%u truncSFS=%u u=%lg"
            " model=%s nIterations=%lu\n",
-           cp->nbins, cp->spdim, cp->twoNsmp, cp->u,
+           cp->nbins, cp->spdim, cp->twoNsmp, cp->truncSFS, cp->u,
            Model_lbl(ODE_model(cp->ode)), cp->nIterations);
     printf("    %15s %15s\n", "c", "sigdsq");
     for(i = 0; i < cp->nbins; ++i)
@@ -272,6 +276,7 @@ TaskArg    *TaskArg_new(unsigned task, int randomStart, TaskArgArg *taa) {
     targ->nbins = taa->nbins;
     targ->spdim = ULIntArray_dim(taa->spectrum);
     targ->twoNsmp = taa->twoNsmp;
+    targ->truncSFS = taa->truncSFS;
     targ->u = taa->u;
     targ->task = task;
     /* each task gets different seed */
@@ -572,6 +577,7 @@ int taskfun(void *varg) {
         .nbins = targ->nbins,
         .spdim = targ->spdim,
         .twoNsmp = targ->twoNsmp,
+        .truncSFS = targ->truncSFS,
         .tolMatCoal = targ->tolMatCoal,
         .u = targ->u,
         .sigdsq = targ->sigdsq_obs,
@@ -735,7 +741,7 @@ static double costFun(const gsl_vector *x, void *varg) {
     ODE        *ode = arg->ode;
     static const double bigval = 1.0 / DBL_EPSILON;
 
-    double      badness, exp_sigdsq[nbins], exp_spectrum[spdim];
+    double      badness, exp_sigdsq[nbins];
     int         i;
 
     // DEBUG: make a vector xx = abs(x)
@@ -767,17 +773,11 @@ static double costFun(const gsl_vector *x, void *varg) {
 
 #ifdef DO_SPEC
     {
-        // get expected spectrum
-        ESpectrum *espec = ESpectrum_new(arg->twoNsmp, ph,
+        // get truncated, folded, expected spectrum
+        TFESpectrum *tfespec = TFESpectrum_new(arg->twoNsmp, arg->truncSFS, ph,
                                          arg->polya, arg->tolMatCoal);
-        for(i=0; i < spdim; ++i)
-            exp_spectrum[i] = ESpectrum_folded(espec, i+1);
-
-        for(i = 0; i < spdim; ++i) {
-            diff = exp_spectrum[i] - spectrum[i];
-            badness += diff * diff;
-        }
-        ESpectrum_free(espec);
+        badness += TFESpectrum_diff(tfespec, spdim, spectrum);
+        TFESpectrum_free(tfespec);
     }
 #endif
 
@@ -1158,6 +1158,7 @@ int main(int argc, char **argv) {
     printf("# %-35s = %s\n", "Fitting LD", (DO_LD ? "true" : "false"));
     printf("# %-35s = %s\n", "Fitting site frequency spectrum",
            (DO_SPEC ? "true" : "false"));
+    printf("# %-35s = %u\n", "Entries truncated from spectrum", truncSFS);
 
     printf("# %-35s = %lg\n", "Initial temp", initTmptr);
     printf("# %-35s = %lg\n", "final temp", 0.0);
@@ -1257,6 +1258,7 @@ int main(int argc, char **argv) {
         .seed = baseSeed,
         .nbins = nbins,
         .twoNsmp = twoNsmp,
+        .truncSFS = truncSFS,
         .u = u,
         .tolMatCoal = tolMatCoal,
         .ftol = ftol,
