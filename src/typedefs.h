@@ -40,6 +40,7 @@ typedef struct SeqDatPar SeqDatPar;
 typedef struct SimplexInfo SimplexInfo;
 typedef struct SimAnn SimAnn;
 typedef struct Spectab Spectab;
+typedef struct TFESpectrum TFESpectrum;
 typedef struct Tabulation Tabulation;
 typedef struct ThreadBounds ThreadBounds;
 typedef struct Threadpool Threadpool;

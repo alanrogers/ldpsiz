@@ -19,13 +19,6 @@
 #include <stdbool.h>
 #include <assert.h>
 
-/// Site frequency spectrum
-struct ESpectrum {
-	unsigned nSamples;
-    int      folded;   // true or false to indicate folded or unfolded
-	double *spec;
-};
-
 /**
    Class ESpectrum: Expected site frequency spectrum under random
    mating with a given history of population size.
@@ -33,6 +26,13 @@ struct ESpectrum {
    @author Alan Rogers
    @date 27 Nov 2014
 **/
+
+/// Site frequency spectrum
+struct ESpectrum {
+	unsigned nSamples;
+	double *spec;
+};
+
 /// Constructor
 /// Polya_prob(polya,i,k) = probability that a mutation occurring in
 /// the coalescent interval containing k lineages will have
