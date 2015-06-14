@@ -7,9 +7,9 @@ prof :=
 incl := -I/usr/local/include -I/opt/local/include -I../src
 
 tests := xassign xboot xchain xem xfileindex xhayes xhill \
-   xini xjobqueue xmisc xmodel xpophist xreadgtp \
+   xini xjobqueue xmisc xmodel xpophist xreadgtp xsnp \
    xspectab xstrobeck xsums xtabulation xtokenizer xwindow \
-   xmatcoal xpolya xespectrum xarray
+   xmatcoal xpolya xespectrum xtfespectrum xarray
 
 CC := gcc
 
@@ -46,19 +46,24 @@ test : $(tests)
 	-./xboot
 	-./xchain
 	-./xem
+	-./xespectrum
 	-./xfileindex
 	-./xhayes
 	-./xhill
 	-./xini
 	-./xjobqueue
+	-./xmatcoal
 	-./xmisc
 	-./xmodel
+	-./xpolya
 	-./xpophist
 	-./xreadgtp
+	-./xsnp
 	-./xspectab
 	-./xstrobeck
 	-./xsums
 	-./xtabulation
+	-./xtfespectrum
 	-./xtokenizer 
 	-./xwindow
 	@echo "FINISHED UNIT TESTS."
@@ -177,6 +182,11 @@ xpolya : $(XPOLYA)
 XESPECTRUM := xespectrum.o espectrum.o polya.o matcoal.o misc.o pophist.o
 xespectrum : $(XESPECTRUM)
 	$(CC) $(CFLAGS) -o $@ $(XESPECTRUM) $(lib)
+
+XTFESPECTRUM := xtfespectrum.o tfespectrum.o espectrum.o polya.o matcoal.o misc.o \
+  pophist.o spectab.o array.o
+xtfespectrum : $(XTFESPECTRUM)
+	$(CC) $(CFLAGS) -o $@ $(XTFESPECTRUM) $(lib)
 
 install: $(alltargets)
 	cp -p $(alltargets) $(destination)

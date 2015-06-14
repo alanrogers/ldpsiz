@@ -11,8 +11,8 @@
    Salt Lake City, UT 84112. Email: rogers at anthro.utah.edu
 **/
 
-#ifndef MATCOAL_ESPECTRUM_H
-#define MATCOAL_ESPECTRUM_H
+#ifndef MATCOAL_TFESPECTRUM_H
+#define MATCOAL_TFESPECTRUM_H
 
 #include "typedefs.h"
 

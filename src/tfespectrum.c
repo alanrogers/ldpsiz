@@ -36,20 +36,20 @@ TFESpectrum  *TFESpectrum_new(unsigned nSamples, unsigned truncSFS, PopHist *ph,
     new->truncSFS = truncSFS;
     new->dim = specdim(nSamples, true);
 
-    new->tfespec = malloc(nSamples * sizeof(new->tfspec[0]));
+    new->tfespec = malloc(nSamples * sizeof(new->tfespec[0]));
     checkmem(new->tfespec, __FILE__, __LINE__);
 
-    new->espec = ESpectrum_new(nsamples, ph, polya, errTol);
-    checkmem(new->espectrum, __FILE__, __LINE__);
+    new->espec = ESpectrum_new(nSamples, ph, polya, errTol);
+    checkmem(new->espec, __FILE__, __LINE__);
 
     unsigned i;
     double sum=0.0;
-    assert(truncSFS < dim);
-    for(i = truncSFS; i < dim; ++i) {
-        new->tfespec[i] = ESpectrum_folded(new->espec, i);
+    assert(truncSFS < new->dim);
+    for(i = truncSFS; i < new->dim; ++i) {
+        new->tfespec[i] = ESpectrum_folded(new->espec, i+1);
         sum += new->tfespec[i];
     }
-    for(i = truncSFS; i < dim; ++i)
+    for(i = truncSFS; i < new->dim; ++i)
         new->tfespec[i] /= sum;
     return new;
 }
@@ -63,13 +63,12 @@ void        TFESpectrum_free(TFESpectrum * self) {
 
 double      TFESpectrum_atNdx(TFESpectrum * self, unsigned i) {
 	assert(i > 0);
-	assert(i < spectrum->nSamples);
-    assert(i < dim+1);
+    assert(i < 1 + self->dim);
     return self->tfespec[i-1];
 }
 
 unsigned    TFESpectrum_nSamples(const TFESpectrum * self) {
-    return ESpectrum_nSamples(self->espectrum);
+    return ESpectrum_nSamples(self->espec);
 }
 
 /// Return sum of squared differences between self and an unnormalized
