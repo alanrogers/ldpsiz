@@ -203,34 +203,38 @@ typedef struct CostPar {
     unsigned long nIterations;
 } CostPar;
 
+// Structure to pass values to TaskArg_new
+typedef struct TaskArgArg {
+    unsigned seed;
+    int nbins;
+    unsigned twoNsmp;
+    double u;
+    double tolMatCoal;
+    double ftol;
+    double xtol;
+    double *stepsize;
+    AnnealSched *sched;
+    double *loBnd;
+    double *hiBnd;
+    double *hiInit;
+    double odeAbsTol;
+    double odeRelTol;
+    int nPerTmptr;
+    int verbose;
+    double *sigdsq_obs;
+    double *c;
+    ULIntArray *spectrum;
+    Model * model;
+    PopHist * ph_init;
+    const Polya *polya;
+} TaskArgArg;
+
 void        usage(void);
 int read_data(FILE * ifp, 
               DblArray *cm,
               DblArray *sigdsq,
               ULIntArray *spectrum);
-TaskArg    *TaskArg_new(unsigned task,
-                        unsigned seed,
-                        int nbins,
-                        unsigned twoNsmp,
-                        double u,
-                        double tolMatCoal,
-                        double ftol,
-                        double xtol,
-                        double *stepsize,
-                        AnnealSched *sched,
-                        double *loBnd,
-                        double *hiBnd,
-                        double *hiInit,
-                        double odeAbsTol,
-                        double odeRelTol,
-                        int nPerTmptr,
-                        int verbose,
-                        double *sigdsq_obs,
-                        double *c,
-                        ULIntArray *spectrum,
-                        Model * model, PopHist * ph_init,
-                        const Polya *polya,
-                        int randomStart);
+TaskArg    *TaskArg_new(unsigned task, int randomStart, TaskArgArg *taa);
 void        TaskArg_free(TaskArg * targ);
 int         taskfun(void *varg);
 static double costFun(const gsl_vector *x, void *varg);
@@ -256,89 +260,66 @@ void CostPar_print(CostPar * cp) {
     PopHist_print_comment(cp->ph, "    ", stdout);
 }
 
-/** Construct a new TaskArg */
-TaskArg    *TaskArg_new(unsigned task,
-                        unsigned seed,
-                        int nbins,
-                        unsigned twoNsmp,
-                        double u,
-                        double tolMatCoal,
-                        double ftol,
-                        double xtol,
-                        double *stepsize,
-                        AnnealSched *sched,
-                        double *loBnd,
-                        double *hiBnd,
-                        double *hiInit,
-                        double odeAbsTol,
-                        double odeRelTol,
-                        int nPerTmptr,
-                        int verbose,
-                        double *sigdsq_obs,
-                        double *c,
-                        ULIntArray *spectrum,
-                        Model * model, PopHist * ph_init,
-                        const Polya *polya,
-                        int randomStart) {
+TaskArg    *TaskArg_new(unsigned task, int randomStart, TaskArgArg *taa) {
     TaskArg    *targ = malloc(sizeof(TaskArg));
 
     checkmem(targ, __FILE__, __LINE__);
     assert(targ != NULL);
 
-    targ->ndim = PopHist_nParams(ph_init);
+    targ->ndim = PopHist_nParams(taa->ph_init);
 
     targ->nIterations = 0;
-    targ->nbins = nbins;
-    targ->spdim = ULIntArray_dim(spectrum);
-    targ->twoNsmp = twoNsmp;
-    targ->u = u;
+    targ->nbins = taa->nbins;
+    targ->spdim = ULIntArray_dim(taa->spectrum);
+    targ->twoNsmp = taa->twoNsmp;
+    targ->u = taa->u;
     targ->task = task;
     /* each task gets different seed */
-    targ->seed = (seed + (unsigned long long) task) % UINT_MAX;  
+    targ->seed = (taa->seed + (unsigned long long) task) % UINT_MAX;  
 
-    targ->stepsize = memdup(stepsize, targ->ndim * sizeof(targ->stepsize[0]));
+    targ->stepsize = memdup(taa->stepsize, targ->ndim * sizeof(targ->stepsize[0]));
     checkmem(targ->stepsize, __FILE__, __LINE__);
 
-    targ->sched = AnnealSched_copy(sched);
+    targ->sched = AnnealSched_copy(taa->sched);
 
-    targ->loBnd = memdup(loBnd, targ->ndim * sizeof(targ->loBnd[0]));
+    targ->loBnd = memdup(taa->loBnd, targ->ndim * sizeof(targ->loBnd[0]));
     checkmem(targ->loBnd, __FILE__, __LINE__);
 
-    targ->hiBnd = memdup(hiBnd, targ->ndim * sizeof(targ->hiBnd[0]));
+    targ->hiBnd = memdup(taa->hiBnd, targ->ndim * sizeof(targ->hiBnd[0]));
     checkmem(targ->hiBnd, __FILE__, __LINE__);
 
-    targ->hiInit = memdup(hiInit, targ->ndim * sizeof(targ->hiInit[0]));
+    targ->hiInit = memdup(taa->hiInit, targ->ndim * sizeof(targ->hiInit[0]));
     checkmem(targ->hiInit, __FILE__, __LINE__);
 
-    targ->nPerTmptr = nPerTmptr;
-    targ->verbose = verbose;
+    targ->nPerTmptr = taa->nPerTmptr;
+    targ->verbose = taa->verbose;
     targ->cost = -1.0;
-    targ->tolMatCoal = tolMatCoal;
-    targ->ftol = ftol;
-    targ->xtol = xtol;
-    targ->ode = ODE_new(model, odeAbsTol, odeRelTol);
-    targ->ph = PopHist_dup(ph_init);
-    targ->polya = polya; // not duplicated
+    targ->tolMatCoal = taa->tolMatCoal;
+    targ->ftol = taa->ftol;
+    targ->xtol = taa->xtol;
+    targ->ode = ODE_new(taa->model, taa->odeAbsTol, taa->odeRelTol);
+    targ->ph = PopHist_dup(taa->ph_init);
+    targ->polya = taa->polya; // not duplicated
     targ->randomStart = randomStart;
     targ->status = 0;
     targ->simplexSize = DBL_MAX;
 
-    targ->sigdsq_obs = memdup(sigdsq_obs, nbins * sizeof(targ->sigdsq_obs[0]));
+    targ->sigdsq_obs = memdup(taa->sigdsq_obs, taa->nbins * sizeof(targ->sigdsq_obs[0]));
     checkmem(targ->sigdsq_obs, __FILE__, __LINE__);
 
     // Normalize spectrum as array of doubles
-    unsigned i, spdim = ULIntArray_dim(spectrum);
+    unsigned i, spdim = ULIntArray_dim(taa->spectrum);
     double spec[spdim];
     unsigned long spsum=0.0;
     for(i=0; i<spdim; ++i)
-        spsum += ULIntArray_get(spectrum, i);
+        spsum += ULIntArray_get(taa->spectrum, i);
     for(i=0; i<spdim; ++i)
-        spec[i] = ULIntArray_get(spectrum, i) / ((double) spsum);
+        spec[i] = ULIntArray_get(taa->spectrum, i) / ((double) spsum);
 
     targ->spectrum_obs = memdup(spec, spdim * sizeof(spec[0]));
     checkmem(targ->spectrum_obs, __FILE__, __LINE__);
 
-    targ->c = memdup(c, nbins * sizeof(targ->c[0]));
+    targ->c = memdup(taa->c, taa->nbins * sizeof(targ->c[0]));
     checkmem(targ->c, __FILE__, __LINE__);
 
     return (targ);
@@ -1269,24 +1250,38 @@ int main(int argc, char **argv) {
         checkmem(taskarg[i], __FILE__, __LINE__);
     }
 
+    // These values are all passed to TaskArg_new. Putting them into
+    // a structure is less error-prone than a long list of function
+    // arguments.  
+    TaskArgArg taskargarg = {
+        .seed = baseSeed,
+        .nbins = nbins,
+        .twoNsmp = twoNsmp,
+        .u = u,
+        .tolMatCoal = tolMatCoal,
+        .ftol = ftol,
+        .xtol = xtol,
+        .stepsize = stepsize,
+        .sched = sched,
+        .loBnd = loBnd,
+        .hiBnd = hiBnd,
+        .hiInit = hiInit,
+        .odeAbsTol = odeAbsTol,
+        .odeRelTol = odeRelTol,
+        .nPerTmptr = nPerTmptr,
+        .verbose = verbose,
+        .sigdsq_obs = DblArray_ptr(sigdsq_obs),
+        .c = DblArray_ptr(cc),
+        .spectrum = spectrum_obs,
+        .model = model,
+        .ph_init = ph_init,
+        .polya = polya,
+    };
+
     /* create task arguments for the observed sigdsq */
     for(j = 0; j < nOpt; ++j) {
         int randomStart = (j==0 ? true : false);
-        taskarg[0][j] = TaskArg_new(j, baseSeed, nbins, twoNsmp,
-                                    u,
-                                    tolMatCoal, ftol, xtol,
-                                    stepsize,
-                                    sched,
-                                    loBnd, hiBnd, hiInit,
-                                    odeAbsTol, odeRelTol,
-                                    nPerTmptr,
-                                    verbose,
-                                    DblArray_ptr(sigdsq_obs),
-                                    DblArray_ptr(cc),
-                                    spectrum_obs,
-                                    model, ph_init,
-                                    polya,
-                                    randomStart);
+        taskarg[0][j] = TaskArg_new(j, randomStart, &taskargarg);
     }
 
     fflush(stdout);
@@ -1299,6 +1294,7 @@ int main(int argc, char **argv) {
     ULIntArray *spec_curr = ULIntArray_new(spdim);
     checkmem(spec_curr, __FILE__, __LINE__);
 
+    taskargarg.verbose = false;
     for(rndx = 0; rndx < nBootReps; ++rndx) {
 
         Boot_get_rep(boot, sigdsq_curr, NULL, cc_curr, NULL,
@@ -1310,24 +1306,15 @@ int main(int argc, char **argv) {
             DblArray_set(cc_curr, i, cci*0.01);
         }
 
+        // These change with each bootstrap replicate
+        taskargarg.sigdsq_obs = DblArray_ptr(sigdsq_curr);
+        taskargarg.c = DblArray_ptr(cc_curr);
+        taskargarg.spectrum = spec_curr;
+
         for(j = 0; j < nOpt; ++j) {
             int randomStart = (j==0 ? true : false);
-            taskarg[rndx + 1][j] = TaskArg_new(j + (1+rndx)*nOpt,
-                                               baseSeed,
-                                               nbins, twoNsmp, u, 
-                                               tolMatCoal, ftol, xtol,
-                                               stepsize,
-                                               sched,
-                                               loBnd, hiBnd, hiInit,
-                                               odeAbsTol, odeRelTol,
-                                               nPerTmptr,
-                                               false,
-                                               DblArray_ptr(sigdsq_curr),
-                                               DblArray_ptr(cc_curr),
-                                               spec_curr,
-                                               model, ph_init,
-                                               polya,
-                                               randomStart);
+            taskarg[rndx + 1][j] = TaskArg_new(j + (1+rndx)*nOpt, randomStart,
+                                               &taskargarg);
         }
     }
 

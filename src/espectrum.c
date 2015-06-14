@@ -16,12 +16,13 @@
 #include "matcoal.h"
 #include "misc.h"
 #include <stdlib.h>
+#include <stdbool.h>
 #include <assert.h>
 
 /// Site frequency spectrum
 struct ESpectrum {
 	unsigned nSamples;
-    unsigned truncSFS; // number of entries of spectrum to ignore
+    int      folded;   // true or false to indicate folded or unfolded
 	double *spec;
 };
 
@@ -36,13 +37,12 @@ struct ESpectrum {
 /// Polya_prob(polya,i,k) = probability that a mutation occurring in
 /// the coalescent interval containing k lineages will have
 /// i descendants in the modern sample.
-ESpectrum *ESpectrum_new(unsigned nSamples, unsigned truncSFS,
-                         PopHist *ph, const Polya *polya, double errTol) {
+ESpectrum *ESpectrum_new(unsigned nSamples, PopHist *ph,
+                         const Polya *polya, double errTol) {
 	ESpectrum *spectrum = malloc(sizeof(ESpectrum));
 	checkmem(spectrum, __FILE__, __LINE__);
 
 	spectrum->nSamples = nSamples;
-    spectrum->truncSFS = truncSFS;
 	spectrum->spec = malloc((nSamples-1) * sizeof(spectrum->spec[0]));
 	checkmem(spectrum->spec, __FILE__, __LINE__);
 
@@ -88,25 +88,6 @@ ESpectrum *ESpectrum_new(unsigned nSamples, unsigned truncSFS,
 		spectrum->spec[i] /= sum;
 
 	return spectrum;
-}
-
-// This isn't going to work. ESpectrum gets normed before it is folded.
-// That precluded truncating the folded version. Need to rethink this.
-// Perhaps ESpectrum needs to store a folded and an unfolded array, each
-// normed according to truncSFS. ESpectrum would need to keep truncSFS
-// as part of state. 
-void ESpectrum_norm(ESpectrum *self, int folded,
-                    unsigned len, double spec[len]) {
-    assert(len == specdim(self->nSamples, folded));
-    unsigned i;
-    double sum = 0.0;
-
-    for(i=0; i < self->truncSFS; ++i)
-        spec[i] = 0.0;
-    for(i = self->truncSFS; i < len; ++i)
-        sum += spec[i];
-    for(i = self->truncSFS; i < len; ++i)
-        spec[i] /= sum;
 }
 
 /// Destructor
