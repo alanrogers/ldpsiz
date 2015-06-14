@@ -37,7 +37,7 @@ struct Spectab {
 /// the boolean variable "folded", which indicates whether we're
 /// dealing with a full site-frequency spectrum or a folded one.
 unsigned specdim(unsigned twoNsmp, int folded) {
-    return (folded ? twoNsmp/2u : twoNsmp-1);
+    return (folded ? twoNsmp/2u : twoNsmp-1u);
 }
 
 /**

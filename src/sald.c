@@ -389,7 +389,7 @@ void usage(void) {
     tellopt("-t <x> or --threads <x>", "number of threads (default is auto)");
     tellopt("-u <x> or --mutation <x>", "mutation rate/generation");
     tellopt("-v or --verbose", "more output");
-	tellopt("-s <x> or --truncateSpectrum <x>",
+	tellopt("-s <x> or --truncSpec <x>",
 			"truncate <x> entries from site frequency spectrum (def: 0)");
 
     /* bootstrap */
@@ -872,7 +872,7 @@ int main(int argc, char **argv) {
         {"time", required_argument, 0, 'T'},
         {"mutation", required_argument, 0, 'u'},
         {"verbose", no_argument, 0, 'v'},
-		{"truncateSpectrum", required_argument, 0, 's'},
+		{"truncSpec", required_argument, 0, 's'},
         {NULL, 0, NULL, 0}
     };
 
@@ -1035,7 +1035,7 @@ int main(int argc, char **argv) {
 		case 's':
 			truncSFS = strtol(optarg, NULL, 10);
             if(truncSFS <= 0) {
-                fprintf(stderr,"Arg following -s or --truncateSpectrum"
+                fprintf(stderr,"Arg following -s or --truncSpec"
 						" should be positive. Got %s.\n", optarg);
                 usage();
             }
