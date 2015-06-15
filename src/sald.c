@@ -630,6 +630,9 @@ int taskfun(void *varg) {
                                   &ss.vector);
     }
 
+    // nPerTmptr is the number of iterations to do at each temperature
+    // except the last. On the last temp, do twice as many iterations.
+    // This is intended to polish the final answer.
     for(i=0; i < AnnealSched_size(targ->sched); ++i) {
         temperature = AnnealSched_next(targ->sched);
         status = sasimplex_n_iterations(minimizer,
