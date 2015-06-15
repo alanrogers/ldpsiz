@@ -12,21 +12,21 @@
 
 #      Parameters         Used in
 # 
-#      PopHist            fitld predld
+#      PopHist            sald preld
 #      blocksize          eld
-#      bootfilename       eld fitld
+#      bootfilename       eld sald
 #      bootreps           eld
-#      c_per_nucleotide   eld fitld
-#      confidence         fitld
-#      doEquilibria       predld
-#      hiC               predld
-#      loC               predld
-#      methods            fitld predld
-#      nbins              eld predld
-#      nthreads           eld fitld
+#      c_per_nucleotide   eld sald
+#      confidence         sald
+#      doEquilibria       preld
+#      hiC               preld
+#      loC               preld
+#      methods            sald preld
+#      nbins              eld preld
+#      nthreads           eld sald
 #      samplingInterval  eld
-#      twoNsmp            fitld predld
-#      u                  fitld predld
+#      twoNsmp            sald preld
+#      u                  sald preld
 #      verbose            eld
 #      windowsize_cm      eld
 #
