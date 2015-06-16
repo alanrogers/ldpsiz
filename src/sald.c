@@ -111,6 +111,7 @@ extern pthread_mutex_t outputLock;
 
 #define DO_LD 1
 #define DO_SPEC 1
+#define KL_DIVERGENCE 
 
 #include "annealsched.h"
 #include "array.h"
@@ -779,11 +780,11 @@ static double costFun(const gsl_vector *x, void *varg) {
         // get truncated, folded, expected spectrum
         TFESpectrum *tfespec = TFESpectrum_new(arg->twoNsmp, arg->truncSFS, ph,
                                          arg->polya, arg->tolMatCoal);
-#  if 0
-        // sum of squared differences
+#  ifdef KL_DIVERGENCE
+        // Kullback-Leibler divergence
         badness += TFESpectrum_diff(tfespec, spdim, spectrum);
 #  else
-        // Kullback-Leibler divergence
+        // sum of squared differences
         badness += TFESpectrum_diff(tfespec, spdim, spectrum);
 #  endif
         TFESpectrum_free(tfespec);
@@ -1168,6 +1169,11 @@ int main(int argc, char **argv) {
     printf("# %-35s = %s\n", "Fitting site frequency spectrum",
            (DO_SPEC ? "true" : "false"));
     printf("# %-35s = %u\n", "Entries truncated from spectrum", truncSFS);
+#ifdef KL_DIVERGENCE
+    printf("# %-35s = %s\n", "Using KL divergence", "true");
+#else
+    printf("# %-35s = %s\n", "Using KL divergence", "false");
+#endif
 
     printf("# %-35s = %lg\n", "Initial temp", initTmptr);
     printf("# %-35s = %lg\n", "final temp", 0.0);
