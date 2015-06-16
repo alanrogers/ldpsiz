@@ -779,7 +779,13 @@ static double costFun(const gsl_vector *x, void *varg) {
         // get truncated, folded, expected spectrum
         TFESpectrum *tfespec = TFESpectrum_new(arg->twoNsmp, arg->truncSFS, ph,
                                          arg->polya, arg->tolMatCoal);
+#  if 0
+        // sum of squared differences
         badness += TFESpectrum_diff(tfespec, spdim, spectrum);
+#  else
+        // Kullback-Leibler divergence
+        badness += TFESpectrum_diff(tfespec, spdim, spectrum);
+#  endif
         TFESpectrum_free(tfespec);
     }
 #endif

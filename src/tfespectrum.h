@@ -22,5 +22,6 @@ void        TFESpectrum_free(TFESpectrum * self);
 double      TFESpectrum_atNdx(TFESpectrum * self, unsigned i);
 unsigned    TFESpectrum_nSamples(const TFESpectrum * self);
 double      TFESpectrum_diff(const TFESpectrum *self, unsigned dim, double s[dim]);
+double      TFESpectrum_KLdiverg(const TFESpectrum *self, unsigned dim, double s[dim]);
 
 #endif

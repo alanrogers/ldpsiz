@@ -87,3 +87,19 @@ double TFESpectrum_diff(const TFESpectrum *self, unsigned dim, double s[dim]) {
     return ssq;
 }
 
+/// Return Kullback-Leibler divergence between self and an estimated spectrum.
+double TFESpectrum_KLdiverg(const TFESpectrum *self, unsigned dim, double s[dim]) {
+    assert(self);
+    assert(dim == self->dim);
+    unsigned i;
+    double kl=0.0, sum=0.0;
+    for(i = self->truncSFS; i < dim; ++i)
+        sum += s[i];
+    for(i = self->truncSFS; i < self->dim; ++i) {
+        double q = s[i]/sum;
+        double p =  self->tfespec[i];
+        kl += p*log(p/q);
+    }
+    return kl;
+}
+
