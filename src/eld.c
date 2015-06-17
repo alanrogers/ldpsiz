@@ -260,7 +260,7 @@ int main(int argc, char **argv) {
     int         nbins = 25;
     int         verbose = 0;
     int         ploidy = 1;     /* default is haploid. */
-    const int   folded = false;
+    const int   folded = true;
     unsigned    nGtype, twoNsmp;
 
     FILE       *ifp = NULL;
