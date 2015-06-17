@@ -151,6 +151,7 @@ int Window_advance(Window * window, Tabulation * tab, Spectab *spectab,
     double      sep_cm;
     int         rval;
     SNP        *snp;
+    int         folded = Spectab_folded(spectab);
 
     rval = Window_nextSNP(window, boot);
     if(rval == EOF)
@@ -164,7 +165,11 @@ int Window_advance(Window * window, Tabulation * tab, Spectab *spectab,
         // weight=1 because this isn't a bootstrap replicate.
         unsigned    alleleCount;
 
-        alleleCount = SNP_countMinor(window->curr,
+        if(folded)
+            alleleCount = SNP_countMinor(window->curr,
+                                         window->ploidy);
+        else
+            alleleCount = SNP_countDerived(window->curr,
                                          window->ploidy);
 #ifndef NDEBUG
         if(alleleCount == 0 || alleleCount > Spectab_dim(spectab)) {

@@ -23,6 +23,7 @@ Spectab    *Spectab_dup(Spectab * old);
 void        Spectab_free(Spectab * tab);
 void        Spectab_plus_equals(Spectab * x, const Spectab * y);
 void        Spectab_print(Spectab * tab, FILE * ofp);
+int         Spectab_folded(Spectab *self);
 long unsigned Spectab_report(const Spectab * tab, ULIntArray *spec);
 long unsigned Spectab_get(const Spectab *st, unsigned i);
 int         Spectab_equals(const Spectab * x, const Spectab * y);

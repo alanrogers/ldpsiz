@@ -144,6 +144,10 @@ void Spectab_free(Spectab * tab) {
     return;
 }
 
+int         Spectab_folded(Spectab *self) {
+    return self->folded;
+}
+
 /// Get spectrum from Spectab object. Function returns nobs. 
 long unsigned Spectab_report(const Spectab * tab, ULIntArray *spec) {
     assert(tab);
