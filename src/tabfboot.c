@@ -14,6 +14,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -29,6 +30,7 @@ void usage(void) {
     tellopt("--maxTime <x>", "max time value");
     tellopt("-q <q1> <q2> ... or --quantiles <q1> <q2> ...",
             "specify quantiles");
+    tellopt ("-L or --log", "report 2N values as log10");
     tellopt("-h or --help", "print this message");
     fprintf(stderr,"\ninput should be an .fboot file produced by sald\n");
     exit(1);
@@ -38,6 +40,7 @@ int main(int argc, char **argv) {
     char ifname[200] = {'\0'};
     FILE *ifp = NULL;
     int i, j, nPr=0;
+    int logScale = 0;
     double *prvals=NULL;
 
     /* MaxT is the largest value of t we want to tabulate. */
@@ -57,6 +60,8 @@ int main(int argc, char **argv) {
             if(++i >= argc)
                 usage();
              maxT = strtod(argv[i], NULL);
+        }else if(isopt("-L", "--log", argv[i])){
+                logScale = true;
         }else if(isopt("-q", "--quantiles", argv[i])) {
             if(++i >= argc)
                 usage();
@@ -67,14 +72,16 @@ int main(int argc, char **argv) {
                 q = strtod(argv[i+nPr], &endptr);
                 if(endptr == argv[i+nPr]) /* argv not a number */
                     break;
-                if(*endptr != '\0')
-                    eprintf("%s:%s:"
-                            "Argument \"%s\" should be a floating-point number",
+                if(*endptr != '\0') {
+                    fprintf(stderr, "%s:%d: Argument \"%s\" isn't a floating-point number",
                             __FILE__,__LINE__,argv[i+nPr]);
-                if(!(q>0.0 && q<1.0))
-                    eprintf("%s:%d:"
-                            "Argument \"%s\" is outside range (0,1)",
+                    exit(EXIT_FAILURE);
+                }
+                if(!(q>0.0 && q<1.0)) {
+                    fprintf(stderr, "%s:%d: Argument \"%s\" is outside range (0,1)",
                             __FILE__,__LINE__,argv[i+nPr]);
+                    exit(EXIT_FAILURE);
+                }
             }
             if(nPr == 0)
                 usage();
@@ -238,12 +245,11 @@ int main(int argc, char **argv) {
 
     printf("%8s", "t");
     for(j=0; j<nPr; ++j) {
-        snprintf(buff, sizeof(buff), "logq%lg", prvals[j]);
+        snprintf(buff, sizeof(buff), "%sq%lg", (logScale ? "log" : ""), prvals[j]);
         printf(" %9s", buff);
     }
-    printf(" %9s", "log2Nmean");
-	putchar('\n');
-
+    snprintf(buff, sizeof(buff), "%s2Nmean", (logScale ? "log" : ""));
+    printf(" %9s\n", buff);
 
     for(i=0; i < nT; ++i) {
 
@@ -252,14 +258,14 @@ int main(int argc, char **argv) {
         qsort(twoN[i], nreps, sizeof(twoN[i][0]), compareDoubles);
         for(j=0; j<nPr; ++j) {
             double q = interpolate(prvals[j], &twoN[i][0], nreps);
-            printf(" %9.5lf", log10(q));
+            printf(" %9.5lf", (logScale ? log10(q) : q));
         }
 
         double twoNmean = 0.0;
         for(j=0; j<nreps; ++j)
             twoNmean += twoN[i][j];
         twoNmean /= nreps;
-        printf(" %9.5lf", log10(twoNmean));
+        printf(" %9.5lf", (logScale ? log10(twoNmean) : twoNmean));
         putchar('\n');
     }
     Tokenizer_free(tkz);
