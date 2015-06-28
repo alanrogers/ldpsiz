@@ -770,7 +770,6 @@ static double costFun(const gsl_vector *x, void *varg) {
     fflush(stdout);
 #endif
 
-    double diff;
     badness = 0.0;
 
 #ifdef DO_LD
@@ -781,7 +780,7 @@ static double costFun(const gsl_vector *x, void *varg) {
         else
             ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
 
-        badness += msqDiff(nbinq, sigdsq, exp_sigdsq);
+        badness += msqDiff(nbins, sigdsq, exp_sigdsq);
     }
 #endif
 
@@ -792,6 +791,8 @@ static double costFun(const gsl_vector *x, void *varg) {
         // get truncated, folded, expected spectrum
         TFESpectrum *tfespec = TFESpectrum_new(arg->twoNsmp, arg->truncSFS, ph,
                                          arg->polya, arg->tolMatCoal);
+
+        assert(Dbl_near(1.0, sum_double(spdim, spectrum)));
 #  ifdef KL_DIVERGENCE
         // Kullback-Leibler divergence
         spcost = TFESpectrum_KLdiverg(tfespec, spdim, spectrum);

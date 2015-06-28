@@ -146,10 +146,10 @@ int SNP_set(SNP * snp, long ndx, double mappos,
     snp->mappos = mappos;
     snp->ndx = ndx;
     if(ploidy == 2)
-        snp->sum = sumDiploid(gtype, snp->nGtype);
+        snp->sum = sumDiploid(snp->nGtype, gtype);
     else {
         assert(ploidy == 1);
-        snp->sum = sum_char(gtype, snp->nGtype);
+        snp->sum = sum_char(snp->nGtype, gtype);
     }
     snp->p = snp->sum / ((double) (ploidy * snp->nGtype));
 
@@ -238,8 +238,8 @@ SNP        *SNP_connect(SNP * list1, SNP * list2) {
 /// Count copies of allele with value 1
 unsigned SNP_countDerived(SNP * snp, unsigned ploidy) {
     if(ploidy == 2)
-        return sumDiploid(snp->gtype, snp->nGtype);
-    return sum_char(snp->gtype, snp->nGtype);
+        return sumDiploid(snp->nGtype, snp->gtype);
+    return sum_char(snp->nGtype, snp->gtype);
 }
 
 /// Count copies of minor allele.
@@ -262,7 +262,7 @@ double SNP_getDsq_haploid(double *pqpq, SNP * x, SNP * y) {
     double      D = 0.0;
 
     /* calculate sum(x[i] * y[i]) */
-    D = sum_and_char(x->gtype, y->gtype, x->nGtype);
+    D = sum_and_char(x->nGtype, x->gtype, y->gtype);
 
     D -= x->sum * y->p;
     D /= (x->nGtype - 1);

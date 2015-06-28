@@ -70,18 +70,18 @@ int main(int argc, char **argv) {
 
     nreps = 100000;
 
-    assert(sum_long_slow(lx, TWON) == sum_long(lx, TWON));
+    assert(sum_long_slow(TWON, lx) == sum_long(TWON, lx));
     unitTstResult("sum_long", "OK");
 
-    u = dotprod_slow(x, y, TWON);
-    v = dotprod(x, y, TWON);
+    u = dotprod_slow(TWON, x, y);
+    v = dotprod(TWON, x, y);
     assert(fabs(u - v) <= u * TWON * DBL_EPSILON);
     unitTstResult("dotprod", "OK");
 
     /* sum_long_slow */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        ulval = sum_long_slow(lx, TWON);
+        ulval = sum_long_slow(TWON, lx);
         trickOptimizer();
     }
     finish = clock();
@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
     /* sum_long */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        ulval = sum_long(lx, TWON);
+        ulval = sum_long(TWON, lx);
         trickOptimizer();
     }
     finish = clock();
@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
     /* sum_int */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        uval = sum_int(ix, TWON);
+        uval = sum_int(TWON, ix);
         trickOptimizer();
     }
     finish = clock();
@@ -120,7 +120,7 @@ int main(int argc, char **argv) {
     /* sum_char */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        uval = sum_char(cx, TWON);
+        uval = sum_char(TWON, cx);
         trickOptimizer();
     }
     finish = clock();
@@ -134,7 +134,7 @@ int main(int argc, char **argv) {
     /* dotprod_slow */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        dotprod_slow(x, y, TWON);
+        dotprod_slow(TWON, x, y);
         trickOptimizer();
     }
     finish = clock();
@@ -143,7 +143,7 @@ int main(int argc, char **argv) {
     /* dotprod */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        dotprod(x, y, TWON);
+        dotprod(TWON, x, y);
         trickOptimizer();
     }
     finish = clock();
@@ -156,7 +156,7 @@ int main(int argc, char **argv) {
     /* dotprod_int_slow */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        uval = dotprod_int_slow(ix, iy, TWON);
+        uval = dotprod_int_slow(TWON, ix, iy);
         trickOptimizer();
     }
     finish = clock();
@@ -167,7 +167,7 @@ int main(int argc, char **argv) {
     /* dotprod_int */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        uval = dotprod_int(ix, iy, TWON);
+        uval = dotprod_int(TWON, ix, iy);
         trickOptimizer();
     }
     finish = clock();
@@ -178,7 +178,7 @@ int main(int argc, char **argv) {
     /* sum_and_int */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        uval = sum_and_int(ix, iy, TWON);
+        uval = sum_and_int(TWON, ix, iy);
         trickOptimizer();
     }
     finish = clock();
@@ -190,16 +190,16 @@ int main(int argc, char **argv) {
         printf("sum_and_int speedup: %lg%%\n", 100 * (t0 - t2) / t0);
     }
 
-    assert(dotprod_int_slow(ix, iy, TWON) == dotprod_int(ix, iy, TWON));
+    assert(dotprod_int_slow(TWON, ix, iy) == dotprod_int(TWON, ix, iy));
     unitTstResult("dotprod_int", "OK");
 
-    assert(sum_and_int(ix, iy, TWON) == dotprod_int(ix, iy, TWON));
+    assert(sum_and_int(TWON, ix, iy) == dotprod_int(TWON, ix, iy));
     unitTstResult("sum_and_int", "OK");
 
     /* dotprod_char */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        uval = dotprod_char(cx, cy, TWON);
+        uval = dotprod_char(TWON, cx, cy);
         trickOptimizer();
     }
     finish = clock();
@@ -210,7 +210,7 @@ int main(int argc, char **argv) {
     /* sum_and_char */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        uval = sum_and_char(cx, cy, TWON);
+        uval = sum_and_char(TWON, cx, cy);
         trickOptimizer();
     }
     finish = clock();
@@ -221,7 +221,7 @@ int main(int argc, char **argv) {
     /* dotprodDiploid */
     start = clock();
     for(i = 0; i < nreps; ++i) {
-        uval = dotprodDiploid(bcx, bcy, N);
+        uval = dotprodDiploid(N, bcx, bcy);
         trickOptimizer();
     }
     finish = clock();
@@ -234,16 +234,16 @@ int main(int argc, char **argv) {
         printf("dotprodDiploid speedup: %lg%%\n", 100 * (t0 - t3) / t0);
     }
 
-    assert(dotprod_char(cx, cy, TWON) == dotprod_int(ix, iy, TWON));
+    assert(dotprod_char(TWON, cx, cy) == dotprod_int(TWON, ix, iy));
     unitTstResult("dotprod_char", "OK");
     
-    assert(sum_and_int(ix, iy, TWON) == sum_and_char(cx, cy, TWON));
+    assert(sum_and_int(TWON, ix, iy) == sum_and_char(TWON, cx, cy));
     unitTstResult("sum_and_char", "OK");
 
-    assert(sum_and_char(cx, cy, TWON) == dotprodDiploid(bcx, bcy, N));
+    assert(sum_and_char(TWON, cx, cy) == dotprodDiploid(N, bcx, bcy));
     unitTstResult("dotprodDiploid", "OK");
 
-    assert(sum_char(cx, TWON) == sumDiploid(bcx, N));
+    assert(sum_char(TWON, cx) == sumDiploid(N, bcx));
     unitTstResult("sumDiploid", "OK");
 
     gsl_rng_free(rng);
