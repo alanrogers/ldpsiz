@@ -787,7 +787,6 @@ static double costFun(const gsl_vector *x, void *varg) {
             ldcost += diff * diff;
         }
         ldcost /= nbins;
-        fprintf(stderr,"ldcost=%lf\n",ldcost);
         badness += 2.0 * ldcost;
     }
 #endif
@@ -807,7 +806,6 @@ static double costFun(const gsl_vector *x, void *varg) {
         spcost = TFESpectrum_diff(tfespec, spdim, spectrum);
 #  endif
         spcost /= spdim;
-        fprintf(stderr,"spcost=%lf\n",spcost);
         badness += spcost;
         TFESpectrum_free(tfespec);
     }
