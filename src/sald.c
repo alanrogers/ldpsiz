@@ -12,7 +12,7 @@ linkage disequilibrium (measured by \f$\sigma_d^2\f$) and the site
 frequency spectrum. This involves maximization on a complex surface
 with lots of local peaks. (To verify this for yourself, see \ref
 mcmcld "mcmcld".) To avoid getting stuck on local peaks, `sald` uses
-the simplex version of simulated annealing.
+simplex simulated annealing.
 
 Usage
 -----
@@ -792,15 +792,15 @@ static double costFun(const gsl_vector *x, void *varg) {
         TFESpectrum *tfespec = TFESpectrum_new(arg->twoNsmp, arg->truncSFS, ph,
                                          arg->polya, arg->tolMatCoal);
 
-        assert(Dbl_near(1.0, sum_double(spdim, spectrum)));
+        assert(spdim == TFESpectrum_dim(tfespec));
 #  ifdef KL_DIVERGENCE
         // Kullback-Leibler divergence
-        spcost = TFESpectrum_KLdiverg(tfespec, spdim, spectrum);
+        spcost = KLdiverg(spdim, spectrum, TFESpectrum_ptr(tfespec));
+        spcost /= spdim;
 #  else
         // sum of squared differences
-        spcost = TFESpectrum_diff(tfespec, spdim, spectrum);
+        spcost = msqDiff(spdim, spectrum, TFESpectrum_ptr(tfespec));
 #  endif
-        spcost /= spdim;
         badness += spcost;
         TFESpectrum_free(tfespec);
     }

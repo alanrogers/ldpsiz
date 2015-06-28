@@ -6,17 +6,18 @@
  * <rogers@anthro.utah.edu>. This file is released under the Internet
  * Systems Consortium License, which can be found in file "LICENSE".
  */
-#include <stdio.h>
-#include <stdbool.h>
-#include <math.h>
-#include <string.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <ctype.h>
+#include "sums.h"
 #include <assert.h>
-#include <gsl/gsl_matrix.h>
+#include <ctype.h>
+#include <errno.h>
 #include <gsl/gsl_blas.h>
+#include <gsl/gsl_matrix.h>
+#include <math.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #ifdef _WIN32
 #include <windows.h>
 #elif defined(MACOS)
@@ -572,3 +573,21 @@ double chisqDiff(int n, double o[n], double e[n]) {
     }
     return s/n;
 }
+
+/// Return mean Kullback-Leibler divergence of o relative to e,
+/// both of which should be non-negative and sum to 1.
+double meanKLdiverg(unsigned n, double o[n], double e[n]) {
+    unsigned i;
+    double kl=0.0;
+    assert(Dbl_near(1.0, sum_double(n, o)));
+    assert(Dbl_near(1.0, sum_double(n, e)));
+    for(i = 0; i < n; ++i) {
+        if(o[i]==0.0 && e[i]==0.0)
+            continue;
+        double q = o[i];
+        double p = e[i];
+        kl += p*log(p/q);
+    }
+    return kl / n;
+}
+

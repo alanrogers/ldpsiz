@@ -45,6 +45,8 @@ TFESpectrum  *TFESpectrum_new(unsigned nSamples, unsigned truncSFS, PopHist *ph,
     unsigned i;
     double sum=0.0;
     assert(truncSFS < new->dim);
+    for(i=0; i<truncSFS; ++i)
+        new->tfespec[i] = 0;
     for(i = truncSFS; i < new->dim; ++i) {
         new->tfespec[i] = ESpectrum_folded(new->espec, i+1);
         sum += new->tfespec[i];
@@ -59,6 +61,14 @@ void        TFESpectrum_free(TFESpectrum * self) {
     ESpectrum_free(self->espec);
     free(self->tfespec);
     free(self);
+}
+
+double *TFESpectrum_ptr(TFESpectrum *self) {
+    return self->tfespec;
+}
+
+unsigned TFESpectrum_dim(const TFESpectrum *self) {
+    return self->dim;
 }
 
 double      TFESpectrum_atNdx(TFESpectrum * self, unsigned i) {

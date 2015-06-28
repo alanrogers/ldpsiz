@@ -19,6 +19,8 @@
 TFESpectrum  *TFESpectrum_new(unsigned nSamples, unsigned truncSFS, PopHist *ph,
                          const Polya *polya, double errTol);
 void        TFESpectrum_free(TFESpectrum * self);
+unsigned    TFESpectrum_dim(const TFESpectrum *self);
+double     *TFESpectrum_ptr(TFESpectrum *self);
 double      TFESpectrum_atNdx(TFESpectrum * self, unsigned i);
 unsigned    TFESpectrum_nSamples(const TFESpectrum * self);
 double      TFESpectrum_diff(const TFESpectrum *self, unsigned dim, double s[dim]);

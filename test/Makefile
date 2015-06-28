@@ -68,11 +68,11 @@ test : $(tests)
 	-./xwindow
 	@echo "FINISHED UNIT TESTS."
 
-XARRAY := xarray.o array.o misc.o
+XARRAY := xarray.o array.o misc.o sums.o
 xarray : $(XARRAY)
 	$(CC) $(CFLAGS) -o $@ $(XARRAY) $(lib)
 
-XASSIGN := xassign.o assign.o misc.o tokenizer.o
+XASSIGN := xassign.o assign.o misc.o tokenizer.o sums.o
 xassign : $(XASSIGN)
 	$(CC) $(CFLAGS) -o $@ $(XASSIGN) $(lib)
 
@@ -83,59 +83,61 @@ xboot : $(XBOOT)
 	$(CC) $(CFLAGS) -o $@ $(XBOOT) $(lib)
 
 XCHAIN := xchain.o chain.o misc.o pophist.o model.o strobeck.o hayes.o \
-   hill.o tokenizer.o
+   hill.o tokenizer.o sums.o
 xchain : $(XCHAIN)
 	$(CC) $(CFLAGS) -o $@ $(XCHAIN) $(lib)
 
-XEM := xem.o em.o misc.o
+XEM := xem.o em.o misc.o sums.o
 xem : $(XEM)
 	$(CC) $(CFLAGS) -o $@ $(XEM) $(lib)
 
 # test fileindex.c
-XFILEINDEX := xfileindex.o fileindex.o misc.o readgtp.o tokenizer.o assign.o
+XFILEINDEX := xfileindex.o fileindex.o misc.o readgtp.o tokenizer.o assign.o \
+    sums.o
 xfileindex : $(XFILEINDEX)
 	$(CC) $(CFLAGS) -o $@ $(XFILEINDEX) $(lib)
 
 XHAYES := xhayes.o hayes.o misc.o pophist.o model.o strobeck.o tokenizer.o \
-   hill.o
+   hill.o sums.o
 xhayes : $(XHAYES)
 	$(CC) $(CFLAGS) -o $@ $(XHAYES) $(lib)
 
-XHILL := xhill.o hill.o misc.o pophist.o model.o strobeck.o hayes.o tokenizer.o
+XHILL := xhill.o hill.o misc.o sums.o pophist.o model.o strobeck.o \
+   hayes.o tokenizer.o
 xhill : $(XHILL)
 	$(CC) $(CFLAGS) -o $@ $(XHILL) $(lib)
 
-XINI := xini.o ini.o misc.o tokenizer.o pophist.o assign.o
+XINI := xini.o ini.o misc.o sums.o tokenizer.o pophist.o assign.o
 xini : $(XINI)
 	$(CC) $(CFLAGS) -o $@ $(XINI) $(lib)
 
-XJOBQUEUE := xjobqueue.o jobqueue.o misc.o 
+XJOBQUEUE := xjobqueue.o jobqueue.o misc.o sums.o
 xjobqueue : $(XJOBQUEUE)
 	$(CC) $(CFLAGS) -o $@ $(XJOBQUEUE) $(lib)
 
-XMISC := xmisc.o misc.o
+XMISC := xmisc.o misc.o sums.o
 xmisc : $(XMISC)
 	$(CC) $(CFLAGS) -o $@ $(XMISC) $(lib)
 
-XMODEL := xmodel.o model.o misc.o strobeck.o hill.o hayes.o tokenizer.o \
-   pophist.o
+XMODEL := xmodel.o model.o misc.o sums.o strobeck.o hill.o hayes.o \
+  tokenizer.o pophist.o
 xmodel : $(XMODEL)
 	$(CC) $(CFLAGS) -o $@ $(XMODEL) $(lib)
 
-XPOPHIST := xpophist.o pophist.o misc.o 
+XPOPHIST := xpophist.o pophist.o misc.o sums.o
 xpophist : $(XPOPHIST)
 	$(CC) $(CFLAGS) -o $@ $(XPOPHIST) $(lib)
 
-XSPECTAB := xspectab.o spectab.o misc.o array.o
+XSPECTAB := xspectab.o spectab.o misc.o sums.o array.o
 xspectab : $(XSPECTAB)
 	$(CC) $(CFLAGS) -o $@ $(XSPECTAB) $(lib)
 
-XREADGTP := xreadgtp.o readgtp.o misc.o tokenizer.o assign.o
+XREADGTP := xreadgtp.o readgtp.o misc.o sums.o tokenizer.o assign.o
 xreadgtp : $(XREADGTP)
 	$(CC) $(CFLAGS) -o $@ $(XREADGTP) $(lib)
 
-XSTROBECK := xstrobeck.o strobeck.o misc.o pophist.o model.o hill.o hayes.o \
-   tokenizer.o
+XSTROBECK := xstrobeck.o strobeck.o misc.o sums.o pophist.o model.o \
+  hill.o hayes.o tokenizer.o
 xstrobeck : $(XSTROBECK)
 	$(CC) $(CFLAGS) -o $@ $(XSTROBECK) $(lib)
 
@@ -149,16 +151,17 @@ XTABULATION := xtabulation.o tabulation.o misc.o window.o snp.o sums.o \
 xtabulation : $(XTABULATION)
 	$(CC) $(CFLAGS) -o $@ $(XTABULATION) $(lib)
 
-XTOKENIZER := xtokenizer.o tokenizer.o misc.o
+XTOKENIZER := xtokenizer.o tokenizer.o misc.o sums.o
 xtokenizer : $(XTOKENIZER)
 	$(CC) $(CFLAGS) -o $@ $(XTOKENIZER) $(lib)
 
 XWINDOW := xwindow.o window.o snp.o boot.o sums.o misc.o tabulation.o \
-   readgtp.o tokenizer.o assign.o em.o spectab.o array.o
+   readgtp.o tokenizer.o assign.o em.o spectab.o array.o 
 xwindow : $(XWINDOW)
 	$(CC) $(CFLAGS) -o $@ $(XWINDOW) $(lib)
 
-XSNP := xsnp.o snp.o boot.o sums.o misc.o em.o tabulation.o spectab.o array.o
+XSNP := xsnp.o snp.o boot.o sums.o misc.o em.o tabulation.o \
+  spectab.o array.o
 xsnp : $(XSNP)
 	$(CC) $(CFLAGS) -o $@ $(XSNP) $(lib)
 
@@ -171,20 +174,20 @@ TSTPREAD := tstpread.o jobqueue.o misc.o
 tstpread: $(TSTPREAD)
 	$(CC) $(CFLAGS) -o $@ $(TSTPREAD) $(lib)
 
-XMATCOAL := xmatcoal.o pophist.o matcoal.o misc.o
+XMATCOAL := xmatcoal.o pophist.o matcoal.o misc.o sums.o
 xmatcoal : $(XMATCOAL)
 	$(CC) $(CFLAGS) -o $@ $(XMATCOAL) $(lib)
 
-XPOLYA := xpolya.o polya.o misc.o
+XPOLYA := xpolya.o polya.o misc.o sums.o
 xpolya : $(XPOLYA)
 	$(CC) $(CFLAGS) -o $@ $(XPOLYA) $(lib)
 
-XESPECTRUM := xespectrum.o espectrum.o polya.o matcoal.o misc.o pophist.o
+XESPECTRUM := xespectrum.o espectrum.o polya.o matcoal.o misc.o sums.o pophist.o
 xespectrum : $(XESPECTRUM)
 	$(CC) $(CFLAGS) -o $@ $(XESPECTRUM) $(lib)
 
-XTFESPECTRUM := xtfespectrum.o tfespectrum.o espectrum.o polya.o matcoal.o misc.o \
-  pophist.o spectab.o array.o
+XTFESPECTRUM := xtfespectrum.o tfespectrum.o espectrum.o polya.o matcoal.o \
+  misc.o pophist.o spectab.o array.o sums.o
 xtfespectrum : $(XTFESPECTRUM)
 	$(CC) $(CFLAGS) -o $@ $(XTFESPECTRUM) $(lib)
 

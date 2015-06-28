@@ -43,7 +43,7 @@ lib := -L/usr/local/lib -lgsl -lgslcblas -lpthread -lm
 all : $(ctargets)
 
 PRELD := preld.o pophist.o hayes.o hill.o strobeck.o misc.o \
-          tokenizer.o model.o ini.o assign.o
+          tokenizer.o model.o ini.o assign.o sums.o
 preld : $(PRELD)
 	$(CC) $(CFLAGS) -o $@ $(PRELD) $(lib)
 
@@ -55,23 +55,24 @@ eld : $(ELD)
 
 # use MCMCMC to fit pophist parameters to data
 MCMCLD := mcmcld.o pophist.o hill.o strobeck.o misc.o \
-    tokenizer.o tabulation.o model.o ini.o hayes.o assign.o chain.o 
+    tokenizer.o tabulation.o model.o ini.o hayes.o assign.o chain.o \
+    sums.o
 mcmcld : $(MCMCLD)
 	$(CC) $(CFLAGS) -o $@ $(MCMCLD) $(lib)
 
 # fit pophist parameters to data using method of Hayes et al.
 FITHAYES := fithayes.o misc.o pophist.o tokenizer.o ini.o hayes.o \
-    assign.o
+    assign.o sums.o
 fithayes : $(FITHAYES)
 	$(CC) $(CFLAGS) -o $@ $(FITHAYES) $(lib)
 
 # convert output of ms into gtp format
-MS2GTP := ms2gtp.o misc.o tokenizer.o ini.o assign.o pophist.o
+MS2GTP := ms2gtp.o misc.o tokenizer.o ini.o assign.o pophist.o sums.o
 ms2gtp : $(MS2GTP)
 	$(CC) $(CFLAGS) -o $@ $(MS2GTP) $(lib)
 
 # convert boot file into a table
-BOOT2TBL := boot2tbl.o misc.o boot.o tabulation.o spectab.o array.o
+BOOT2TBL := boot2tbl.o misc.o boot.o tabulation.o spectab.o array.o sums.o
 boot2tbl : $(BOOT2TBL)
 	$(CC) $(CFLAGS) -o $@ $(BOOT2TBL) $(lib)
 
@@ -87,12 +88,12 @@ try : $(TRY)
 SALD := sald.o sasimplex.o model.o misc.o hayes.o hill.o strobeck.o \
 pophist.o tokenizer.o ini.o assign.o jobqueue.o boot.o tabulation.o \
 rusage.o locref.o annealsched.o array.o spectab.o espectrum.o matcoal.o \
-polya.o dprintf.o tfespectrum.o
+polya.o dprintf.o tfespectrum.o sums.o
 sald: $(SALD)
 	$(CC) $(CFLAGS) -o $@ $(SALD) $(lib)
 
 TABFBOOT := tabfboot.o misc.o pophist.o boot.o tokenizer.o \
-  tabulation.o spectab.o array.o
+  tabulation.o spectab.o array.o sums.o
 tabfboot: $(TABFBOOT)
 	$(CC) $(CFLAGS) -o $@ $(TABFBOOT) $(lib)
 
