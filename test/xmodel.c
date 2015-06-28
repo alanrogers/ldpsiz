@@ -110,7 +110,7 @@ int main(int argc, char **argv) {
     }
 
     int         nbins = 10;
-    double      ldvec[nbins], ldvec0[nbins], cc[nbins];
+    double      ldvec[nbins], ldvec0[nbins], exactLD[nbins], cc[nbins];
     double      hiCm = 0.3;
     double      binwidth = hiCm / nbins;
 
@@ -118,11 +118,25 @@ int main(int argc, char **argv) {
         cc[i] = 0.01 * (i + 0.5) * binwidth;
     ODE_ldVec(ode, ldvec, nbins, cc, u, ph);
     ODE_ldVecEq(ode, ldvec0, nbins, cc, u, ph, 0);
+    Model_exactLDvec(model, ode, nbins, exactLD, cc, u, ph);
     if(verbose)
-        printf("%8s %8s %8s (using ODE_ldVec and ODE_ldVecEq)\n",
-               "c", "LD", "LD_eq0");
+        printf("%8s %8s %8s %8s (using ODE_ldVec and ODE_ldVecEq)\n",
+               "c", "LD", "exactLD", "LD_eq0");
     for(i = 0; verbose && i < nbins; ++i)
-        printf("%8.6lg %8.6lg %8.6lg\n", cc[i], ldvec[i], ldvec0[i]);
+        printf("%8.6lg %8.6lg %8.6lg %8.6lg\n",
+               cc[i], ldvec[i], exactLD[i], ldvec0[i]);
+    for(i = 0; i < nbins; ++i) {
+        double diff = fabs(ldvec[i]-exactLD[i]);
+        if(diff > fmax(ldvec[i],exactLD[i])*odeRelTol
+           && diff > odeAbsTol) {
+            printf("%s:%d: diff=%lg too large."
+                   " ldvec[%d]=%g exactLD=%g\n",
+                   __FILE__, __LINE__, diff,
+                   i, ldvec[i], exactLD[i]);
+            unitTstResult("Model", "FAIL");
+            exit(EXIT_FAILURE);
+        }
+    }
 
     assert(model->stateVal(ODE_state(ode), 0) == ODE_stateVal(ode, 0));
 

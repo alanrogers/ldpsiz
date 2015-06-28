@@ -182,6 +182,32 @@ double Model_exactLD(const Model *model, ODE *ode, double c, double u,
     return model->exactLD(c, u, ph, model->twoNsmp, ode->data);
 }
 
+/**
+ * Calculate vector, ld, of values of sigdsq without using ODE
+ * approximation.  
+ *
+ * @param[in] model An object of type Model, which determines
+ *            which model to use in calculating LD.
+ * @param[in,out] ode An object of type ODE, which is used only for
+ *            its data field.
+ * @param[in] nbins Size of arrays ld and c.
+ * @param[out] ld is a vector of "nbins" doubles. On return, the i'th
+ * entry will contain the value of sigma_d^2 implied by recombination
+ * rate c[i], and by the population history in argument "ph".
+ * @param[in] c Array of recombination rates.
+ * @param[in] u Mutation rate.
+ * @param[in] ph Population history.
+ */
+void Model_exactLDvec(const Model *model, ODE *ode, int nbins,
+                        double ld[nbins], double c[nbins], double u,
+                        PopHist *ph) {
+    assert(model != NULL);
+    assert(ode != NULL);
+    int i;
+    for(i=0; i < nbins; ++i)
+        ld[i] = model->exactLD(c[i], u, ph, model->twoNsmp, ode->data);
+}
+
 /** Print state vector to file fp. */
 void ODE_printState(const ODE * ode, FILE * fp) {
     unsigned    i, dim = ODE_stateDim(ode);
@@ -300,7 +326,6 @@ int ODE_evolve(ODE * ode,
 }
 
 /**
- *
  * On entry, c is a list of recombination rates, ph the population
  * history, and odeStepSize is the initial step size.
  *

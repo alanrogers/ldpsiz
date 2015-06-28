@@ -69,6 +69,9 @@ struct ModelList {
 
 double      Model_exactLD(const Model *model, ODE *ode, double c, double u,
                           PopHist *ph);
+void Model_exactLDvec(const Model *model, ODE *ode, int nbins,
+                      double ld[nbins], double c[nbins], double u,
+                      PopHist *ph);
 Model      *Model_alloc(const char *method, int twoNsmp);
 void        Model_free(Model * m);
 static inline const char *Model_lbl(const Model * model);
