@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
         printf("t=0:\n");
     maxerr = 0.0;
     for(i=0; i<nSamples-1; ++i) {
-        err = fabs(x[i] - 0.0);
+        err = fabsl(x[i] - 0.0L);
         if(err > maxerr)
             maxerr = err;
         if(verbose) {
@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
                     i, x[i], 0.0L, err);
         }
     }
-    err = fabs(x[nSamples-1] - 1.0);
+    err = fabsl(x[nSamples-1] - 1.0L);
     if(err > maxerr)
         maxerr = err;
     if(verbose) {
@@ -115,7 +115,7 @@ int main(int argc, char **argv) {
     if(verbose)
         printf(" t=2: %15s %15s\n", "2-step", "1-step");
     for(i=0; i < nSamples; ++i) {
-        err = fabs(x[i] - y[i]);
+        err = fabsl(x[i] - y[i]);
         if(err > maxerr)
             maxerr = err;
         if(verbose)
@@ -142,7 +142,7 @@ int main(int argc, char **argv) {
         printf(" t=3: %15s %15s\n", "3-step", "1-step");
 
     for(i=0; i < nSamples; ++i) {
-        err = fabs(x[i] - y[i]);
+        err = fabsl(x[i] - y[i]);
         if(err > maxerr)
             maxerr = err;
         if(verbose)
