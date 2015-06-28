@@ -549,3 +549,26 @@ unsigned hash(const char *ss) {
 
     return hashval % 10001;
 }
+
+/// Return mean squared difference between two arrays
+double msqDiff(int n, double x[n], double y[n]) {
+    double s = 0.0;
+    int i;
+    for(i=0; i<n; ++i) {
+        double diff = x[i] - y[i];
+        s += diff*diff;
+    }
+    return s/n;
+}
+
+/// Return mean chi-squared difference between observed array, o,
+/// and expected, e.
+double chisqDiff(int n, double o[n], double e[n]) {
+    double s = 0.0;
+    int i;
+    for(i=0; i<n; ++i) {
+        double diff = o[i] - e[i];
+        s += diff*diff/e[i];
+    }
+    return s/n;
+}

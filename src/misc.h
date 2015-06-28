@@ -59,12 +59,15 @@ void        unitTstResult(const char *facility, const char *result);
 int         compareLongs(const void *void_x, const void *void_y);
 int         compareDoubles(const void *void_x, const void *void_y);
 long        LInt_div_round(long num, long denom);
+double      msqDiff(int n, double x[n], double y[n]);
+double      chisqDiff(int n, double o[n], double e[n]);
 
 static inline int encodeDiploid(unsigned char *gtype, unsigned gtypeSize,
                                 const char *str);
 static inline int encodeHaploid(unsigned char *gtype, unsigned gtypeSize,
                                 const char *str);
 static inline unsigned encode01(char c);
+
 
 /**
  * Encode a single character, which should equal either '0' or '1' on

@@ -111,7 +111,7 @@ extern pthread_mutex_t outputLock;
 
 #define DO_LD 1
 #define DO_SPEC 1
-#define  KL_DIVERGENCE 
+#undef  KL_DIVERGENCE 
 
 #include "annealsched.h"
 #include "array.h"
@@ -775,19 +775,13 @@ static double costFun(const gsl_vector *x, void *varg) {
 
 #ifdef DO_LD
     {
-        double ldcost=0.0;
         // get vector of expected values of sigdsq
         if(arg->doExact)
             ODE_ldVecExact(ode, nbins, exp_sigdsq, c, u, ph);
         else
             ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
 
-        for(i = 0; i < nbins; ++i) {
-            diff = exp_sigdsq[i] - sigdsq[i];
-            ldcost += diff * diff;
-        }
-        ldcost /= nbins;
-        badness += ldcost;
+        badness += msqDiff(nbinq, sigdsq, exp_sigdsq);
     }
 #endif
 
@@ -806,7 +800,7 @@ static double costFun(const gsl_vector *x, void *varg) {
         spcost = TFESpectrum_diff(tfespec, spdim, spectrum);
 #  endif
         spcost /= spdim;
-        badness += 2.0*spcost;
+        badness += spcost;
         TFESpectrum_free(tfespec);
     }
 #endif
