@@ -774,30 +774,37 @@ static double costFun(const gsl_vector *x, void *varg) {
     badness = 0.0;
 
 #ifdef DO_LD
-    // get vector of expected values of sigdsq
-    if(arg->doExact)
-        ODE_ldVecExact(ode, nbins, exp_sigdsq, c, u, ph);
-    else
-        ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
+    {
+        double ldcost=0.0;
+        // get vector of expected values of sigdsq
+        if(arg->doExact)
+            ODE_ldVecExact(ode, nbins, exp_sigdsq, c, u, ph);
+        else
+            ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
 
-    for(i = 0; i < nbins; ++i) {
-        diff = exp_sigdsq[i] - sigdsq[i];
-        badness += diff * diff;
+        for(i = 0; i < nbins; ++i) {
+            diff = exp_sigdsq[i] - sigdsq[i];
+            ldcost += diff * diff;
+        }
+        badness += ldcost / nbins;
     }
 #endif
 
 #ifdef DO_SPEC
     {
+        double spcost = 0.0;
+
         // get truncated, folded, expected spectrum
         TFESpectrum *tfespec = TFESpectrum_new(arg->twoNsmp, arg->truncSFS, ph,
                                          arg->polya, arg->tolMatCoal);
 #  ifdef KL_DIVERGENCE
         // Kullback-Leibler divergence
-        badness += TFESpectrum_KLdiverg(tfespec, spdim, spectrum);
+        spcost = TFESpectrum_KLdiverg(tfespec, spdim, spectrum);
 #  else
         // sum of squared differences
-        badness += TFESpectrum_diff(tfespec, spdim, spectrum);
+        spcost = TFESpectrum_diff(tfespec, spdim, spectrum);
 #  endif
+        badness += spcost / spdim;
         TFESpectrum_free(tfespec);
     }
 #endif
