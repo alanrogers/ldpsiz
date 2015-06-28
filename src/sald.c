@@ -111,7 +111,7 @@ extern pthread_mutex_t outputLock;
 
 #define DO_LD 1
 #define DO_SPEC 1
-#undef  KL_DIVERGENCE 
+#define  KL_DIVERGENCE 
 
 #include "annealsched.h"
 #include "array.h"
