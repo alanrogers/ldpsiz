@@ -111,7 +111,7 @@ extern pthread_mutex_t outputLock;
 
 #define DO_LD 1
 #define DO_SPEC 1
-#define KL_DIVERGENCE 
+#undef  KL_DIVERGENCE 
 
 #include "annealsched.h"
 #include "array.h"
@@ -174,6 +174,7 @@ typedef struct TaskArg {
     int         nPerTmptr;      // number of iterations per temp
     int         randomStart;    // whether to initialize from random ph
     int         verbose;
+    int         doExact;        // no ODE approximation
     double     *sigdsq_obs;
     double     *c;
     double     *spectrum_obs;
@@ -193,6 +194,7 @@ typedef struct TaskArg {
 /** Parameters of cost function--that which is minimized. */
 typedef struct CostPar {
     int         nbins;
+    int         doExact;
     unsigned    spdim;
     unsigned    twoNsmp;
     unsigned    truncSFS;
@@ -230,6 +232,7 @@ typedef struct TaskArgArg {
     double *c;
     ULIntArray *spectrum;
     Model * model;
+    int doExact;
     PopHist * ph_init;
     const Polya *polya;
 } TaskArgArg;
@@ -251,9 +254,9 @@ void CostPar_print(CostPar * cp) {
     int         i;
 
     printf("CostPar: nbins=%d spdim=%u twoNsmp=%u truncSFS=%u u=%lg"
-           " model=%s nIterations=%lu\n",
+           " model=%s nIterations=%lu doExact=%d\n",
            cp->nbins, cp->spdim, cp->twoNsmp, cp->truncSFS, cp->u,
-           Model_lbl(ODE_model(cp->ode)), cp->nIterations);
+           Model_lbl(ODE_model(cp->ode)), cp->nIterations, cp->doExact);
     printf("    %15s %15s\n", "c", "sigdsq");
     for(i = 0; i < cp->nbins; ++i)
         printf("    %15.8lg %15.8lg\n", cp->c[i], cp->sigdsq[i]);
@@ -283,7 +286,8 @@ TaskArg    *TaskArg_new(unsigned task, int randomStart, TaskArgArg *taa) {
     /* each task gets different seed */
     targ->seed = (taa->seed + (unsigned long long) task) % UINT_MAX;  
 
-    targ->stepsize = memdup(taa->stepsize, targ->ndim * sizeof(targ->stepsize[0]));
+    targ->stepsize = memdup(taa->stepsize,
+                            targ->ndim * sizeof(targ->stepsize[0]));
     checkmem(targ->stepsize, __FILE__, __LINE__);
 
     targ->sched = AnnealSched_copy(taa->sched);
@@ -307,10 +311,12 @@ TaskArg    *TaskArg_new(unsigned task, int randomStart, TaskArgArg *taa) {
     targ->ph = PopHist_dup(taa->ph_init);
     targ->polya = taa->polya; // not duplicated
     targ->randomStart = randomStart;
+    targ->doExact = taa->doExact;
     targ->status = 0;
     targ->simplexSize = DBL_MAX;
 
-    targ->sigdsq_obs = memdup(taa->sigdsq_obs, taa->nbins * sizeof(targ->sigdsq_obs[0]));
+    targ->sigdsq_obs = memdup(taa->sigdsq_obs,
+                              taa->nbins * sizeof(targ->sigdsq_obs[0]));
     checkmem(targ->sigdsq_obs, __FILE__, __LINE__);
 
     // Normalize spectrum as array of doubles
@@ -372,6 +378,7 @@ void usage(void) {
     /* misc */
     tellopt("-m <method> or --methods <method>",
             "specify method \"Hill\", or \"Strobeck\", or \"Hill,Strobeck\"");
+    tellopt("--exact" , "don't use ODE to approximate difference equations");
     tellopt("-n <x> or --twoNsmp <x>", "haploid sample size");
     tellopt("-t <x> or --threads <x>", "number of threads (default is auto)");
     tellopt("-u <x> or --mutation <x>", "mutation rate/generation");
@@ -576,6 +583,7 @@ int taskfun(void *varg) {
 
     CostPar     costPar = {
         .nbins = targ->nbins,
+        .doExact = targ->doExact,
         .spdim = targ->spdim,
         .twoNsmp = targ->twoNsmp,
         .truncSFS = targ->truncSFS,
@@ -767,7 +775,10 @@ static double costFun(const gsl_vector *x, void *varg) {
 
 #ifdef DO_LD
     // get vector of expected values of sigdsq
-    ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
+    if(arg->doExact)
+        ODE_ldVecExact(ode, nbins, exp_sigdsq, c, u, ph);
+    else
+        ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
 
     for(i = 0; i < nbins; ++i) {
         diff = exp_sigdsq[i] - sigdsq[i];
@@ -782,7 +793,7 @@ static double costFun(const gsl_vector *x, void *varg) {
                                          arg->polya, arg->tolMatCoal);
 #  ifdef KL_DIVERGENCE
         // Kullback-Leibler divergence
-        badness += TFESpectrum_diff(tfespec, spdim, spectrum);
+        badness += TFESpectrum_KLdiverg(tfespec, spdim, spectrum);
 #  else
         // sum of squared differences
         badness += TFESpectrum_diff(tfespec, spdim, spectrum);
@@ -849,6 +860,7 @@ int main(int argc, char **argv) {
         /* {char *name, int has_arg, int *flag, int val} */
         {"bootfile", required_argument, 0, 'f'},
         {"confidence", required_argument, 0, 'c'},
+        {"exact", no_argument, 0, 'x'},
         {"nextepoch", no_argument, 0, 'E'},
         {"tmptrDecay", required_argument, 0, 'd'},
         {"help", no_argument, 0, 'h'},
@@ -889,6 +901,7 @@ int main(int argc, char **argv) {
 
     int         nbins;
     int         verbose = 0;
+    int         doExact = 0;    // Don't use ODE approximation
     int         twoNsmp = 0;    /* number of haploid samples */
     int         nthreads = 0;   /* number of threads to launch */
     int         nDataSets = 1;  /* 1 + nBootReps */
@@ -960,7 +973,7 @@ int main(int argc, char **argv) {
 
     /* command line arguments */
     for(;;) {
-        i = getopt_long(argc, argv, "c:d:f:BEhi:m:n:N:s:t:T:u:v",
+        i = getopt_long(argc, argv, "c:d:f:BEhi:m:n:N:s:t:T:u:xv",
                         myopts, &optndx);
         if(i == -1)
             break;
@@ -1056,6 +1069,9 @@ int main(int argc, char **argv) {
             break;
         case 'v':
             verbose = 1;
+            break;
+        case 'x':
+            doExact = 1;
             break;
         case 'h':
         default:
@@ -1159,6 +1175,8 @@ int main(int argc, char **argv) {
 
     printf("# %-35s = %x\n", "JobId", jobid);
     printf("# %-35s = %s\n", "Model", method);
+    printf("# %-35s = %s\n", "Method",
+            (doExact ? "No ODE" : "ODE for methods Hill and/or Strobeck"));
     printf("# %-35s = %lg\n", "mutation rate per nucleotide", u);
     printf("# %-35s = %lg\n", "ftol", ftol);
     printf("# %-35s = %lg\n", "xtol", xtol);
@@ -1291,6 +1309,7 @@ int main(int argc, char **argv) {
         .c = DblArray_ptr(cc),
         .spectrum = spectrum_obs,
         .model = model,
+        .doExact = doExact,
         .ph_init = ph_init,
         .polya = polya,
     };
@@ -1486,8 +1505,12 @@ int main(int argc, char **argv) {
         // find fitted values of sigdsq
         double      sigdsq_fit[nbins];
         ODE        *ode = ODE_new(model, odeAbsTol, odeRelTol);
-        ODE_ldVec(ode, sigdsq_fit, nbins,
-                  DblArray_ptr(cc), u, best[0]->ph);
+        if(doExact)
+            ODE_ldVecExact(ode, nbins, sigdsq_fit,
+                             DblArray_ptr(cc), u, best[0]->ph);
+        else
+            ODE_ldVec(ode, sigdsq_fit, nbins,
+                      DblArray_ptr(cc), u, best[0]->ph);
         ODE_free(ode);
 
         printf("\n# Fitted values of sigma_d^2. (cM = centimorgans)\n");

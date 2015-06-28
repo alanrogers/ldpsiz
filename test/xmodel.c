@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
         cc[i] = 0.01 * (i + 0.5) * binwidth;
     ODE_ldVec(ode, ldvec, nbins, cc, u, ph);
     ODE_ldVecEq(ode, ldvec0, nbins, cc, u, ph, 0);
-    Model_exactLDvec(model, ode, nbins, exactLD, cc, u, ph);
+    ODE_ldVecExact(ode, nbins, exactLD, cc, u, ph);
     if(verbose)
         printf("%8s %8s %8s %8s (using ODE_ldVec and ODE_ldVecEq)\n",
                "c", "LD", "exactLD", "LD_eq0");

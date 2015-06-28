@@ -204,7 +204,7 @@ int main(int argc, char **argv) {
 
     /* command line arguments */
     for(;;) {
-        i = getopt_long(argc, argv, "b:r:R:m:n:eu:ET:Sh", myopts, &optndx);
+        i = getopt_long(argc, argv, "b:r:R:m:n:exu:ET:Sh", myopts, &optndx);
         if(i == -1)
             break;
         switch (i) {
@@ -345,7 +345,7 @@ int main(int argc, char **argv) {
     fprintf(ofp, "# %-36s = %s\n", "doEquilibria",
             (doEquilibria ? "yes" : "no"));
     fprintf(ofp, "# %-36s = %s\n", "Method",
-            (doExact ? "No ODE" : "ODE for methods Hill and/or Strobeck"));
+            (doExact ? "NoODE" : "ODE for methods Hill and/or Strobeck"));
     fprintf(ofp, "# %-36s = %lg\n", "mutation_rate", u);
     fprintf(ofp, "# %-36s = %lg to %lg\n", "centimorgans",
             lo_c * 100.0, hi_c * 100.0);

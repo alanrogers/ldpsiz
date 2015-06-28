@@ -69,9 +69,6 @@ struct ModelList {
 
 double      Model_exactLD(const Model *model, ODE *ode, double c, double u,
                           PopHist *ph);
-void Model_exactLDvec(const Model *model, ODE *ode, int nbins,
-                      double ld[nbins], double c[nbins], double u,
-                      PopHist *ph);
 Model      *Model_alloc(const char *method, int twoNsmp);
 void        Model_free(Model * m);
 static inline const char *Model_lbl(const Model * model);
@@ -127,6 +124,9 @@ struct dydt_params *ODE_dydtPar(ODE * ode);
 void        ODE_printState(const ODE * ode, FILE * fp);
 void        ODE_ldVec(ODE * ode, double *ld, int nbins, const double *c,
                       double u, PopHist * ph);
+void        ODE_ldVecExact(ODE *ode, int nbins,
+                           double ld[nbins], double c[nbins], double u,
+                           PopHist *ph);
 double      ODE_ldEq(ODE * ode, double c, double u, PopHist * ph,
                      unsigned whichEpoch);
 void        ODE_ldVecEq(ODE * ode, double *eq, int nbins, const double *c,
