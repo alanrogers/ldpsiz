@@ -141,7 +141,7 @@ Model      *Model_alloc(const char *method, int twoNsmp) {
 
     snprintf(buff, sizeof(buff), "%s", method);
     strlowercase(buff);
-    if(strcmp(buff, "hill") == 0)
+    if(strcmp(buff, "hill") == 0) 
         model = Model_allocHill(twoNsmp);
     else if(strcmp(buff, "strobeck") == 0)
         model = Model_allocStrobeck(twoNsmp);

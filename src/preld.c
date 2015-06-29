@@ -350,21 +350,28 @@ int main(int argc, char **argv) {
     fprintf(ofp, "# %-36s = %lg to %lg\n", "centimorgans",
             lo_c * 100.0, hi_c * 100.0);
     fprintf(ofp, "# %-36s = %d\n", "nbins", nbins);
-#ifdef HAYES_MUTATION_ADJUSTMENT
-    printf("# %-36s = %s\n", "Hayes mutation adjustment: E[rsq]", "1/(4Nc+2)");
-#else
-    printf("# %-36s = %s\n", "no Hayes mutation adjustment: E[rsq]",
-           "1/(4Nc+1)");
-#endif
 
-
+    int doHayes = 0;
     fprintf(ofp, "# %-36s =", "Models");
     for(i = 0; i < ModelList_size(ml); ++i) {
-        fprintf(ofp, " %s", Model_lbl(ModelList_model(ml, i)));
+        Model *model = ModelList_model(ml, i);
+        const char *lbl = Model_lbl(model);
+        fprintf(ofp, " %s", lbl);
+        if(0 == mystrcasecmp(lbl, "hayes"))
+            doHayes = 1;
         if(i + 1 < ModelList_size(ml))
             putc(',', ofp);
     }
-    fputs("\n\n", ofp);
+    putc('\n', ofp);
+    if(doHayes) {
+#ifdef HAYES_MUTATION_ADJUSTMENT
+        printf("# %-36s = %s\n", "Hayes mutation adjustment: E[rsq]", "1/(4Nc+2)");
+#else
+        printf("# %-36s = %s\n", "no Hayes mutation adjustment: E[rsq]",
+               "1/(4Nc+1)");
+#endif
+    }
+    putc('\n', ofp);
 
     PopHist_print_comment(ph, "#", ofp);
     putc('\n', ofp);

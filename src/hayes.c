@@ -96,6 +96,8 @@ static inline double svedRsq(double c, double twoN, int twoNsmp) {
     return rsq;
 }
 
+/// Hayes_rsq doesn't use an ODE anyway, so Hayes_rsqNoODE just
+/// calls Hayes_rsq.
 double Hayes_rsqNoODE(double c, double u, PopHist *ph, int twoNsmp,
                       void *notused) {
     return Hayes_rsq(NULL, c, u, ph, twoNsmp);
