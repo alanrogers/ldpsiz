@@ -249,7 +249,6 @@ int ODE_evolve(ODE * ode,
             assertFiniteArray(y, ydim, __FILE__, __LINE__);
 #endif
             int         status;
-
 #if 0
             status = pthread_mutex_lock(&stderr_mutex);
             if(status)
@@ -259,18 +258,10 @@ int ODE_evolve(ODE * ode,
             if(status)
                 ERR(status, "lock stderr_mutex");
 #endif
-
-            /*
-             * Following line dumps core because, at some point, t >
-             * t1, but ode->stepsize > 0. This shouldn't happen
-             * because of the condition in the while loop above. Some
-             * other thread must be writing to t or to t1.
-             */
             status = gsl_odeiv2_evolve_apply(ode->evolve,
                                              ode->ctrl,
                                              ode->stepFun,
                                              &sys, &t, t1, &stepSize, y);
-
 #ifdef DEBUG
             assertFiniteArray(y, ydim, __FILE__, __LINE__);
 #endif

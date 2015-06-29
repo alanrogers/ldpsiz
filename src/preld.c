@@ -150,8 +150,8 @@ int main(int argc, char **argv) {
     int         doLog = 0;
     int         printState = 0;
     double      u = 1e-4;
-    double      odeAbsTol = 1e-7;
-    double      odeRelTol = 1e-3;
+    double      odeAbsTol = 1e-9;
+    double      odeRelTol = 1e-7;
 
     /* variables */
     int         twoNsmp = 0;
@@ -344,14 +344,13 @@ int main(int argc, char **argv) {
         fprintf(ofp, "# %-36s = %s\n", "Haploid sample size", "infinity");
     fprintf(ofp, "# %-36s = %s\n", "doEquilibria",
             (doEquilibria ? "yes" : "no"));
-    fprintf(ofp, "# %-36s = %s\n", "Method",
-            (doExact ? "NoODE" : "ODE for methods Hill and/or Strobeck"));
     fprintf(ofp, "# %-36s = %lg\n", "mutation_rate", u);
     fprintf(ofp, "# %-36s = %lg to %lg\n", "centimorgans",
             lo_c * 100.0, hi_c * 100.0);
     fprintf(ofp, "# %-36s = %d\n", "nbins", nbins);
 
     int doHayes = 0;
+    int doHillStrobeck = 0;
     fprintf(ofp, "# %-36s =", "Models");
     for(i = 0; i < ModelList_size(ml); ++i) {
         Model *model = ModelList_model(ml, i);
@@ -359,6 +358,9 @@ int main(int argc, char **argv) {
         fprintf(ofp, " %s", lbl);
         if(0 == mystrcasecmp(lbl, "hayes"))
             doHayes = 1;
+        if(0 == mystrcasecmp(lbl, "hill")
+           || 0 == mystrcasecmp(lbl, "strobeck"))
+            doHillStrobeck = 1;
         if(i + 1 < ModelList_size(ml))
             putc(',', ofp);
     }
@@ -370,6 +372,14 @@ int main(int argc, char **argv) {
         printf("# %-36s = %s\n", "no Hayes mutation adjustment: E[rsq]",
                "1/(4Nc+1)");
 #endif
+    }
+    if(doHillStrobeck) {
+        fprintf(ofp, "# %-36s = %s\n", "Hill/Strobeck calculations",
+                (doExact ? "exact" : "ODE approximation"));
+        if(!doExact) {
+            printf("# %-36s = %lg\n", "odeAbsTol", odeAbsTol);
+            printf("# %-36s = %lg\n", "odeRelTol", odeRelTol);
+        }
     }
     putc('\n', ofp);
 
@@ -387,12 +397,10 @@ int main(int argc, char **argv) {
     fprintf(ofp, "#%s", strcenter("", fwidth - 1, buff, sizeof(buff)));
     for(i = 0; i < nModels; ++i) {
         const Model *model = ModelList_model(ml, i);
-
-        int         currWidth = lblWidth;
+        int          currWidth = lblWidth;
 
         if(printState)
             currWidth += Model_stateDim(model) * (1 + fwidth);
-
         putc(' ', ofp);
         fprintf(ofp, "%s", strcenter(Model_lbl(model),
                                      currWidth, buff, sizeof(buff)));
