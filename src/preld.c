@@ -87,6 +87,7 @@ void usage(void) {
     tellopt("-u <x> or --mutation <x>", "set mutation rate/generation");
     tellopt("-b <x> or --nbins <x>",
             "specify the number of recombination rates");
+    tellopt("-F or --folded", "Toggle folded spectrum. Def: true");
     tellopt("-r <x> or --lo_r <x>",
             "low end of range of recombination rates in centimorgans");
     tellopt("-R <x> or --hi_r <x>",
@@ -132,6 +133,7 @@ int main(int argc, char **argv) {
         /* {char *name, int has_arg, int *flag, int val} */
         {"nbins", required_argument, 0, 'b'},
         {"exact", no_argument, 0, 'x'},
+        {"folded", no_argument, 0, 'F'},
         {"log", no_argument, 0, 'l'},
         {"lo_r", required_argument, 0, 'r'},
         {"hi_r", required_argument, 0, 'R'},
@@ -154,7 +156,7 @@ int main(int argc, char **argv) {
     int         doExact = 0;
     int         doLog = 0;
     int         printState = 0;
-    const int   folded = true;   // Folded site frequency spectrum
+    int         folded = true;   // Folded site frequency spectrum
     double      u = 1e-4;
     double      odeAbsTol = 1e-9;
     double      odeRelTol = 1e-7;
@@ -210,7 +212,7 @@ int main(int argc, char **argv) {
 
     /* command line arguments */
     for(;;) {
-        i = getopt_long(argc, argv, "b:r:R:m:n:exu:ET:Sh", myopts, &optndx);
+        i = getopt_long(argc, argv, "b:r:FR:m:n:exu:ET:Sh", myopts, &optndx);
         if(i == -1)
             break;
         switch (i) {
@@ -220,6 +222,9 @@ int main(int argc, char **argv) {
             break;
         case 'b':
             nbins = strtod(optarg, 0);
+            break;
+        case 'F':
+            folded = !folded;
             break;
         case 'r':
             /* multiply by 0.01 to convert cM to recombination rate */

@@ -220,6 +220,7 @@ static void usage(void) {
     fprintf(stderr, "usage: eld [options] input_file_name\n");
     fprintf(stderr, "   where options may include:\n");
     tellopt("-b <x> or --blocksize <x>", "SNPs per bootstrap block");
+    tellopt("-F or --folded", "Toggle folded spectrum. Def: true");
     tellopt("-h or --help", "print this message");
     tellopt("-i <x> or --interval <x>",
             "for debugging: increase speed by examining every x'th focal SNP");
@@ -242,6 +243,7 @@ int main(int argc, char **argv) {
         /* {char *name, int has_arg, int *flag, int val} */
         {"blocksize", required_argument, 0, 'b'},
         {"help", no_argument, 0, 'h'},
+        {"folded", no_argument, 0, 'F'},
         {"interval", required_argument, 0, 'i'},
         {"nbins", required_argument, 0, 'n'},
         {"bootreps", required_argument, 0, 'r'},
@@ -260,7 +262,7 @@ int main(int argc, char **argv) {
     int         nbins = 25;
     int         verbose = 0;
     int         ploidy = 1;     /* default is haploid. */
-    const int   folded = false;
+    int         folded = true;
     unsigned    nGtype, twoNsmp;
 
     FILE       *ifp = NULL;
@@ -316,7 +318,7 @@ int main(int argc, char **argv) {
 
     /* command line arguments */
     for(;;) {
-        i = getopt_long(argc, argv, "b:f:hi:n:R:r:t:vw:W:", myopts, &optndx);
+        i = getopt_long(argc, argv, "b:f:Fhi:n:R:r:t:vw:W:", myopts, &optndx);
         if(i == -1)
             break;
         switch (i) {
@@ -332,6 +334,9 @@ int main(int argc, char **argv) {
 						__FILE__,__LINE__,optarg);
 				usage();
 			}
+            break;
+        case 'F':
+            folded = !folded;
             break;
         case 'h':
             usage();
@@ -641,12 +646,14 @@ int main(int argc, char **argv) {
             printf(" with %0.1lf%% confidence bounds", 100*confidence);
         putchar('\n');
         printf("# %lu segregating sites\n", nSpec);
-        printf("#%10s %11s", "count", "spectrum");
+        printf("#%10s %11s %11s", "count", "spectrum", "normedSpec");
         if(bootreps > 0)
             printf(" %10s %10s", "loSpec", "hiSpec");
         putchar('\n');
         for(i=0; i < spdim; ++i)  {
-            printf("%11d %11lu", i+1, ULIntArray_get(spectrum,i));
+            unsigned long currSpec = ULIntArray_get(spectrum,i);
+            printf("%11d %11lu %11.6lf", i+1,
+                   currSpec, currSpec/((double) nSpec));
             if(bootreps > 0)
                 printf(" %10.2lf %10.2lf",
                        BootConf_loSpecBound(bc, i),

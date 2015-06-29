@@ -1,8 +1,8 @@
 # Where the executable files will be copied
 destination := $(HOME)/bin
 
-opt := -DNDEBUG -O3  -finline-functions  # For full optimization
-#opt :=  -O0 -fno-inline-functions         # For debugging
+#opt := -DNDEBUG -O3  -finline-functions  # For full optimization
+opt :=  -O0 -fno-inline-functions         # For debugging
 #prof := -pg -rdynamic                    # For profiling
 prof :=
 incl := -I/usr/local/include -I/opt/local/include
@@ -44,7 +44,7 @@ all : $(ctargets)
 
 PRELD := preld.o pophist.o hayes.o hill.o strobeck.o misc.o \
           tokenizer.o model.o ini.o assign.o sums.o polya.o \
-          matcoal.o espectrum.o spectab.o
+          matcoal.o espectrum.o spectab.o array.o
 preld : $(PRELD)
 	$(CC) $(CFLAGS) -o $@ $(PRELD) $(lib)
 

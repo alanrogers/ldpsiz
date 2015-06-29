@@ -380,6 +380,7 @@ void usage(void) {
             "specify method \"Hill\", or \"Strobeck\", or \"Hill,Strobeck\"");
     tellopt("--exact" , "don't use ODE to approximate difference equations");
     tellopt("-n <x> or --twoNsmp <x>", "haploid sample size");
+    tellopt("-F or --folded", "Toggle folded spectrum. Def: true");
     tellopt("-t <x> or --threads <x>", "number of threads (default is auto)");
     tellopt("-u <x> or --mutation <x>", "mutation rate/generation");
     tellopt("-v or --verbose", "more output");
@@ -516,14 +517,14 @@ int read_data(FILE * ifp,
         if(strcmp(Tokenizer_token(tkz, 1), "spectrum") == 0) {
             state = in_spectrum;
             switch (ntokens) {
-            case 2: // fall through
-            case 4:
+            case 3: // fall through
+            case 5:
                 tokensExpected = ntokens;
                 break;
             default:
                 fprintf(stderr, "Current tokens:");
                 Tokenizer_print(tkz, stderr);
-                eprintf("ERR@%s:%d: got %d tokens rather than 2 or 4"
+                eprintf("ERR@%s:%d: got %d tokens rather than 3 or 5"
                         " (spectrum header)",
                         __FILE__, __LINE__, ntokens);
             }
@@ -865,6 +866,7 @@ int main(int argc, char **argv) {
         {"bootfile", required_argument, 0, 'f'},
         {"confidence", required_argument, 0, 'c'},
         {"exact", no_argument, 0, 'x'},
+        {"folded", no_argument, 0, 'F'},
         {"nextepoch", no_argument, 0, 'E'},
         {"tmptrDecay", required_argument, 0, 'd'},
         {"help", no_argument, 0, 'h'},
@@ -895,7 +897,7 @@ int main(int argc, char **argv) {
     int         nItr = 1000;     /* total number of iterations */
     int         nPerTmptr;       /* iterations at each temperature */
     int         nTmptrs = 3;     /* number of temperatures */
-    const int   folded = true;   // Folded site frequency spectrum
+    int         folded = true;   // Folded site frequency spectrum
 	int         truncSFS = 0;    // Truncate site frequency spectrum
     double      lo2N = 400.0, hi2N = 1e8, lo2Ninit = 1000.0;
     double      loT = 1.0, hiT = 5e3, hiTinit = 2000.0;
@@ -940,7 +942,8 @@ int main(int argc, char **argv) {
 
 
     printf("############################################\n"
-           "# sald: fit population history to LD using #\n"
+           "# sald: fit population history to LD and   #\n"
+           "#       site frequency spectrum using      #\n"
            "#       simulated annealing                #\n"
            "############################################\n");
     putchar('\n');
@@ -977,7 +980,7 @@ int main(int argc, char **argv) {
 
     /* command line arguments */
     for(;;) {
-        i = getopt_long(argc, argv, "c:d:f:BEhi:m:n:N:s:t:T:u:xv",
+        i = getopt_long(argc, argv, "c:d:f:FBEhi:m:n:N:s:t:T:u:xv",
                         myopts, &optndx);
         if(i == -1)
             break;
@@ -1009,6 +1012,9 @@ int main(int argc, char **argv) {
             break;
         case 'f':
             snprintf(bootfilename, sizeof(bootfilename), "%s", optarg);
+            break;
+        case 'F':
+            folded = !folded;
             break;
         case 'I':
             assert(optarg);

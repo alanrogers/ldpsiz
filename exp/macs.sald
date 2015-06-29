@@ -1,24 +1,30 @@
 ############################################
-# sald: fit population history to LD using #
+# sald: fit population history to LD and   #
+#       site frequency spectrum using      #
 #       simulated annealing                #
 ############################################
 
-# Program was compiled: Sat Jun  6 15:16:11 2015
-# Program was run     : Sat Jun  6 15:16:30 2015
+# Program was compiled: Mon Jun 29 16:46:55 2015
+# Program was run     : Mon Jun 29 16:54:43 2015
 
-# cmd: sald --bootfile macs-1076.boot --threads 2 macs.eld
+# cmd: sald --bootfile macs-2414.boot macs.eld
 # Initial PopHist:
 # epoch duration         2N
 #     0       40      1e+05
 #     1      inf        100
-# JobId                               = d81
+# JobId                               = 3e8
 # Model                               = Hill
+# Method                              = ODE for methods Hill and/or Strobeck
 # mutation rate per nucleotide        = 1e-07
 # ftol                                = 0.00125
 # xtol                                = 1e-06
 # tolMatCoal                          = 0.001
 # odeAbsTol                           = 1e-07
 # odeRelTol                           = 0.001
+# Fitting LD                          = true
+# Fitting site frequency spectrum     = true
+# Entries truncated from spectrum     = 0
+# Using KL divergence                 = false
 # Initial temp                        = 2
 # final temp                          = 0
 # tmptr decay                         = 1
