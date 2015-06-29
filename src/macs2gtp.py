@@ -139,11 +139,11 @@ for line in infile:
     line = line.strip().split()
     if(line=="" or line[0] != "SITE:"):
         continue
+    nfields = len(line)
     if lineno==0:
-        print "# %-35s = %d" % ("Haploid sample size", len(line[3]))
+        print "# %-35s = %d" % ("Haploid sample size", len(line[nfields-1]))
         print "#%9s %10s %14s %7s %s" \
             % ("snp_id", "nucpos", "mappos", "alleles", "genotypes")
-    nfields = len(line)
     nucpos = int(round(nnucleotides*float(line[2])))
     centimorgan = nucpos*recombination*100.0
     if nucpos == oldNucpos:
