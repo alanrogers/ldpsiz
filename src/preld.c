@@ -481,7 +481,7 @@ int main(int argc, char **argv) {
         putc('\n', ofp);
     }
 
-    if(twoNsmp > 0) {
+    if(twoNsmp > 1) {
         // fitted spectrum
         unsigned spdim = specdim((unsigned) twoNsmp, folded);
         double      tolMatCoal = 1e-3; // controls accuracy of MatCoal
