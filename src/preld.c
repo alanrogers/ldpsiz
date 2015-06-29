@@ -55,23 +55,28 @@ Usage
 Systems Consortium License, which can be found in file "LICENSE".
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <time.h>
+#include "espectrum.h"
+#include "hayes.h"
+#include "hill.h"
+#include "ini.h"
+#include "matcoal.h"
+#include "misc.h"
+#include "model.h"
+#include "polya.h"
+#include "pophist.h"
+#include "spectab.h"
+#include "strobeck.h"
+#include "tokenizer.h"
 #include <assert.h>
 #include <getopt.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_matrix.h>
-#include "misc.h"
-#include "pophist.h"
-#include "tokenizer.h"
-#include "hill.h"
-#include "hayes.h"
-#include "strobeck.h"
-#include "model.h"
-#include "ini.h"
+#include <math.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 void        usage(void);
 void        check_tn(double t, double n);
@@ -149,6 +154,7 @@ int main(int argc, char **argv) {
     int         doExact = 0;
     int         doLog = 0;
     int         printState = 0;
+    const int   folded = true;   // Folded site frequency spectrum
     double      u = 1e-4;
     double      odeAbsTol = 1e-9;
     double      odeRelTol = 1e-7;
@@ -474,6 +480,29 @@ int main(int argc, char **argv) {
         }
         putc('\n', ofp);
     }
+
+    if(twoNsmp > 0) {
+        // fitted spectrum
+        unsigned spdim = specdim((unsigned) twoNsmp, folded);
+        double      tolMatCoal = 1e-3; // controls accuracy of MatCoal
+        Polya *polya = Polya_new(twoNsmp);
+        ESpectrum *espec = ESpectrum_new(twoNsmp, ph,  polya, tolMatCoal);
+        printf("\n# %s site frequency spectrum\n",
+               (folded ? "Folded" : "Unfolded"));
+        printf("#%5s %10s\n", "i", "spectrum");
+        for(i=1; i <= spdim; ++i) {
+            double s;
+            if(folded)
+                s = ESpectrum_folded(espec, i);
+            else
+                s = ESpectrum_unfolded(espec, i);
+            printf("%6d %10.8lf\n", i, s);
+        }
+
+        ESpectrum_free(espec);
+        Polya_free(polya);
+    }else
+        printf("# Not calculating spectrum, because twoNsmp=%d\n", twoNsmp);
 
     PopHist_free(ph);
     if(linkedList)

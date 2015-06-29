@@ -1529,11 +1529,17 @@ int main(int argc, char **argv) {
         // fitted spectrum
         ESpectrum *espec = ESpectrum_new(twoNsmp, best[0]->ph,
                                          polya, tolMatCoal);
-        printf("\n# Fitted site frequency spectrum\n");
+        printf("\n# Fitted %s site frequency spectrum\n",
+               (folded ? "folded" : "unfolded"));
         printf("#%5s %10s\n", "i", "spectrum");
-        for(i=1; i <= spdim; ++i)
-            printf("%6d %10.0lf\n", i,
-                   floor(0.5 + nSNPs*ESpectrum_folded(espec, i)));
+        for(i=1; i <= spdim; ++i) {
+            double s;
+            if(folded)
+                s = ESpectrum_folded(espec, i);
+            else
+                s = ESpectrum_unfolded(espec, i);
+            printf("%6d %10.0lf\n", i, floor(0.5 + nSNPs*s));
+        }
 
         ESpectrum_free(espec);
     }

@@ -43,7 +43,8 @@ lib := -L/usr/local/lib -lgsl -lgslcblas -lpthread -lm
 all : $(ctargets)
 
 PRELD := preld.o pophist.o hayes.o hill.o strobeck.o misc.o \
-          tokenizer.o model.o ini.o assign.o sums.o
+          tokenizer.o model.o ini.o assign.o sums.o polya.o \
+          matcoal.o espectrum.o spectab.o
 preld : $(PRELD)
 	$(CC) $(CFLAGS) -o $@ $(PRELD) $(lib)
 
