@@ -60,6 +60,7 @@ int         compareLongs(const void *void_x, const void *void_y);
 int         compareDoubles(const void *void_x, const void *void_y);
 long        LInt_div_round(long num, long denom);
 double      msqDiff(int n, double x[n], double y[n]);
+double      mAbsDiff(int n, double x[n], double y[n]);
 double      chisqDiff(int n, double o[n], double e[n]);
 double      meanKLdiverg(unsigned n, double o[n], double e[n]);
 

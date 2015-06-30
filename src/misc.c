@@ -564,6 +564,15 @@ double msqDiff(int n, double x[n], double y[n]) {
     return s/n;
 }
 
+/// Return mean absolute difference between two arrays
+double mAbsDiff(int n, double x[n], double y[n]) {
+    double s = 0.0;
+    int i;
+    for(i=0; i<n; ++i)
+        s += fabs(x[i] - y[i]);
+    return s/n;
+}
+
 /// Return mean chi-squared difference between observed array, o,
 /// and expected, e.
 double chisqDiff(int n, double o[n], double e[n]) {

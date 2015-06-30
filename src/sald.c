@@ -111,6 +111,7 @@ extern pthread_mutex_t outputLock;
 
 #define DO_LD 1
 #define DO_SPEC 1
+#define MEAN_ABS_DIFF
 #undef  KL_DIVERGENCE 
 
 #include "annealsched.h"
@@ -781,7 +782,11 @@ static double costFun(const gsl_vector *x, void *varg) {
         else
             ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
 
+#ifdef MEAN_ABS_DIFF
+        badness += mAbsDiff(nbins, sigdsq, exp_sigdsq);
+#else
         badness += msqDiff(nbins, sigdsq, exp_sigdsq);
+#endif
     }
 #endif
 
@@ -800,7 +805,11 @@ static double costFun(const gsl_vector *x, void *varg) {
         spcost /= spdim;
 #  else
         // sum of squared differences
+#ifdef MEAN_ABS_DIFF
+        spcost = mAbsDiff(spdim, spectrum, TFESpectrum_ptr(tfespec));
+#else
         spcost = msqDiff(spdim, spectrum, TFESpectrum_ptr(tfespec));
+#endif
 #  endif
         badness += spcost;
         TFESpectrum_free(tfespec);
