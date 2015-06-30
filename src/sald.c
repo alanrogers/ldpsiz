@@ -1537,14 +1537,15 @@ int main(int argc, char **argv) {
                                          polya, tolMatCoal);
         printf("\n# Fitted %s site frequency spectrum\n",
                (folded ? "folded" : "unfolded"));
-        printf("#%5s %10s\n", "i", "spectrum");
+        printf("#%5s %10s %10s\n", "i", "spectrum", "normedSpec");
         for(i=1; i <= spdim; ++i) {
             double s;
             if(folded)
                 s = ESpectrum_folded(espec, i);
             else
                 s = ESpectrum_unfolded(espec, i);
-            printf("%6d %10.0lf\n", i, floor(0.5 + nSNPs*s));
+            printf("%6d %10.0lf %10.6lf\n", i,
+                   floor(0.5 + nSNPs*s), s);
         }
 
         ESpectrum_free(espec);
