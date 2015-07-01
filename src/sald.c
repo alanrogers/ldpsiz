@@ -1382,7 +1382,7 @@ int main(int argc, char **argv) {
         nthreads = nTasks;
 
     fflush(stdout);
-    fprintf(stderr, "sald: creating %d threads for %d tasks\n",
+    fprintf(stderr, "sald: launching %d threads for %d tasks\n",
             nthreads, nTasks);
 
     JobQueue   *jq = JobQueue_new(nthreads);
