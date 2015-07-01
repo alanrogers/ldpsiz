@@ -50,7 +50,7 @@ preld : $(PRELD)
 
 ELD := eld.o readgtp.o misc.o tabulation.o window.o snp.o assign.o \
          fileindex.o boot.o sums.o tokenizer.o ini.o pophist.o \
-         em.o spectab.o array.o
+         em.o spectab.o array.o jobqueue.o
 eld : $(ELD)
 	$(CC) $(CFLAGS) -o $@ $(ELD) $(lib)
 

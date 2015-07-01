@@ -62,6 +62,7 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include "boot.h"
 #include "fileindex.h"
 #include "ini.h"
+#include "jobqueue.h"
 #include "misc.h"
 #include "readgtp.h"
 #include "spectab.h"
@@ -134,7 +135,8 @@ typedef struct ThreadArg {
 
 static void usage(void);
 void        ThreadArg_print(ThreadArg * targ, FILE * ofp);
-void       *threadfun(void *varg);
+//void       *taskfun(void *varg);
+int       taskfun(void *varg);
 
 /*pthread_mutex_t mutex_stdout;*/
 
@@ -161,14 +163,15 @@ void ThreadArg_print(ThreadArg * targ, FILE * ofp) {
  *
  * @param varg A void pointer to an object of type ThreadArg.
  */
-void       *threadfun(void *varg) {
+//void       *taskfun(void *varg) {
+int       taskfun(void *varg) {
     long        i;
     ThreadArg  *targ = (ThreadArg *) varg;
 
     FILE       *ifp = fopen(targ->ifname, "r");
 
     if(ifp == NULL) {
-        fprintf(stderr, "threadfun: can't open file \"%s\"\n", targ->ifname);
+        fprintf(stderr, "taskfun: can't open file \"%s\"\n", targ->ifname);
         pthread_exit(NULL);
     }
 
@@ -203,7 +206,7 @@ void       *threadfun(void *varg) {
 
 #if 0
         if(i % 10000 == 0)
-            fprintf(stderr, "threadfun SNP #%8ld\n", i);
+            fprintf(stderr, "taskfun SNP #%8ld\n", i);
 #endif
     }
 
@@ -212,7 +215,8 @@ void       *threadfun(void *varg) {
 
     fclose(ifp);
     Window_free(window);
-    pthread_exit(NULL);
+    //pthread_exit(NULL);
+    return 0;
 }
 
 /** Print usage message and abort */
@@ -461,7 +465,6 @@ int main(int argc, char **argv) {
     DblArray *rsq = DblArray_new((unsigned long) nbins);
     checkmem(rsq, __FILE__, __LINE__);
 
-
     DblArray *separation = DblArray_new((unsigned long) nbins);
     checkmem(separation, __FILE__, __LINE__);
 
@@ -550,6 +553,7 @@ int main(int argc, char **argv) {
 
     fflush(stdout);
 
+#if 0
     pthread_t  *thread;
 
     thread = malloc(nthreads * sizeof(pthread_t));
@@ -558,7 +562,7 @@ int main(int argc, char **argv) {
     fflush(stdout);
     fprintf(stderr, "eld: launching %d threads...\n", nthreads);
     for(tndx = 0; tndx < nthreads; ++tndx) {
-        i = pthread_create(&thread[tndx], NULL, threadfun, &targ[tndx]);
+        i = pthread_create(&thread[tndx], NULL, taskfun, &targ[tndx]);
         if(i)
             eprintf("ERR@%s:%d: pthread_create returned %d\n",
                     __FILE__, __LINE__, i);
@@ -575,6 +579,24 @@ int main(int argc, char **argv) {
                     __FILE__, __LINE__, i);
         fprintf(stderr, " %2d threads have finished\n", tndx + 1);
     }
+    free(thread);
+    thread = NULL;
+#else
+    {
+        fprintf(stderr, "eld: launching %d threads\n", nthreads);
+        JobQueue   *jq = JobQueue_new(nthreads);
+        if(jq == NULL)
+            eprintf("ERR@%s:%d: Bad return from JobQueue_new",
+                    __FILE__, __LINE__);
+
+        for(i = 0; i < nthreads; ++i)
+            JobQueue_addJob(jq, taskfun, &targ[i]);
+
+        JobQueue_waitOnJobs(jq);
+        JobQueue_free(jq);
+        jq = NULL;
+    }
+#endif
 
     fprintf(stderr, "eld: back from threads\n");
 
@@ -677,7 +699,6 @@ int main(int argc, char **argv) {
     for(i = 0; i < nthreads; ++i) {
         Tabulation_free(tab[i]);
     }
-    free(thread);
     free(tab);
     free(targ);
     ThreadBounds_free(tb);
