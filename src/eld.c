@@ -410,7 +410,7 @@ int main(int argc, char **argv) {
 
     // 1st pass through file: count SNPs and figure out which will be
     // read by each thread.
-    fprintf(stderr, "Indexing file \"%s\"...\n", ifname);
+    fprintf(stderr, "eld: indexing file \"%s\"...\n", ifname);
     FileIndex  *fndx = FileIndex_readFile(ifp);
 
     // Number of SNPs and number genotypes per SNP
@@ -556,7 +556,7 @@ int main(int argc, char **argv) {
     checkmem(thread, __FILE__, __LINE__);
 
     fflush(stdout);
-    fprintf(stderr, "Launching %d threads...\n", nthreads);
+    fprintf(stderr, "eld: launching %d threads...\n", nthreads);
     for(tndx = 0; tndx < nthreads; ++tndx) {
         i = pthread_create(&thread[tndx], NULL, threadfun, &targ[tndx]);
         if(i)
@@ -576,7 +576,7 @@ int main(int argc, char **argv) {
         fprintf(stderr, " %2d threads have finished\n", tndx + 1);
     }
 
-    fprintf(stderr, "Back from threads\n");
+    fprintf(stderr, "eld: back from threads\n");
 
     assert(nGtype == targ[nthreads - 1].nGtype);
 

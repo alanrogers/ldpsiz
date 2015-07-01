@@ -1382,7 +1382,7 @@ int main(int argc, char **argv) {
         nthreads = nTasks;
 
     fflush(stdout);
-    fprintf(stderr, "Creating %d threads to perform %d tasks\n",
+    fprintf(stderr, "sald: creating %d threads to perform %d tasks\n",
             nthreads, nTasks);
 
     JobQueue   *jq = JobQueue_new(nthreads);
@@ -1400,7 +1400,7 @@ int main(int argc, char **argv) {
     JobQueue_waitOnJobs(jq);
 
     fflush(stdout);
-    fprintf(stderr, "Back from threads\n");
+    fprintf(stderr, "sald: back from threads\n");
 
     TaskArg   **best = malloc(nDataSets * sizeof(best[0]));
     checkmem(best, __FILE__, __LINE__);
@@ -1453,7 +1453,7 @@ int main(int argc, char **argv) {
     char        pname[50];
 
     if(boot) {
-        fprintf(stderr, "Processing bootstrap\n");
+        fprintf(stderr, "sald: processing bootstrap\n");
         // output with confidence interval
         assert(nBootReps > 0);
         double      low, high;
