@@ -73,7 +73,6 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include <gsl/gsl_rng.h>
 #include <limits.h>
 #include <math.h>
-#include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -138,8 +137,6 @@ void        ThreadArg_print(ThreadArg * targ, FILE * ofp);
 //void       *taskfun(void *varg);
 int       taskfun(void *varg);
 
-/*pthread_mutex_t mutex_stdout;*/
-
 /** Print ThreadArg object */
 void ThreadArg_print(ThreadArg * targ, FILE * ofp) {
     fprintf(ofp, "ThreadArg %d\n", targ->thisThread);
@@ -172,7 +169,7 @@ int       taskfun(void *varg) {
 
     if(ifp == NULL) {
         fprintf(stderr, "taskfun: can't open file \"%s\"\n", targ->ifname);
-        pthread_exit(NULL);
+        exit(1);
     }
 
     /* set up sliding window */
@@ -215,7 +212,6 @@ int       taskfun(void *varg) {
 
     fclose(ifp);
     Window_free(window);
-    //pthread_exit(NULL);
     return 0;
 }
 
@@ -550,38 +546,8 @@ int main(int argc, char **argv) {
     printf("# %-35s = %u\n", "Number of genotypes", nGtype);
     printf("# %-35s = %d\n", "Ploidy", ploidy);
     printf("# %-35s = %d\n", "Haploid sample size", nGtype * ploidy);
-
     fflush(stdout);
 
-#if 0
-    pthread_t  *thread;
-
-    thread = malloc(nthreads * sizeof(pthread_t));
-    checkmem(thread, __FILE__, __LINE__);
-
-    fflush(stdout);
-    fprintf(stderr, "eld: launching %d threads...\n", nthreads);
-    for(tndx = 0; tndx < nthreads; ++tndx) {
-        i = pthread_create(&thread[tndx], NULL, taskfun, &targ[tndx]);
-        if(i)
-            eprintf("ERR@%s:%d: pthread_create returned %d\n",
-                    __FILE__, __LINE__, i);
-    }
-
-    fflush(stdout);
-    /* wait for threads to finish */
-    for(tndx = 0; tndx < nthreads; ++tndx) {
-        void       *status;
-
-        i = pthread_join(thread[tndx], &status);
-        if(i)
-            eprintf("ERR@%s:%d: pthread_join returned %d\n",
-                    __FILE__, __LINE__, i);
-        fprintf(stderr, " %2d threads have finished\n", tndx + 1);
-    }
-    free(thread);
-    thread = NULL;
-#else
     {
         fprintf(stderr, "eld: launching %d threads\n", nthreads);
         JobQueue   *jq = JobQueue_new(nthreads);
@@ -596,7 +562,6 @@ int main(int argc, char **argv) {
         JobQueue_free(jq);
         jq = NULL;
     }
-#endif
 
     fprintf(stderr, "eld: back from threads\n");
 
