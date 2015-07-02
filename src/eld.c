@@ -134,7 +134,6 @@ typedef struct ThreadArg {
 
 static void usage(void);
 void        ThreadArg_print(ThreadArg * targ, FILE * ofp);
-//void       *taskfun(void *varg);
 int       taskfun(void *varg);
 
 /** Print ThreadArg object */
@@ -160,7 +159,6 @@ void ThreadArg_print(ThreadArg * targ, FILE * ofp) {
  *
  * @param varg A void pointer to an object of type ThreadArg.
  */
-//void       *taskfun(void *varg) {
 int       taskfun(void *varg) {
     long        i;
     ThreadArg  *targ = (ThreadArg *) varg;
