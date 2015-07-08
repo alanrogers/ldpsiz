@@ -1,156 +1,95 @@
 #!/usr/bin/python
+
 ###
-#@file macs2gtp.py
-#@page macs2gtp
-#@brief Parse output of macs, produce gtp format, the input for eld.
+# @file domacs.py
+# @page domacs
+# @author Alan R. Rogers
+# @brief Run Gary Chen's program, "MACS"
 #
-#macs2gtp.py, a program that converts `macs` output into .gtp format 
-#===================================================================
+# domacs.py: Use MACS to simulate a history of constant population size.
+# =====================================================================
 #
+# Usage: domacs.py [-r or --run] output_file_basename
 #
-#    Usage: macs2gtp.py [options] \<input file\> 
-#    where options may include:
-#      -R \<x\> : set recombination rate for adjacent sites
-#
-# For example,
-#
-#     macs2gtp.py -R 1e-8 macs.out > macs.gtp
-#
-# Would read file `macs.out`, generate map distances assuming a
-# recombination rate of 1e-8 per nucleotide, and write the output
-# into macs.gtp.
-#
-# If the recombination rate is not specified, `macs2gtp.py` tries to get
-# it from the initialization file `ldpsiz.ini`. 
+# Chen doesn't say how time is scaled. I'm guessing that units are
+# 4N generations, because that is how recombination rate and mutation
+# are scaled.
 #
 # @copyright Copyright (c) 2014, Alan R. Rogers
 # <rogers@anthro.utah.edu>. This file is released under the Internet
 # Systems Consortium License, which can be found in file "LICENSE".
 
-import sys, datetime
+
+import os, sys
 from ini import *
 
-
-### Print usage message and exit
 def usage():
-   print >> sys.stderr, "Usage: macs2gtp.py [options] <input file>"
-   print >> sys.stderr, "where options may include:"
-   print >> sys.stderr, " -R <x> : set recombination rate for adjacent sites"
-   sys.exit(1)
+    print "Usage: domacs.py [options] output_file_basename"
+    print "  where options may include:"
+    print "  -r or --run: run macs. By default, command is printed"
+    print "               but not executed."
+    sys.exit(1)
 
-recombination = None    
+runprogram = False
+obasename = None
+for arg in sys.argv[1:]:
+    if arg == "-r" or arg == "--run":
+        runprogram = True
+    elif arg[0] == '-':
+        usage()
+    else:
+        if obasename == None:
+            obasename = arg[:]
+        else:
+            usage()
+
+if obasename==None:
+    usage()
+
+# Parameters defined here rather than in initialization file
+retain = 100                # explained in MACS documentation
+outputfile = obasename + ".macs"
+errfile = obasename + ".macserr"
+print "Writing SNPs to", outputfile
+print "Writing stderr to", errfile
+
+# name of initialization file
+iniFile = "ldpsiz.ini"
 
 # Read parameter definitions from initialization file
 a, ph = readIni("ldpsiz.ini")
+
+# Make convenience names for variables defined in initialization file
 twoN0 = ph[0].twoN
+if len(ph) > 1:
+    twoN1 = ph[1].twoN
 
-if "recombination" in a:    
-    recombination = float(a["recombination"])
+t0 = ph[0].t
 
-# Command line arguments
-i = 1
-while(True):
-    if i >= len(sys.argv):
-        break
-    if sys.argv[i] == "-R":
-        i += 1
-        try:
-            recombination = float(sys.argv[i])
-        except:
-            usage()
-    elif sys.argv[i][0] == '-':
-       usage()
-    else:
-        datafile = sys.argv[i]
-    i += 1
+twoNsmp = int(a["twoNsmp"])
+basepairs = float(a["basepairs"])
+mutation = float(a["mutation"])
+recombination = float(a["recombination"])
 
-if recombination == None:
-    print "Error: no recombination rate"
-    exit(1)
+# construct command string
+cmd = "macs %s %s" % (twoNsmp, basepairs)
+cmd += " -h %s" % retain
+cmd += " -t %g" % (mutation * 2 * twoN0)
+cmd += " -r %g" % (recombination * 2 * twoN0)
 
-print "# %-35s =" % "data source",
-for word in sys.argv:
-    print "%s" % word.strip(),
-print
+#  Add additional epochs of population history
+time = 0.0
+for i in range(len(ph)):
+    time += ph[i].t
+    if isfinite(time):
+        cmd += " -eN %g %g" % (time/(2*twoN0), ph[i+1].twoN/twoN0)
+    
+cmd += " 2>%s 1>%s" % (errfile, outputfile)
 
-infile = open(datafile)
 
-# Skip comments at top of file
-while(True):
-    line = infile.readline()
-    line = line.strip()
-    if len(line)>0 and line[0] != '#':
-        break
+if runprogram:
+    print "Running:", cmd
+    os.system(cmd)
+else:
+    print "Dry run:", cmd
 
-# First line of input has MACS command line
-line = line.split()
-
-if(len(line) < 3 or line[0] != "COMMAND:" or line[1] != "macs"):
-    print >> sys.stderr, "1st line looks wrong:"
-    for word in line:
-        print >> sys.stderr, "%s" % word,
-    print
-    sys.exit(1)
-
-# Find recombination rate per 4N nucleotides
-try:
-    i = line.index("-r")
-    i += 1
-except:
-    i = len(line)
-
-if i < len(line):
-    fourNc = float(line[i])
-
-    # Make sure command line agrees with ldpsiz.ini
-    err = abs(fourNc - recombination*2*twoN0)/fourNc
-    if err > 1e-10:
-       print "MACS command not consistent with ldpsiz.ini in current directory"
-       print "  According to MACS command, 4Nc=%g" % fourNc
-       print "  In ldpsiz.ini, c=%g and 2N0=%g, so 4Nc=%g" \
-           % (recombination, twoN0, recombination*2*twoN0)
-       print "  relerr=%e" % err
-       exit(1)
-
-print "# %-35s = %s" % ("time", datetime.datetime.now())
-print "# %-35s =" % "macs cmd",
-for i in range(1,len(line)):
-    print "%s" % line[i],
-print
-
-nnucleotides = int(round(float(line[3])))
-
-# Second line has seed, which we will ignore
-line = infile.readline().split()
-if(len(line) != 2 or line[0] != "SEED:"):
-    print "2nd line looks wrong:"
-    for word in line:
-        print "%s" % word,
-    print
-    sys.exit(1)
-
-print "# %-35s = %lg" % ("recombination rate per nucleotide", recombination)
-print "# %-35s = %d" % ("nnucleotides", nnucleotides)
-print "# %-35s = %d" % ("ploidy", 1)
-
-lineno = 0
-oldNucpos = 0
-for line in infile:
-    line = line.strip().split()
-    if(line=="" or line[0] != "SITE:"):
-        continue
-    if lineno==0:
-        print "# %-35s = %d" % ("Haploid sample size", len(line[3]))
-        print "#%9s %10s %14s %7s %s" \
-            % ("snp_id", "nucpos", "mappos", "alleles", "genotypes")
-    nfields = len(line)
-    nucpos = int(round(nnucleotides*float(line[2])))
-    centimorgan = nucpos*recombination*100.0
-    if nucpos == oldNucpos:
-       # skip SNPs at same nucleotide
-       continue
-    print "%10ld %10ld %14.12lf %7s %s" % (lineno,
-                                        nucpos,
-                                        centimorgan,
-                                        "01", line[nfields-1])
-    lineno += 1
