@@ -62,6 +62,7 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include "boot.h"
 #include "fileindex.h"
 #include "ini.h"
+#include "jobqueue.h"
 #include "misc.h"
 #include "readgtp.h"
 #include "spectab.h"
@@ -72,7 +73,6 @@ Systems Consortium License, which can be found in file "LICENSE".
 #include <gsl/gsl_rng.h>
 #include <limits.h>
 #include <math.h>
-#include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -134,9 +134,7 @@ typedef struct ThreadArg {
 
 static void usage(void);
 void        ThreadArg_print(ThreadArg * targ, FILE * ofp);
-void       *threadfun(void *varg);
-
-/*pthread_mutex_t mutex_stdout;*/
+int       taskfun(void *varg);
 
 /** Print ThreadArg object */
 void ThreadArg_print(ThreadArg * targ, FILE * ofp) {
@@ -161,15 +159,15 @@ void ThreadArg_print(ThreadArg * targ, FILE * ofp) {
  *
  * @param varg A void pointer to an object of type ThreadArg.
  */
-void       *threadfun(void *varg) {
+int       taskfun(void *varg) {
     long        i;
     ThreadArg  *targ = (ThreadArg *) varg;
 
     FILE       *ifp = fopen(targ->ifname, "r");
 
     if(ifp == NULL) {
-        fprintf(stderr, "threadfun: can't open file \"%s\"\n", targ->ifname);
-        pthread_exit(NULL);
+        fprintf(stderr, "taskfun: can't open file \"%s\"\n", targ->ifname);
+        exit(1);
     }
 
     /* set up sliding window */
@@ -203,7 +201,7 @@ void       *threadfun(void *varg) {
 
 #if 0
         if(i % 10000 == 0)
-            fprintf(stderr, "threadfun SNP #%8ld\n", i);
+            fprintf(stderr, "taskfun SNP #%8ld\n", i);
 #endif
     }
 
@@ -212,7 +210,7 @@ void       *threadfun(void *varg) {
 
     fclose(ifp);
     Window_free(window);
-    pthread_exit(NULL);
+    return 0;
 }
 
 /** Print usage message and abort */
@@ -220,6 +218,7 @@ static void usage(void) {
     fprintf(stderr, "usage: eld [options] input_file_name\n");
     fprintf(stderr, "   where options may include:\n");
     tellopt("-b <x> or --blocksize <x>", "SNPs per bootstrap block");
+    tellopt("-F or --folded", "Toggle folded spectrum. Def: true");
     tellopt("-h or --help", "print this message");
     tellopt("-i <x> or --interval <x>",
             "for debugging: increase speed by examining every x'th focal SNP");
@@ -242,6 +241,7 @@ int main(int argc, char **argv) {
         /* {char *name, int has_arg, int *flag, int val} */
         {"blocksize", required_argument, 0, 'b'},
         {"help", no_argument, 0, 'h'},
+        {"folded", no_argument, 0, 'F'},
         {"interval", required_argument, 0, 'i'},
         {"nbins", required_argument, 0, 'n'},
         {"bootreps", required_argument, 0, 'r'},
@@ -260,7 +260,7 @@ int main(int argc, char **argv) {
     int         nbins = 25;
     int         verbose = 0;
     int         ploidy = 1;     /* default is haploid. */
-    const int   folded = false;
+    int         folded = true;
     unsigned    nGtype, twoNsmp;
 
     FILE       *ifp = NULL;
@@ -316,7 +316,7 @@ int main(int argc, char **argv) {
 
     /* command line arguments */
     for(;;) {
-        i = getopt_long(argc, argv, "b:f:hi:n:R:r:t:vw:W:", myopts, &optndx);
+        i = getopt_long(argc, argv, "b:f:Fhi:n:R:r:t:vw:W:", myopts, &optndx);
         if(i == -1)
             break;
         switch (i) {
@@ -332,6 +332,9 @@ int main(int argc, char **argv) {
 						__FILE__,__LINE__,optarg);
 				usage();
 			}
+            break;
+        case 'F':
+            folded = !folded;
             break;
         case 'h':
             usage();
@@ -405,7 +408,7 @@ int main(int argc, char **argv) {
 
     // 1st pass through file: count SNPs and figure out which will be
     // read by each thread.
-    fprintf(stderr, "Indexing file \"%s\"...\n", ifname);
+    fprintf(stderr, "eld: indexing file \"%s\"...\n", ifname);
     FileIndex  *fndx = FileIndex_readFile(ifp);
 
     // Number of SNPs and number genotypes per SNP
@@ -455,7 +458,6 @@ int main(int argc, char **argv) {
 
     DblArray *rsq = DblArray_new((unsigned long) nbins);
     checkmem(rsq, __FILE__, __LINE__);
-
 
     DblArray *separation = DblArray_new((unsigned long) nbins);
     checkmem(separation, __FILE__, __LINE__);
@@ -542,36 +544,24 @@ int main(int argc, char **argv) {
     printf("# %-35s = %u\n", "Number of genotypes", nGtype);
     printf("# %-35s = %d\n", "Ploidy", ploidy);
     printf("# %-35s = %d\n", "Haploid sample size", nGtype * ploidy);
-
     fflush(stdout);
 
-    pthread_t  *thread;
+    {
+        fprintf(stderr, "eld: launching %d threads\n", nthreads);
+        JobQueue   *jq = JobQueue_new(nthreads);
+        if(jq == NULL)
+            eprintf("ERR@%s:%d: Bad return from JobQueue_new",
+                    __FILE__, __LINE__);
 
-    thread = malloc(nthreads * sizeof(pthread_t));
-    checkmem(thread, __FILE__, __LINE__);
+        for(i = 0; i < nthreads; ++i)
+            JobQueue_addJob(jq, taskfun, &targ[i]);
 
-    fflush(stdout);
-    fprintf(stderr, "Launching %d threads...\n", nthreads);
-    for(tndx = 0; tndx < nthreads; ++tndx) {
-        i = pthread_create(&thread[tndx], NULL, threadfun, &targ[tndx]);
-        if(i)
-            eprintf("ERR@%s:%d: pthread_create returned %d\n",
-                    __FILE__, __LINE__, i);
+        JobQueue_waitOnJobs(jq);
+        JobQueue_free(jq);
+        jq = NULL;
     }
 
-    fflush(stdout);
-    /* wait for threads to finish */
-    for(tndx = 0; tndx < nthreads; ++tndx) {
-        void       *status;
-
-        i = pthread_join(thread[tndx], &status);
-        if(i)
-            eprintf("ERR@%s:%d: pthread_join returned %d\n",
-                    __FILE__, __LINE__, i);
-        fprintf(stderr, " %2d threads have finished\n", tndx + 1);
-    }
-
-    fprintf(stderr, "Back from threads\n");
+    fprintf(stderr, "eld: back from threads\n");
 
     assert(nGtype == targ[nthreads - 1].nGtype);
 
@@ -641,12 +631,14 @@ int main(int argc, char **argv) {
             printf(" with %0.1lf%% confidence bounds", 100*confidence);
         putchar('\n');
         printf("# %lu segregating sites\n", nSpec);
-        printf("#%10s %11s", "count", "spectrum");
+        printf("#%10s %11s %11s", "count", "spectrum", "normedSpec");
         if(bootreps > 0)
             printf(" %10s %10s", "loSpec", "hiSpec");
         putchar('\n');
         for(i=0; i < spdim; ++i)  {
-            printf("%11d %11lu", i+1, ULIntArray_get(spectrum,i));
+            unsigned long currSpec = ULIntArray_get(spectrum,i);
+            printf("%11d %11lu %11.6lf", i+1,
+                   currSpec, currSpec/((double) nSpec));
             if(bootreps > 0)
                 printf(" %10.2lf %10.2lf",
                        BootConf_loSpecBound(bc, i),
@@ -670,7 +662,6 @@ int main(int argc, char **argv) {
     for(i = 0; i < nthreads; ++i) {
         Tabulation_free(tab[i]);
     }
-    free(thread);
     free(tab);
     free(targ);
     ThreadBounds_free(tb);

@@ -111,6 +111,7 @@ extern pthread_mutex_t outputLock;
 
 #define DO_LD 1
 #define DO_SPEC 1
+#define MEAN_ABS_DIFF
 #undef  KL_DIVERGENCE 
 
 #include "annealsched.h"
@@ -380,6 +381,7 @@ void usage(void) {
             "specify method \"Hill\", or \"Strobeck\", or \"Hill,Strobeck\"");
     tellopt("--exact" , "don't use ODE to approximate difference equations");
     tellopt("-n <x> or --twoNsmp <x>", "haploid sample size");
+    tellopt("-F or --folded", "Toggle folded spectrum. Def: true");
     tellopt("-t <x> or --threads <x>", "number of threads (default is auto)");
     tellopt("-u <x> or --mutation <x>", "mutation rate/generation");
     tellopt("-v or --verbose", "more output");
@@ -516,14 +518,14 @@ int read_data(FILE * ifp,
         if(strcmp(Tokenizer_token(tkz, 1), "spectrum") == 0) {
             state = in_spectrum;
             switch (ntokens) {
-            case 2: // fall through
-            case 4:
+            case 3: // fall through
+            case 5:
                 tokensExpected = ntokens;
                 break;
             default:
                 fprintf(stderr, "Current tokens:");
                 Tokenizer_print(tkz, stderr);
-                eprintf("ERR@%s:%d: got %d tokens rather than 2 or 4"
+                eprintf("ERR@%s:%d: got %d tokens rather than 3 or 5"
                         " (spectrum header)",
                         __FILE__, __LINE__, ntokens);
             }
@@ -780,7 +782,11 @@ static double costFun(const gsl_vector *x, void *varg) {
         else
             ODE_ldVec(ode, exp_sigdsq, nbins, c, u, ph);
 
+#ifdef MEAN_ABS_DIFF
+        badness += mAbsDiff(nbins, sigdsq, exp_sigdsq);
+#else
         badness += msqDiff(nbins, sigdsq, exp_sigdsq);
+#endif
     }
 #endif
 
@@ -799,7 +805,11 @@ static double costFun(const gsl_vector *x, void *varg) {
         spcost /= spdim;
 #  else
         // sum of squared differences
+#ifdef MEAN_ABS_DIFF
+        spcost = mAbsDiff(spdim, spectrum, TFESpectrum_ptr(tfespec));
+#else
         spcost = msqDiff(spdim, spectrum, TFESpectrum_ptr(tfespec));
+#endif
 #  endif
         badness += spcost;
         TFESpectrum_free(tfespec);
@@ -865,6 +875,7 @@ int main(int argc, char **argv) {
         {"bootfile", required_argument, 0, 'f'},
         {"confidence", required_argument, 0, 'c'},
         {"exact", no_argument, 0, 'x'},
+        {"folded", no_argument, 0, 'F'},
         {"nextepoch", no_argument, 0, 'E'},
         {"tmptrDecay", required_argument, 0, 'd'},
         {"help", no_argument, 0, 'h'},
@@ -895,7 +906,7 @@ int main(int argc, char **argv) {
     int         nItr = 1000;     /* total number of iterations */
     int         nPerTmptr;       /* iterations at each temperature */
     int         nTmptrs = 3;     /* number of temperatures */
-    const int   folded = true;   // Folded site frequency spectrum
+    int         folded = true;   // Folded site frequency spectrum
 	int         truncSFS = 0;    // Truncate site frequency spectrum
     double      lo2N = 400.0, hi2N = 1e8, lo2Ninit = 1000.0;
     double      loT = 1.0, hiT = 5e3, hiTinit = 2000.0;
@@ -940,7 +951,8 @@ int main(int argc, char **argv) {
 
 
     printf("############################################\n"
-           "# sald: fit population history to LD using #\n"
+           "# sald: fit population history to LD and   #\n"
+           "#       site frequency spectrum using      #\n"
            "#       simulated annealing                #\n"
            "############################################\n");
     putchar('\n');
@@ -977,7 +989,7 @@ int main(int argc, char **argv) {
 
     /* command line arguments */
     for(;;) {
-        i = getopt_long(argc, argv, "c:d:f:BEhi:m:n:N:s:t:T:u:xv",
+        i = getopt_long(argc, argv, "c:d:f:FBEhi:m:n:N:s:t:T:u:xv",
                         myopts, &optndx);
         if(i == -1)
             break;
@@ -1009,6 +1021,9 @@ int main(int argc, char **argv) {
             break;
         case 'f':
             snprintf(bootfilename, sizeof(bootfilename), "%s", optarg);
+            break;
+        case 'F':
+            folded = !folded;
             break;
         case 'I':
             assert(optarg);
@@ -1367,7 +1382,7 @@ int main(int argc, char **argv) {
         nthreads = nTasks;
 
     fflush(stdout);
-    fprintf(stderr, "Creating %d threads to perform %d tasks\n",
+    fprintf(stderr, "sald: launching %d threads for %d tasks\n",
             nthreads, nTasks);
 
     JobQueue   *jq = JobQueue_new(nthreads);
@@ -1385,7 +1400,7 @@ int main(int argc, char **argv) {
     JobQueue_waitOnJobs(jq);
 
     fflush(stdout);
-    fprintf(stderr, "Back from threads\n");
+    fprintf(stderr, "sald: back from threads\n");
 
     TaskArg   **best = malloc(nDataSets * sizeof(best[0]));
     checkmem(best, __FILE__, __LINE__);
@@ -1438,7 +1453,7 @@ int main(int argc, char **argv) {
     char        pname[50];
 
     if(boot) {
-        fprintf(stderr, "Processing bootstrap\n");
+        fprintf(stderr, "sald: processing bootstrap\n");
         // output with confidence interval
         assert(nBootReps > 0);
         double      low, high;
@@ -1529,11 +1544,18 @@ int main(int argc, char **argv) {
         // fitted spectrum
         ESpectrum *espec = ESpectrum_new(twoNsmp, best[0]->ph,
                                          polya, tolMatCoal);
-        printf("\n# Fitted site frequency spectrum\n");
-        printf("#%5s %10s\n", "i", "spectrum");
-        for(i=1; i <= spdim; ++i)
-            printf("%6d %10.0lf\n", i,
-                   floor(0.5 + nSNPs*ESpectrum_folded(espec, i)));
+        printf("\n# Fitted %s site frequency spectrum\n",
+               (folded ? "folded" : "unfolded"));
+        printf("#%5s %10s %10s\n", "i", "spectrum", "normedSpec");
+        for(i=1; i <= spdim; ++i) {
+            double s;
+            if(folded)
+                s = ESpectrum_folded(espec, i);
+            else
+                s = ESpectrum_unfolded(espec, i);
+            printf("%6d %10.0lf %10.6lf\n", i,
+                   floor(0.5 + nSNPs*s), s);
+        }
 
         ESpectrum_free(espec);
     }

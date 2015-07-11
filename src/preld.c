@@ -55,23 +55,28 @@ Usage
 Systems Consortium License, which can be found in file "LICENSE".
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <time.h>
+#include "espectrum.h"
+#include "hayes.h"
+#include "hill.h"
+#include "ini.h"
+#include "matcoal.h"
+#include "misc.h"
+#include "model.h"
+#include "polya.h"
+#include "pophist.h"
+#include "spectab.h"
+#include "strobeck.h"
+#include "tokenizer.h"
 #include <assert.h>
 #include <getopt.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_matrix.h>
-#include "misc.h"
-#include "pophist.h"
-#include "tokenizer.h"
-#include "hill.h"
-#include "hayes.h"
-#include "strobeck.h"
-#include "model.h"
-#include "ini.h"
+#include <math.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 void        usage(void);
 void        check_tn(double t, double n);
@@ -82,6 +87,7 @@ void usage(void) {
     tellopt("-u <x> or --mutation <x>", "set mutation rate/generation");
     tellopt("-b <x> or --nbins <x>",
             "specify the number of recombination rates");
+    tellopt("-F or --folded", "Toggle folded spectrum. Def: true");
     tellopt("-r <x> or --lo_r <x>",
             "low end of range of recombination rates in centimorgans");
     tellopt("-R <x> or --hi_r <x>",
@@ -127,6 +133,7 @@ int main(int argc, char **argv) {
         /* {char *name, int has_arg, int *flag, int val} */
         {"nbins", required_argument, 0, 'b'},
         {"exact", no_argument, 0, 'x'},
+        {"folded", no_argument, 0, 'F'},
         {"log", no_argument, 0, 'l'},
         {"lo_r", required_argument, 0, 'r'},
         {"hi_r", required_argument, 0, 'R'},
@@ -149,9 +156,10 @@ int main(int argc, char **argv) {
     int         doExact = 0;
     int         doLog = 0;
     int         printState = 0;
+    int         folded = true;   // Folded site frequency spectrum
     double      u = 1e-4;
-    double      odeAbsTol = 1e-7;
-    double      odeRelTol = 1e-3;
+    double      odeAbsTol = 1e-9;
+    double      odeRelTol = 1e-7;
 
     /* variables */
     int         twoNsmp = 0;
@@ -204,7 +212,7 @@ int main(int argc, char **argv) {
 
     /* command line arguments */
     for(;;) {
-        i = getopt_long(argc, argv, "b:r:R:m:n:exu:ET:Sh", myopts, &optndx);
+        i = getopt_long(argc, argv, "b:r:FR:m:n:exu:ET:Sh", myopts, &optndx);
         if(i == -1)
             break;
         switch (i) {
@@ -214,6 +222,9 @@ int main(int argc, char **argv) {
             break;
         case 'b':
             nbins = strtod(optarg, 0);
+            break;
+        case 'F':
+            folded = !folded;
             break;
         case 'r':
             /* multiply by 0.01 to convert cM to recombination rate */
@@ -344,27 +355,44 @@ int main(int argc, char **argv) {
         fprintf(ofp, "# %-36s = %s\n", "Haploid sample size", "infinity");
     fprintf(ofp, "# %-36s = %s\n", "doEquilibria",
             (doEquilibria ? "yes" : "no"));
-    fprintf(ofp, "# %-36s = %s\n", "Method",
-            (doExact ? "NoODE" : "ODE for methods Hill and/or Strobeck"));
     fprintf(ofp, "# %-36s = %lg\n", "mutation_rate", u);
     fprintf(ofp, "# %-36s = %lg to %lg\n", "centimorgans",
             lo_c * 100.0, hi_c * 100.0);
     fprintf(ofp, "# %-36s = %d\n", "nbins", nbins);
-#ifdef HAYES_MUTATION_ADJUSTMENT
-    printf("# %-36s = %s\n", "Hayes mutation adjustment: E[rsq]", "1/(4Nc+2)");
-#else
-    printf("# %-36s = %s\n", "no Hayes mutation adjustment: E[rsq]",
-           "1/(4Nc+1)");
-#endif
 
-
+    int doHayes = 0;
+    int doHillStrobeck = 0;
     fprintf(ofp, "# %-36s =", "Models");
     for(i = 0; i < ModelList_size(ml); ++i) {
-        fprintf(ofp, " %s", Model_lbl(ModelList_model(ml, i)));
+        Model *model = ModelList_model(ml, i);
+        const char *lbl = Model_lbl(model);
+        fprintf(ofp, " %s", lbl);
+        if(0 == mystrcasecmp(lbl, "hayes"))
+            doHayes = 1;
+        if(0 == mystrcasecmp(lbl, "hill")
+           || 0 == mystrcasecmp(lbl, "strobeck"))
+            doHillStrobeck = 1;
         if(i + 1 < ModelList_size(ml))
             putc(',', ofp);
     }
-    fputs("\n\n", ofp);
+    putc('\n', ofp);
+    if(doHayes) {
+#ifdef HAYES_MUTATION_ADJUSTMENT
+        printf("# %-36s = %s\n", "Hayes mutation adjustment: E[rsq]", "1/(4Nc+2)");
+#else
+        printf("# %-36s = %s\n", "no Hayes mutation adjustment: E[rsq]",
+               "1/(4Nc+1)");
+#endif
+    }
+    if(doHillStrobeck) {
+        fprintf(ofp, "# %-36s = %s\n", "Hill/Strobeck calculations",
+                (doExact ? "exact" : "ODE approximation"));
+        if(!doExact) {
+            printf("# %-36s = %lg\n", "odeAbsTol", odeAbsTol);
+            printf("# %-36s = %lg\n", "odeRelTol", odeRelTol);
+        }
+    }
+    putc('\n', ofp);
 
     PopHist_print_comment(ph, "#", ofp);
     putc('\n', ofp);
@@ -380,12 +408,10 @@ int main(int argc, char **argv) {
     fprintf(ofp, "#%s", strcenter("", fwidth - 1, buff, sizeof(buff)));
     for(i = 0; i < nModels; ++i) {
         const Model *model = ModelList_model(ml, i);
-
-        int         currWidth = lblWidth;
+        int          currWidth = lblWidth;
 
         if(printState)
             currWidth += Model_stateDim(model) * (1 + fwidth);
-
         putc(' ', ofp);
         fprintf(ofp, "%s", strcenter(Model_lbl(model),
                                      currWidth, buff, sizeof(buff)));
@@ -459,6 +485,29 @@ int main(int argc, char **argv) {
         }
         putc('\n', ofp);
     }
+
+    if(twoNsmp > 1) {
+        // fitted spectrum
+        unsigned spdim = specdim((unsigned) twoNsmp, folded);
+        double      tolMatCoal = 1e-3; // controls accuracy of MatCoal
+        Polya *polya = Polya_new(twoNsmp);
+        ESpectrum *espec = ESpectrum_new(twoNsmp, ph,  polya, tolMatCoal);
+        printf("\n# %s site frequency spectrum\n",
+               (folded ? "Folded" : "Unfolded"));
+        printf("#%5s %10s\n", "i", "spectrum");
+        for(i=1; i <= spdim; ++i) {
+            double s;
+            if(folded)
+                s = ESpectrum_folded(espec, i);
+            else
+                s = ESpectrum_unfolded(espec, i);
+            printf("%6d %10.8lf\n", i, s);
+        }
+
+        ESpectrum_free(espec);
+        Polya_free(polya);
+    }else
+        printf("# Not calculating spectrum, because twoNsmp=%d\n", twoNsmp);
 
     PopHist_free(ph);
     if(linkedList)

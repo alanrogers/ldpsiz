@@ -84,8 +84,10 @@ int mystrcasecmp(const char *s1, const char *s2) {
             return ccmp(*s1,*s2);
         c1= (isascii(*s1) && isupper(*s1)) ? tolower(*s1) : *s1;
         c2= (isascii(*s2) && isupper(*s2)) ? tolower(*s2) : *s2;
-        if (c1 != c2)
-            return ccmp(c1,c2);
+        if(c1 > c2)
+            return 1;
+        if(c1 < c2)
+            return -1;
         s1++;
         s2++;
     }
@@ -559,6 +561,15 @@ double msqDiff(int n, double x[n], double y[n]) {
         double diff = x[i] - y[i];
         s += diff*diff;
     }
+    return s/n;
+}
+
+/// Return mean absolute difference between two arrays
+double mAbsDiff(int n, double x[n], double y[n]) {
+    double s = 0.0;
+    int i;
+    for(i=0; i<n; ++i)
+        s += fabs(x[i] - y[i]);
     return s/n;
 }
 
