@@ -199,10 +199,9 @@ static inline int Dbl_near(double x, double y) {
 int mystrcasecmp(const char *s1, const char *s2);
 
 #ifndef NDEBUG
-#define myassert(x) do { if (!(x)) { dostacktrace(__FILE__,__LINE__,stderr); assert(x); } } while(0)
+#  define myassert(x) do { if (!(x)) { dostacktrace(__FILE__,__LINE__,stderr); assert(x); } } while(0)
 #else
-#define myassert(x)
-#endif
+#  define myassert(x)
 #endif
 
 #define REQUIRE(x,file,lineno) do { \
@@ -212,3 +211,5 @@ int mystrcasecmp(const char *s1, const char *s2);
             (file),(lineno),__FILE__,__LINE__); \
    }\
 } while(0)
+
+#endif
