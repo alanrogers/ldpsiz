@@ -57,7 +57,25 @@ int main(void) {
 
     mpfr_abs(z, y, rnd);
     zd = mpfr_get_d(z, rnd);
-    printf("Neg: -%lf = %lf\n", yd, zd);
+    printf("Abs: abs(%lf) = %lf\n", yd, zd);
+
+    mpfr_exp(z, y, rnd);
+    zd = mpfr_get_d(z, rnd);
+    printf("Exp: exp(%lf) = %lf\n", yd, zd);
+
+    mpfr_log(z, y, rnd);
+    zd = mpfr_get_d(z, rnd);
+    printf("Log: log(%lf) = %lf\n", yd, zd);
+
+    // Write z in full precision
+    size_t charsWritten = mpfr_out_str(stdout, 10, 0, z, rnd);
+    putchar('\n');
+    printf("Wrote %zu chars\n", charsWritten);
+
+    // Write 25 significant digits
+    charsWritten = mpfr_out_str(stdout, 10, 25, z, rnd);
+    putchar('\n');
+    printf("Wrote %zu chars\n", charsWritten);
 
 #endif
     mpfr_clears(x, y, (mpfr_ptr) 0);
