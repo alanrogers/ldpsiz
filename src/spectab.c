@@ -52,14 +52,14 @@ unsigned specdim(unsigned twoNsmp, int folded) {
  */
 Spectab    *Spectab_new(unsigned twoNsmp, int folded) {
     Spectab *tab = (Spectab *) malloc(sizeof(Spectab));
-    checkmem(tab, __FILE__, __LINE__);
+    CHECKMEM(tab);
     memset(tab, 0, sizeof(Spectab));
 
     tab->twoNsmp = twoNsmp;
     tab->folded = folded;
     tab->dim = specdim(twoNsmp, folded);
     tab->s = malloc(tab->dim * sizeof(tab->s[0]));
-    checkmem(tab->s, __FILE__, __LINE__);
+    CHECKMEM(tab->s);
     memset(tab->s, 0, tab->dim * sizeof(tab->s[0]));
 
 #ifndef NDEBUG
@@ -75,10 +75,10 @@ Spectab    *Spectab_new(unsigned twoNsmp, int folded) {
 Spectab *Spectab_dup(Spectab * old) {
     assert(old);
     Spectab *new = memdup(old, sizeof(Spectab));
-    checkmem(new, __FILE__, __LINE__);
+    CHECKMEM(new);
 
     new->s = memdup(old->s, old->dim * sizeof(old->s[0]));
-    checkmem(new, __FILE__, __LINE__);
+    CHECKMEM(new);
 
 #ifndef NDEBUG
     Spectab_sanityCheck(new, __FILE__, __LINE__);
@@ -217,7 +217,7 @@ Spectab *Spectab_restore(FILE * ifp) {
         eprintf("%s:%s:%d: fscanf", __FILE__, __func__, __LINE__);
 
     Spectab *tab = Spectab_new(twoNsmp, folded);
-    checkmem(tab, __FILE__, __LINE__);
+    CHECKMEM(tab);
     tab->nobs = nobs;
     if(tab->dim != dim)
         eprintf("%s:%s:%d: tab->dim=%u should match dim=%u",
@@ -316,7 +316,7 @@ void Spectab_test(int verbose) {
     dim = (folded ? twoNsmp/2 : twoNsmp-1);
     long unsigned nobs;
     ULIntArray *spec = ULIntArray_new(dim);
-    checkmem(spec, __FILE__, __LINE__);
+    CHECKMEM(spec);
 
     nobs = Spectab_report(tab2, spec);
     assert(dim == Spectab_dim(tab2));
