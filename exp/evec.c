@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 int main(void) {
-    const long nSamples = 8;
+    const long nSamples = 5;
     const long dim = nSamples - 1;
     long i, j, k, ii, jj;
     double rvec[dim][dim];

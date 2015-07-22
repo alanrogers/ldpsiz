@@ -35,7 +35,7 @@ warn := \
 
 CFLAGS := -g -std=gnu99 $(warn) $(incl) $(opt) $(prof) $(osargs)
 
-lib := -L/usr/local/lib -lgsl -lgslcblas -lpthread -lm
+lib := -L/usr/local/lib -lgsl -lgslcblas -lpthread -lm -lmpfr -lgmp
 
 .c.o:
 	$(CC) $(CFLAGS) $(incl) -c -o ${@F}  $<
@@ -190,6 +190,13 @@ XTFESPECTRUM := xtfespectrum.o tfespectrum.o espectrum.o polya.o matcoal.o \
   misc.o pophist.o spectab.o array.o sums.o
 xtfespectrum : $(XTFESPECTRUM)
 	$(CC) $(CFLAGS) -o $@ $(XTFESPECTRUM) $(lib)
+
+xmatcoalspec.o : matcoalspec.c
+	$(CC) $(CFLAGS) -c -DTEST -o $@ ../src/matcoalspec.c
+
+XMATCOALSPEC := xmatcoalspec.o misc.o sums.o
+xmatcoalspec : $(XMATCOALSPEC)
+	$(CC) $(CFLAGS) -o $@ $(XMATCOALSPEC) $(lib)
 
 install: $(alltargets)
 	cp -p $(alltargets) $(destination)

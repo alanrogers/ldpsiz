@@ -26,6 +26,7 @@ typedef struct Ini Ini;
 typedef struct IntArray IntArray;
 typedef struct JobQueue JobQueue;
 typedef struct LocRef LocRef;
+typedef struct MatCoalSpec MatCoalSpec;
 typedef struct MinimizerResult MinimizerResult;
 typedef struct Model Model;
 typedef struct ModelList ModelList;
