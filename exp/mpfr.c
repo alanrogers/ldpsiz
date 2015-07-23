@@ -20,6 +20,7 @@ int main(void) {
 
     mpfr_set_d(x, 2.0, rnd);
     mpfr_set_d(y, 3.0, rnd);
+    mpfr_set(z, y, rnd);
     xd = mpfr_get_d(x, rnd);
     yd = mpfr_get_d(y, rnd);
 

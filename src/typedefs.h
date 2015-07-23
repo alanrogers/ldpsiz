@@ -30,6 +30,7 @@ typedef struct MatCoalSpec MatCoalSpec;
 typedef struct MinimizerResult MinimizerResult;
 typedef struct Model Model;
 typedef struct ModelList ModelList;
+typedef struct MpfrVec MpfrVec;
 typedef struct ObjLink ObjLink;
 typedef struct ODE ODE;
 typedef struct Polya Polya;
