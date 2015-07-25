@@ -27,25 +27,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-/** The number of parameters in each Epoch */
-#define PAR_PER_EPOCH 2
-
 /** Names of the parameters within each lpoch */
 const static char *epochParamName[] = { "twoN", "t" };
-
-/**
- * PopHist represents the history of a single population.
- * It is a structure allocated on a single block of memory, using the
- * "struct hack" of C programming. This makes it possible to avoid
- * pointers within PopHist, so that these objects can be copied using
- * memcpy. (Otherwise, you end up with pointers in one object pointing
- * to memory in another.)
- */
-struct PopHist {
-    unsigned    nepoch;    /**< number of epochs */
-    size_t      size;      /**< size of memory block allocated */
-    double      p[PAR_PER_EPOCH];   /**< array of parameter values */
-};
 
 /**
  * Population history represented as a linked list of epochs.
@@ -262,13 +245,6 @@ size_t PopHist_calcSize(unsigned nepoch) {
 }
 
 /**
- * Return duration of Epoch i.
- */
-double PopHist_duration(const PopHist * ph, int i) {
-    return ph->p[1 + i * PAR_PER_EPOCH];
-}
-
-/**
  * Return time from leaves to the most recent end of Epoch i. Thus,
  * PopHist_age(ph, 0) is 0 and PopHist_age(ph, PopHist_nepoch(ph))
  * gives the sum of all epoch durations except the final infinite one.
@@ -279,11 +255,6 @@ double PopHist_age(const PopHist *ph, int i) {
 	for(j=0; j<i; ++j)
 		t += PopHist_duration(ph, j);
 	return t;
-}
-
-/** Return the haploid population size, 2N, during epoch i. */
-double PopHist_twoN(const PopHist * ph, int i) {
-    return 1.0 / ph->p[i * PAR_PER_EPOCH];
 }
 
 /**

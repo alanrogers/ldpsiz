@@ -43,7 +43,7 @@ struct MatCoalSpec {
     mpfr_t *cvec; // column eigenvectors
     mpfr_t *beta; // beta[i-2] = i*(i-1)/2
     mpfr_t *lambda; // eigenvalues
-    mpfr_t *x;  // work vector
+    mpfr_t *work, w, x, y, z; // temporaries
     unsigned *offset;  // offset[j] = j*(j+1)/2
 };
 
@@ -88,7 +88,6 @@ void MpfrVec_get(MpfrVec *self, unsigned dim, long double x[dim]) {
 
 MatCoalSpec *MatCoalSpec_new(unsigned nSamples) {
     long i, j, ii, jj;
-    mpfr_t x, y, z;
     MatCoalSpec *self = malloc( sizeof *self );
     CHECKMEM(self);
 
@@ -96,9 +95,7 @@ MatCoalSpec *MatCoalSpec_new(unsigned nSamples) {
     self->dim = nSamples-1;
     self->nPairs = (self->dim * (self->dim+1))/2;
 
-    mpfr_init2(x, precision);
-    mpfr_init2(y, precision);
-    mpfr_init2(z, precision);
+    mpfr_inits2(precision, self->w, self->x, self->y, self->z, (mpfr_ptr) 0);
 
     self->offset = malloc(self->dim * sizeof self->offset[0]);
     CHECKMEM(self->offset);
@@ -123,22 +120,22 @@ MatCoalSpec *MatCoalSpec_new(unsigned nSamples) {
         mpfr_set_si(self->rvec[jj + self->offset[jj]], 1L, rnd);
         for(i = j-1; i > 1; --i) {
             ii = i-2;
-            mpfr_set_si(x, i*(i+1L), rnd);
-            mpfr_set_si(y, i*(i-1L) - j*(j-1L), rnd);
-            mpfr_div(z, x, y, rnd);
+            mpfr_set_si(self->x, i*(i+1L), rnd);
+            mpfr_set_si(self->y, i*(i-1L) - j*(j-1L), rnd);
+            mpfr_div(self->z, self->x, self->y, rnd);
             // now z = i*(i+1)/(i*(i-1) - j*(j-1))
             mpfr_mul(self->cvec[ii + self->offset[jj]],
                      self->cvec[ii+1 + self->offset[jj]],
-                     z, rnd);
+                     self->z, rnd);
         }
         for(i=j+1; i <= nSamples; ++i) {
             ii = i-2;
-            mpfr_set_si(x, i*(i-1L), rnd);
-            mpfr_set_si(y, i*(i-1L) - j*(j-1L), rnd);
-            mpfr_div(z, x, y, rnd);
+            mpfr_set_si(self->x, i*(i-1L), rnd);
+            mpfr_set_si(self->y, i*(i-1L) - j*(j-1L), rnd);
+            mpfr_div(self->z, self->x, self->y, rnd);
             // z = i*(i-1)/(i*(i-1) - j*(j-1))
             mpfr_mul(self->rvec[jj+self->offset[ii]],
-                     self->rvec[jj+self->offset[ii-1]], z, rnd);
+                     self->rvec[jj+self->offset[ii-1]], self->z, rnd);
         }
     }
 
@@ -148,19 +145,37 @@ MatCoalSpec *MatCoalSpec_new(unsigned nSamples) {
     self->lambda = malloc(self->dim * sizeof self->lambda[0]);
     CHECKMEM(self->lambda);
 
-    self->x = malloc(self->dim * sizeof self->x[0]);
-    CHECKMEM(self->x);
+    self->work = malloc(self->dim * sizeof self->work[0]);
+    CHECKMEM(self->work);
 
     // eigenvalues are beta[i]*t/N
     for(i=0; i < self->dim; ++i) {
         j = i+2;
         mpfr_init2(self->beta[i], precision);
         mpfr_init2(self->lambda[i], precision);
-        mpfr_init2(self->x[i], precision);
+        mpfr_init2(self->work[i], precision);
         mpfr_set_si(self->beta[i], (j*(j-1L))/2L, rnd);
     }
-    mpfr_clears(x, y, z, (mpfr_ptr) 0);
     return self;
+}
+
+void MatCoalSpec_free(MatCoalSpec *self) {
+    unsigned i;
+
+    mpfr_clears(self->w, self->x, self->y, self->z, (mpfr_ptr) 0);
+
+    for(i=0; i < self->nPairs; ++i)
+        mpfr_clears(self->rvec[i], self->cvec[i], (mpfr_ptr) 0);
+
+    for(i=0; i < self->dim; ++i)
+        mpfr_clears(self->beta[i], self->lambda[i], self->work[i],
+                    (mpfr_ptr) 0);
+
+    free(self->beta);
+    free(self->cvec);
+    free(self->rvec);
+    free(self->offset);
+    free(self);
 }
 
 void MatCoalSpec_project(MatCoalSpec *self, MpfrVec *x, long double v) {
@@ -169,26 +184,22 @@ void MatCoalSpec_project(MatCoalSpec *self, MpfrVec *x, long double v) {
         eprintf("%s:%s:%d: dimensions don't match. x->dim=%ld but self->dim=%u\n",
                 __FILE__,__func__,__LINE__, x->dim, self->dim);
     int i;
-    mpfr_t work;
-    mpfr_init2(work, precision);
     
     // Left-multiply state vector, x, by matrix of row eigenvectors.
-    UTmatXvec(self->dim, self->x, self->rvec, self->offset, x->x);
+    UTmatXvec(self->dim, self->work, self->rvec, self->offset, x->x);
 
     // Left-multiply resulting vector by diag(exp(-beta[i]*v))
     for(i=0; i < self->dim; ++i) {
-        // work = exp(-beta[i]*v)
-        mpfr_set_d(work, v, rnd);
-        mpfr_mul(work, work, self->beta[i], rnd); 
-        mpfr_neg(work, work, rnd); 
-        mpfr_exp(work, work, rnd); 
-        mpfr_mul(self->x[i], self->x[i], work, rnd);
+        // self->x = exp(-beta[i]*v)
+        mpfr_set_d(self->x, v, rnd);
+        mpfr_mul(self->x, self->x, self->beta[i], rnd); 
+        mpfr_neg(self->x, self->x, rnd); 
+        mpfr_exp(self->x, self->x, rnd); 
+        mpfr_mul(self->work[i], self->work[i], self->x, rnd);
     }
 
     // Left-multiply by matrix of column eigenvectors.
-    UTmatXvec(self->dim, x->x, self->cvec, self->offset, self->x);
-
-    mpfr_clear(work);
+    UTmatXvec(self->dim, x->x, self->cvec, self->offset, self->work);
 }
 
 /// Form matrix product y = A*x, where y is a vector, A an
@@ -229,6 +240,52 @@ void MatCoalSpec_print(MatCoalSpec *self) {
 
     printf("Column eigenvectors:\n");
     prUTMat(self->dim, self->cvec, 17, self->offset);
+}
+
+void MatCoalSpec_integrate(MatCoalSpec *self, unsigned nSamples, double m[nSamples],
+                           PopHist *ph) {
+    assert(self);
+    assert(nSamples == self->nSamples);
+
+    m[0] = 0.0;
+
+    unsigned i, j, dim = nSamples-1;
+    unsigned nEpoch = PopHist_nepoch(ph);
+    double *mm = m+1;  // mm has dimension dim
+
+    for(j=0; j<dim; ++j)
+        mpfr_set_si(lambda[j], 0, rnd);
+
+    long double t=0.0L;
+    for(i=0; i<nEpoch; ++i) {
+        long double dt = PopHist_duration(ph, i);
+        t += dt;
+
+        // x: twoN
+        mpfr_set_d(self->x, PopHist_twoN(ph, i), rnd);
+
+        for(j=0; j<dim; ++j) {
+            // y: h = beta[j]/twoN
+            mpfr_div(self->y, self->beta[j], self->x, rnd);
+
+            // w: exp(-h*t)/h
+            mpfr_set_ld(self->w, t, rnd);              // t
+            mpfr_mul(self->w, self->w, self->y, rnd);  // h*t
+            mpfr_neg(self->w, self->w, rnd);           // -h*t
+            mpfr_exp(self->w, self->w, rnd);           // exp(-h*t)
+            mpfr_div(self->w, self->w, self->y, rnd);  // exp(-h*t)/h
+
+            // z: expm1(-h*dt)
+            mpfr_set_ld(self->z, dt, rnd);             // dt
+            mpfr_mul(self->z, self->z, self->y, rnd);  // h*dt
+            mpfr_neg(self->z, self->z, rnd);           // -h*dt
+            mpfr_expm1(self->z, self->z, rnd);         // expm1(-h*dt)
+
+            // lambda[i] += (exp(-h*t)/h)*expm1(-h*dt)
+            mpfr_mul(self->w, self->w, self->z, rnd);
+            mpfr_add(self->lambda[i], self->lambda[i], self->w, rnd);
+        }
+    }
 }
 
 void prUTMat(unsigned dim, mpfr_t *mat, unsigned prWid, unsigned offset[dim]) {

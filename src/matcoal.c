@@ -411,12 +411,11 @@ void MatCoal_integrate_epoch(unsigned nSamples,
  * the coalescent interval during which there were i+1
  * distinct lineages.  m[0] is set equal to HUGE_VAL.
  *
- * The goal of this method is to calculate
+ * The goal of this function is to calculate
  * @verbatim
  * F(0,infinity)*x(0)
  * @endverbatim
- * where F(a,b) is the definite integral of exp(A*z/N(t)) dz over
- * the interval (a,b), and 
+ * where F(a,b) is the integral of exp(A*z/N(t)) dz over (a,b), and 
  * @verbatim
  * x(0) = (0,...,0,1)'
  * @endverbatim
@@ -424,8 +423,7 @@ void MatCoal_integrate_epoch(unsigned nSamples,
  *
  * It is useful to re-express this problem in terms of the
  * variable v(t) = t/N(t).  With this transformation, we have the
- * definite integral of N(z)*exp(A*v) dv over the interval
- * (b/N(b), a/N(a)).
+ * integral of N(z)*exp(A*v) dv over (b/N(b), a/N(a)).
  *
  * If the population's history is divided into P+1 epochs with
  * population sizes N0, N1, ..., NP, this integral can be

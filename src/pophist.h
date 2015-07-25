@@ -9,7 +9,8 @@
 #ifndef LDPSIZ_POPHIST
 #define LDPSIZ_POPHIST
 
-#define  PERTURB_GAUSSIAN
+#define PERTURB_GAUSSIAN
+#define PAR_PER_EPOCH 2 ///< The number of parameters in each Epoch
 
 /* #define PERTURB_TDIST */
 
@@ -18,6 +19,20 @@
 #include <stdio.h>
 #include <stddef.h>
 #include "typedefs.h"
+
+/**
+ * PopHist represents the history of a single population.
+ * It is a structure allocated on a single block of memory, using the
+ * "struct hack" of C programming. This makes it possible to avoid
+ * pointers within PopHist, so that these objects can be copied using
+ * memcpy. (Otherwise, you end up with pointers in one object pointing
+ * to memory in another.)
+ */
+struct PopHist {
+    unsigned    nepoch;    /**< number of epochs */
+    size_t      size;      /**< size of memory block allocated */
+    double      p[PAR_PER_EPOCH];   /**< array of parameter values */
+};
 
 EpochLink  *EpochLink_new(EpochLink * head, double t, double n);
 EpochLink  *EpochLink_dup(EpochLink * head);
@@ -34,9 +49,7 @@ void        EpochLink_test(void);
 void        PopHist_init(PopHist * ph, unsigned nepoch, size_t size);
 PopHist    *PopHist_newEmpty(unsigned nepoch);
 size_t      PopHist_calcSize(unsigned nepoch);
-double      PopHist_duration(const PopHist * ph, int i);
 double      PopHist_age(const PopHist *ph, int i);
-double      PopHist_twoN(const PopHist * ph, int i);
 int         PopHist_findEpoch(const PopHist *ph, double age);
 double      PopHist_twoNinv(const PopHist * ph, int i);
 void        PopHist_setDuration(PopHist * ph, int i, double duration);
@@ -71,4 +84,17 @@ void        PopHist_sanityCheck(PopHist * ph, const char *file, int line);
 double      PopHist_distance(PopHist * ph1, PopHist * ph2);
 size_t      PopHist_size(const PopHist * ph);
 int         PopHist_calc_nParams(int nepoch);
+
+static inline double PopHist_duration(const PopHist * ph, int i);
+static inline double PopHist_twoN(const PopHist * ph, int i);
+
+/// Return duration of Epoch i.
+static inline double PopHist_duration(const PopHist * ph, int i) {
+    return ph->p[1 + i * PAR_PER_EPOCH];
+}
+
+/// Return the haploid population size, 2N, during epoch i.
+static inline double PopHist_twoN(const PopHist * ph, int i) {
+    return 1.0 / ph->p[i * PAR_PER_EPOCH];
+}
 #endif
