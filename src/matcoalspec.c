@@ -254,7 +254,7 @@ void MatCoalSpec_integrate(MatCoalSpec *self, unsigned nSamples, double m[nSampl
     double *mm = m+1;  // mm has dimension dim
 
     for(j=0; j<dim; ++j)
-        mpfr_set_si(lambda[j], 0, rnd);
+        mpfr_set_si(self->lambda[j], 0, rnd);
 
     long double t=0.0L;
     for(i=0; i<nEpoch; ++i) {
@@ -268,12 +268,11 @@ void MatCoalSpec_integrate(MatCoalSpec *self, unsigned nSamples, double m[nSampl
             // y: h = beta[j]/twoN
             mpfr_div(self->y, self->beta[j], self->x, rnd);
 
-            // w: exp(-h*t)/h
+            // w: exp(-h*t)
             mpfr_set_ld(self->w, t, rnd);              // t
             mpfr_mul(self->w, self->w, self->y, rnd);  // h*t
             mpfr_neg(self->w, self->w, rnd);           // -h*t
             mpfr_exp(self->w, self->w, rnd);           // exp(-h*t)
-            mpfr_div(self->w, self->w, self->y, rnd);  // exp(-h*t)/h
 
             // z: expm1(-h*dt)
             mpfr_set_ld(self->z, dt, rnd);             // dt
@@ -281,8 +280,9 @@ void MatCoalSpec_integrate(MatCoalSpec *self, unsigned nSamples, double m[nSampl
             mpfr_neg(self->z, self->z, rnd);           // -h*dt
             mpfr_expm1(self->z, self->z, rnd);         // expm1(-h*dt)
 
-            // lambda[i] += (exp(-h*t)/h)*expm1(-h*dt)
-            mpfr_mul(self->w, self->w, self->z, rnd);
+            // lambda[i] += (exp(-h*t)/h)*expm1(-h*dt)/h
+            mpfr_mul(self->w, self->w, self->z, rnd);  // w *= z
+            mpfr_div(self->w, self->w, self->y, rnd);  // w /= y
             mpfr_add(self->lambda[i], self->lambda[i], self->w, rnd);
         }
     }
