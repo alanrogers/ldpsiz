@@ -57,6 +57,7 @@ MpfrVec *MpfrVec_new(unsigned dim, long double x[dim]) {
 
     new->dim = dim;
     new->x = malloc(dim * sizeof(new->x[0]));
+    CHECKMEM(new->x);
     unsigned i;
     for(i=0; i < dim; ++i)
         mpfr_init2(new->x[i], precision);
@@ -181,7 +182,8 @@ void MatCoalSpec_free(MatCoalSpec *self) {
 void MatCoalSpec_project(MatCoalSpec *self, MpfrVec *x, long double v) {
     assert(x);
     if(x->dim != self->dim)
-        eprintf("%s:%s:%d: dimensions don't match. x->dim=%ld but self->dim=%u\n",
+        eprintf("%s:%s:%d: dimensions don't match."
+                " x->dim=%ld but self->dim=%u\n",
                 __FILE__,__func__,__LINE__, x->dim, self->dim);
     int i;
     
@@ -208,7 +210,8 @@ void MatCoalSpec_project(MatCoalSpec *self, MpfrVec *x, long double v) {
 /// offset of the beginning of the j'th column within matrix A.
 /// A should be laid out so that element (i,j), i.e. row i and column
 /// j, is at position A[i + offset[j]].
-void UTmatXvec(unsigned dim, mpfr_t *y, mpfr_t *A, unsigned *offset, mpfr_t *x) {
+void UTmatXvec(unsigned dim, mpfr_t *y, mpfr_t *A, unsigned *offset,
+               mpfr_t *x) {
     unsigned i, j;
     mpfr_t tmp;
     mpfr_init2(tmp, precision);
@@ -242,8 +245,8 @@ void MatCoalSpec_print(MatCoalSpec *self) {
     prUTMat(self->dim, self->cvec, 17, self->offset);
 }
 
-void MatCoalSpec_integrate(MatCoalSpec *self, unsigned nSamples, double m[nSamples],
-                           PopHist *ph) {
+void MatCoalSpec_integrate(MatCoalSpec *self, unsigned nSamples,
+                           double m[nSamples], PopHist *ph) {
     assert(self);
     assert(nSamples == self->nSamples);
 
@@ -328,7 +331,7 @@ int main(int argc, char **argv) {
         verbose = 1;
     }
 
-    unsigned i, nSamples = 5;
+    unsigned i, nSamples = 10;
     MatCoalSpec *mcs = MatCoalSpec_new(nSamples);
 
     if(verbose)
@@ -346,21 +349,35 @@ int main(int argc, char **argv) {
     MpfrVec_get(vec, dim, y);
     printf("v=%Lf\n", v);
     for(i=0; i<dim; ++i)
-        printf("%d %10.6Lf -> %10.6Lf\n", i+2, x[i], y[i]);
+        printf("%3d %10.8Lf -> %12.8Lf\n", i+2, x[i], y[i]);
+
+    v = 0.1L;
+    MatCoalSpec_project(mcs, vec, v);
+    MpfrVec_get(vec, dim, y);
+    printf("v=%Lf\n", v);
+    for(i=0; i<dim; ++i)
+        printf("%3d %10.8Lf -> %12.8Lf\n", i+2, x[i], y[i]);
 
     v = 1.0L;
     MatCoalSpec_project(mcs, vec, v);
     MpfrVec_get(vec, dim, y);
     printf("v=%Lf\n", v);
     for(i=0; i<dim; ++i)
-        printf("%d %10.6Lf -> %10.6Lf\n", i+2, x[i], y[i]);
+        printf("%3d %10.8Lf -> %12.8Lf\n", i+2, x[i], y[i]);
+
+    v = 3.0L;
+    MatCoalSpec_project(mcs, vec, v);
+    MpfrVec_get(vec, dim, y);
+    printf("v=%Lf\n", v);
+    for(i=0; i<dim; ++i)
+        printf("%3d %10.8Lf -> %12.8Lf\n", i+2, x[i], y[i]);
 
     v = 100000.0L;
     MatCoalSpec_project(mcs, vec, v);
     MpfrVec_get(vec, dim, y);
     printf("v=%Lf\n", v);
     for(i=0; i<dim; ++i)
-        printf("%d %10.6Lf -> %10.6Lf\n", i+2, x[i], y[i]);
+        printf("%3d %10.8Lf -> %12.8Lf\n", i+2, x[i], y[i]);
 
     return 0;
 }

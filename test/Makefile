@@ -194,7 +194,7 @@ xtfespectrum : $(XTFESPECTRUM)
 xmatcoalspec.o : matcoalspec.c
 	$(CC) $(CFLAGS) -c -DTEST -o $@ ../src/matcoalspec.c
 
-XMATCOALSPEC := xmatcoalspec.o misc.o sums.o
+XMATCOALSPEC := xmatcoalspec.o misc.o sums.o pophist.o
 xmatcoalspec : $(XMATCOALSPEC)
 	$(CC) $(CFLAGS) -o $@ $(XMATCOALSPEC) $(lib)
 
